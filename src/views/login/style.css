@@ -1,0 +1,41 @@
+.login-background {
+  position: relative;
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+  /* background-image: url(https://media.istockphoto.com/id/902863026/photo/texture-of-treadmill-background.jpg?s=612x612&w=0&k=20&c=o8FG5M633jD4M2dGhkFnBzVOFU6NQeaHzyEZU6aemWg=);
+  background-repeat: no-repeat;
+  background-size: cover; */
+  height: 100vh;
+}
+
+.box-login {
+  position: absolute;
+  width: 100%;
+  padding: 0px 24px 20px 24px;
+  bottom: 0;
+}
+
+.login .ant-input,
+.login .ant-input-password {
+  background-color: #0f0f0f;
+  border: 1px solid #494949;
+  color: #b8b8b8;
+}
+
+.login .ant-input-password .anticon {
+  color: #b8b8b8;
+}
+
+.login .ant-input-password .anticon:hover {
+  color: #fff;
+}
+
+.login .ant-input::placeholder {
+  color: #b8b8b8;
+}
+
+.login .logo {
+  margin: auto;
+  text-align: center;
+  padding: 24px 0px;
+}
