@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isAuthenticated: false,
-  themeMode: 'light'
+  themeMode: 'red'
 }
 
 export const globalSlice = createSlice({

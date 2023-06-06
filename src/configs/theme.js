@@ -1,12 +1,26 @@
 import { theme as antheme } from 'antd'
 
 const theme = {
-  algorithm: antheme.darkAlgorithm,
-  token: {
-    colorPrimary: '#ed143d', //PRIME
-    //colorPrimary: '#acc571', //NUTRI
-    //colorPrimary: '#A2722A', //PRIME
-    controlHeight: 50
+  red: {
+    algorithm: antheme.darkAlgorithm,
+    token: {
+      colorPrimary: '#ed143d',
+      controlHeight: 50
+    }
+  },
+  green: {
+    algorithm: antheme.darkAlgorithm,
+    token: {
+      colorPrimary: '#acc571',
+      controlHeight: 50
+    }
+  },
+  gold: {
+    algorithm: antheme.darkAlgorithm,
+    token: {
+      colorPrimary: '#A2722A',
+      controlHeight: 50
+    }
   }
 }
 

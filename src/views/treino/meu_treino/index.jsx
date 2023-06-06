@@ -1,8 +1,7 @@
-import { Col, Collapse, Row, Statistic, Tabs, Tag } from 'antd'
+import { Col, Collapse, Row, Statistic, Tabs, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay } from 'react-icons/lu'
 import InfoBox from '../components/InfoBox'
-import theme from '@/configs/theme'
 
 const { Panel } = Collapse
 
@@ -81,19 +80,8 @@ const items = [
   }
 ]
 
-const dates = (
-  <Row gutter={2}>
-    <Tag color={theme.token.colorPrimary} className="m-0">
-      31 MAI 2023
-    </Tag>
-    <ArrowRightOutlined />
-    <Tag color={theme.token.colorPrimary} className="m-0">
-      08 JUN 2023
-    </Tag>
-  </Row>
-)
-
 export default function MeuTreinoView() {
+  const { token } = theme.useToken()
   return (
     <>
       <Row gutter={8}>
@@ -110,7 +98,24 @@ export default function MeuTreinoView() {
           <InfoBox icon={<LuAirplay />} title="RECUPERAÇÃO 1 MIN" />
         </Col>
       </Row>
-      <Tabs defaultActiveKey="1" items={items} size="small" tabBarExtraContent={{ right: dates }} />
+      <Tabs
+        defaultActiveKey="1"
+        items={items}
+        size="small"
+        tabBarExtraContent={{
+          right: (
+            <Row gutter={2}>
+              <Tag color={token.colorPrimary} className="m-0">
+                31 MAI 2023
+              </Tag>
+              <ArrowRightOutlined />
+              <Tag color={token.colorPrimary} className="m-0">
+                08 JUN 2023
+              </Tag>
+            </Row>
+          )
+        }}
+      />
     </>
   )
 }

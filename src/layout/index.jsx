@@ -6,25 +6,32 @@ import Login from '@/views/login'
 import Header from './Header'
 import routes from '@/constants/routes'
 import utils from '@/utils'
+import theme from '@/configs/theme'
 
 const { Footer, Content } = AntLayout
 const { Title } = Typography
 
 export default function Layout({ children }) {
-  const { isAuthenticated } = useSelector(state => state.global)
+  const { isAuthenticated, themeMode } = useSelector(state => state.global)
   const pathname = usePathname()
-  return !isAuthenticated ? (
-    <AntLayout className="app">
-      <Header />
-      <Content>
-        <Title level={3}>{utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}</Title>
-        {children}
-      </Content>
-      <Affix offsetBottom={12}>
-        <Navigation data={routes} />
-      </Affix>
-    </AntLayout>
-  ) : (
-    <Login />
+  return (
+    <ConfigProvider theme={theme[themeMode]}>
+      {isAuthenticated ? (
+        <AntLayout className="app">
+          <Header />
+          <Content>
+            <Title level={3}>
+              {utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
+            </Title>
+            {children}
+          </Content>
+          <Affix offsetBottom={12}>
+            <Navigation data={routes} />
+          </Affix>
+        </AntLayout>
+      ) : (
+        <Login />
+      )}
+    </ConfigProvider>
   )
 }
