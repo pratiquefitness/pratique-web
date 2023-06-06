@@ -18,7 +18,7 @@ body {
   overflow-x: hidden;
 }
 body .ant-layout:first-child {
-  min-height: 100vh;
+  height: 100vh;
 }
 body .ant-layout-header {
   height: 50px;
