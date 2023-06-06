@@ -105,11 +105,11 @@ export default function MeuTreinoView() {
         tabBarExtraContent={{
           right: (
             <Row gutter={2}>
-              <Tag color={token.colorPrimary} className="m-0">
+              <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
                 31 MAI 2023
               </Tag>
               <ArrowRightOutlined />
-              <Tag color={token.colorPrimary} className="m-0">
+              <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
                 08 JUN 2023
               </Tag>
             </Row>
