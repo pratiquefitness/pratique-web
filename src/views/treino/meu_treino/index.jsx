@@ -1,14 +1,8 @@
 import { Col, Collapse, Row, Statistic, Tabs, Tag } from 'antd'
-import {
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  CloseCircleOutlined,
-  ExclamationCircleOutlined,
-  MinusCircleOutlined,
-  SyncOutlined
-} from '@ant-design/icons'
+import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay } from 'react-icons/lu'
 import InfoBox from '../components/InfoBox'
+import theme from '@/configs/theme'
 
 const { Panel } = Collapse
 
@@ -89,8 +83,13 @@ const items = [
 
 const dates = (
   <Row gutter={2}>
-    <Tag color="default">31 MAI 2023</Tag>
-    <Tag color="default">08 JUN 2023</Tag>
+    <Tag color={theme.token.colorPrimary} className="m-0">
+      31 MAI 2023
+    </Tag>
+    <ArrowRightOutlined />
+    <Tag color={theme.token.colorPrimary} className="m-0">
+      08 JUN 2023
+    </Tag>
   </Row>
 )
 

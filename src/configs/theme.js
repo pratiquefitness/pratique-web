@@ -4,7 +4,7 @@ const theme = {
   algorithm: antheme.darkAlgorithm,
   token: {
     colorPrimary: '#ed143d', //PRIME
-    //colorPrimary: '#475621', //NUTRI
+    //colorPrimary: '#acc571', //NUTRI
     //colorPrimary: '#A2722A', //PRIME
     controlHeight: 50
   }
