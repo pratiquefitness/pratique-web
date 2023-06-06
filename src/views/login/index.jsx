@@ -1,13 +1,16 @@
 import { Button, Checkbox, Form, Input } from 'antd'
-import './style.css'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux'
+import { setIsAuthenticated, setThemeMode } from '@/redux/slices/global'
 
-export default function Login() {
+export default function LoginView() {
+  const dispath = useDispatch()
   const router = useRouter()
 
   const onFinish = values => {
-    console.log('Success:', values)
+    dispath(setIsAuthenticated(true))
+    dispath(setThemeMode(values.username))
   }
 
   const onFinishFailed = errorInfo => {
@@ -40,7 +43,7 @@ export default function Login() {
           </Form.Item> */}
 
           <Form.Item>
-            <Button type="primary" onClick={() => router.push('/treino')} block>
+            <Button type="primary" htmlType="submit" block>
               Entrar
             </Button>
           </Form.Item>

@@ -18,6 +18,9 @@ body {
   overflow-x: hidden;
   height: 100%;
 }
+body #__next {
+  height: 100%;
+}
 body .ant-layout:first-child {
   height: 100%;
 }
@@ -31,4 +34,130 @@ body .ant-layout-content {
 }
 body .ant-layout-footer {
   padding: 10px 0px;
+}
+.header-logo {
+  padding: 9px;
+}
+.navigation {
+  margin: auto;
+  position: relative;
+  width: 350px;
+  height: 70px;
+  border-radius: 40px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+}
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 70px;
+  height: 70px;
+  z-index: 1;
+}
+.navigation ul li a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: var(--color-white);
+  font-weight: 500;
+}
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  line-height: 78px;
+  text-align: center;
+  transition: 0.5s;
+  font-size: 20px;
+}
+.navigation ul li.active a .icon {
+  color: var(--color-primary);
+}
+.navigation ul li a .icon i {
+  font-size: 20px;
+}
+.navigation ul .indicator {
+  position: absolute;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  transition: all 0.5s;
+}
+.navigation ul .indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+.navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(70px * 0));
+}
+.navigation ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(70px * 1));
+}
+.navigation ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(70px * 2));
+}
+.navigation ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(70px * 3));
+}
+.navigation ul li:nth-child(5).active ~ .indicator {
+  transform: translateX(calc(70px * 4));
+}
+.navigation ul li.active ~ .indicator::before {
+  background-color: var(--color-white);
+}
+.login-background {
+  position: relative;
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+  /* background-image: url(https://media.istockphoto.com/id/902863026/photo/texture-of-treadmill-background.jpg?s=612x612&w=0&k=20&c=o8FG5M633jD4M2dGhkFnBzVOFU6NQeaHzyEZU6aemWg=);
+  background-repeat: no-repeat;
+  background-size: cover; */
+  height: 100vh;
+}
+
+.box-login {
+  position: absolute;
+  width: 100%;
+  padding: 0px 24px 20px 24px;
+  bottom: 0;
+}
+
+.login .ant-input,
+.login .ant-input-password {
+  background-color: #0f0f0f;
+  border: 1px solid #494949;
+  color: #b8b8b8;
+}
+
+.login .ant-input-password .anticon {
+  color: #b8b8b8;
+}
+
+.login .ant-input-password .anticon:hover {
+  color: #fff;
+}
+
+.login .ant-input::placeholder {
+  color: #b8b8b8;
+}
+
+.login .logo {
+  margin: auto;
+  text-align: center;
+  padding: 24px 0px;
 }

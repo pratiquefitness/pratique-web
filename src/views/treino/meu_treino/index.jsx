@@ -1,7 +1,6 @@
-'use client'
 import { Col, Collapse, Row } from 'antd'
-import InfoBox from './InfoBox'
 import { LuAirplay } from 'react-icons/lu'
+import InfoBox from '../components/InfoBox'
 
 const { Panel } = Collapse
 
@@ -11,7 +10,7 @@ const text = `
   it can be found as a welcome guest in many households across the world.
 `
 
-export default function Treino() {
+export default function MeuTreinoView() {
   return (
     <>
       <Row gutter={8}>

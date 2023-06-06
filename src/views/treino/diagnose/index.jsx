@@ -1,4 +1,3 @@
-'use client'
 import { Table, Tag } from 'antd'
 
 const dataSource = [
@@ -42,6 +41,6 @@ const columns = [
   }
 ]
 
-export default function Page() {
+export default function DiagnoseView() {
   return <Table dataSource={dataSource} columns={columns} pagination={false} />
 }

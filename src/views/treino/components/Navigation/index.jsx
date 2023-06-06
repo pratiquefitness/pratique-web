@@ -1,4 +1,3 @@
-'use client'
 import { Button, Col, Row } from 'antd'
 import { usePathname, useRouter } from 'next/navigation'
 import { LuUserCheck } from 'react-icons/lu'

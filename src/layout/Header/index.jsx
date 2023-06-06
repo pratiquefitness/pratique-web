@@ -1,6 +1,5 @@
 import { Layout, theme } from 'antd'
 import Logo from '../Logo'
-import './style.css'
 
 const { Header: AntHeader } = Layout
 

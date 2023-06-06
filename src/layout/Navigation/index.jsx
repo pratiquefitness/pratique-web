@@ -1,7 +1,6 @@
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
 import utils from '@/utils'
-import './style.css'
 import { theme } from 'antd'
 
 export default function Navigation({ data }) {
