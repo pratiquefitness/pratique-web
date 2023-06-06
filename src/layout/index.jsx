@@ -15,7 +15,7 @@ export default function Layout({ children }) {
   const { isAuthenticated, themeMode } = useSelector(state => state.global)
   const pathname = usePathname()
   return (
-    <ConfigProvider theme={theme[themeMode]}>
+    <ConfigProvider theme={theme[themeMode] || theme.red}>
       {isAuthenticated ? (
         <AntLayout className="app">
           <Header />
