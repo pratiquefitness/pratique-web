@@ -1,4 +1,4 @@
-import { Layout as AntLayout, ConfigProvider, Typography } from 'antd'
+import { Affix, Layout as AntLayout, ConfigProvider, Typography } from 'antd'
 import { Provider as ReduxProvider, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
@@ -20,9 +20,9 @@ export default function Layout({ children }) {
         <Title level={3}>{utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}</Title>
         {children}
       </Content>
-      <Footer>
+      <Affix offsetBottom={12}>
         <Navigation data={routes} />
-      </Footer>
+      </Affix>
     </AntLayout>
   ) : (
     <Login />
