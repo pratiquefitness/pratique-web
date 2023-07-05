@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@internal/pratiquefunciona/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_pratiquefunciona")
+}
+
+model funcionarios {
+  id       Int     @id @default(autoincrement())
+  unidade  String? @db.VarChar(80)
+  nome     String  @db.VarChar(300)
+  email    String  @db.VarChar(150)
+  telefone String? @db.VarChar(30)
+  cpf      String  @db.VarChar(25)
+  cargo    String  @db.VarChar(100)
+}
+
+model ponto {
+  ponto_id          Int      @id @default(autoincrement())
+  ponto_funcionario String   @db.VarChar(15)
+  ponto_hora        DateTime @default(now()) @db.DateTime(0)
+  ponto_aparelho    String?  @db.VarChar(300)
+  ponto_unidade     String?  @db.VarChar(15)
+}

@@ -9,7 +9,7 @@ export default function LoginView() {
   const router = useRouter()
 
   const onFinish = values => {
-    dispath(setIsAuthenticated(true))
+    dispath(setIsAuthenticated(false))
     dispath(setThemeMode(values.username))
   }
 

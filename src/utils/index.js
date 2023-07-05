@@ -14,6 +14,10 @@ const utils = {
       return obj[key] === value
     })
     return result[0] || ''
+  },
+  clearDatabaseResult: data => {
+    const updatedData = JSON.stringify(data, (key, value) => (typeof value === 'bigint' ? value.toString() : value))
+    return JSON.parse(updatedData)
   }
 }
 
