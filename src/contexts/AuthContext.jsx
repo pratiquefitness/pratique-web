@@ -1,7 +1,7 @@
 import { createContext, useEffect } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { setLogin, unsetLogin, setLoading } from '@/redux/slices/login'
-import { signInRequest, signInVerify } from '@/redux/actions/login'
+import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
@@ -14,15 +14,15 @@ export function AuthProvider({ children }) {
   const router = useRouter()
 
   useEffect(() => {
-    //signOut()
     const { [tokenName]: token } = parseCookies()
     if (token) {
       dispatch(setLoading(true))
       //const login = await signInVerify(token)
-      const login = true
+      const login = JSON.parse(token)
+      console.log(login)
       if (login) {
-        const { usuario } = login
-        dispatch(setLogin(usuario))
+        dispatch(setLogin(login))
+        dispatch(setTheme(login.plano))
       } else {
         destroyCookie(undefined, tokenName)
         dispatch(setLoading(false))
@@ -35,13 +35,12 @@ export function AuthProvider({ children }) {
     const login = await signInRequest(email, senha)
 
     if (login?.ID) {
-      const token = login.ID
+      const token = JSON.stringify(login)
 
-      setCookie(undefined, tokenName, token, {
-        expires: new Date()
-      })
+      setCookie(undefined, tokenName, token)
 
       dispatch(setLogin(login))
+      dispatch(setTheme(login.plano))
 
       router.push('/')
       dispatch(setLoading(false))

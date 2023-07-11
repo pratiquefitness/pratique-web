@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   data: [],
-  loading: false
+  loading: true
 }
 
 export const treinoSlice = createSlice({

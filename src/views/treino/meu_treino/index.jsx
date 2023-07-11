@@ -65,13 +65,17 @@ export default function MeuTreinoView() {
       </Row>
       <Tabs
         defaultActiveKey="1"
-        items={data.treinos.map((treino, key) => {
-          return {
-            key,
-            label: treino.nome,
-            children: treinoA
-          }
-        })}
+        items={
+          !loading
+            ? data.treinos.map((treino, key) => {
+                return {
+                  key,
+                  label: treino.nome,
+                  children: treinoA
+                }
+              })
+            : []
+        }
         size="small"
         tabBarExtraContent={{
           right: (
