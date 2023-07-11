@@ -6,15 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npx prisma generate --schema prisma/pratiqueaulas.prisma && npx prisma generate --schema prisma/pratiquediagnose.prisma && npx prisma generate --schema prisma/pratiquefunciona.prisma && npx prisma generate --schema prisma/pratiquepro.prisma && npx prisma generate --schema prisma/pratiqueuser.prisma"
   },
-  "postinstall": [
-    "npx prisma generate --schema prisma/pratiqueaulas.prisma",
-    "npx prisma generate --schema prisma/pratiquediagnose.prisma",
-    "npx prisma generate --schema prisma/pratiquefunciona.prisma",
-    "npx prisma generate --schema prisma/pratiquepro.prisma",
-    "npx prisma generate --schema prisma/pratiqueuser.prisma"
-  ],
   "dependencies": {
     "@prisma/client": "4.15.0",
     "@reduxjs/toolkit": "^1.9.5",
