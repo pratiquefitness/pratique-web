@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@internal/pratiquediagnose/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_pratiquediagnose")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model totem {
+  diagnose_id           Int
+  diagnose_nome         String  @db.VarChar(255)
+  diagnose_email        String  @db.VarChar(255)
+  diagnose_sexo         String? @db.VarChar(20)
+  diagnose_telefone     String  @db.VarChar(20)
+  diagnose_resposta     String? @db.LongText
+  diagnose_produto      String? @db.VarChar(255)
+  diagnose_peso         String  @db.VarChar(50)
+  diagnose_subproduto   String? @db.VarChar(255)
+  diagnose_nivel        String? @db.VarChar(50)
+  diagnose_recomendacao String? @db.VarChar(255)
+  diagnose_dores        String? @db.VarChar(255)
+  diagnose_data         String? @db.VarChar(80)
+  diagnose_semana       String? @db.VarChar(3)
+  diagnose_modalidade   String? @db.VarChar(30)
+
+  @@ignore
+}
+
+model totem_respostas {
+  diagnose_id           Int       @id @default(autoincrement())
+  diagnose_nome         String    @db.VarChar(255)
+  diagnose_email        String    @db.VarChar(255)
+  diagnose_sexo         String    @db.VarChar(10)
+  diagnose_telefone     String    @db.VarChar(20)
+  diagnose_resposta     String    @db.LongText
+  diagnose_produto      String    @db.VarChar(255)
+  diagnose_peso         String    @db.VarChar(5)
+  diagnose_subproduto   String    @db.VarChar(255)
+  diagnose_nivel        String    @db.VarChar(50)
+  diagnose_recomendacao String    @db.VarChar(255)
+  diagnose_dores        String    @db.VarChar(255)
+  diagnose_data         DateTime? @default(now()) @db.DateTime(0)
+}
+
+model windows {
+  diagnose_id           Int     @id @default(autoincrement())
+  diagnose_nome         String  @db.VarChar(255)
+  diagnose_email        String  @db.VarChar(255)
+  diagnose_sexo         String? @db.VarChar(20)
+  diagnose_telefone     String  @db.VarChar(20)
+  diagnose_resposta     String? @db.LongText
+  diagnose_produto      String? @db.VarChar(255)
+  diagnose_peso         String  @db.VarChar(50)
+  diagnose_subproduto   String? @db.VarChar(255)
+  diagnose_nivel        String? @db.VarChar(50)
+  diagnose_recomendacao String? @db.VarChar(255)
+  diagnose_dores        String? @db.VarChar(255)
+  diagnose_data         String? @db.VarChar(80)
+  diagnose_semana       String? @db.VarChar(3)
+  diagnose_modalidade   String? @db.VarChar(30)
+}

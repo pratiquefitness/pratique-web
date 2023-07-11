@@ -1,7 +1,11 @@
-import { Col, Collapse, Row, Statistic, Tabs, Tag, theme } from 'antd'
+import { Col, Collapse, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay } from 'react-icons/lu'
 import InfoBox from '../components/InfoBox'
+import Loading from '@/components/Loading'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getTreino } from '@/redux/actions/treino'
 
 const { Panel } = Collapse
 
@@ -34,59 +38,20 @@ const treinoA = (
   </Collapse>
 )
 
-const treinoB = (
-  <Collapse className="collapse-treino">
-    <Panel header="PULLEY COSTA PRONADA ABERTA - AVA" key="1">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="REMADA ARTICULADA PRONADA ABERTA - INT" key="2">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="SUPINO BANCO 45 COM BARRA - INT" key="3">
-      <p>{text}</p>
-    </Panel>
-  </Collapse>
-)
-
-const treinoC = (
-  <Collapse className="collapse-treino">
-    <Panel header="SUPINO RETO COM HALTERES - INT" key="1">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="TRICEPS TESTA COM BARRA PRONADA" key="2">
-      <p>{text}</p>
-    </Panel>
-    <Panel header="ELEVACAO LATERAL NO CROSS OVER - AVA" key="3">
-      <p>{text}</p>
-    </Panel>
-  </Collapse>
-)
-
-const items = [
-  {
-    key: '1',
-    label: 'Treino A',
-    children: treinoA
-  },
-  {
-    key: '2',
-    label: 'Treino B',
-    children: treinoB
-  },
-  {
-    key: '3',
-    label: 'Treino C',
-    children: treinoC
-  }
-]
-
 export default function MeuTreinoView() {
+  const dispatch = useDispatch()
+  const { data, loading } = useSelector(state => state.treino)
   const { token } = theme.useToken()
+
+  useEffect(() => {
+    dispatch(getTreino())
+  }, [])
+
   return (
-    <>
+    <Loading spinning={loading}>
       <Row gutter={8}>
         <Col span={6}>
-          <InfoBox icon={<LuAirplay />} title="HIPERTROFIA NÍVEL 2" />
+          <InfoBox icon={<LuAirplay />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
         </Col>
         <Col span={6}>
           <InfoBox icon={<LuAirplay />} title="3 SÉRIES" />
@@ -100,7 +65,13 @@ export default function MeuTreinoView() {
       </Row>
       <Tabs
         defaultActiveKey="1"
-        items={items}
+        items={data.treinos.map((treino, key) => {
+          return {
+            key,
+            label: treino.nome,
+            children: treinoA
+          }
+        })}
         size="small"
         tabBarExtraContent={{
           right: (
@@ -116,6 +87,6 @@ export default function MeuTreinoView() {
           )
         }}
       />
-    </>
+    </Loading>
   )
 }

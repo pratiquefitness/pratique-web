@@ -1,16 +1,23 @@
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input, message } from 'antd'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsAuthenticated, setThemeMode } from '@/redux/slices/global'
+import { useContext } from 'react'
+import { AuthContext } from '@/contexts/AuthContext'
 
 export default function LoginView() {
+  const { loading } = useSelector(state => state.login)
+  const { signIn } = useContext(AuthContext)
   const dispath = useDispatch()
   const router = useRouter()
 
-  const onFinish = values => {
-    dispath(setIsAuthenticated(false))
-    dispath(setThemeMode(values.username))
+  const onFinish = async values => {
+    const login = await signIn(values)
+    if (!login) {
+      message.error('Usuário ou senha invalidos!')
+    }
+    //dispath(setThemeMode(values.username))
   }
 
   const onFinishFailed = errorInfo => {
@@ -30,11 +37,11 @@ export default function LoginView() {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item name="username" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item name="email" rules={[{ required: true, message: 'Please input your username!' }]}>
             <Input placeholder="E-mail" />
           </Form.Item>
 
-          <Form.Item name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+          <Form.Item name="senha" rules={[{ required: true, message: 'Please input your password!' }]}>
             <Input.Password placeholder="Senha" />
           </Form.Item>
 
@@ -43,7 +50,7 @@ export default function LoginView() {
           </Form.Item> */}
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" loading={loading} block>
               Entrar
             </Button>
           </Form.Item>

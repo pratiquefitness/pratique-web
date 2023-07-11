@@ -2,9 +2,13 @@ import { apiPratiqueFunciona, apiPratiquePro, apiPratiqueUser } from '@/services
 import utils from '@/utils'
 
 export default async function handler(req, res) {
-  let user = {}
-  const email = 'adelmodesign@gmail.com' // nao afiliado
+  //const email = 'adelmodesign@gmail.com' // nao afiliado
   // const email = 'bruna.vn.costa@gmail.com' // afiliado
+
+  const { email, senha } = req.body
+
+  let user = {}
+
   const usuarioExist = await apiPratiqueUser.wp_users.findMany({
     where: {
       user_login: email

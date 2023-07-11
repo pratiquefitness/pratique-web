@@ -1,6 +1,7 @@
-import apiPratiqueAulas from './api/pratiqueaulas'
-import apiPratiqueFunciona from './api/pratiquefunciona'
-import apiPratiqueUser from './api/pratiqueuser'
-import apiPratiquePro from './api/pratiquepro'
+import apiPratiqueAulas from './databases/pratiqueaulas'
+import apiPratiqueFunciona from './databases/pratiquefunciona'
+import apiPratiqueUser from './databases/pratiqueuser'
+import apiPratiquePro from './databases/pratiquepro'
+import apiPratiqueDiagnose from './databases/pratiquediagnose'
 
-export { apiPratiqueAulas, apiPratiqueFunciona, apiPratiqueUser, apiPratiquePro }
+export { apiPratiqueAulas, apiPratiqueFunciona, apiPratiqueUser, apiPratiquePro, apiPratiqueDiagnose }

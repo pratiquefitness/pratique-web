@@ -8,15 +8,16 @@ import routes from '@/constants/routes'
 import utils from '@/utils'
 import theme from '@/configs/theme'
 
-const { Footer, Content } = AntLayout
+const { Content } = AntLayout
 const { Title } = Typography
 
 export default function Layout({ children }) {
-  const { isAuthenticated, themeMode } = useSelector(state => state.global)
+  const { themeMode } = useSelector(state => state.global)
+  const { authenticated } = useSelector(state => state.login)
   const pathname = usePathname()
   return (
     <ConfigProvider theme={theme[themeMode] || theme.red}>
-      {isAuthenticated ? (
+      {authenticated ? (
         <AntLayout className="app">
           <Header />
           <Content>
