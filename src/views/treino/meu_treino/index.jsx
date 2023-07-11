@@ -9,6 +9,11 @@ import { getTreino } from '@/redux/actions/treino'
 
 const { Panel } = Collapse
 
+function convertToEmbedUrl(url) {
+  const videoId = url.split('/').pop()
+  return `https://www.youtube.com/embed/${videoId}`
+}
+
 const text = (
   <>
     <iframe
@@ -71,7 +76,27 @@ export default function MeuTreinoView() {
                 return {
                   key,
                   label: treino.nome,
-                  children: treinoA
+                  children: (
+                    <Collapse className="collapse-treino">
+                      {treino.videos.map((video, key) => (
+                        <Panel header={video.exercicio_nome} key={key}>
+                          <p>
+                            <iframe
+                              width="100%"
+                              height="200px"
+                              src={`${convertToEmbedUrl(
+                                video.exercicio_url
+                              )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen=""
+                            ></iframe>
+                            {video.exercicio_descricao}
+                          </p>
+                        </Panel>
+                      ))}
+                    </Collapse>
+                  )
                 }
               })
             : []

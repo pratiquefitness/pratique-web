@@ -1,7 +1,7 @@
 import { objectives } from '@/constants'
-import { apiPratiqueFunciona, apiPratiquePro, apiPratiqueUser } from '@/services'
+import { apiPratiquePro, apiPratiqueUser } from '@/services'
 import utils from '@/utils'
-import { getDay, getMonth } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 
 export default async function handler(req, res) {
   let user = {}
@@ -29,15 +29,32 @@ export default async function handler(req, res) {
     if (fichasExist.length) {
       user.ficha = fichasExist[0]
 
-      user.treinos = fichasExist.map((ficha, key) => {
-        return { nome: `Treino ${String.fromCharCode(65 + key)}`, ...ficha }
-      })
+      user.treinos = await Promise.all(
+        fichasExist.map(async (ficha, key) => {
+          const videos = await apiPratiquePro.exercicio.findMany({
+            where: {
+              exercicio_id: {
+                in: ficha.videos
+                  .split(',')
+                  .filter(n => n)
+                  .map(n => parseInt(n))
+              }
+            }
+          })
+          return { nome: `Treino ${String.fromCharCode(65 + key)}`, ...ficha, videos }
+        })
+      )
 
-      const data_comeco = String(user.ficha.data_comeco).split('-')
+      const data_comeco = user.ficha.data_comeco
+      const data_final = user.ficha.data_final
 
-      user.ano_inicio = getMonth(data_comeco[0])
-      user.mes_inicio = getMonth(data_comeco[1])
-      user.dia_inicio = getDay(data_comeco[2])
+      user.ano_inicio = format(data_comeco, 'yyyy')
+      user.mes_inicio = format(data_comeco, 'MM')
+      user.dia_inicio = format(data_comeco, 'dd')
+
+      user.ano_final = format(data_final, 'yyyy')
+      user.mes_final = format(data_final, 'MM')
+      user.dia_final = format(data_final, 'dd')
 
       const configExist = await apiPratiquePro.ficha_pre.findMany({
         where: {

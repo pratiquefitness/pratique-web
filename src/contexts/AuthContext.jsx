@@ -1,11 +1,10 @@
 import { createContext, useEffect } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { setLogin, unsetLogin, setLoading } from '@/redux/slices/login'
-import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
+import { setTheme, signInRequest } from '@/redux/actions/login'
+import { tokenName } from '@/configs/global'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-
-export const tokenName = 'pratiqueemcasa.token'
 
 export const AuthContext = createContext({})
 
@@ -14,20 +13,7 @@ export function AuthProvider({ children }) {
   const router = useRouter()
 
   useEffect(() => {
-    const { [tokenName]: token } = parseCookies()
-    if (token) {
-      dispatch(setLoading(true))
-      //const login = await signInVerify(token)
-      const login = JSON.parse(token)
-      console.log(login)
-      if (login) {
-        dispatch(setLogin(login))
-        dispatch(setTheme(login.plano))
-      } else {
-        destroyCookie(undefined, tokenName)
-        dispatch(setLoading(false))
-      }
-    }
+    checkCookie()
   }, [])
 
   async function signIn({ email, senha }) {
@@ -48,6 +34,23 @@ export function AuthProvider({ children }) {
     } else {
       dispatch(setLoading(false))
       return false
+    }
+  }
+
+  function checkCookie() {
+    const { [tokenName]: token } = parseCookies()
+    if (token) {
+      dispatch(setLoading(true))
+      //const login = await signInVerify(token)
+      const login = JSON.parse(token)
+      console.log(login)
+      if (login) {
+        dispatch(setLogin(login))
+        dispatch(setTheme(login.plano))
+      } else {
+        destroyCookie(undefined, tokenName)
+        dispatch(setLoading(false))
+      }
     }
   }
 
