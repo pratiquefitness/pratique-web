@@ -1,4 +1,4 @@
-import { PrismaClient as PratiquePro } from '../../../node_modules/@internal/pratiquepro/client'
+import { PrismaClient as PratiquePro } from '@internal/pratiquepro/client'
 
 const globalForPrisma = global
 
