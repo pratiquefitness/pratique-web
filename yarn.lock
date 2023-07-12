@@ -229,6 +229,11 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.15.0.tgz#d8687a9fda615fab88b75b466931280289de9e26"
   integrity sha512-FTaOCGs0LL0OW68juZlGxFtYviZa4xdQj/rQEdat2txw0s3Vu/saAPKjNVXfIgUsGXmQ72HPgNr6935/P8FNAA==
 
+"@prisma/nextjs-monorepo-workaround-plugin@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@prisma/nextjs-monorepo-workaround-plugin/-/nextjs-monorepo-workaround-plugin-5.0.0.tgz#3dbb1e2ea4b7c31cdc65c175965d70089065be54"
+  integrity sha512-9iPBVd2Mz29QzJccyLJforZb/oWCLAS/5Ky6ZVtV5iST/kcDdCL+R+fllzNBltwywPrNwGorUx4C8Ps6WFZaiA==
+
 "@rc-component/color-picker@~1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@rc-component/color-picker/-/color-picker-1.2.0.tgz#964c86e85f0791703c7f1ec842e7476bcb41954d"
