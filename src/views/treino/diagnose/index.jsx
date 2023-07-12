@@ -1,4 +1,8 @@
+import Loading from '@/components/Loading'
+import { getDiagnose } from '@/redux/actions/diagnose'
 import { Table, Tag } from 'antd'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const dataSource = [
   {
@@ -18,19 +22,19 @@ const dataSource = [
 const columns = [
   {
     title: 'Data',
-    dataIndex: 'data',
-    key: 'data'
+    dataIndex: 'diagnose_data',
+    key: 'diagnose_data'
   },
   {
     title: 'Método',
-    dataIndex: 'metodo',
-    key: 'metodo',
+    dataIndex: 'diagnose_produto',
+    key: 'diagnose_produto',
     render: text => <Tag>{text}</Tag>
   },
   {
     title: 'Tratamento',
-    dataIndex: 'tratamento',
-    key: 'tratamento',
+    dataIndex: 'diagnose_subproduto',
+    key: 'diagnose_subproduto',
     render: text => <Tag>{text}</Tag>
   },
   {
@@ -42,5 +46,16 @@ const columns = [
 ]
 
 export default function DiagnoseView() {
-  return <Table dataSource={dataSource} columns={columns} pagination={false} />
+  const dispatch = useDispatch()
+  const { data, loading } = useSelector(state => state.diagnose)
+
+  useEffect(() => {
+    dispatch(getDiagnose())
+  }, [])
+
+  return (
+    <Loading spinning={loading}>
+      <Table dataSource={data} columns={columns} pagination={false} />
+    </Loading>
+  )
 }

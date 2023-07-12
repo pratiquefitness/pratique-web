@@ -37,11 +37,11 @@ export default function LoginView() {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item name="email" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item name="email" rules={[{ required: true, message: 'Preencha seu e-mail...' }]}>
             <Input placeholder="E-mail" />
           </Form.Item>
 
-          <Form.Item name="senha" rules={[{ required: true, message: 'Please input your password!' }]}>
+          <Form.Item name="senha" rules={[{ required: true, message: 'Preencha sua senha...' }]}>
             <Input.Password placeholder="Senha" />
           </Form.Item>
 

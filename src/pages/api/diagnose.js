@@ -1,7 +1,8 @@
 import { apiPratiqueDiagnose } from '@/services'
 
 export default async function handler(req, res) {
-  const email = 'adelmodesign@gmail.com'
+  const { email } = req.body
+  //const email = 'adelmodesign@gmail.com'
   const data = await apiPratiqueDiagnose.windows.findMany({
     where: {
       diagnose_email: email

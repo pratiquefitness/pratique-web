@@ -1,5 +1,10 @@
 const months = [
   {
+    key: 0,
+    name: '',
+    nameMin: ''
+  },
+  {
     key: 1,
     name: 'Janeiro',
     nameMin: 'Jan'

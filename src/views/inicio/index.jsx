@@ -1,5 +1,6 @@
-import { Carousel, Col, Row, Typography, theme } from 'antd'
+import { Carousel, Col, Modal, Row, Typography, theme } from 'antd'
 import Image from 'next/image'
+import { useState } from 'react'
 
 const contentStyle = {
   margin: 5,
@@ -26,9 +27,13 @@ const settings = {
 const { Title, Text } = Typography
 
 export default function InicioView() {
+  const [horariosModal, setHorariosModal] = useState(false)
   const { token } = theme.useToken()
   return (
     <>
+      <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
+        <iframe src="https://pratiquefitness.com.br/horarios/" frameborder="0" width={'100%'} height={500}></iframe>
+      </Modal>
       <Carousel {...settings}>
         <div>
           <h3 style={{ ...contentStyle, background: 'red' }}>1</h3>
@@ -78,12 +83,16 @@ export default function InicioView() {
       <Row gutter={6} className="mb-2 mt-2">
         <Col flex="auto">
           <div style={{ height: 100, position: 'relative' }}>
-            <Image src="/images/sac.png" fill />
+            <a href="https://api.whatsapp.com/send?phone=553141411962&text=Estou%20no%20site%20e%20tenho%20d%C3%BAvidas">
+              <Image src="/images/sac.png" fill />
+            </a>
           </div>
         </Col>
         <Col flex="auto">
           <div style={{ height: 100, position: 'relative' }}>
-            <Image src="/images/horarios.png" fill />
+            <a onClick={() => setHorariosModal(true)}>
+              <Image src="/images/horarios.png" fill />
+            </a>
           </div>
         </Col>
       </Row>
