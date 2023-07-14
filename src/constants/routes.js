@@ -4,27 +4,52 @@ const routes = [
   {
     title: 'Início',
     icon: <LuHome />,
-    href: '/'
+    href: '/',
+    showInNavigation: true
   },
   {
     title: 'Treino',
     icon: <LuDumbbell />,
-    href: '/treino'
+    href: '/treino',
+    showInNavigation: true
   },
   {
     title: 'Bike',
     icon: <LuBike />,
-    href: '/bike'
+    href: '/bike',
+    showInNavigation: true
   },
   {
     title: 'Instruções',
     icon: <LuHelpCircle />,
-    href: '/instrucoes'
+    href: '/instrucoes',
+    showInNavigation: true
   },
   {
     title: 'Conta',
     icon: <LuUser />,
-    href: '/conta'
+    href: '/conta',
+    showInNavigation: true
+  },
+  {
+    title: 'Meditacao',
+    href: '/meditacao',
+    showInNavigation: false
+  },
+  {
+    title: 'Aulas Coletivas',
+    href: '/aulas_coletivas',
+    showInNavigation: false
+  },
+  {
+    title: 'Canal da Equipe',
+    href: '/canal_equipe',
+    showInNavigation: false
+  },
+  {
+    title: 'Jump',
+    href: '/jump',
+    showInNavigation: false
   }
 ]
 

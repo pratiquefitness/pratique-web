@@ -2,6 +2,7 @@ import { months } from '@/constants'
 
 const utils = {
   getFirstLevelRoute: path => {
+    if (path === null) return '/'
     const segments = path.split('/').filter(function (segment) {
       return segment !== ''
     })

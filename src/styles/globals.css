@@ -41,13 +41,13 @@ body .ant-layout-footer {
 
 .header-button {
   border-radius: 0;
-  font-size: 24px;
-  min-width: 50px;
   height: 50px;
-  padding: 8px;
+  display: inline-flex;
+  align-items: center;
 }
-.header-button:hover {
-  background: none !important;
+
+.header-button .ant-btn-icon {
+  font-size: 22px;
 }
 
 .navigation {

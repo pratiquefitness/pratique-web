@@ -1,4 +1,4 @@
-import { Col, Collapse, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
+import { Button, Col, Collapse, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay } from 'react-icons/lu'
 import InfoBox from '../components/InfoBox'
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getTreino } from '@/redux/actions/treino'
 import utils from '@/utils'
+import { FaWhatsapp } from 'react-icons/fa'
 
 const { Panel } = Collapse
 
@@ -22,6 +23,11 @@ export default function MeuTreinoView() {
   return (
     <Loading spinning={loading}>
       <Row gutter={8}>
+        <Col span={24} className="mb-2">
+          <Button icon={<FaWhatsapp />} block>
+            Fale com o professor
+          </Button>
+        </Col>
         <Col span={6}>
           <InfoBox icon={<LuAirplay />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
         </Col>

@@ -3,11 +3,11 @@ import { apiPratiqueAulas } from '@/services'
 
 export default async function handler(req, res) {
   const data = await apiPratiqueAulas.lives.findMany({
-    // where: {
-    //   live_datapublicacao: {
-    //     lte: format(toDate(new Date()), 'yyyy-MM-dd')
-    //   }
-    // },
+    where: {
+      live_datapublicacao: {
+        lte: new Date()
+      }
+    },
     orderBy: {
       live_datapublicacao: 'asc'
     }

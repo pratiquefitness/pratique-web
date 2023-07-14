@@ -7,6 +7,7 @@ import Header from './Header'
 import routes from '@/constants/routes'
 import utils from '@/utils'
 import theme from '@/configs/theme'
+import ptBR from 'antd/locale/pt_BR'
 
 const { Content } = AntLayout
 const { Title } = Typography
@@ -16,7 +17,7 @@ export default function Layout({ children }) {
   const { authenticated } = useSelector(state => state.login)
   const pathname = usePathname()
   return (
-    <ConfigProvider theme={theme[themeMode] || theme.red}>
+    <ConfigProvider theme={theme[themeMode] || theme.red} locale={ptBR}>
       {authenticated ? (
         <AntLayout className="app">
           <Header />

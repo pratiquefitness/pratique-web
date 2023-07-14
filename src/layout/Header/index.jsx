@@ -1,11 +1,14 @@
-import { Button, Col, Dropdown, Layout, Row, theme } from 'antd'
+import { Button, Col, Dropdown, Layout, Row, Space, Typography, theme } from 'antd'
 import { FaSignOutAlt, FaUserCircle } from 'react-icons/fa'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext } from 'react'
 import Logo from '../Logo'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 const { Header: AntHeader } = Layout
+
+const { Title } = Typography
 
 const items = [
   {
@@ -23,6 +26,7 @@ const items = [
 export default function Header() {
   const router = useRouter()
   const { signOut } = useContext(AuthContext)
+  const { usuario } = useSelector(state => state.login)
   const { token } = theme.useToken()
 
   const onClick = ({ key }) => {
@@ -44,7 +48,12 @@ export default function Header() {
         </Col>
         <Col flex="auto" className="text-right">
           <Dropdown menu={{ items, onClick }} placement="bottomRight" overlayStyle={{ marginRight: 4, width: 150 }}>
-            <Button className="header-button" type="text" icon={<FaUserCircle />} />
+            <Button className="header-button" type="text">
+              <Space align="center">
+                {usuario.user_nicename.split('@')[0]}
+                <FaUserCircle size={24} style={{ marginBottom: -4 }} />
+              </Space>
+            </Button>
           </Dropdown>
         </Col>
       </Row>

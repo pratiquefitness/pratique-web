@@ -19,15 +19,18 @@ export default function Navigation({ data }) {
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
-        {data.map((item, key) => (
-          <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
-            <a href="#">
-              <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}>
-                {item.icon}
-              </span>
-            </a>
-          </li>
-        ))}
+        {data.map(
+          (item, key) =>
+            item.showInNavigation && (
+              <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
+                <a href="#">
+                  <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}>
+                    {item.icon}
+                  </span>
+                </a>
+              </li>
+            )
+        )}
         <div className="indicator"></div>
       </ul>
     </div>
