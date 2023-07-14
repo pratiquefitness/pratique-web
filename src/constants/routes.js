@@ -1,4 +1,5 @@
 import { LuHome, LuDumbbell, LuBike, LuHelpCircle, LuUser } from 'react-icons/lu'
+import { HiUserGroup } from 'react-icons/hi'
 
 const routes = [
   {
@@ -20,9 +21,9 @@ const routes = [
     showInNavigation: true
   },
   {
-    title: 'Instruções',
-    icon: <LuHelpCircle />,
-    href: '/instrucoes',
+    title: 'Afiliados',
+    icon: <HiUserGroup />,
+    href: '/afiliados',
     showInNavigation: true
   },
   {

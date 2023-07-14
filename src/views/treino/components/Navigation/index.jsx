@@ -30,12 +30,11 @@ export default function Navigation() {
           <Button
             type={item.href === pathname ? 'primary' : 'default'}
             onClick={() => router.push(item.href)}
-            style={{ height: 'auto' }}
+            style={{ height: 'auto', display: 'block' }}
             block
           >
-            {item.icon}
-            <br />
-            {item.title}
+            <div>{item.icon}</div>
+            <div>{item.title}</div>
           </Button>
         </Col>
       ))}
