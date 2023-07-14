@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     meditacoes.map(async item => {
       const aulas = await apiPratiqueAulas.meditacao.findMany({
         where: {
-          meditacao_categoria: item.id
+          meditacao_categoria: String(item.modalidademeditacao_id)
         }
       })
       return {

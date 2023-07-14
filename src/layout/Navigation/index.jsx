@@ -1,5 +1,5 @@
 import { useRouter, usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import utils from '@/utils'
 import { theme } from 'antd'
 
@@ -10,6 +10,10 @@ export default function Navigation({ data }) {
   const [selected, setSelected] = useState(
     utils.getByObjectKeyValue(data, 'href', utils.getFirstLevelRoute(pathname)).href
   )
+
+  useEffect(() => {
+    setSelected(utils.getFirstLevelRoute(pathname))
+  }, [pathname])
 
   const onNavigate = item => () => {
     setSelected(item.href)

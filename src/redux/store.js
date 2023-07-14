@@ -6,6 +6,7 @@ import treinoSlice from './slices/treino'
 import diagnoseSlice from './slices/diagnose'
 import meditacaoSlice from './slices/meditacao'
 import aulasColetivasSlice from './slices/aulasColetivas'
+import livesSlice from './slices/lives'
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ const store = configureStore({
     treino: treinoSlice.reducer,
     diagnose: diagnoseSlice.reducer,
     meditacao: meditacaoSlice.reducer,
-    aulasColetivas: aulasColetivasSlice.reducer
+    aulasColetivas: aulasColetivasSlice.reducer,
+    lives: livesSlice.reducer
   }
 })
 

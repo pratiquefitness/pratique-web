@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import Logo from '../Logo'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
 const { Header: AntHeader } = Layout
 
@@ -43,7 +44,9 @@ export default function Header() {
       <Row justify="flex-end">
         <Col flex="auto">
           <div className="header-logo">
-            <Logo type="min" />
+            <Link href="/">
+              <Logo type="min" />
+            </Link>
           </div>
         </Col>
         <Col flex="auto" className="text-right">

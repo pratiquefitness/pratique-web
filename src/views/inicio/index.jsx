@@ -2,6 +2,7 @@ import { Button, Carousel, Col, Modal, Row, Typography, theme } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const contentStyle = {
   margin: 5,
@@ -31,6 +32,7 @@ export default function InicioView() {
   const [horariosModal, setHorariosModal] = useState(false)
   const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [blogModal, setBlogModal] = useState(false)
+  const { usuario } = useSelector(state => state.login)
   const { token } = theme.useToken()
   return (
     <>
@@ -68,42 +70,47 @@ export default function InicioView() {
           <h3 style={{ ...contentStyle, background: 'gray' }}>4</h3>
         </div>
       </Carousel>
-      <Title level={4} className="m-0">
-        Area do Colaborador!
-      </Title>
-      <Text type="secondary">Beneficios e conteúdos para você</Text>
-      <Row gutter={6} className="mb-2 mt-2">
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <Link href="/canal_equipe">
-              <Image src="/images/canal_equipe.png" fill />
-            </Link>
-          </div>
-        </Col>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a href="https://metodologiapowergym.com.br/courses/">
-              <Image src="/images/unipower.png" fill />
-            </a>
-          </div>
-        </Col>
-      </Row>
-      <Row gutter={6} className="mb-2 mt-2">
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a href="https://www.clubecertosaude.com.br/saude/saversaude/">
-              <Image src="/images/saver_saude.png" fill />
-            </a>
-          </div>
-        </Col>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique">
-              <Image src="/images/saver_club.png" fill />
-            </a>
-          </div>
-        </Col>
-      </Row>
+      {usuario.isEmployee && (
+        <>
+          <Title level={4} className="m-0">
+            Area do Colaborador!
+          </Title>
+          <Text type="secondary">Beneficios e conteúdos para você</Text>
+          <Row gutter={6} className="mb-2 mt-2">
+            <Col flex="auto">
+              <div style={{ height: 150, position: 'relative' }}>
+                <Link href="/canal_equipe">
+                  <Image src="/images/canal_equipe.png" fill />
+                </Link>
+              </div>
+            </Col>
+            <Col flex="auto">
+              <div style={{ height: 150, position: 'relative' }}>
+                <a href="https://metodologiapowergym.com.br/courses/">
+                  <Image src="/images/unipower.png" fill />
+                </a>
+              </div>
+            </Col>
+          </Row>
+          <Row gutter={6} className="mb-2 mt-2">
+            <Col flex="auto">
+              <div style={{ height: 150, position: 'relative' }}>
+                <a href="https://www.clubecertosaude.com.br/saude/saversaude/">
+                  <Image src="/images/saver_saude.png" fill />
+                </a>
+              </div>
+            </Col>
+            <Col flex="auto">
+              <div style={{ height: 150, position: 'relative' }}>
+                <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique">
+                  <Image src="/images/saver_club.png" fill />
+                </a>
+              </div>
+            </Col>
+          </Row>
+        </>
+      )}
+
       <Title level={4} className="m-0">
         Você, Feliz e Saudável!
       </Title>

@@ -11,16 +11,6 @@ const items = [
     key: 'plano',
     label: `Plano`,
     children: `Content of Tab Pane 2`
-  },
-  {
-    key: 'pagamentos',
-    label: `Pagamentos`,
-    children: `Content of Tab Pane 3`
-  },
-  {
-    key: 'colaborador',
-    label: `Colaborador`,
-    children: `Content of Tab Pane 4`
   }
 ]
 

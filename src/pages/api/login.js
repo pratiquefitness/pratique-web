@@ -41,6 +41,7 @@ export default async function handler(req, res) {
     })
 
     user.isEmployee = funcionarioExists.length ? 1 : 0
+    user.cargo = funcionarioExists[0].cargo
 
     // pacto
     const pactoExist = await apiPratiquePro.matriz.findMany({

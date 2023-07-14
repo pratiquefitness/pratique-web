@@ -4,32 +4,32 @@ import { HiUserGroup } from 'react-icons/hi'
 const routes = [
   {
     title: 'Início',
-    icon: <LuHome />,
     href: '/',
+    icon: <LuHome />,
     showInNavigation: true
   },
   {
     title: 'Treino',
-    icon: <LuDumbbell />,
     href: '/treino',
+    icon: <LuDumbbell />,
     showInNavigation: true
   },
   {
     title: 'Bike',
-    icon: <LuBike />,
     href: '/bike',
+    icon: <LuBike />,
     showInNavigation: true
   },
   {
     title: 'Afiliados',
-    icon: <HiUserGroup />,
     href: '/afiliados',
+    icon: <HiUserGroup />,
     showInNavigation: true
   },
   {
-    title: 'Conta',
-    icon: <LuUser />,
+    title: 'Minha Conta',
     href: '/conta',
+    icon: <LuUser />,
     showInNavigation: true
   },
   {
