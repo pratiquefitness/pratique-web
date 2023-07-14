@@ -35,6 +35,14 @@ body .ant-layout-content {
 body .ant-layout-footer {
   padding: 10px 0px;
 }
+.ant-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ant-form-item-label label {
+  height: auto;
+}
 .header-logo {
   padding: 8px;
 }
