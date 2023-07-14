@@ -1,10 +1,13 @@
-import TreinoView from '@/views/treino'
-import ScannerView from '@/views/treino/scanner'
+import { Button } from 'antd'
+import { DownloadOutlined } from '@ant-design/icons'
+import TreinoLayout from '../_Layout'
 
-export default function Scanner() {
+export default function ScannerView() {
   return (
-    <TreinoView>
-      <ScannerView />
-    </TreinoView>
+    <TreinoLayout>
+      <Button shape="round" icon={<DownloadOutlined />} size="large" block>
+        Baixar Exame
+      </Button>
+    </TreinoLayout>
   )
 }

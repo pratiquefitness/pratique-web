@@ -1,5 +1,3 @@
-import BikeView from '@/views/bike'
-
 export default function Bike() {
-  return <BikeView />
+  return <div>Bike</div>
 }

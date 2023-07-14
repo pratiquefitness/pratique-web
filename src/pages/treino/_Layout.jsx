@@ -1,9 +1,9 @@
 import { Layout } from 'antd'
-import Navigation from './components/Navigation'
+import Navigation from './_Navigation'
 
 const { Content } = Layout
 
-export default function TreinoView({ children }) {
+export default function TreinoLayout({ children }) {
   return (
     <div>
       <Navigation />

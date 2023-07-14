@@ -2,12 +2,12 @@ import { Affix, Layout as AntLayout, ConfigProvider, Typography } from 'antd'
 import { Provider as ReduxProvider, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
-import Login from '@/views/login'
 import Header from './Header'
 import routes from '@/constants/routes'
 import utils from '@/utils'
 import theme from '@/configs/theme'
 import ptBR from 'antd/locale/pt_BR'
+import LoginView from '@/pages/login'
 
 const { Content } = AntLayout
 const { Title } = Typography
@@ -32,7 +32,7 @@ export default function Layout({ children }) {
           </Affix>
         </AntLayout>
       ) : (
-        <Login />
+        <LoginView />
       )}
     </ConfigProvider>
   )
