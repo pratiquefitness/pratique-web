@@ -1,4 +1,4 @@
-import { apiPratiqueFunciona, apiPratiquePro, apiPratiqueUser } from '@/services'
+import { apiPratiqueFunciona, apiPratiquePro } from '@/services'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   let user = {}
 
-  const usuarioExist = await apiPratiqueUser.wp_users.findMany({
+  const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
     where: {
       user_login: email
     }

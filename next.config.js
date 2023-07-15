@@ -5,9 +5,6 @@ const nextConfig = {
   images: {
     domains: ['img.youtube.com', 'pratiqueemcasa.com.br']
   },
-  experimental: {
-    outputFileTracingIgnores: ['**canvas**']
-  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()]

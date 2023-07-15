@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate --schema prisma/pratiqueaulas.prisma && prisma generate --schema prisma/pratiquediagnose.prisma && prisma generate --schema prisma/pratiquefunciona.prisma && prisma generate --schema prisma/pratiquepro.prisma && prisma generate --schema prisma/pratiqueuser.prisma && prisma generate --schema prisma/novopower.prisma"
+    "postinstall": "prisma generate --schema prisma/pratiqueaulas.prisma && prisma generate --schema prisma/pratiquediagnose.prisma && prisma generate --schema prisma/pratiquefunciona.prisma && prisma generate --schema prisma/pratiquepro.prisma && prisma generate --schema prisma/novopower.prisma"
   },
   "dependencies": {
     "@prisma/client": "4.15.0",

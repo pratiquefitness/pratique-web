@@ -1,5 +1,5 @@
 import { objectives } from '@/constants'
-import { apiPratiquePro, apiPratiqueUser } from '@/services'
+import { apiPratiquePro, apiPratiqueFunciona } from '@/services'
 import utils from '@/utils'
 import { format, parseISO } from 'date-fns'
 
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   let user = {}
   const email = 'adelmodesign@gmail.com' // nao afiliado
   // const email = 'bruna.vn.costa@gmail.com' // afiliado
-  const usuarioExist = await apiPratiqueUser.wp_users.findMany({
+  const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
     where: {
       user_email: email
     }

@@ -23,7 +23,7 @@ export default function Dados() {
         <Input />
       </Form.Item>
       <Form.Item label="Email" name="user_email">
-        <Input />
+        <Input disabled />
       </Form.Item>
       <Form.Item label="Senha" name="user_pass">
         <Input type="password" />
