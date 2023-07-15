@@ -15,7 +15,7 @@ const routes = [
     showInNavigation: true
   },
   {
-    title: 'Bike',
+    title: 'Power Cycle',
     href: '/bike',
     icon: <LuBike />,
     showInNavigation: true

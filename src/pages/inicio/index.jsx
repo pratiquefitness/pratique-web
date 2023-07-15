@@ -16,7 +16,7 @@ export default function Inicio() {
   return (
     <>
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
-        <iframe src="https://pratiquefitness.com.br/horarios/" frameborder="0" width={'100%'} height={500}></iframe>
+        <iframe src="http://pratiquefitness.com.br/horarios/" frameborder="0" width={'100%'} height={500}></iframe>
       </Modal>
       <Modal title="Blog" open={blogModal} footer={null} onCancel={() => setBlogModal(false)}>
         <iframe src="https://pratiquefitness.com.br/blog/" frameborder="0" width={'100%'} height={600}></iframe>
@@ -27,10 +27,10 @@ export default function Inicio() {
         footer={null}
         onCancel={() => setAulasColetivasModal(false)}
       >
-        <Link href="/jump">
+        <Link href="/aulas_coletivas/jump">
           <Button>Jump</Button>
         </Link>
-        <Link href="/yoga">
+        <Link href="/aulas_coletivas/yoga">
           <Button>Yoga</Button>
         </Link>
       </Modal>
@@ -88,7 +88,9 @@ export default function Inicio() {
       </Row>
       <Row gutter={6}>
         <Col span={12}>
-          <img src="/images/power.png" width="100%" />
+          <Link href="/bike">
+            <img src="/images/power.png" width="100%" />
+          </Link>
         </Col>
         <Col span={12}>
           <a onClick={() => setBlogModal(true)}>

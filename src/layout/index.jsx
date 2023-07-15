@@ -1,4 +1,4 @@
-import { Affix, Layout as AntLayout, ConfigProvider, Typography } from 'antd'
+import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography } from 'antd'
 import { Provider as ReduxProvider, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
@@ -8,11 +8,15 @@ import utils from '@/utils'
 import theme from '@/configs/theme'
 import ptBR from 'antd/locale/pt_BR'
 import LoginView from '@/pages/login'
+import { FaArrowLeft } from 'react-icons/fa'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const { Content } = AntLayout
 const { Title } = Typography
 
 export default function Layout({ children }) {
+  const router = useRouter()
   const { themeMode } = useSelector(state => state.global)
   const { authenticated } = useSelector(state => state.login)
   const pathname = usePathname()
@@ -22,9 +26,16 @@ export default function Layout({ children }) {
         <AntLayout className="app">
           <Header />
           <Content>
-            <Title level={3}>
-              {utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
-            </Title>
+            <div className="d-flex justify-space-between">
+              <Title level={3}>
+                {utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
+              </Title>
+              {pathname !== '/' && (
+                <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
+                  Voltar
+                </Button>
+              )}
+            </div>
             {children}
           </Content>
           <Affix offsetBottom={12}>
