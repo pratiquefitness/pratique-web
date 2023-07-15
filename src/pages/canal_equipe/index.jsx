@@ -16,9 +16,14 @@ export default function CanalEquipe() {
   const disptach = useDispatch()
   const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis)
   const { loading: loadingPonto } = useSelector(state => state.ponto)
+  const { usuario } = useSelector(state => state.login)
 
   const insertPonto = () => {
     disptach(setPonto())
+  }
+
+  const refreshCI = () => {
+    disptach(getCis())
   }
 
   useEffect(() => {
@@ -33,7 +38,10 @@ export default function CanalEquipe() {
             <Card
               title={ci.post_title}
               extra={
-                <a href={ci.guid} target="_blank">
+                <a
+                  href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=teste&url=https://www.metodologiapowergym.com.br/courses/${ci.post_name}`}
+                  target="_blank"
+                >
                   {ButtonCI}
                 </a>
               }
@@ -42,16 +50,24 @@ export default function CanalEquipe() {
             </Card>
           ))
         ) : (
-          <div className="text-center">
-            <Typography.Title level={3}>Nenhuma C.I</Typography.Title>
+          <div className="text-center p-4">
+            <Typography.Title level={5}>Nenhuma C.I</Typography.Title>
           </div>
         )}
+        {!!dataCis.length && (
+          <Button type="primary" onClick={refreshCI} loading={loadingCis} block>
+            Atualizar
+          </Button>
+        )}
+
         <Button type="primary" disabled={!!dataCis.length} onClick={insertPonto} loading={loadingPonto} block>
           Ponto Digital
         </Button>
-        <Button icon={<LuMegaphone />} block>
-          Fale com o Papai
-        </Button>
+        <a href="https://grupopratique.typeform.com/to/WZUsTlXl">
+          <Button icon={<LuMegaphone />} block>
+            Fale com o Papai
+          </Button>
+        </a>
       </Space>
     </Loading>
   )

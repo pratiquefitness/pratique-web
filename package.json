@@ -10,15 +10,16 @@
     "postinstall": "prisma generate --schema prisma/pratiqueaulas.prisma && prisma generate --schema prisma/pratiquediagnose.prisma && prisma generate --schema prisma/pratiquefunciona.prisma && prisma generate --schema prisma/pratiquepro.prisma && prisma generate --schema prisma/novopower.prisma"
   },
   "dependencies": {
-    "@prisma/client": "4.15.0",
+    "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.5.2",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "next": "13.4.4",
     "nookies": "^2.5.2",
-    "prisma": "^4.15.0",
+    "prisma": "^5.0.0",
     "react": "18.2.0",
+    "react-countdown": "^2.3.5",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
     "react-redux": "^8.0.7",

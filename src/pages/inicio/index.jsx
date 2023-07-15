@@ -44,35 +44,27 @@ export default function Inicio() {
           </Title>
           <Text type="secondary">Beneficios e conteúdos para você</Text>
           <Row gutter={6} className="mb-2 mt-2">
-            <Col flex="auto">
-              <div style={{ height: 150, position: 'relative' }}>
-                <Link href="/canal_equipe">
-                  <Image src="/images/canal_equipe.png" fill />
-                </Link>
-              </div>
+            <Col span={12}>
+              <Link href="/canal_equipe">
+                <img src="/images/canal_equipe.png" width="100%" />
+              </Link>
             </Col>
-            <Col flex="auto">
-              <div style={{ height: 150, position: 'relative' }}>
-                <a href="https://metodologiapowergym.com.br/courses/">
-                  <Image src="/images/unipower.png" fill />
-                </a>
-              </div>
+            <Col span={12}>
+              <a href="https://metodologiapowergym.com.br/courses/">
+                <img src="/images/unipower.png" width="100%" />
+              </a>
             </Col>
           </Row>
           <Row gutter={6} className="mb-2 mt-2">
-            <Col flex="auto">
-              <div style={{ height: 150, position: 'relative' }}>
-                <a href="https://www.clubecertosaude.com.br/saude/saversaude/">
-                  <Image src="/images/saver_saude.png" fill />
-                </a>
-              </div>
+            <Col span={12}>
+              <a href="https://www.clubecertosaude.com.br/saude/saversaude/">
+                <img src="/images/saver_saude.png" width="100%" />
+              </a>
             </Col>
-            <Col flex="auto">
-              <div style={{ height: 150, position: 'relative' }}>
-                <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique">
-                  <Image src="/images/saver_club.png" fill />
-                </a>
-              </div>
+            <Col span={12}>
+              <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique">
+                <img src="/images/saver_club.png" width="100%" />
+              </a>
             </Col>
           </Row>
         </>
@@ -83,33 +75,25 @@ export default function Inicio() {
       </Title>
       <Text type="secondary">Exercícios e conteúdos para você</Text>
       <Row gutter={6} className="mb-2 mt-2">
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <Link href="/meditacao">
-              <Image src="/images/meditacao.png" fill />
-            </Link>
-          </div>
+        <Col span={12}>
+          <Link href="/meditacao">
+            <img src="/images/meditacao.png" width="100%" />
+          </Link>
         </Col>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a onClick={() => setAulasColetivasModal(true)}>
-              <Image src="/images/aulas.png" fill />
-            </a>
-          </div>
+        <Col span={12}>
+          <a onClick={() => setAulasColetivasModal(true)}>
+            <img src="/images/aulas.png" width="100%" />
+          </a>
         </Col>
       </Row>
       <Row gutter={6}>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <Image src="/images/power.png" fill />
-          </div>
+        <Col span={12}>
+          <img src="/images/power.png" width="100%" />
         </Col>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a onClick={() => setBlogModal(true)}>
-              <Image src="/images/blog.png" fill />
-            </a>
-          </div>
+        <Col span={12}>
+          <a onClick={() => setBlogModal(true)}>
+            <img src="/images/blog.png" width="100%" />
+          </a>
         </Col>
       </Row>
       <Title level={4} className="m-0 mt-6">
@@ -117,19 +101,15 @@ export default function Inicio() {
       </Title>
       <Text type="secondary">Canais de atendimento da Pratique</Text>
       <Row gutter={6} className="mb-2 mt-2">
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20em%20Casa%20e%20estou%20com%20d%C3%BAvida">
-              <Image src="/images/sac.png" fill />
-            </a>
-          </div>
+        <Col span={12}>
+          <a href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20em%20Casa%20e%20estou%20com%20d%C3%BAvida">
+            <img src="/images/sac.png" width="100%" />
+          </a>
         </Col>
-        <Col flex="auto">
-          <div style={{ height: 150, position: 'relative' }}>
-            <a onClick={() => setHorariosModal(true)}>
-              <Image src="/images/horarios.png" fill />
-            </a>
-          </div>
+        <Col span={12}>
+          <a onClick={() => setHorariosModal(true)}>
+            <img src="/images/horarios.png" width="100%" />
+          </a>
         </Col>
       </Row>
     </>

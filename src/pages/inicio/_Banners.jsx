@@ -4,6 +4,7 @@ import utils from '@/utils'
 import { Carousel, Typography, theme } from 'antd'
 import { format } from 'date-fns'
 import { useEffect } from 'react'
+import Countdown from 'react-countdown'
 import { useDispatch, useSelector } from 'react-redux'
 
 const contentStyle = {
@@ -25,6 +26,11 @@ const settings = {
     marginBottom: 20
   }
 }
+
+/*
+5 min - em instantes
+agora - acontecendo
+*/
 
 export default function Banners() {
   const disptach = useDispatch()
@@ -51,6 +57,18 @@ export default function Banners() {
                       <small>às {live.live_horagravacao}H</small>
                     </h3>
                     <h2 style={{ color: token.colorPrimary }}>{live.live_nome}</h2>
+                    <p>
+                      <Countdown
+                        date={Date.now() + 5000000}
+                        renderer={({ hours, minutes, seconds, completed }) => {
+                          return (
+                            <span>
+                              Em: {hours}h {minutes}m {seconds}s
+                            </span>
+                          )
+                        }}
+                      />
+                    </p>
                   </div>
                 </div>
               </div>
