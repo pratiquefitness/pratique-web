@@ -1,4 +1,4 @@
-import { Tabs } from 'antd'
+import { Button, Tabs } from 'antd'
 
 const items = [
   {
@@ -24,5 +24,8 @@ const items = [
 ]
 
 export default function Afiliados() {
-  return <Tabs defaultActiveKey="1" items={items} />
+  return (
+    // <Tabs defaultActiveKey="1" items={items} />
+    <Button block>Acesse o painel antigo</Button>
+  )
 }
