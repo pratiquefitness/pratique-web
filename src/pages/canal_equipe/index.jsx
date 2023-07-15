@@ -1,5 +1,6 @@
 import Loading from '@/components/Loading'
 import { getCis } from '@/redux/actions/cis'
+import { setPonto } from '@/redux/actions/ponto'
 import { Button, Card, Space, Typography } from 'antd'
 import { useEffect } from 'react'
 import { LuMegaphone } from 'react-icons/lu'
@@ -13,17 +14,22 @@ const ButtonCI = (
 
 export default function CanalEquipe() {
   const disptach = useDispatch()
-  const { data, loading } = useSelector(state => state.cis)
+  const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis)
+  const { loading: loadingPonto } = useSelector(state => state.ponto)
+
+  const insertPonto = () => {
+    disptach(setPonto())
+  }
 
   useEffect(() => {
     disptach(getCis())
   }, [])
 
   return (
-    <Loading spinning={loading}>
+    <Loading spinning={loadingCis}>
       <Space direction="vertical" size={16} className="w-100">
-        {data.length ? (
-          data.map(ci => (
+        {dataCis.length ? (
+          dataCis.map(ci => (
             <Card
               title={ci.post_title}
               extra={
@@ -40,7 +46,7 @@ export default function CanalEquipe() {
             <Typography.Title level={3}>Nenhuma C.I</Typography.Title>
           </div>
         )}
-        <Button type="primary" disabled={!!data.length} block>
+        <Button type="primary" disabled={!!dataCis.length} onClick={insertPonto} loading={loadingPonto} block>
           Ponto Digital
         </Button>
         <Button icon={<LuMegaphone />} block>

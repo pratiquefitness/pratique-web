@@ -8,6 +8,7 @@ import meditacaoSlice from './slices/meditacao'
 import aulasColetivasSlice from './slices/aulasColetivas'
 import livesSlice from './slices/lives'
 import cisSlice from './slices/cis'
+import pontoSlice from './slices/ponto'
 
 const store = configureStore({
   reducer: {
@@ -18,7 +19,8 @@ const store = configureStore({
     meditacao: meditacaoSlice.reducer,
     aulasColetivas: aulasColetivasSlice.reducer,
     lives: livesSlice.reducer,
-    cis: cisSlice.reducer
+    cis: cisSlice.reducer,
+    ponto: pontoSlice.reducer
   }
 })
 
