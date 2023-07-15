@@ -1,5 +1,5 @@
-import InicioView from '@/views/inicio'
+import Inicio from './inicio'
 
-export default function Inicio() {
-  return <InicioView />
+export default function Init() {
+  return <Inicio />
 }

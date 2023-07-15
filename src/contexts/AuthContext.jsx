@@ -8,6 +8,11 @@ import { useDispatch } from 'react-redux'
 
 export const AuthContext = createContext({})
 
+export function setToken(user) {
+  const token = JSON.stringify(user)
+  setCookie(undefined, tokenName, token)
+}
+
 export function AuthProvider({ children }) {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -21,9 +26,7 @@ export function AuthProvider({ children }) {
     const login = await signInRequest(email, senha)
 
     if (login?.ID) {
-      const token = JSON.stringify(login)
-
-      setCookie(undefined, tokenName, token)
+      setToken(login)
 
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))

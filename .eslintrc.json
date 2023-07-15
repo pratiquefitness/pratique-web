@@ -19,5 +19,7 @@
     }
   },
   "plugins": ["react", "prettier"],
-  "rules": {}
+  "rules": {
+    "@next/next/no-img-element": "off"
+  }
 }

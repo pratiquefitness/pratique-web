@@ -3,28 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-
-const contentStyle = {
-  margin: 5,
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  borderRadius: 10
-}
-
-const settings = {
-  className: 'center',
-  centerMode: true,
-  slidesToShow: 1,
-  swipeToSlide: true,
-  draggable: true,
-  autoplay: true,
-  autoplaySpeed: 2000,
-  style: {
-    marginBottom: 20
-  }
-}
+import Banners from './_Banners'
 
 const { Title, Text } = Typography
 
@@ -56,20 +35,8 @@ export default function Inicio() {
         </Link>
       </Modal>
 
-      <Carousel {...settings}>
-        <div>
-          <h3 style={{ ...contentStyle, background: 'red' }}>1</h3>
-        </div>
-        <div>
-          <h3 style={{ ...contentStyle, background: 'green' }}>2</h3>
-        </div>
-        <div>
-          <h3 style={{ ...contentStyle, background: 'blue' }}>3</h3>
-        </div>
-        <div>
-          <h3 style={{ ...contentStyle, background: 'gray' }}>4</h3>
-        </div>
-      </Carousel>
+      <Banners />
+
       {usuario.isEmployee && (
         <>
           <Title level={4} className="m-0">

@@ -1,6 +1,6 @@
 import { Tabs } from 'antd'
-import Dados from './Dados'
-import Plano from './Plano'
+import Dados from './_Dados'
+import Plano from './_Plano'
 
 const items = [
   {
