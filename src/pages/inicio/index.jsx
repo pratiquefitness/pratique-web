@@ -50,19 +50,19 @@ export default function Inicio() {
               </Link>
             </Col>
             <Col span={12}>
-              <a href="https://metodologiapowergym.com.br/courses/">
+              <a href="https://metodologiapowergym.com.br/courses/" target="_blank">
                 <img src="/images/unipower.png" width="100%" />
               </a>
             </Col>
           </Row>
           <Row gutter={6} className="mb-2 mt-2">
             <Col span={12}>
-              <a href="https://www.clubecertosaude.com.br/saude/saversaude/">
+              <a href="https://www.clubecertosaude.com.br/saude/saversaude/" target="_blank">
                 <img src="/images/saver_saude.png" width="100%" />
               </a>
             </Col>
             <Col span={12}>
-              <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique">
+              <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique" target="_blank">
                 <img src="/images/saver_club.png" width="100%" />
               </a>
             </Col>
@@ -104,7 +104,10 @@ export default function Inicio() {
       <Text type="secondary">Canais de atendimento da Pratique</Text>
       <Row gutter={6} className="mb-2 mt-2">
         <Col span={12}>
-          <a href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20em%20Casa%20e%20estou%20com%20d%C3%BAvida">
+          <a
+            href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20em%20Casa%20e%20estou%20com%20d%C3%BAvida"
+            target="_blank"
+          >
             <img src="/images/sac.png" width="100%" />
           </a>
         </Col>

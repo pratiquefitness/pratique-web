@@ -63,7 +63,7 @@ export default function CanalEquipe() {
         <Button type="primary" disabled={!!dataCis.length} onClick={insertPonto} loading={loadingPonto} block>
           Ponto Digital
         </Button>
-        <a href="https://grupopratique.typeform.com/to/WZUsTlXl">
+        <a href="https://grupopratique.typeform.com/to/WZUsTlXl" target="_blank">
           <Button icon={<LuMegaphone />} block>
             Fale com o Papai
           </Button>

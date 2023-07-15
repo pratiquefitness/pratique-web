@@ -102,10 +102,13 @@ export default function Bike() {
               <img src="/images/bike/3.png" width={100} alt="" />
             </div>
             <div className="text-center">
-              <a href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1"
+                target="_blank"
+              >
                 <img src="/images/bike/play.png" width={150} alt="" />
               </a>
-              <a href="https://apps.apple.com/br/app/motosumo/id1069353073">
+              <a href="https://apps.apple.com/br/app/motosumo/id1069353073" target="_blank">
                 <img src="/images/bike/store.png" width={150} alt="" />
               </a>
             </div>
@@ -129,10 +132,13 @@ export default function Bike() {
               você pode assistir por temporada, professor e duração de aula (5, 10, 15, 30 minutos).
             </p>
             <div className="text-center">
-              <a href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1"
+                target="_blank"
+              >
                 <img src="/images/bike/play.png" width={150} alt="" />
               </a>
-              <a href="https://apps.apple.com/br/app/motosumo/id1069353073">
+              <a href="https://apps.apple.com/br/app/motosumo/id1069353073" target="_blank">
                 <img src="/images/bike/store.png" width={150} alt="" />
               </a>
             </div>
@@ -142,10 +148,13 @@ export default function Bike() {
           <Space direction="vertical">
             <p>Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa.</p>
             <div className="text-center">
-              <a href="https://play.google.com/store/apps/details?id=com.fortram.pratiqueemcasa&hl=pt_BR&gl=US">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.fortram.pratiqueemcasa&hl=pt_BR&gl=US"
+                target="_blank"
+              >
                 <img src="/images/bike/play.png" width={150} alt="" />
               </a>
-              <a href="https://apps.apple.com/br/app/pratique-em-casa/id1520321614">
+              <a href="https://apps.apple.com/br/app/pratique-em-casa/id1520321614" target="_blank">
                 <img src="/images/bike/store.png" width={150} alt="" />
               </a>
             </div>
@@ -166,7 +175,9 @@ export default function Bike() {
           <Space direction="vertical">
             <p>Temos também um grupo do Telegram com todos professores e a turma do pedal Pratique em casa:</p>
             <p>
-              <a href="http://bit.ly/turmapedalpratiqueemcasa">🌐 bit.ly/turmapedalpratiqueemcasa</a>
+              <a href="http://bit.ly/turmapedalpratiqueemcasa" target="_blank">
+                🌐 bit.ly/turmapedalpratiqueemcasa
+              </a>
             </p>
           </Space>
         </Collapse.Panel>
@@ -186,14 +197,17 @@ export default function Bike() {
         </Collapse.Panel>
         <Collapse.Panel header="Loja Pratique">
           <p className="p-10 text-center">
-            <a href="https://lojapratique.com.br/">
+            <a href="https://lojapratique.com.br/" target="_blank">
               <img src="/images/bike/loja.png" width={200} alt="" />
             </a>
           </p>
         </Collapse.Panel>
         <Collapse.Panel header="Whatsapp">
           <p className="p-10 text-center">
-            <a href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda.">
+            <a
+              href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
+              target="_blank"
+            >
               <img src="/images/bike/whats.png" width={150} alt="" />
             </a>
           </p>
