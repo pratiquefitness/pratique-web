@@ -92,11 +92,11 @@ export default function Inicio() {
             <img src="/images/power.png" width="100%" />
           </Link>
         </Col>
-        <Col span={12}>
+        {/* <Col span={12}>
           <a onClick={() => setBlogModal(true)}>
             <img src="/images/blog.png" width="100%" />
           </a>
-        </Col>
+        </Col> */}
       </Row>
       <Title level={4} className="m-0 mt-6">
         SAC
