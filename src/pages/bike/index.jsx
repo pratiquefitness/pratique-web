@@ -66,7 +66,7 @@ export default function Bike() {
         </Typography.Paragraph>
         <Typography.Paragraph>Siga o Passo a passo para participar das aulas:</Typography.Paragraph>
       </div>
-      <Collapse defaultActiveKey={['1']}>
+      <Collapse defaultActiveKey={['0']}>
         <Collapse.Panel header="1º Assista aulas ao vivo no YouTube">
           <Space direction="vertical">
             <p>
