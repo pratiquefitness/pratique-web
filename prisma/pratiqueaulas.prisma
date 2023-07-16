@@ -143,21 +143,21 @@ model live {
 }
 
 model lives {
-  live_id             Int      @id @default(autoincrement())
-  live_nome           String   @db.VarChar(100)
-  live_iconelive      String   @db.VarChar(100)
-  live_datagravacao   DateTime @db.Date
-  live_horagravacao   String   @db.Text
-  live_datapublicacao DateTime @db.Date
-  live_horapublicacao String   @db.VarChar(100)
-  live_modalidadeapp  String   @db.VarChar(100)
-  live_professorapp   String   @db.VarChar(100)
-  live_tipolive       String   @db.VarChar(100)
-  live_valor          String   @db.VarChar(100)
-  live_videoyoutube   String   @db.VarChar(100)
-  live_link           String   @db.VarChar(120)
-  live_horafinal      String   @db.VarChar(15)
-  live_compara        String   @db.VarChar(20)
+  live_id             Int    @id @default(autoincrement())
+  live_nome           String @db.VarChar(100)
+  live_iconelive      String @db.VarChar(100)
+  live_datagravacao   String @db.VarChar(100)
+  live_horagravacao   String @db.Text
+  live_datapublicacao String @db.VarChar(100)
+  live_horapublicacao String @db.VarChar(100)
+  live_modalidadeapp  String @db.VarChar(100)
+  live_professorapp   String @db.VarChar(100)
+  live_tipolive       String @db.VarChar(100)
+  live_valor          String @db.VarChar(100)
+  live_videoyoutube   String @db.VarChar(100)
+  live_link           String @db.VarChar(120)
+  live_horafinal      String @db.VarChar(15)
+  live_compara        String @db.VarChar(20)
 }
 
 model meditacao {
