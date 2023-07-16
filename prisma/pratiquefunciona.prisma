@@ -14,8 +14,9 @@ model funcionarios {
   nome     String  @db.VarChar(300)
   email    String  @db.VarChar(150)
   telefone String? @db.VarChar(30)
-  cpf      String  @db.VarChar(25)
+  cpf      String? @db.VarChar(25)
   cargo    String  @db.VarChar(100)
+  status   String? @db.VarChar(3)
 }
 
 model ponto {
