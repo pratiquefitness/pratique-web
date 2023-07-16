@@ -1,4 +1,4 @@
-import { Button, Carousel, Col, Modal, Row, Typography, theme } from 'antd'
+import { Button, Carousel, Col, Modal, Row, Space, Typography, theme } from 'antd'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -27,12 +27,14 @@ export default function Inicio() {
         footer={null}
         onCancel={() => setAulasColetivasModal(false)}
       >
-        <Link href="/aulas_coletivas/jump">
-          <Button>Jump</Button>
-        </Link>
-        <Link href="/aulas_coletivas/yoga">
-          <Button>Yoga</Button>
-        </Link>
+        <Space direction="vertical">
+          <Link href="/aulas_coletivas/jump">
+            <img src="/images/jump.png" width={'100%'} alt="" />
+          </Link>
+          <Link href="/aulas_coletivas/yoga">
+            <img src="/images/yoga2.png" width={'100%'} alt="" />
+          </Link>
+        </Space>
       </Modal>
 
       <Banners />
