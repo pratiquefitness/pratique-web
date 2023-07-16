@@ -14,8 +14,9 @@ model funcionarios {
   nome     String  @db.VarChar(300)
   email    String  @db.VarChar(150)
   telefone String? @db.VarChar(30)
-  cpf      String  @db.VarChar(25)
+  cpf      String? @db.VarChar(25)
   cargo    String  @db.VarChar(100)
+  status   String? @db.VarChar(3)
 }
 
 model ponto {
@@ -24,21 +25,4 @@ model ponto {
   ponto_hora        DateTime @default(now()) @db.DateTime(0)
   ponto_aparelho    String?  @db.VarChar(300)
   ponto_unidade     String?  @db.VarChar(15)
-}
-
-model wp_users {
-  ID                  BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
-  user_login          String   @default("") @db.VarChar(60)
-  user_pass           String   @default("") @db.VarChar(255)
-  user_nicename       String   @default("") @db.VarChar(50)
-  user_email          String   @default("") @db.VarChar(100)
-  user_url            String   @default("") @db.VarChar(100)
-  user_registered     DateTime @default(now()) @db.DateTime(0)
-  user_activation_key String   @default("") @db.VarChar(255)
-  user_status         Int      @default(0)
-  display_name        String   @default("") @db.VarChar(250)
-
-  @@index([user_email], map: "user_email")
-  @@index([user_login], map: "user_login_key")
-  @@index([user_nicename], map: "user_nicename")
 }
