@@ -51,11 +51,22 @@ export default async function handler(req, res) {
     })
 
     if (pactoExist.length) {
+      const unidadeExist = await apiPratiquePro.unidade.findMany({
+        where: {
+          unidade_numero: pactoExist[0].matriz_unidade
+        },
+        select: {
+          unidade_nome: true
+        }
+      })
+      console.log(pactoExist)
       user.status = pactoExist[0].matriz_situacao
       user.plano = pactoExist[0].matriz_plano
+      user.unidade = unidadeExist[0].unidade_nome
     } else {
       user.status = null
       user.plano = null
+      user.unidade = null
     }
   }
 

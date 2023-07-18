@@ -9,7 +9,7 @@ export default function Plano() {
         <p>{usuario.plano}</p>
       </Card>
       <Card title="Sua unidade" size="small">
-        <p>{usuario.plano}</p>
+        <p>{usuario.unidade}</p>
       </Card>
     </Space>
   )
