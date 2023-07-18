@@ -1,60 +1,5 @@
 import { Button, Col, Collapse, Row, Space, Typography } from 'antd'
 
-const text = 'text'
-
-const items = [
-  {
-    key: '1',
-    label: '1º Assista aulas ao vivo no YouTube',
-    children: <p>{text}</p>
-  },
-  {
-    key: '2',
-    label: '2º Baixe o App de monitoramento',
-    children: <p>{text}</p>
-  },
-  {
-    key: '3',
-    label: '3° Como Configurar o App de Monitoramento',
-    children: <p>{text}</p>
-  },
-  {
-    key: '4',
-    label: '4º Acesso ao APP Pratique em Casa',
-    children: <p>{text}</p>
-  },
-  {
-    key: '5',
-    label: '5º Regulagem da Bike',
-    children: <p>{text}</p>
-  },
-  {
-    key: '6',
-    label: '6º Participar do Grupo Exclusivo Telegram',
-    children: <p>{text}</p>
-  },
-  {
-    key: '7',
-    label: 'Quadro de Horários',
-    children: <p>{text}</p>
-  },
-  {
-    key: '8',
-    label: 'Solicitar manutenção',
-    children: <p>{text}</p>
-  },
-  {
-    key: '9',
-    label: 'Loja Pratique',
-    children: <p>{text}</p>
-  },
-  {
-    key: '10',
-    label: 'Whatsapp',
-    children: <p>{text}</p>
-  }
-]
-
 export default function Bike() {
   return (
     <>
@@ -66,7 +11,7 @@ export default function Bike() {
         </Typography.Paragraph>
         <Typography.Paragraph>Siga o Passo a passo para participar das aulas:</Typography.Paragraph>
       </div>
-      <Collapse defaultActiveKey={['0']}>
+      <Collapse>
         <Collapse.Panel header="1º Assista aulas ao vivo no YouTube">
           <Space direction="vertical">
             <p>
@@ -76,16 +21,20 @@ export default function Bike() {
             <Row className="mt-10">
               <Col span={12} className="text-center">
                 <img src="/images/bike/1.png" width={100} alt="" />
-                <Button type="primary" size="small">
-                  Inscreva-se no canal
-                </Button>
+                <a href="https://www.youtube.com/channel/UCjM1lVj_OH7D0XAU1vKHcDQ?sub_confirmation=1">
+                  <Button type="primary" size="small">
+                    Inscreva-se no canal
+                  </Button>
+                </a>
                 <p>Se inscreva e ative o sininho🔔</p>
               </Col>
               <Col span={12} className="text-center">
                 <img src="/images/bike/2.png" width={100} alt="" />
-                <Button type="primary" size="small">
-                  Inscreva-se no canal
-                </Button>
+                <a href="https://www.youtube.com/channel/UCjM1lVj_OH7D0XAU1vKHcDQ?sub_confirmation=1">
+                  <Button type="primary" size="small">
+                    Inscreva-se no canal
+                  </Button>
+                </a>
                 <p>Se inscreva e ative o sininho🔔</p>
               </Col>
             </Row>

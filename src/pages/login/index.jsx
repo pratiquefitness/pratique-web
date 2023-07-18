@@ -20,23 +20,13 @@ export default function LoginView() {
     //dispath(setThemeMode(values.username))
   }
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
     <div className="login login-background">
       <div className="logo">
         <Image src="/logo.svg" width={220} height={58} />
       </div>
       <div className="box-login">
-        <Form
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
+        <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
           <Form.Item name="email" rules={[{ required: true, message: 'Preencha seu e-mail...' }]}>
             <Input placeholder="E-mail" />
           </Form.Item>

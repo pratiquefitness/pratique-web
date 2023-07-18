@@ -10,16 +10,17 @@ const { Title, Text } = Typography
 export default function Inicio() {
   const [horariosModal, setHorariosModal] = useState(false)
   const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
-  const [blogModal, setBlogModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
   const { token } = theme.useToken()
   return (
     <>
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
-        <iframe src="http://pratiquefitness.com.br/horarios/" frameborder="0" width={'100%'} height={500}></iframe>
-      </Modal>
-      <Modal title="Blog" open={blogModal} footer={null} onCancel={() => setBlogModal(false)}>
-        <iframe src="https://pratiquefitness.com.br/blog/" frameborder="0" width={'100%'} height={600}></iframe>
+        <iframe
+          src="https://pratiquefitness.com.br/horarios/horariospratique/"
+          frameborder="0"
+          width={'100%'}
+          height={500}
+        ></iframe>
       </Modal>
       <Modal
         title="Aulas Coletivas"
@@ -94,11 +95,11 @@ export default function Inicio() {
             <img src="/images/power.png" width="100%" />
           </Link>
         </Col>
-        {/* <Col span={12}>
-          <a onClick={() => setBlogModal(true)}>
+        <Col span={12}>
+          <a href="https://pratiquefitness.com.br/blog/" target="_blank">
             <img src="/images/blog.png" width="100%" />
           </a>
-        </Col> */}
+        </Col>
       </Row>
       <Title level={4} className="m-0 mt-6">
         SAC

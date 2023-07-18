@@ -24,10 +24,6 @@ export default function MeditacaoView() {
     setMeditacao(data.find(item => item.modalidademeditacao_id))
   }, [router.query.id, data])
 
-  useEffect(() => {
-    console.log('med', meditacao)
-  }, [meditacao])
-
   return (
     <Loading spinning={loading && meditacao}>
       <div className="p-1">
@@ -36,10 +32,17 @@ export default function MeditacaoView() {
           {meditacao?.aulas?.map((item, key) => (
             <Collapse.Panel header={item.meditacao_nome} key={key}>
               <Paragraph>{item.meditacao_item}</Paragraph>
-              <audio controls>
-                <source src={item.meditacao_audio} type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
+              {item.meditacao_audio
+                .replace('[', '')
+                .replace(']', '')
+                .split(',')
+                .filter(n => n)
+                .map(item => (
+                  <audio controls>
+                    <source src={item} type="audio/mpeg" />
+                    Your browser does not support the audio element.
+                  </audio>
+                ))}
             </Collapse.Panel>
           ))}
         </Collapse>

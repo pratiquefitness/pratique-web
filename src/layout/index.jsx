@@ -18,7 +18,7 @@ const { Title } = Typography
 export default function Layout({ children }) {
   const router = useRouter()
   const { themeMode } = useSelector(state => state.global)
-  const { authenticated } = useSelector(state => state.login)
+  const { authenticated, usuario } = useSelector(state => state.login)
   const pathname = usePathname()
   return (
     <ConfigProvider theme={theme[themeMode] || theme.red} locale={ptBR}>
@@ -28,7 +28,9 @@ export default function Layout({ children }) {
           <Content>
             <div className="d-flex justify-space-between">
               <Title level={3}>
-                {utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
+                {pathname === '/'
+                  ? 'Olá, ' + usuario.user_nicename.split('@')[0]
+                  : utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
               </Title>
               {pathname !== '/' && (
                 <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>

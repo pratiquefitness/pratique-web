@@ -4,8 +4,8 @@ import { apiPratiqueAulas } from '@/services'
 export default async function handler(req, res) {
   const data = await apiPratiqueAulas.lives.findMany({
     where: {
-      live_datapublicacao: {
-        lte: new Date()
+      live_datagravacao: {
+        gte: new Date()
       }
     },
     orderBy: {

@@ -46,7 +46,6 @@ export function AuthProvider({ children }) {
       dispatch(setLoading(true))
       //const login = await signInVerify(token)
       const login = JSON.parse(token)
-      console.log(login)
       if (login) {
         dispatch(setLogin(login))
         dispatch(setTheme(login.plano))

@@ -1,6 +1,6 @@
 import Loading from '@/components/Loading'
 import { getCis } from '@/redux/actions/cis'
-import { setPonto } from '@/redux/actions/ponto'
+import { getPonto, setPonto } from '@/redux/actions/ponto'
 import { Button, Card, Space, Typography } from 'antd'
 import { useEffect } from 'react'
 import { LuMegaphone } from 'react-icons/lu'
@@ -15,7 +15,7 @@ const ButtonCI = (
 export default function CanalEquipe() {
   const disptach = useDispatch()
   const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis)
-  const { loading: loadingPonto } = useSelector(state => state.ponto)
+  const { data: ponto, loading: loadingPonto } = useSelector(state => state.ponto)
   const { usuario } = useSelector(state => state.login)
 
   const insertPonto = () => {
@@ -27,6 +27,7 @@ export default function CanalEquipe() {
   }
 
   useEffect(() => {
+    disptach(getPonto())
     disptach(getCis())
   }, [])
 
@@ -60,9 +61,16 @@ export default function CanalEquipe() {
           </Button>
         )}
 
-        <Button type="primary" disabled={!!dataCis.length} onClick={insertPonto} loading={loadingPonto} block>
-          Ponto Digital
+        <Button
+          type="primary"
+          disabled={!!dataCis.length || ponto.length}
+          onClick={insertPonto}
+          loading={loadingPonto}
+          block
+        >
+          {ponto.length ? 'Ponto Registrado' : 'Ponto Digital'}
         </Button>
+
         <a href="https://grupopratique.typeform.com/to/WZUsTlXl" target="_blank">
           <Button icon={<LuMegaphone />} block>
             Fale com o Papai

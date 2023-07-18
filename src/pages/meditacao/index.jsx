@@ -22,8 +22,7 @@ export default function MeditacaoView() {
         {data.map((meditacao, key) => (
           <Row gutter={[16, 16]} key={key} className="pb-4" align="middle">
             <Col span={8}>
-              <div style={{ width: '100%', height: 200, background: 'gray' }}></div>
-              {/* <Image src="https://picsum.photos/200/300" fill={true} /> */}
+              <img src={meditacao.modalidademeditacao_capa} width={'100%'} />
             </Col>
             <Col span={12}>
               <Title level={3}>{meditacao.modalidademeditacao_nome}</Title>
