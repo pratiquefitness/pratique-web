@@ -87,13 +87,11 @@ export default function MeuTreinoView() {
             right: (
               <Row gutter={2}>
                 <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
-                  {`${data.dia_inicio} ${utils.getMonthNames(data.mes_inicio).nameMin.toUpperCase()} ${
-                    data.ano_inicio
-                  }`}
+                  {`${data.dia_inicio} ${utils.getMonthNames(data.mes_inicio).nameMin.toUpperCase()}`}
                 </Tag>
                 <ArrowRightOutlined />
                 <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
-                  {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
+                  {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()}`}
                 </Tag>
               </Row>
             )
