@@ -39,7 +39,10 @@ export default function MeditacaoView() {
                 .filter(n => n)
                 .map(item => (
                   <audio controls>
-                    <source src={item} type="audio/mpeg" />
+                    <source
+                      src={`https://academiapratique.com.br/sistema/conteudo/audio/${item.replace('"', '')}`}
+                      type="audio/mpeg"
+                    />
                     Your browser does not support the audio element.
                   </audio>
                 ))}
