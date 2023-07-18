@@ -33,7 +33,7 @@ const routes = [
     showInNavigation: true
   },
   {
-    title: 'Meditacao',
+    title: 'Meditação',
     href: '/meditacao',
     showInNavigation: false
   },
