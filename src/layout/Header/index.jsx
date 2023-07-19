@@ -41,25 +41,27 @@ export default function Header() {
 
   return (
     <AntHeader style={{ background: token.colorPrimary }}>
-      <Row justify="flex-end">
-        <Col flex="auto">
-          <div className="header-logo">
-            <Link href="/">
-              <Logo type="min" />
-            </Link>
-          </div>
-        </Col>
-        <Col flex="auto" className="text-right">
-          <Dropdown menu={{ items, onClick }} placement="bottomRight" overlayStyle={{ marginRight: 4, width: 150 }}>
-            <Button className="header-button" type="text">
-              <Space align="center">
-                {usuario.user_nicename.split('@')[0]}
-                <FaUserCircle size={24} style={{ marginBottom: -4 }} />
-              </Space>
-            </Button>
-          </Dropdown>
-        </Col>
-      </Row>
+      <div className="container">
+        <Row justify="flex-end">
+          <Col flex="auto">
+            <div className="header-logo">
+              <Link href="/">
+                <Logo type="min" />
+              </Link>
+            </div>
+          </Col>
+          <Col flex="auto" className="text-right">
+            <Dropdown menu={{ items, onClick }} placement="bottomRight" overlayStyle={{ marginRight: 4, width: 150 }}>
+              <Button className="header-button" type="text">
+                <Space align="center">
+                  {usuario.user_nicename.split('@')[0]}
+                  <FaUserCircle size={24} style={{ marginBottom: -4 }} />
+                </Space>
+              </Button>
+            </Dropdown>
+          </Col>
+        </Row>
+      </div>
     </AntHeader>
   )
 }

@@ -25,8 +25,10 @@ export default function Inicio() {
       <Modal
         title="Aulas Coletivas"
         open={aulasColtivasModal}
-        footer={null}
         onCancel={() => setAulasColetivasModal(false)}
+        footer={null}
+        width={300}
+        centered
       >
         <Space direction="vertical">
           <Link href="/aulas_coletivas/jump">

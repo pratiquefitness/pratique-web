@@ -26,19 +26,21 @@ export default function Layout({ children }) {
         <AntLayout className="app">
           <Header />
           <Content>
-            <div className="d-flex justify-space-between">
-              <Title level={3}>
-                {pathname === '/'
-                  ? 'Olá, ' + usuario.user_nicename.split('@')[0]
-                  : utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
-              </Title>
-              {pathname !== '/' && (
-                <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
-                  Voltar
-                </Button>
-              )}
+            <div className="container">
+              <div className="d-flex justify-space-between">
+                <Title level={3}>
+                  {pathname === '/'
+                    ? 'Olá, ' + usuario.user_nicename.split('@')[0]
+                    : utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
+                </Title>
+                {pathname !== '/' && (
+                  <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
+                    Voltar
+                  </Button>
+                )}
+              </div>
+              {children}
             </div>
-            {children}
           </Content>
           <Affix offsetBottom={12}>
             <Navigation data={routes} />

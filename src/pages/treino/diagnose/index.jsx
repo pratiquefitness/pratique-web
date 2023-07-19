@@ -5,21 +5,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
 
-const dataSource = [
-  {
-    key: '1',
-    data: '01/01/2023',
-    metodo: 'START',
-    tratamento: 'CARDIOFIT'
-  },
-  {
-    key: '2',
-    data: '05/01/2023',
-    metodo: 'RESIST',
-    tratamento: 'CARDIOFIT'
-  }
-]
-
 const columns = [
   {
     title: 'Data',

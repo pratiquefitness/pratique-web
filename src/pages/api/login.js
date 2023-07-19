@@ -59,7 +59,6 @@ export default async function handler(req, res) {
           unidade_nome: true
         }
       })
-      console.log(pactoExist)
       user.status = pactoExist[0].matriz_situacao
       user.plano = pactoExist[0].matriz_plano
       user.unidade = unidadeExist[0].unidade_nome

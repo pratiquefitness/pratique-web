@@ -1,15 +1,18 @@
 import { useRouter } from 'next/router'
 import { getAulasColetivas } from '@/redux/actions/aulasColetivas'
-import { Card, Col, Row, Tag, Typography } from 'antd'
-import { useEffect } from 'react'
+import { Card, Col, FloatButton, Row, Tag, Typography } from 'antd'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import modalidades from '@/constants/modalidades'
 import Loading from '@/components/Loading'
 import Image from 'next/image'
+import { GiCancel } from 'react-icons/gi'
+import YoutubePlayer from './_YoutubePlayer'
 
 const { Title, Paragraph } = Typography
 
 export default function AulasColetivas() {
+  const [videoID, setVideoID] = useState('')
   const { data, loading } = useSelector(state => state.aulasColetivas)
   const dispatch = useDispatch()
   const router = useRouter()
@@ -27,7 +30,12 @@ export default function AulasColetivas() {
             (aula, key) =>
               aula.aula_capa.length && (
                 <Col span={12} key={key} className="pb-4">
-                  <Card title={aula.aula_nome} size="small">
+                  <Card
+                    title={aula.aula_nome}
+                    size="small"
+                    onClick={() => setVideoID(aula.aula_linkvideo)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <div style={{ position: 'relative' }}>
                       <img src={aula.aula_capa} width={'100%'} />
                       <Tag
@@ -43,6 +51,7 @@ export default function AulasColetivas() {
           )}
         </Row>
       </div>
+      {videoID && <YoutubePlayer id={videoID} onClose={() => setVideoID('')} />}
     </Loading>
   )
 }
