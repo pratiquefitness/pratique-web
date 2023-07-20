@@ -5,7 +5,7 @@ import Navigation from './Navigation'
 import Header from './Header'
 import routes from '@/constants/routes'
 import utils from '@/utils'
-import theme from '@/configs/theme'
+import theme, { getTheme } from '@/configs/theme'
 import ptBR from 'antd/locale/pt_BR'
 import LoginView from '@/pages/login'
 import { FaArrowLeft } from 'react-icons/fa'
@@ -21,7 +21,7 @@ export default function Layout({ children }) {
   const { authenticated, usuario } = useSelector(state => state.login)
   const pathname = usePathname()
   return (
-    <ConfigProvider theme={theme[themeMode] || theme.red} locale={ptBR}>
+    <ConfigProvider theme={getTheme(themeMode || 'red')} locale={ptBR}>
       {authenticated ? (
         <AntLayout className="app">
           <Header />

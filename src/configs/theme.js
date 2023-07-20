@@ -1,29 +1,23 @@
 import { theme as antheme } from 'antd'
 
 const theme = {
-  red: {
-    algorithm: antheme.defaultAlgorithm,
-    token: {
-      colorPrimary: '#ed143d',
-      colorFillAlter: '#ed143d',
-      controlHeight: 50,
-      controlHeightSM: 30
-    }
+  algorithm: {
+    light: antheme.defaultAlgorithm,
+    dark: antheme.darkAlgorithm
   },
-  green: {
-    algorithm: antheme.defaultAlgorithm,
+  colorPrimary: {
+    red: '#ed143d',
+    green: '#acc571',
+    gold: '#A2722A'
+  }
+}
+
+export const getTheme = (color, mode = 'light') => {
+  return {
+    algorithm: theme.algorithm[mode],
     token: {
-      colorPrimary: '#acc571',
-      colorFillAlter: '#acc571',
-      controlHeight: 50,
-      controlHeightSM: 30
-    }
-  },
-  gold: {
-    algorithm: antheme.defaultAlgorithm,
-    token: {
-      colorPrimary: '#A2722A',
-      colorFillAlter: '#A2722A',
+      colorPrimary: theme.colorPrimary[color],
+      colorFillAlter: theme.colorPrimary[color],
       controlHeight: 50,
       controlHeightSM: 30
     }

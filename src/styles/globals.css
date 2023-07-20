@@ -23,6 +23,8 @@ body #__next {
   position: fixed;
   width: 100vw;
   height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 body .ant-layout:first-child {
   min-height: 100%;
