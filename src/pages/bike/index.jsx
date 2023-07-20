@@ -1,6 +1,8 @@
-import { Button, Col, Collapse, Row, Space, Typography } from 'antd'
+import { Button, Col, Collapse, Row, Space, Typography, theme } from 'antd'
 
 export default function Bike() {
+  const { token } = theme.useToken()
+
   return (
     <>
       <div className="text-center">

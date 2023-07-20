@@ -52,7 +52,7 @@ export default function Header() {
           </Col>
           <Col flex="auto" className="text-right">
             <Dropdown menu={{ items, onClick }} placement="bottomRight" overlayStyle={{ marginRight: 4, width: 150 }}>
-              <Button className="header-button" type="text">
+              <Button className="header-button" type="text" style={{ color: token.colorBgBase }}>
                 <Space align="center">
                   {usuario.user_nicename.split('@')[0]}
                   <FaUserCircle size={24} style={{ marginBottom: -4 }} />

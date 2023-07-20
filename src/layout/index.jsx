@@ -1,5 +1,5 @@
 import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography } from 'antd'
-import { Provider as ReduxProvider, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
 import Header from './Header'

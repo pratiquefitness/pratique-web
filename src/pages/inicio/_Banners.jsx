@@ -43,7 +43,7 @@ export default function Banners() {
 
   return (
     <Loading spinning={loading}>
-      {data.length && (
+      {data.length ? (
         <Carousel {...settings}>
           {data.map((live, key) => {
             const dia = format(new Date(live.live_datagravacao), 'dd')
@@ -75,7 +75,7 @@ export default function Banners() {
             )
           })}
         </Carousel>
-      )}
+      ) : null}
     </Loading>
   )
 }

@@ -63,6 +63,7 @@ export default function CanalEquipe() {
 
         <Button
           type="primary"
+          style={ponto.length ? { background: '#b7eb8f' } : {}}
           disabled={!!dataCis.length || ponto.length}
           onClick={insertPonto}
           loading={loadingPonto}

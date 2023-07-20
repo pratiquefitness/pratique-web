@@ -1,7 +1,7 @@
-import { Button, Carousel, Col, Modal, Row, Space, Typography, theme } from 'antd'
-import Image from 'next/image'
+import { Col, Modal, Row, Space, Typography, message } from 'antd'
+
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Banners from './_Banners'
 
@@ -11,9 +11,13 @@ export default function Inicio() {
   const [horariosModal, setHorariosModal] = useState(false)
   const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
-  const { token } = theme.useToken()
+
+  useEffect(() => {
+    message.info('Agora você pode alterar sua senha em Minha Conta')
+  }, [])
+
   return (
-    <>
+    <Space direction="vertical">
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
@@ -122,6 +126,6 @@ export default function Inicio() {
           </a>
         </Col>
       </Row>
-    </>
+    </Space>
   )
 }
