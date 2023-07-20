@@ -17,7 +17,7 @@ export default function Inicio() {
   }, [])
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" className="w-100">
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
@@ -46,7 +46,7 @@ export default function Inicio() {
 
       <Banners />
 
-      {usuario.isEmployee && (
+      {usuario.isEmployee ? (
         <>
           <Title level={4} className="m-0">
             Area do Colaborador!
@@ -77,7 +77,7 @@ export default function Inicio() {
             </Col>
           </Row>
         </>
-      )}
+      ) : null}
 
       <Title level={4} className="m-0">
         Você, Feliz e Saudável!

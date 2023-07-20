@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import { getTheme } from '@/configs/theme'
+import { useSelector } from 'react-redux'
 
 export default function Logo({ type = 'normal' }) {
+  const { themeMode } = useSelector(state => state.global)
   return type === 'normal' ? (
-    <Image src="/logo.svg" width={220} height={58} />
+    <img src="/logo.svg" height={58} />
   ) : (
-    <Image src="/logo-min.svg" width={140} height={31} />
+    <img src={getTheme(themeMode || 'red').logo} height={31} />
   )
 }
