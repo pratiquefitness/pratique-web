@@ -31,8 +31,8 @@ export default function MeuTreinoView() {
               href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20Professor%20,%20estou%20vindo%20da%20pagina%20de%20treino%20do%20Aplicativo"
               target="_blank"
             >
-              <Button icon={<FaWhatsapp />} block>
-                Fale com o professor
+              <Button icon={<FaWhatsapp />} style={{ background: '#756483', color: 'white' }} block>
+                Ajuste seu Treino
               </Button>
             </a>
           </Col>
@@ -49,54 +49,44 @@ export default function MeuTreinoView() {
             <InfoBox icon={<LuAirplay />} title="RECUPERAÇÃO 1 MIN" />
           </Col>
         </Row>
-        <Tabs
-          defaultActiveKey="1"
-          items={
-            !loading
-              ? data.treinos.map((treino, key) => {
-                  return {
-                    key,
-                    label: treino.nome,
-                    children: (
-                      <Collapse className="collapse-treino">
-                        {treino.videos.map((video, key) => (
-                          <Panel header={video.exercicio_nome} key={key}>
-                            <p>
-                              <iframe
-                                width="100%"
-                                height="200px"
-                                src={`${utils.convertToEmbedUrl(
-                                  video.exercicio_url
-                                )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen=""
-                              ></iframe>
-                              {video.exercicio_descricao}
-                            </p>
-                          </Panel>
-                        ))}
-                      </Collapse>
-                    )
-                  }
-                })
-              : []
-          }
-          size="small"
-          tabBarExtraContent={{
-            right: (
-              <Row gutter={2}>
-                <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
-                  {`${data.dia_inicio} ${utils.getMonthNames(data.mes_inicio).nameMin.toUpperCase()}`}
-                </Tag>
-                <ArrowRightOutlined />
-                <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
-                  {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()}`}
-                </Tag>
-              </Row>
-            )
-          }}
-        />
+        <div className="text-center pb-4">
+          <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
+            {`${data.dia_inicio} ${utils.getMonthNames(data.mes_inicio).nameMin.toUpperCase()} ${data.ano_inicio}`}
+          </Tag>
+          <ArrowRightOutlined />
+          <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
+            {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
+          </Tag>
+        </div>
+        <Collapse className="collapse-treino">
+          {!loading
+            ? data.treinos.map((treino, key) => {
+                return (
+                  <Panel header={treino.nome} key={key}>
+                    <Collapse className="collapse-treino">
+                      {treino.videos.map((video, key) => (
+                        <Panel header={video.exercicio_nome} key={key}>
+                          <p>
+                            <iframe
+                              width="100%"
+                              height="200px"
+                              src={`${utils.convertToEmbedUrl(
+                                video.exercicio_url
+                              )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
+                              frameborder="0"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowfullscreen=""
+                            ></iframe>
+                            {video.exercicio_descricao}
+                          </p>
+                        </Panel>
+                      ))}
+                    </Collapse>
+                  </Panel>
+                )
+              })
+            : null}
+        </Collapse>
       </Loading>
     </TreinoLayout>
   )

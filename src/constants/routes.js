@@ -3,13 +3,13 @@ import { HiUserGroup } from 'react-icons/hi'
 
 const routes = [
   {
-    title: 'Início',
+    title: 'Olá, #USUARIO#!',
     href: '/',
     icon: <LuHome />,
     showInNavigation: true
   },
   {
-    title: 'Treino',
+    title: 'Olá, #USUARIO#! Tenha um bom treino.',
     href: '/treino',
     icon: <LuDumbbell />,
     showInNavigation: true

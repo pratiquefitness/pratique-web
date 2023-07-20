@@ -29,9 +29,9 @@ export default function Layout({ children }) {
             <div className="container">
               <div className="d-flex justify-space-between">
                 <Title level={3}>
-                  {pathname === '/'
-                    ? 'Olá, ' + usuario.user_nicename.split('@')[0]
-                    : utils.getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname)).title}
+                  {utils
+                    .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+                    .title.replace('#USUARIO#', usuario.user_nicename.split('@')[0])}
                 </Title>
                 {pathname !== '/' && (
                   <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>

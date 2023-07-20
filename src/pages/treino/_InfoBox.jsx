@@ -7,11 +7,12 @@ export default function InfoBox({ title, icon }) {
       style={{
         border: `1px solid ${token.colorBorder}`,
         borderRadius: token.borderRadius,
-        color: token.colorTextBase,
+        color: 'white',
         textAlign: 'center',
         padding: 10,
         height: 54,
-        marginBottom: 12
+        marginBottom: 12,
+        background: '#756483'
       }}
     >
       {icon}
