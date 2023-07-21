@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import AulasColetivas from './_AulasColetivas'
 
-export default function Tema({ tema }) {
+export default function Tema() {
   const router = useRouter()
   const { tema } = router.query
 
