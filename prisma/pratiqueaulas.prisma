@@ -156,7 +156,7 @@ model lives {
   live_valor          String   @db.VarChar(100)
   live_videoyoutube   String   @db.VarChar(100)
   live_link           String   @db.VarChar(120)
-  live_horafinal      DateTime @db.Date
+  live_horafinal      String   @db.VarChar(15)
   live_compara        String   @db.VarChar(20)
 }
 
