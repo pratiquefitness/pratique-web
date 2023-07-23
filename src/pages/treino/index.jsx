@@ -1,4 +1,4 @@
-import { Button, Col, Collapse, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
+import { Button, Col, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
@@ -10,8 +10,7 @@ import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
 import Link from 'next/link'
 import TreinoLayout from './_Layout'
-
-const { Panel } = Collapse
+import { Collapse, Panel } from '@/components'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()

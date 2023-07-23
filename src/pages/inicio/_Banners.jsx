@@ -50,7 +50,7 @@ export default function Banners() {
             const mes = format(new Date(live.live_datagravacao), 'MM')
             return (
               <div key={key}>
-                <div style={{ background: `url(${live.live_link})`, backgroundSize: 'cover', ...contentStyle }}>
+                <div style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}>
                   <div className="p-4">
                     <h3>
                       {`${dia} de ${utils.getMonthNames(mes).name} `}
