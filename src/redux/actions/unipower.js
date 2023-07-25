@@ -6,7 +6,7 @@ export const getCursos = () => {
     const { login } = getState()
     dispatch(setLoading(true))
     return apiUnipower
-      .post('/getCourses.php', { email: login.usuario.user_email, id: login.usuario.ID })
+      .post('getCourses.php', { email: login.usuario.user_email, id: login.usuario.ID })
       .then(res => {
         dispatch(setData(res.data[0]))
       })

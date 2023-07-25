@@ -51,6 +51,11 @@ const routes = [
     title: 'Jump',
     href: '/jump',
     showInNavigation: false
+  },
+  {
+    title: 'Unipower',
+    href: '/unipower',
+    showInNavigation: false
   }
 ]
 
