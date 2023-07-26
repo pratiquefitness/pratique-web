@@ -9,7 +9,9 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <title>Pratique em Casa</title>
         <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <Provider store={store}>
         <AuthProvider>
