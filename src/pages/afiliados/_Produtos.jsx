@@ -20,10 +20,10 @@ const columns = (setLinkID, id) => {
       render: (_, record) => (
         <>
           <div>{record.nome}</div>
-          <div>{record.preco}</div>
-          <div>
-            <b>Comissão: {record.comissao}</b>
-          </div>
+          <p className="mb-2">Preço: {record.preco}</p>
+          <span style={{ background: '#ed143d', padding: 8, borderRadius: 20, textAlign: 'center', color: 'white' }}>
+            Comissão: {record.comissao}
+          </span>
         </>
       )
     },
