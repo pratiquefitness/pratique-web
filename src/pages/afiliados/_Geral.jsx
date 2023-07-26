@@ -25,7 +25,11 @@ export default function Geral() {
         </Col>
         <Col span={12}>
           <div className="p-4" style={{ background: token.colorPrimary, borderRadius: 5 }}>
-            <Statistic title="Valor a Receber" value={`R$ ${data.valorReceber},00`} />
+            <Statistic
+              title={<span style={{ color: 'white' }}>Valor a Receber</span>}
+              valueStyle={{ color: 'white' }}
+              value={`R$ ${data.valorReceber},00`}
+            />
           </div>
         </Col>
       </Row>

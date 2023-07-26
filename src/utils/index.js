@@ -31,7 +31,10 @@ const utils = {
     return monthSelected.length ? monthSelected[0] : months[0]
   },
   fieldSearch: (list, input, field) => {
-    list = list.filter(item => item[field].includes(input))
+    list = list.filter(item => {
+      return item[field].toLowerCase().includes(input.toLowerCase())
+    })
+
     return list
   },
   wildCardSearch: (list, input) => {
