@@ -4,6 +4,11 @@ import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
 
 const items = [
   {
+    key: '2',
+    label: `Aulas`,
+    children: <AulasColetivas tema={'spinning'} />
+  },
+  {
     key: '1',
     label: `Instruções`,
     children: (
@@ -168,11 +173,6 @@ const items = [
         </Collapse>
       </>
     )
-  },
-  {
-    key: '2',
-    label: `Aulas`,
-    children: <AulasColetivas tema={'spinning'} />
   }
 ]
 
