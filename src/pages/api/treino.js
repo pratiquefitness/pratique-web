@@ -27,6 +27,7 @@ export default async function handler(req, res) {
     })
 
     if (fichasExist.length) {
+      user.fichas = fichasExist
       user.ficha = fichasExist[0]
 
       user.treinos = await Promise.all(
