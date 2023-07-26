@@ -38,10 +38,12 @@ const columns = (setLinkID, id) => {
             setLinkID(record.id)
             const id = record.id.split('&')[0]
             const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
-            const link = await fetch(url)
-            const linkFinal = `${link.url}?ref=${id}`
-            utils.copyTextToClipboard(linkFinal)
-            setLinkID(linkFinal)
+            const response = await fetch(url)
+            response.text().then(function (text) {
+              const linkFinal = `${text}?ref=${id}`
+              utils.copyTextToClipboard(linkFinal)
+              setLinkID(linkFinal)
+            })
           }}
         >
           Link
