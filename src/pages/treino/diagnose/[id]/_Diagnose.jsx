@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getDiagnose } from '@/redux/actions/diagnose'
+import { Loading } from '@/components'
+import { Alert, Typography } from 'antd'
+import { produtos } from '@/constants/diagnose'
+import { FaCheck } from 'react-icons/fa'
 
 const getRespostas = diagnose_resposta => {
   if (diagnose_resposta) {
@@ -24,18 +28,107 @@ const getRespostas = diagnose_resposta => {
   }
 }
 
+const getTratamento = respostas => {
+  return (
+    Object.keys(respostas)
+      .map((valor, item) => {
+        if (valor === 'estima' && respostas[valor] === 'sim') {
+          return 'Aumentar sua Auto Estima'
+        }
+        if (valor === 'sono' && respostas[valor] === 'mal') {
+          return 'Melhorar o seu Sono'
+        }
+        if (valor === 'ansiedade' && respostas[valor] === 'sim') {
+          return 'Diminuir sua Ansiedade'
+        }
+        if (valor === 'stress' && respostas[valor] === 'sim') {
+          return 'Diminuir seu Stress'
+        }
+        if (valor === 'indisposto' && respostas[valor] === 'sim') {
+          return 'Acabar com sua Indisposição'
+        }
+        if (valor === 'imunidade' && respostas[valor] === 'nao') {
+          return 'Aumentar sua Imunidade'
+        }
+        return null
+      })
+      .filter(n => n)
+      .join(', ') + '.'
+  )
+}
+
+const getSuplementos = respostas => {
+  const suplementacao = []
+  if (respostas.estima === 'sim') {
+    suplementacao.push('estima')
+  }
+  if (respostas.sono === 'mal') {
+    suplementacao.push('sono')
+  }
+  if (respostas.ansiedade === 'sim') {
+    suplementacao.push('ansiedade')
+  }
+  if (respostas.dores === 'sim') {
+    suplementacao.push('dores')
+  }
+  if (respostas.sangue === 'sim') {
+    suplementacao.push('sangue')
+  }
+  if (respostas.indisposto === 'sim') {
+    suplementacao.push('indisposto')
+  }
+  if (respostas.stress === 'sim') {
+    suplementacao.push('stress')
+  }
+  if (respostas.imunidade === 'sim') {
+    suplementacao.push('imunidade')
+  }
+  return suplementacao
+    .map(item => {
+      if (item === 'estima') {
+        return 'RETENTION<br />DRY BELLY<br />MAXI PRO'
+      }
+      if (item === 'sono') {
+        return 'SLEEP'
+      }
+      if (item === 'ansiedade') {
+        return 'IMMUNITY+<br />SLEEP<br />PROTEIN+<br />DRY BELLY<br />RETENTION'
+      }
+      if (item === 'dores') {
+        return 'RECOVER'
+      }
+      if (item === 'sangue') {
+        return 'RETENTION<br />DRY BELLY<br />PROTEIN+'
+      }
+      if (item === 'indisposto') {
+        return 'DRY BELLY<br />RETENTION'
+      }
+      if (item === 'stress') {
+        return 'SLEEP'
+      }
+      if (item === 'imunidade') {
+        return 'IMMUNITY+'
+      }
+      if (item === 'pressao') {
+        return 'IMMUNITY+<br />SLEEP<br />PROTEIN+<br />DRY BELLY<br />RETENTION<br />IMMUNITY+'
+      }
+    })
+    .filter(n => n)
+    .join('<br />')
+}
+
 const initDiagnose = data => {
   if (data) {
     const respostas = getRespostas(data.diagnose_resposta)
-    console.log({
+    return {
       ...data,
       respostas
-    })
+    }
   }
 }
 
 export default function Diagnose({ id }) {
-  const [diagnose, setDiagnose] = useState(0)
+  const [diagnose, setDiagnose] = useState({})
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
 
@@ -47,5 +140,37 @@ export default function Diagnose({ id }) {
     setDiagnose(initDiagnose(data.find(item => item.diagnose_id === id)))
   }, [id, data])
 
-  return <div></div>
+  return (
+    <Loading spinning={loading}>
+      <div className="text-center">
+        <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
+        <img
+          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.png`}
+          style={{ filter: 'invert(100%)' }}
+          className="mb-4"
+          height={20}
+        />
+        <Typography.Paragraph>{produtos[diagnose?.diagnose_produto]}</Typography.Paragraph>
+
+        {diagnose?.diagnose_subproduto !== 'nenhum' ? (
+          <>
+            <Typography.Title level={3}>TRATAMENTO INDICADO</Typography.Title>
+            <Typography.Paragraph>{diagnose?.diagnose_subproduto}</Typography.Paragraph>
+          </>
+        ) : null}
+        <Typography.Title level={3}>VOCÊ PRECISA</Typography.Title>
+        <Alert
+          type="warning"
+          style={{ textTransform: 'capitalize' }}
+          message={`MELHORAR DORES: ${diagnose?.diagnose_dores}.`}
+          className="mb-4"
+          showIcon
+        />
+        <Typography.Paragraph>{getTratamento(diagnose?.respostas || {})}</Typography.Paragraph>
+        <Typography.Title level={3}>Suplementos Indicados para Você!</Typography.Title>
+        <div dangerouslySetInnerHTML={{ __html: getSuplementos(diagnose?.respostas || {}) }}></div>
+        <img src="/images/suplementos.png" width={'100%'} className="mt-4" />
+      </div>
+    </Loading>
+  )
 }

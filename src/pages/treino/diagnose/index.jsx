@@ -4,6 +4,7 @@ import { Table, Tag } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
+import Link from 'next/link'
 
 const columns = [
   {
@@ -27,7 +28,7 @@ const columns = [
     title: '',
     dataIndex: 'acoes',
     key: 'acoes',
-    render: () => <a>Ver</a>
+    render: (_, record) => <Link href={`/treino/diagnose/${record.diagnose_id}`}>Ver</Link>
   }
 ]
 
