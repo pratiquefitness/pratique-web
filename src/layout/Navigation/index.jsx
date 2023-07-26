@@ -25,10 +25,10 @@ export default function Navigation({ data }) {
   }
 
   return (
-    <div className="navigation" style={{ background: token.colorPrimary, width: 350 }}>
+    <div className="navigation" style={{ background: token.colorPrimary, width: isHomeUser ? 350 : 280 }}>
       <ul>
         {data.map((item, key) => {
-          const checkBike = true
+          const checkBike = item.href === '/bike' ? isHomeUser : true
           return (
             item.showInNavigation &&
             checkBike && (

@@ -77,7 +77,6 @@ export default function Header() {
                 <Button className="header-button" type="text" style={{ color: token.colorBgBase }}>
                   <Space align="center">
                     <FaUserCircle size={24} style={{ marginBottom: -4 }} />
-                    {usuario.user_nicename.split('@')[0]}
                   </Space>
                 </Button>
               </Dropdown>

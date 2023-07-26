@@ -46,8 +46,12 @@ export default function Banners() {
       {data.length ? (
         <Carousel {...settings}>
           {data.map((live, key) => {
-            const dia = format(new Date(live.live_datagravacao), 'dd')
-            const mes = format(new Date(live.live_datagravacao), 'MM')
+            const datetime = new Date(`${live.live_datagravacao} ${live.live_horagravacao}:00`)
+            if (new Date() >= datetime) {
+              return false
+            }
+            const dia = format(new Date(live.live_datagravacao + ' 00:00:00'), 'dd')
+            const mes = format(new Date(live.live_datagravacao + ' 00:00:00'), 'MM')
             return (
               <div key={key}>
                 <div style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}>
@@ -59,12 +63,15 @@ export default function Banners() {
                     <h2 style={{ color: token.colorPrimary }}>{live.live_nome}</h2>
                     <p>
                       <Countdown
-                        date={Date.now() + 5000000}
+                        date={datetime}
                         renderer={({ hours, minutes, seconds, completed }) => {
                           return (
-                            <span>
-                              Em: {hours}h {minutes}m {seconds}s
-                            </span>
+                            <>
+                              Começa em: <br />
+                              <span style={{ fontWeight: 'bold', fontSize: 20 }}>
+                                {hours}h {minutes}m {seconds}s
+                              </span>
+                            </>
                           )
                         }}
                       />

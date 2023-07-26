@@ -47,6 +47,21 @@ const utils = {
     }
     list = list.filter(value => searchText(value))
     return list
+  },
+  copyTextToClipboard: text => {
+    if (!navigator.clipboard) {
+      fallbackCopyTextToClipboard(text)
+      return
+    }
+    navigator.clipboard.writeText(text).then(
+      function () {
+        return true
+      },
+      function (err) {
+        console.error(err)
+        return false
+      }
+    )
   }
 }
 

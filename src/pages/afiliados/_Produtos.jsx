@@ -1,5 +1,6 @@
 import { Loading } from '@/components'
-import { Button, Table, Tabs } from 'antd'
+import { Button, Modal, Table, Tabs } from 'antd'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const columns = [
@@ -30,12 +31,14 @@ const columns = [
 ]
 
 export default function Produtos() {
+  const [linkID, setLinkID] = useState('')
   const { data, loading } = useSelector(state => state.afiliados)
 
   const { produtos } = data
 
   return (
     <Loading spinning={loading}>
+      <Modal title="link" open={linkID.length}></Modal>
       <Tabs
         defaultActiveKey="0"
         items={[
