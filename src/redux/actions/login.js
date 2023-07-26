@@ -1,5 +1,5 @@
 import api from '@/services/api'
-import { setThemeMode } from '../slices/global'
+import { setThemeColor } from '../slices/global'
 
 export async function signInRequest(email, senha) {
   const userRequest = await api.post('/login', { email: email, senha: senha })
@@ -19,6 +19,6 @@ export const setTheme = plano => {
     if (plano.includes('NUTRI')) {
       theme = 'green'
     }
-    dispatch(setThemeMode(theme))
+    dispatch(setThemeColor(theme))
   }
 }

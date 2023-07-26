@@ -1,4 +1,5 @@
-import { Button, Col, Collapse, Row, Space, Tabs, Typography, theme } from 'antd'
+import { Button, Col, Row, Space, Tabs, Typography, theme } from 'antd'
+import { Collapse, Panel } from '@/components'
 import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
 
 const items = [
@@ -15,7 +16,7 @@ const items = [
           <Typography.Paragraph>Siga o Passo a passo para participar das aulas:</Typography.Paragraph>
         </div>
         <Collapse>
-          <Collapse.Panel header="1º Assista aulas ao vivo no YouTube">
+          <Panel header="1º Assista aulas ao vivo no YouTube">
             <Space direction="vertical">
               <p>
                 Assista nossas aulas no YouTube pela sua TV ou Computador atráves dos canais NetFit Brasil e Pratique Em
@@ -43,8 +44,8 @@ const items = [
               </Row>
               <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </Space>
-          </Collapse.Panel>
-          <Collapse.Panel header="2º Baixe o App de monitoramento">
+          </Panel>
+          <Panel header="2º Baixe o App de monitoramento">
             <Space direction="vertical">
               <p>
                 Pedale junto com todo Pelotão, se enxergue na Tela, interaja com Professor e todos na Sala NETFIT,
@@ -75,8 +76,8 @@ const items = [
                 allowfullscreen=""
               ></iframe>
             </Space>
-          </Collapse.Panel>
-          <Collapse.Panel header="3° Como Configurar o App de Monitoramento">
+          </Panel>
+          <Panel header="3° Como Configurar o App de Monitoramento">
             <Space direction="vertical">
               <p>🚲 Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa. 📲</p>
               <p>
@@ -95,8 +96,8 @@ const items = [
                 </a>
               </div>
             </Space>
-          </Collapse.Panel>
-          <Collapse.Panel header="4º Acesso ao APP Pratique em Casa">
+          </Panel>
+          <Panel header="4º Acesso ao APP Pratique em Casa">
             <Space direction="vertical">
               <p>Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa.</p>
               <div className="text-center">
@@ -111,8 +112,8 @@ const items = [
                 </a>
               </div>
             </Space>
-          </Collapse.Panel>
-          <Collapse.Panel header="5º Regulagem da Bike">
+          </Panel>
+          <Panel header="5º Regulagem da Bike">
             <iframe
               width="100%"
               height="200"
@@ -122,8 +123,8 @@ const items = [
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen=""
             ></iframe>
-          </Collapse.Panel>
-          <Collapse.Panel header="6º Participar do Grupo Exclusivo Telegram">
+          </Panel>
+          <Panel header="6º Participar do Grupo Exclusivo Telegram">
             <Space direction="vertical">
               <p>Temos também um grupo do Telegram com todos professores e a turma do pedal Pratique em casa:</p>
               <p>
@@ -132,13 +133,13 @@ const items = [
                 </a>
               </p>
             </Space>
-          </Collapse.Panel>
-          <Collapse.Panel header="Quadro de Horários">
+          </Panel>
+          <Panel header="Quadro de Horários">
             <p>
               <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </p>
-          </Collapse.Panel>
-          <Collapse.Panel header="Solicitar manutenção">
+          </Panel>
+          <Panel header="Solicitar manutenção">
             <iframe
               src="https://form.typeform.com/to/tANzURg0"
               width="100%"
@@ -146,15 +147,15 @@ const items = [
               frameborder="0"
               allowfullscreen="true"
             ></iframe>
-          </Collapse.Panel>
-          <Collapse.Panel header="Loja Pratique">
+          </Panel>
+          <Panel header="Loja Pratique">
             <p className="p-10 text-center">
               <a href="https://lojapratique.com.br/" target="_blank">
                 <img src="/images/bike/loja.png" width={200} alt="" />
               </a>
             </p>
-          </Collapse.Panel>
-          <Collapse.Panel header="Whatsapp">
+          </Panel>
+          <Panel header="Whatsapp">
             <p className="p-10 text-center">
               <a
                 href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
@@ -163,7 +164,7 @@ const items = [
                 <img src="/images/bike/whats.png" width={150} alt="" />
               </a>
             </p>
-          </Collapse.Panel>
+          </Panel>
         </Collapse>
       </>
     )

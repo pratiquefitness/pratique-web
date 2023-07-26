@@ -7,6 +7,9 @@ const { Panel: AntdPanel } = AntdCollapse
 const { token } = getTheme()
 
 export const CollapseStyled = styled(AntdCollapse)`
+  /* .ant-collapse-item .ant-collapse-header {
+    background-color: red;
+  } */
   .ant-collapse-header svg {
     fill: #fff;
   }

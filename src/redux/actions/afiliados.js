@@ -6,7 +6,9 @@ export const getDadosAfiliado = () => {
     const { login } = getState()
     dispatch(setLoading(true))
     return apiLojaAfiliados
-      .post('getDadosAfiliado.php', { email: login.usuario.user_email, id: login.usuario.ID })
+      .post('getDadosAfiliado.php', {
+        isAffiliate: login.usuario.isAffiliate
+      })
       .then(res => {
         dispatch(setData(res.data))
       })

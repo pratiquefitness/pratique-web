@@ -2,7 +2,6 @@ import { Button, Checkbox, Form, Input, Typography, message, theme } from 'antd'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsAuthenticated, setThemeMode } from '@/redux/slices/global'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
 
@@ -18,7 +17,6 @@ export default function LoginView() {
     if (!login) {
       message.error('Usuário ou senha invalidos!')
     }
-    //dispath(setThemeMode(values.username))
   }
 
   return (

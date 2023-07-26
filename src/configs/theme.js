@@ -1,5 +1,4 @@
 import { theme as antheme } from 'antd'
-import store from '@/redux/store'
 
 const theme = {
   algorithm: {
@@ -18,18 +17,15 @@ const theme = {
   }
 }
 
-export const getTheme = () => {
-  const mode = 'light'
-  const { themeMode } = store.getState().global
+export const getTheme = (themeColor, themeMode) => {
   return {
-    algorithm: theme.algorithm[mode],
+    algorithm: theme.algorithm[themeMode],
     token: {
-      colorPrimary: theme.colorPrimary[themeMode],
-      colorFillAlter: theme.colorPrimary[themeMode],
+      colorPrimary: theme.colorPrimary[themeColor],
       controlHeight: 50,
       controlHeightSM: 30
     },
-    logo: theme.logo[themeMode]
+    logo: theme.logo[themeColor]
   }
 }
 

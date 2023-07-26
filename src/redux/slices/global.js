@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isAuthenticated: false,
-  themeMode: 'red'
+  themeColor: 'red',
+  themeMode: 'light'
 }
 
 export const globalSlice = createSlice({
@@ -15,6 +16,12 @@ export const globalSlice = createSlice({
         isAuthenticated: action.payload
       }
     },
+    setThemeColor(state, action) {
+      return {
+        ...state,
+        themeColor: action.payload
+      }
+    },
     setThemeMode(state, action) {
       return {
         ...state,
@@ -24,6 +31,6 @@ export const globalSlice = createSlice({
   }
 })
 
-export const { setIsAuthenticated, setThemeMode } = globalSlice.actions
+export const { setIsAuthenticated, setThemeColor, setThemeMode } = globalSlice.actions
 
 export default globalSlice

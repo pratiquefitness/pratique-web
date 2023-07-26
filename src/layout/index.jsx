@@ -17,10 +17,11 @@ const { Title } = Typography
 
 export default function Layout({ children }) {
   const router = useRouter()
+  const { themeColor, themeMode } = useSelector(state => state.global)
   const { authenticated, usuario } = useSelector(state => state.login)
   const pathname = usePathname()
   return (
-    <ConfigProvider theme={getTheme()} locale={ptBR}>
+    <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
         <AntLayout className="app">
           <Header />
