@@ -30,7 +30,7 @@ export default function MeuTreinoView() {
               href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20Professor%20,%20estou%20vindo%20da%20pagina%20de%20treino%20do%20Aplicativo"
               target="_blank"
             >
-              <Button icon={<FaWhatsapp />} style={{ background: '#756483', color: 'white' }} block>
+              <Button icon={<FaWhatsapp fill="#25D366" />} style={{ background: '#756483', color: 'white' }} block>
                 Ajuste seu Treino
               </Button>
             </a>
