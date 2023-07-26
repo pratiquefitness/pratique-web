@@ -26,14 +26,5 @@ const items = [
 ]
 
 export default function Afiliados() {
-  const dispatch = useDispatch()
-  const { loading } = useSelector(state => state.afiliados)
-  useEffect(() => {
-    dispatch(getDadosAfiliado())
-  }, [])
-  return (
-    <Loading spinning={loading}>
-      <Tabs defaultActiveKey="0" items={items} />
-    </Loading>
-  )
+  return <Tabs defaultActiveKey="0" items={items} />
 }

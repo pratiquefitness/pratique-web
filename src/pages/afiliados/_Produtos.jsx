@@ -1,9 +1,10 @@
 import { Loading } from '@/components'
+import { getProdutosAfiliado } from '@/redux/actions/afiliados'
 import utils from '@/utils'
 import { Alert, Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LuCheckCircle2 } from 'react-icons/lu'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const messageLink = () => {
   message.success('Link copiado!')
@@ -60,12 +61,15 @@ const columns = (setLinkID, id) => {
 }
 
 export default function Produtos() {
-  const inputRef = useRef(null)
+  const dispatch = useDispatch()
+
   const [linkID, setLinkID] = useState('')
   const { usuario } = useSelector(state => state.login)
-  const { data, loading } = useSelector(state => state.afiliados)
+  const { produtos, loading } = useSelector(state => state.afiliados)
 
-  const { produtos } = data
+  useEffect(() => {
+    dispatch(getProdutosAfiliado())
+  }, [])
 
   return (
     <Loading spinning={loading}>

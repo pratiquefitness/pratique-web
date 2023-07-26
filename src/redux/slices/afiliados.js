@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  data: [],
+  geral: [],
+  comissao: [],
+  produtos: [],
   loading: true
 }
 
@@ -9,8 +11,14 @@ export const afiliadosSlice = createSlice({
   name: 'afiliados',
   initialState,
   reducers: {
-    setData(state, action) {
-      return { ...state, data: action.payload }
+    setGeral(state, action) {
+      return { ...state, geral: action.payload }
+    },
+    setComissao(state, action) {
+      return { ...state, comissao: action.payload }
+    },
+    setProdutos(state, action) {
+      return { ...state, produtos: action.payload }
     },
     setLoading(state, action) {
       return { ...state, loading: action.payload }
@@ -18,6 +26,6 @@ export const afiliadosSlice = createSlice({
   }
 })
 
-export const { setData, setLoading } = afiliadosSlice.actions
+export const { setGeral, setComissao, setProdutos, setLoading } = afiliadosSlice.actions
 
 export default afiliadosSlice

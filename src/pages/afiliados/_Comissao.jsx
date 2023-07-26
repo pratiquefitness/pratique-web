@@ -1,11 +1,19 @@
+import { getComissoesAfiliado } from '@/redux/actions/afiliados'
 import { Table } from 'antd'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Comissao() {
-  const { data, loading } = useSelector(state => state.afiliados)
+  const dispatch = useDispatch()
+  const { comissao, loading } = useSelector(state => state.afiliados)
+
+  useEffect(() => {
+    dispatch(getComissoesAfiliado())
+  }, [])
+
   return (
     <Table
-      dataSource={data.comissoes}
+      dataSource={comissao}
       columns={[
         {
           title: 'Comissão',
