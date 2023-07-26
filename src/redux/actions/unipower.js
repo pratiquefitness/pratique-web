@@ -8,7 +8,7 @@ export const getCursos = () => {
     return apiUnipower
       .post('getCourses.php', { email: login.usuario.user_email, id: login.usuario.ID })
       .then(res => {
-        dispatch(setData(res.data[0]))
+        dispatch(setData(res.data))
       })
       .finally(() => {
         dispatch(setLoading(false))
