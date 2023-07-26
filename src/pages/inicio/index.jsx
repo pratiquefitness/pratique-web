@@ -10,6 +10,7 @@ const { Title, Text } = Typography
 export default function Inicio() {
   const [horariosModal, setHorariosModal] = useState(false)
   const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
+  const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   useEffect(() => {
@@ -44,6 +45,36 @@ export default function Inicio() {
         </Space>
       </Modal>
 
+      <Modal
+        title="Saver Club"
+        open={saverClubModal}
+        onCancel={() => setSaverClubModal(false)}
+        footer={null}
+        width={300}
+        centered
+      >
+        <Space direction="vertical">
+          <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique" target="_blank">
+            <img src="/images/clube_certo.png" width={'100%'} className="rounded" />
+          </a>
+          <a href="https://grupopratique.typeform.com/cadas-desconto" target="_blank">
+            <img src="/images/igreen.png" width={'100%'} className="rounded" />
+          </a>
+          <a href="https://www.bolsamaisbrasil.com.br/unipower/bolsas" target="_blank">
+            <img src="/images/bolsa_brasil.png" width={'100%'} className="rounded" />
+          </a>
+          <a
+            href="https://api.whatsapp.com/send?phone=5531984400941&text=Ol%C3%A1%2C+Igor+da+RDC+Viagens.+Sou+assinante+do+Saver+Club+e+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+descontos+da+assinatura+de+viagens"
+            target="_blank"
+          >
+            <img src="/images/rdc.png" width={'100%'} className="rounded" />
+          </a>
+          <a href="https://pratiquefitness.com.br/" target="_blank">
+            <img src="/images/pratique.png" width={'100%'} className="rounded" />
+          </a>
+        </Space>
+      </Modal>
+
       <Banners />
 
       {usuario.isEmployee ? (
@@ -67,12 +98,12 @@ export default function Inicio() {
           <Row gutter={6} className="mb-2 mt-2">
             <Col span={12}>
               <a href="https://www.clubecertosaude.com.br/saude/saversaude/" target="_blank">
-                <img src="/images/saver_saude.png" width="100%" />
+                <img src="/images/saver_saude.png" width="100%" className="rounded" />
               </a>
             </Col>
             <Col span={12}>
-              <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique" target="_blank">
-                <img src="/images/saver_club.png" width="100%" />
+              <a onClick={() => setSaverClubModal(true)}>
+                <img src="/images/saver_club.png" width="100%" className="rounded" />
               </a>
             </Col>
           </Row>
