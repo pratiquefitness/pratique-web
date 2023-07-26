@@ -1,31 +1,33 @@
 import { Button, Tabs } from 'antd'
+import Geral from './_Geral'
+import Comissao from './_Comissao'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { getDadosAfiliado } from '@/redux/actions/afiliados'
+import Produtos from './_Produtos'
 
 const items = [
   {
     key: 'geral',
     label: `Geral`,
-    children: `Content of Tab Pane 2`
+    children: <Geral />
   },
   {
     key: 'comissao',
     label: `Comissão`,
-    children: `Content of Tab Pane 2`
-  },
-  {
-    key: 'pagamentos',
-    label: `Pagamentos`,
-    children: `Content of Tab Pane 3`
+    children: <Comissao />
   },
   {
     key: 'produtos',
     label: `Produtos`,
-    children: `Content of Tab Pane 4`
+    children: <Produtos />
   }
 ]
 
 export default function Afiliados() {
-  return (
-    // <Tabs defaultActiveKey="1" items={items} />
-    <Button block>Acesse o painel antigo</Button>
-  )
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getDadosAfiliado())
+  }, [])
+  return <Tabs defaultActiveKey="0" items={items} />
 }
