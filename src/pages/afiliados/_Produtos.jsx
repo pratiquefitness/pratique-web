@@ -1,8 +1,13 @@
 import { Loading } from '@/components'
 import utils from '@/utils'
-import { Alert, Button, Input, Modal, Table, Tabs } from 'antd'
+import { Alert, Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
 import { useRef, useState } from 'react'
+import { LuCheckCircle2 } from 'react-icons/lu'
 import { useSelector } from 'react-redux'
+
+const messageLink = () => {
+  message.success('Link copiado!')
+}
 
 const columns = (setLinkID, id) => {
   return [
@@ -42,6 +47,7 @@ const columns = (setLinkID, id) => {
             response.text().then(function (text) {
               const linkFinal = `${text}?ref=${id}`
               utils.copyTextToClipboard(linkFinal)
+              messageLink()
               setLinkID(linkFinal)
             })
           }}
@@ -65,20 +71,15 @@ export default function Produtos() {
     <Loading spinning={loading}>
       <Modal title="Link" open={linkID.length} onCancel={() => setLinkID('')} footer={null} width={300} centered>
         {linkID.includes('http') ? (
-          <>
-            <Input
-              style={{ border: '1px dashed gray' }}
-              className="my-4"
-              value={linkID}
-              ref={inputRef}
-              onClick={() => {
-                inputRef.current.focus({
-                  cursor: 'all'
-                })
-              }}
-            />
-            <Alert message="Link copiado!" showIcon />
-          </>
+          <div className="text-center">
+            <LuCheckCircle2 style={{ fontSize: 50, color: '#ed143d' }} />
+            <Typography.Title level={4} className="mb-4">
+              Link Gerado!
+            </Typography.Title>
+            <Button type="primary" size="small" onClick={messageLink}>
+              Copiar Link
+            </Button>
+          </div>
         ) : (
           <Loading spinning />
         )}
