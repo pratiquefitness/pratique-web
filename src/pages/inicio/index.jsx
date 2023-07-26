@@ -59,9 +59,9 @@ export default function Inicio() {
               </Link>
             </Col>
             <Col span={12}>
-              <a href="https://metodologiapowergym.com.br/courses/" target="_blank">
+              <Link href="/unipower">
                 <img src="/images/unipower.png" width="100%" />
-              </a>
+              </Link>
             </Col>
           </Row>
           <Row gutter={6} className="mb-2 mt-2">

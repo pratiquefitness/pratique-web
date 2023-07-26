@@ -30,6 +30,10 @@ const utils = {
     const monthSelected = months.filter(mes => mes.key === parseInt(month))
     return monthSelected.length ? monthSelected[0] : months[0]
   },
+  fieldSearch: (list, input, field) => {
+    list = list.filter(item => item[field].includes(input))
+    return list
+  },
   wildCardSearch: (list, input) => {
     const searchText = item => {
       for (const key in item) {

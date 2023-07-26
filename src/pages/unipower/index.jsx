@@ -17,7 +17,7 @@ export default function Unipower() {
 
   const searchData = e => {
     const value = e.currentTarget.value
-    const dataFiltered = utils.wildCardSearch(data, value)
+    const dataFiltered = utils.fieldSearch(data, value, 'post_title')
     setSearch(value)
     setDataSearch(dataFiltered)
   }
