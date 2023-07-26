@@ -1,12 +1,13 @@
 import { Button, Col, Row } from 'antd'
 import { usePathname, useRouter } from 'next/navigation'
-import { LuUserCheck } from 'react-icons/lu'
+import { FaDiagnoses } from 'react-icons/fa'
+import { LuDumbbell, LuUserCheck } from 'react-icons/lu'
 
 const navigation = [
   {
     title: 'Meu Treino',
     href: '/treino',
-    icon: <LuUserCheck />
+    icon: <LuDumbbell />
   },
   {
     title: 'Scanner',
@@ -16,7 +17,7 @@ const navigation = [
   {
     title: 'Diagnose',
     href: '/treino/diagnose',
-    icon: <LuUserCheck />
+    icon: <FaDiagnoses />
   }
 ]
 

@@ -1,6 +1,6 @@
 import { Button, Col, Row, Spin, Statistic, Tabs, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
-import { LuAirplay } from 'react-icons/lu'
+import { LuAirplay, LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { getTreino } from '@/redux/actions/treino'
 import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
-import Link from 'next/link'
+import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
 
@@ -36,16 +36,16 @@ export default function MeuTreinoView() {
             </a>
           </Col>
           <Col span={6}>
-            <InfoBox icon={<LuAirplay />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
+            <InfoBox icon={<LuUser />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
           </Col>
           <Col span={6}>
-            <InfoBox icon={<LuAirplay />} title="3 SÉRIES" />
+            <InfoBox icon={<LuClipboardCheck />} title="3 SÉRIES" />
           </Col>
           <Col span={6}>
-            <InfoBox icon={<LuAirplay />} title="10 A 12 REPETIÇÒES" />
+            <InfoBox icon={<BsFire />} title="10 A 12 REPETIÇÒES" />
           </Col>
           <Col span={6}>
-            <InfoBox icon={<LuAirplay />} title="RECUPERAÇÃO 1 MIN" />
+            <InfoBox icon={<LuClock />} title="RECUPERAÇÃO 1 MIN" />
           </Col>
         </Row>
         <div className="text-center pb-4">
