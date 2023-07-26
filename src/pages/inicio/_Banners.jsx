@@ -54,30 +54,34 @@ export default function Banners() {
             const mes = format(new Date(live.live_datagravacao + ' 00:00:00'), 'MM')
             return (
               <div key={key}>
-                <div style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}>
-                  <div className="p-4">
-                    <h3>
-                      {`${dia} de ${utils.getMonthNames(mes).name} `}
-                      <small>às {live.live_horagravacao}H</small>
-                    </h3>
-                    <h2 style={{ color: token.colorPrimary }}>{live.live_nome}</h2>
-                    <p>
-                      <Countdown
-                        date={datetime}
-                        renderer={({ hours, minutes, seconds, completed }) => {
-                          return (
-                            <>
-                              Começa em: <br />
-                              <span style={{ fontWeight: 'bold', fontSize: 20 }}>
-                                {hours}h {minutes}m {seconds}s
-                              </span>
-                            </>
-                          )
-                        }}
-                      />
-                    </p>
+                <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
+                  <div
+                    style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}
+                  >
+                    <div className="p-4">
+                      <h3>
+                        {`${dia} de ${utils.getMonthNames(mes).name} `}
+                        <small>às {live.live_horagravacao}H</small>
+                      </h3>
+                      <h2 style={{ color: token.colorPrimary }}>{live.live_nome}</h2>
+                      <p>
+                        <Countdown
+                          date={datetime}
+                          renderer={({ hours, minutes, seconds, completed }) => {
+                            return (
+                              <>
+                                Começa em: <br />
+                                <span style={{ fontWeight: 'bold', fontSize: 20 }}>
+                                  {hours}h {minutes}m {seconds}s
+                                </span>
+                              </>
+                            )
+                          }}
+                        />
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </a>
               </div>
             )
           })}
