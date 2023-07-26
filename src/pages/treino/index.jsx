@@ -49,11 +49,11 @@ export default function MeuTreinoView() {
           </Col>
         </Row>
         <div className="text-center pb-4">
-          <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
+          <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
             {`${data.dia_inicio} ${utils.getMonthNames(data.mes_inicio).nameMin.toUpperCase()} ${data.ano_inicio}`}
           </Tag>
           <ArrowRightOutlined />
-          <Tag color={token.colorPrimary} style={{ fontSize: 10 }} className="m-0">
+          <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
             {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
           </Tag>
         </div>
