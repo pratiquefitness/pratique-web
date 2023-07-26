@@ -153,7 +153,7 @@ export default function Inicio() {
         </Col>
         <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
-            <img src="/images/horarios.png" width="100%" />
+            <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
           </a>
         </Col>
       </Row>
