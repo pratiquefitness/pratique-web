@@ -146,11 +146,11 @@ body .ant-layout-footer {
   background-color: var(--color-white);
 }
 .login-background {
-  background-image: url(/images/people-login.png);
-  background-color: #0f0f0f;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: bottom;
+  background: url(/images/people-login.png) no-repeat center top fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   height: 100vh;
   display: flex;
   align-items: center;

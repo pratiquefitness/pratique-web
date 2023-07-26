@@ -23,7 +23,12 @@ export default function LoginView() {
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
       <div className="w-100 p-6" style={{ maxWidth: 400 }}>
         <div className="logo">
-          <Image src="/logo.svg" width={220} height={58} />
+          <Image
+            src="/logo.svg"
+            width={220}
+            height={58}
+            style={{ filter: 'drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4))' }}
+          />
         </div>
         <div className="box-login">
           <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
@@ -45,7 +50,7 @@ export default function LoginView() {
               </Button>
             </Form.Item>
           </Form>
-          <Typography.Paragraph className="text-center">
+          <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
             Ao clicar em ENTRAR
             <br /> você concorda com os nossos termos.
           </Typography.Paragraph>
