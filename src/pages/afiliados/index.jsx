@@ -2,9 +2,10 @@ import { Button, Tabs } from 'antd'
 import Geral from './_Geral'
 import Comissao from './_Comissao'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getDadosAfiliado } from '@/redux/actions/afiliados'
 import Produtos from './_Produtos'
+import { Loading } from '@/components'
 
 const items = [
   {
@@ -26,8 +27,13 @@ const items = [
 
 export default function Afiliados() {
   const dispatch = useDispatch()
+  const { loading } = useSelector(state => state.afiliados)
   useEffect(() => {
     dispatch(getDadosAfiliado())
   }, [])
-  return <Tabs defaultActiveKey="0" items={items} />
+  return (
+    <Loading spinning={loading}>
+      <Tabs defaultActiveKey="0" items={items} />
+    </Loading>
+  )
 }

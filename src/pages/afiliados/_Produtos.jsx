@@ -21,6 +21,9 @@ const columns = (setLinkID, id) => {
         <>
           <div>{record.nome}</div>
           <div>{record.preco}</div>
+          <div>
+            <b>Comissão: {record.comissao}</b>
+          </div>
         </>
       )
     },
