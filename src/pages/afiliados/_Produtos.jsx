@@ -72,11 +72,11 @@ export default function Produtos() {
       <Modal title="Link" open={linkID.length} onCancel={() => setLinkID('')} footer={null} width={300} centered>
         {linkID.includes('http') ? (
           <div className="text-center">
-            <LuCheckCircle2 style={{ fontSize: 50, color: '#ed143d' }} />
+            <LuCheckCircle2 style={{ fontSize: 50, color: '#25D366' }} />
             <Typography.Title level={4} className="mb-4">
               Link Gerado!
             </Typography.Title>
-            <Button type="primary" size="small" onClick={messageLink}>
+            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
             </Button>
           </div>
