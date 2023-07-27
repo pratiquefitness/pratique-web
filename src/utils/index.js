@@ -22,9 +22,14 @@ const utils = {
     const updatedData = JSON.stringify(data, (key, value) => (typeof value === 'bigint' ? value.toString() : value))
     return JSON.parse(updatedData)
   },
-  convertToEmbedUrl: url => {
+  convertToYouTubeEmbedUrl: url => {
     const videoId = url.split('/').pop()
     return `https://www.youtube.com/embed/${videoId}`
+  },
+  getIdFromYouTubeUrl: url => {
+    const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+    const match = url.match(regExp)
+    return match && match[7].length == 11 ? match[7] : false
   },
   getMonthNames: month => {
     const monthSelected = months.filter(mes => mes.key === parseInt(month))

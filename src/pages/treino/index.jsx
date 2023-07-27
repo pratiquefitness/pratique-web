@@ -11,6 +11,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
+import YouTubeVideo from 'react-youtube'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
@@ -60,13 +61,32 @@ export default function MeuTreinoView() {
         <Collapse className="collapse-treino">
           {!loading
             ? data.treinos.map((treino, key) => {
+                const playerRef = []
                 return (
                   <Panel header={treino.nome} key={key}>
-                    <Collapse className="collapse-treino">
+                    <Collapse
+                      className="collapse-treino"
+                      onChange={actives => {
+                        playerRef.map((player, key) => {
+                          if (!actives.includes(key)) {
+                            player[key].pauseVideo()
+                          }
+                        })
+                      }}
+                    >
                       {treino.videos.map((video, key) => (
                         <Panel header={video.exercicio_nome} key={key}>
                           <p>
-                            <iframe
+                            <YouTubeVideo
+                              videoId={utils.getIdFromYouTubeUrl(video.exercicio_url)}
+                              onReady={e => playerRef.push({ [key]: e.target })}
+                              opts={{
+                                width: '100%',
+                                height: '200px',
+                                playerVars: {}
+                              }}
+                            />
+                            {/* <iframe
                               width="100%"
                               height="200px"
                               src={`${utils.convertToEmbedUrl(
@@ -75,7 +95,7 @@ export default function MeuTreinoView() {
                               frameborder="0"
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                               allowfullscreen=""
-                            ></iframe>
+                            ></iframe> */}
                             {video.exercicio_descricao}
                           </p>
                         </Panel>
