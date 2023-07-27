@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  data: [],
+  data: {
+    disponiveis: [],
+    anteriores: []
+  },
   loading: true
 }
 
