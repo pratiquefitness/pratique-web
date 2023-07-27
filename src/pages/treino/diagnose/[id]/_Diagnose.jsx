@@ -168,7 +168,9 @@ export default function Diagnose({ id }) {
         />
         <Typography.Paragraph>{getTratamento(diagnose?.respostas || {})}</Typography.Paragraph>
         <Typography.Title level={3}>Suplementos Indicados para Você!</Typography.Title>
-        <div dangerouslySetInnerHTML={{ __html: getSuplementos(diagnose?.respostas || {}) }}></div>
+        <Typography.Paragraph>
+          <div dangerouslySetInnerHTML={{ __html: getSuplementos(diagnose?.respostas || {}) }}></div>
+        </Typography.Paragraph>
         <img src="/images/suplementos.png" width={'100%'} className="mt-4" />
       </div>
     </Loading>
