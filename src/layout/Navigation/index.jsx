@@ -13,7 +13,7 @@ export default function Navigation({ data }) {
     utils.getByObjectKeyValue(data, 'href', utils.getFirstLevelRoute(pathname)).href
   )
 
-  const isHomeUser = usuario.plano.includes('CASA')
+  const isHomeUser = usuario.plano?.includes('CASA') || false
 
   useEffect(() => {
     setSelected(utils.getFirstLevelRoute(pathname))

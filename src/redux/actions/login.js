@@ -13,10 +13,10 @@ export async function signInRequest(email, senha) {
 export const setTheme = plano => {
   return dispatch => {
     let theme = 'red'
-    if (plano.includes('PRIME')) {
+    if (plano?.includes('PRIME')) {
       theme = 'gold'
     }
-    if (plano.includes('NUTRI')) {
+    if (plano?.includes('NUTRI')) {
       theme = 'green'
     }
     dispatch(setThemeColor(theme))
