@@ -10,7 +10,7 @@ export const updateConta = values => {
     return api
       .post('/conta', { id: login.usuario.ID, ...values })
       .then(res => {
-        dispatch(setLogin({ ...login.usario, ...res.data }))
+        dispatch(setLogin({ ...login.usuario, ...res.data }))
         setToken(res.data)
         message.success('Dados alterados com sucesso!')
       })

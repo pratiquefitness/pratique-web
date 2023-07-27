@@ -80,7 +80,7 @@ export default function Inicio() {
       {usuario.isEmployee ? (
         <>
           <Title level={4} className="m-0">
-            Area do Colaborador!
+            Área do Colaborador!
           </Title>
           <Text type="secondary">Beneficios e conteúdos para você</Text>
           <Row gutter={6} className="mb-2 mt-2">
