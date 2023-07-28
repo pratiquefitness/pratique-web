@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@vercel/analytics": "^1.0.1",
     "antd": "^5.5.2",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",

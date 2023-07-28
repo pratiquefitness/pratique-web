@@ -2,6 +2,7 @@ import Layout from '@/layout'
 import store from '@/redux/store'
 import { Provider } from 'react-redux'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { Analytics } from '@vercel/analytics/react'
 import '@/styles/globals.css'
 import Head from 'next/head'
 
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }) {
           </Layout>
         </AuthProvider>
       </Provider>
+      <Analytics />
     </>
   )
 }
