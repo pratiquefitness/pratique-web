@@ -23,7 +23,8 @@ const settings = {
   autoplay: false,
   autoplaySpeed: 2000,
   style: {
-    marginBottom: 20
+    marginBottom: 20,
+    width: '100%'
   }
 }
 
