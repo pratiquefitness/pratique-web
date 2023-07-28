@@ -11,6 +11,7 @@ const { Title, Paragraph } = Typography
 
 export default function Unipower() {
   const dispatch = useDispatch()
+  const { usuario } = useSelector(state => state.login)
   const { data, loading } = useSelector(state => state.unipower)
   const [dataSearch, setDataSearch] = useState([])
   const [search, setSearch] = useState('')
@@ -50,7 +51,10 @@ export default function Unipower() {
             </Col>
             <Col span={16}>
               <Title level={3}>{curso.post_title}</Title>
-              <a href={curso.guid}>
+              <a
+                href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/courses/${curso.post_name}`}
+                target="_blank"
+              >
                 <Button type="primary">Ver Curso</Button>
               </a>
             </Col>
