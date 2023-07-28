@@ -62,7 +62,7 @@ WHERE wp_posts.post_status = 'publish'
       }
     })
   )
-
+  res.setHeader('Cache-Control', 'no-store')
   res.status(200).json(
     utils.clearDatabaseResult({
       anteriores: anteriores,
