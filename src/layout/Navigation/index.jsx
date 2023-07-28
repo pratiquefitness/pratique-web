@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import utils from '@/utils'
 import { theme } from 'antd'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
 export default function Navigation({ data }) {
   const { token } = theme.useToken()
@@ -33,7 +34,7 @@ export default function Navigation({ data }) {
             item.showInNavigation &&
             checkBike && (
               <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
-                <a href="#">
+                <a style={{ pointerEvents: 'none' }}>
                   <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}>
                     {item.icon}
                   </span>

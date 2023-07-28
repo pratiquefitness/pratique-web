@@ -20,6 +20,9 @@ export default function Layout({ children }) {
   const { themeColor, themeMode } = useSelector(state => state.global)
   const { authenticated, usuario } = useSelector(state => state.login)
   const pathname = usePathname()
+
+  const isApp = typeof window !== 'undefined' && window.self === window.parent ? true : false
+
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
