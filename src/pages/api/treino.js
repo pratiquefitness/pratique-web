@@ -5,8 +5,9 @@ import { format, parseISO } from 'date-fns'
 
 export default async function handler(req, res) {
   let user = {}
-  const { email } = req.body // nao afiliado
-  // const email = 'bruna.vn.costa@gmail.com' // afiliado
+
+  const { email } = req.body
+
   const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
     where: {
       user_email: email

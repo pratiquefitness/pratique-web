@@ -5,18 +5,21 @@ import { useSelector } from 'react-redux'
 
 export default function ScannerView() {
   const { data } = useSelector(state => state.treino)
-  const { ficha } = data
+  const { ficha, fichas } = data
+
+  const temExame = fichas.find(objeto => objeto.urlexame.includes('pdf'))
+
   return (
     <TreinoLayout>
-      <a href={ficha?.urlexame} target="_blank">
-        {ficha?.urlexame.includes('.pdf') ? (
+      {temExame ? (
+        <a href={temExame?.urlexame} target="_blank">
           <Button shape="round" icon={<DownloadOutlined />} size="large" block>
             Baixar Exame
           </Button>
-        ) : (
-          <Empty className="my-8" />
-        )}
-      </a>
+        </a>
+      ) : (
+        <Empty className="my-8" />
+      )}
     </TreinoLayout>
   )
 }

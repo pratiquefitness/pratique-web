@@ -11,7 +11,6 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
-import YouTube from 'react-youtube'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()

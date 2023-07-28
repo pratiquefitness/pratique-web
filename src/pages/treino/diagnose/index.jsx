@@ -1,6 +1,6 @@
 import Loading from '@/components/Loading'
 import { getDiagnose } from '@/redux/actions/diagnose'
-import { Table, Tag } from 'antd'
+import { Button, Table, Tag } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
@@ -10,7 +10,8 @@ const columns = [
   {
     title: 'Data',
     dataIndex: 'diagnose_data',
-    key: 'diagnose_data'
+    key: 'diagnose_data',
+    render: text => (text ? text : '-')
   },
   {
     title: 'Método',
@@ -28,7 +29,14 @@ const columns = [
     title: '',
     dataIndex: 'acoes',
     key: 'acoes',
-    render: (_, record) => <Link href={`/treino/diagnose/${record.diagnose_id}`}>Ver</Link>
+    width: 60,
+    render: (_, record) => (
+      <Link href={`/treino/diagnose/${record.diagnose_id}`}>
+        <Button type="primary" size="small">
+          Visualizar
+        </Button>
+      </Link>
+    )
   }
 ]
 
