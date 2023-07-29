@@ -15,7 +15,22 @@ export default async function handler(req, res) {
   })
 
   if (usuarioExist.length) {
-    user = usuarioExist[0]
+    user = {
+      fichas: [],
+      ficha: {},
+      treinos: [],
+      ano_inicio: null,
+      mes_inicio: null,
+      dia_inicio: null,
+      ano_final: null,
+      mes_final: null,
+      dia_final: null,
+      config: null,
+      objetivo: null,
+      nivel: null,
+      ...user,
+      ...usuarioExist[0]
+    }
 
     const fichasExist = await apiPratiquePro.fichas.findMany({
       where: {
@@ -72,6 +87,7 @@ export default async function handler(req, res) {
       }
     }
   }
+
   res.setHeader('Cache-Control', 'no-store')
-  res.status(200).json(utils.clearDatabaseResult(usuarioExist))
+  res.status(200).json(utils.clearDatabaseResult(user))
 }

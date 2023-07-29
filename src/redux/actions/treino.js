@@ -8,7 +8,7 @@ export const getTreino = () => {
     return api
       .post('/treino', { email: login.usuario.user_email })
       .then(res => {
-        dispatch(setData(res.data[0]))
+        dispatch(setData(res.data))
       })
       .finally(() => {
         dispatch(setLoading(false))
