@@ -44,7 +44,7 @@ export default function MeuTreinoView() {
                 <InfoBox icon={<LuClipboardCheck />} title="3 SÉRIES" />
               </Col>
               <Col span={6}>
-                <InfoBox icon={<BsFire />} title="10 A 12 REPETIÇÒES" />
+                <InfoBox icon={<BsFire />} title="10 A 12 REPETIÇÕES" />
               </Col>
               <Col span={6}>
                 <InfoBox icon={<LuClock />} title="RECUPERAÇÃO 1 MIN" />
