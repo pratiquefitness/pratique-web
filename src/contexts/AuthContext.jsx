@@ -19,7 +19,26 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkCookie()
+    window.addEventListener('message', handleMessage)
+    return () => {
+      window.removeEventListener('message', handleMessage)
+    }
   }, [])
+
+  const handleMessage = event => {
+    const message = event.data
+    if (message.type === 'LOGIN_MOBILE') {
+      const token = message.token
+      const login = JSON.parse(token)
+      if (login) {
+        dispatch(setLogin(login))
+        dispatch(setTheme(login.plano))
+      } else {
+        destroyCookie(undefined, tokenName)
+        dispatch(setLoading(false))
+      }
+    }
+  }
 
   async function signIn({ email, senha }) {
     dispatch(setLoading(true))
