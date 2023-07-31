@@ -13,6 +13,8 @@ export default function Inicio() {
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
+  const isSaverAndClient = (usuario.plano?.includes('SAVER CLUB') && !usuario.isEmployee) || false
+
   useEffect(() => {
     message.info('Agora você pode alterar sua senha em Minha Conta')
   }, [])
@@ -101,6 +103,23 @@ export default function Inicio() {
                 <img src="/images/saver_saude.png" width="100%" className="rounded" />
               </a>
             </Col>
+            <Col span={12}>
+              <a onClick={() => setSaverClubModal(true)}>
+                <img src="/images/saver_club.png" width="100%" className="rounded" />
+              </a>
+            </Col>
+          </Row>
+        </>
+      ) : null}
+
+      {isSaverAndClient ? (
+        <>
+          <Title level={4} className="m-0">
+            Área do Cliente!
+          </Title>
+          <Text type="secondary">Beneficios e conteúdos para você</Text>
+
+          <Row gutter={6} className="mb-2 mt-2">
             <Col span={12}>
               <a onClick={() => setSaverClubModal(true)}>
                 <img src="/images/saver_club.png" width="100%" className="rounded" />
