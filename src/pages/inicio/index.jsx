@@ -176,6 +176,18 @@ export default function Inicio() {
           </a>
         </Col>
       </Row>
+      <Row gutter={6} className="mb-2 mt-2">
+        <Col span={12}>
+          <a href="https://pratiquefitness.com.br/trabalhe-na-academia-pratique/" target="_blank">
+            <img src="/images/trabalhe_conosco.png" width="100%" />
+          </a>
+        </Col>
+        <Col span={12}>
+          <a href="https://pratiquefitness.com.br/sobre-a-pratique/" target="_blank">
+            <img src="/images/sua_pratique.png" width="100%" />
+          </a>
+        </Col>
+      </Row>
     </Space>
   )
 }
