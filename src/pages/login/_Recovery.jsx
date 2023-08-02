@@ -123,7 +123,7 @@ export default function Recovery() {
 
   return (
     <Row>
-      <Col span={24}>
+      <Col span={24} className="mt-4">
         <Steps current={modalRecoveryStep} items={items} size="small" />
         <div className="py-6">{steps[modalRecoveryStep].content}</div>
       </Col>
