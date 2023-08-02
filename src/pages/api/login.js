@@ -1,4 +1,5 @@
 import { apiPratiqueFunciona, apiPratiquePro } from '@/services'
+import crypto from 'crypto'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
@@ -11,7 +12,8 @@ export default async function handler(req, res) {
 
   const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
     where: {
-      user_login: email
+      user_login: email,
+      user_pass: crypto.createHash('md5').update(senha).digest('hex')
     }
   })
 
