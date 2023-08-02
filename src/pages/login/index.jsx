@@ -1,6 +1,6 @@
-import { Button, Checkbox, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
+import { Alert, Button, Checkbox, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
@@ -10,14 +10,21 @@ import { resetModalRecovery, setModalRecovery } from '@/redux/slices/login'
 export default function LoginView() {
   const { token } = theme.useToken()
   const { loading, modalRecovery } = useSelector(state => state.login)
+  const searchParams = useSearchParams()
   const { signIn } = useContext(AuthContext)
   const dispath = useDispatch()
   const router = useRouter()
+
+  const error = searchParams.get('error')
 
   const onFinish = async values => {
     const login = await signIn(values)
     if (!login) {
       message.error('Usuário ou senha invalidos!')
+      router.push({
+        pathname: '/',
+        query: { error: 'true' }
+      })
     }
   }
 
@@ -50,8 +57,20 @@ export default function LoginView() {
             <Form.Item name="senha" rules={[{ required: true, message: 'Preencha sua senha...' }]}>
               <Input.Password placeholder="Senha" />
             </Form.Item>
+            {error && (
+              <Alert
+                message="Usuário ou senha invalidos!"
+                description={
+                  <>
+                    Esqueceu sua senha? <a onClick={() => dispath(setModalRecovery(true))}>Clique aqui</a>.
+                  </>
+                }
+                type="error"
+                showIcon
+              />
+            )}
 
-            <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: -10 }}>
+            <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: error ? 10 : -10 }}>
               Senha padrão: 123
             </Typography.Paragraph>
 
