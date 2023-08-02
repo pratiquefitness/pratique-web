@@ -13,6 +13,7 @@ export default function Inicio() {
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
+  const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER CLUB') && !usuario.isEmployee) || false
 
   useEffect(() => {
@@ -112,17 +113,29 @@ export default function Inicio() {
         </>
       ) : null}
 
-      {isSaverAndClient ? (
+      {isClient ? (
         <>
           <Title level={4} className="m-0">
             Área do Cliente!
           </Title>
           <Text type="secondary">Beneficios e conteúdos para você</Text>
+          <Row gutter={[6, 6]} className="mb-2 mt-2">
+            {isSaverAndClient ? (
+              <Col span={12}>
+                <a onClick={() => setSaverClubModal(true)}>
+                  <img src="/images/saver_club.png" width="100%" className="rounded" />
+                </a>
+              </Col>
+            ) : null}
 
-          <Row gutter={6} className="mb-2 mt-2">
             <Col span={12}>
-              <a onClick={() => setSaverClubModal(true)}>
-                <img src="/images/saver_club.png" width="100%" className="rounded" />
+              <a href="https://pratiquefitness.com.br/trabalhe-na-academia-pratique/" target="_blank">
+                <img src="/images/trabalhe_conosco.png" width="100%" />
+              </a>
+            </Col>
+            <Col span={12}>
+              <a href="https://pratiquefitness.com.br/sobre-a-pratique/" target="_blank">
+                <img src="/images/sua_pratique.png" width="100%" />
               </a>
             </Col>
           </Row>
@@ -133,7 +146,7 @@ export default function Inicio() {
         Você, Feliz e Saudável!
       </Title>
       <Text type="secondary">Exercícios e conteúdos para você</Text>
-      <Row gutter={6} className="mb-2 mt-2">
+      <Row gutter={[6, 6]} className="mb-2 mt-2">
         <Col span={12}>
           <Link href="/meditacao">
             <img src="/images/meditacao.png" width="100%" />
@@ -144,8 +157,7 @@ export default function Inicio() {
             <img src="/images/aulas.png" width="100%" />
           </a>
         </Col>
-      </Row>
-      <Row gutter={6}>
+
         <Col span={12}>
           <Link href="/bike">
             <img src="/images/power.png" width="100%" />
@@ -157,6 +169,7 @@ export default function Inicio() {
           </a>
         </Col>
       </Row>
+
       <Title level={4} className="m-0 mt-6">
         SAC
       </Title>
@@ -173,18 +186,6 @@ export default function Inicio() {
         <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
-          </a>
-        </Col>
-      </Row>
-      <Row gutter={6} className="mb-2 mt-2">
-        <Col span={12}>
-          <a href="https://pratiquefitness.com.br/trabalhe-na-academia-pratique/" target="_blank">
-            <img src="/images/trabalhe_conosco.png" width="100%" />
-          </a>
-        </Col>
-        <Col span={12}>
-          <a href="https://pratiquefitness.com.br/sobre-a-pratique/" target="_blank">
-            <img src="/images/sua_pratique.png" width="100%" />
           </a>
         </Col>
       </Row>
