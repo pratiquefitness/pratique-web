@@ -51,9 +51,10 @@ export default function LoginView() {
               </Button>
             </Form.Item>
           </Form>
-          <Typography.Paragraph>
-            Senha padrão: 123 ou <Link>Clique Aqui</Link> e altere sua senha.
+          <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
+            Senha padrão: 123
           </Typography.Paragraph>
+          {/* <Button block>Esqueci minha senha</Button> */}
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
             Ao clicar em ENTRAR
             <br /> você concorda com os nossos termos.
