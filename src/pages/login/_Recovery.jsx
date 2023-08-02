@@ -52,7 +52,7 @@ export default function Recovery() {
       )
     },
     {
-      title: 'Confirmação',
+      title: 'Código',
       icon: <LoadingOutlined />,
       content: (
         <Form layout="vertical" form={formCheckCode} onFinish={onCheckCode}>
@@ -124,7 +124,7 @@ export default function Recovery() {
   return (
     <Row>
       <Col span={24} className="mt-4">
-        <Steps current={modalRecoveryStep} items={items} size="small" />
+        <Steps current={modalRecoveryStep} items={items} size="small" responsive={false} />
         <div className="py-6">{steps[modalRecoveryStep].content}</div>
       </Col>
     </Row>

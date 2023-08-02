@@ -20,7 +20,10 @@ export const sendEmail = async data => {
     ...smtpOptions
   })
   return await transporter.sendMail({
-    from: process.env.SMTP_FROM_EMAIL,
+    from: {
+      name: 'Pratique Em Casa',
+      address: process.env.SMTP_FROM_EMAIL
+    },
     ...data
   })
 }
@@ -49,7 +52,7 @@ export default async function handler(req, res) {
 
     await sendEmail({
       to: usuarioExist[0].user_login,
-      subject: 'Seu código de verificação Pratique em Casa',
+      subject: 'Recuperação de senha',
       html: render(EmailVerificationCode(usuarioExist[0].user_nicename, code))
     })
     res.status(200).json(utils.clearDatabaseResult([user]))
