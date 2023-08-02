@@ -1,14 +1,15 @@
-import { Button, Checkbox, Form, Input, Typography, message, theme } from 'antd'
+import { Button, Checkbox, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
-import Link from 'next/link'
+import Recovery from './_Recovery'
+import { resetModalRecovery, setModalRecovery } from '@/redux/slices/login'
 
 export default function LoginView() {
   const { token } = theme.useToken()
-  const { loading } = useSelector(state => state.login)
+  const { loading, modalRecovery } = useSelector(state => state.login)
   const { signIn } = useContext(AuthContext)
   const dispath = useDispatch()
   const router = useRouter()
@@ -22,6 +23,15 @@ export default function LoginView() {
 
   return (
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
+      <Modal
+        title="Recuperar senha"
+        open={modalRecovery}
+        footer={null}
+        onCancel={() => dispath(resetModalRecovery())}
+        centered
+      >
+        <Recovery />
+      </Modal>
       <div className="w-100 p-6" style={{ maxWidth: 400 }}>
         <div className="logo">
           <Image
@@ -41,6 +51,10 @@ export default function LoginView() {
               <Input.Password placeholder="Senha" />
             </Form.Item>
 
+            <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: -10 }}>
+              Senha padrão: 123
+            </Typography.Paragraph>
+
             {/* <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
             <Checkbox>Remember me</Checkbox>
           </Form.Item> */}
@@ -51,14 +65,14 @@ export default function LoginView() {
               </Button>
             </Form.Item>
           </Form>
-          <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
-            Senha padrão: 123
+
+          <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: -10 }}>
+            <small>Ao clicar em ENTRAR você concorda com os nossos termos.</small>
           </Typography.Paragraph>
-          {/* <Button block>Esqueci minha senha</Button> */}
-          <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
-            Ao clicar em ENTRAR
-            <br /> você concorda com os nossos termos.
-          </Typography.Paragraph>
+          <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
+          <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
+            Alterar minha senha
+          </Button>
         </div>
       </div>
     </div>

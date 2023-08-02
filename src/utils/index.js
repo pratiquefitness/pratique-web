@@ -72,7 +72,10 @@ const utils = {
       }
     )
   },
-  encrypt_md5: text => crypto.createHash('md5').update(text).digest('hex')
+  encrypt_md5: text => crypto.createHash('md5').update(text).digest('hex'),
+  getRndInteger: (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min
+  }
 }
 
 export default utils
