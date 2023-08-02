@@ -1,4 +1,5 @@
 import { months } from '@/constants'
+import crypto from 'crypto'
 
 const utils = {
   getFirstLevelRoute: path => {
@@ -70,7 +71,8 @@ const utils = {
         return false
       }
     )
-  }
+  },
+  encrypt_md5: text => crypto.createHash('md5').update(text).digest('hex')
 }
 
 export default utils

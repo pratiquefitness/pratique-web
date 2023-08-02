@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
+import Link from 'next/link'
 
 export default function LoginView() {
   const { token } = theme.useToken()
@@ -50,6 +51,9 @@ export default function LoginView() {
               </Button>
             </Form.Item>
           </Form>
+          <Typography.Paragraph>
+            Senha padrão: 123 ou <Link>Clique Aqui</Link> e altere sua senha.
+          </Typography.Paragraph>
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}>
             Ao clicar em ENTRAR
             <br /> você concorda com os nossos termos.

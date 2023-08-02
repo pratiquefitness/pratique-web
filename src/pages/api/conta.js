@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     data: {
       user_nicename,
       user_email,
-      user_pass
+      user_pass: utils.encrypt_md5(user_pass)
     }
   })
   res.status(200).json(utils.clearDatabaseResult(data))
