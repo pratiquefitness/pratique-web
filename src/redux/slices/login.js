@@ -26,8 +26,8 @@ export const loginSlice = createSlice({
     setAuthenticated(state) {
       return { ...state, authenticated: true, loading: false }
     },
-    unsetLogin() {
-      return { usuario: {}, authenticated: false, loading: false }
+    unsetLogin(state) {
+      return { ...state, usuario: {}, authenticated: false, loading: false }
     },
     setModalRecoveryStep(state, action) {
       return { ...state, modalRecoveryStep: action.payload }

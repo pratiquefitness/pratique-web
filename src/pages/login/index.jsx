@@ -71,7 +71,7 @@ export default function LoginView() {
           </Typography.Paragraph>
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
           <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
-            Alterar minha senha
+            Esqueci minha senha
           </Button>
         </div>
       </div>
