@@ -8,6 +8,7 @@ const initialState = {
   usuario: {},
   loading: false,
   authenticated: false,
+  modalRegister: false,
   modalRecovery: false,
   modalRecoveryStep: 0,
   modalRecoveryData: {}
@@ -29,11 +30,14 @@ export const loginSlice = createSlice({
     unsetLogin(state) {
       return { ...state, usuario: {}, authenticated: false, loading: false }
     },
-    setModalRecoveryStep(state, action) {
-      return { ...state, modalRecoveryStep: action.payload }
+    setModalRegister(state, action) {
+      return { ...state, modalRegister: action.payload }
     },
     setModalRecovery(state, action) {
       return { ...state, modalRecovery: action.payload }
+    },
+    setModalRecoveryStep(state, action) {
+      return { ...state, modalRecoveryStep: action.payload }
     },
     setModalRecoveryData(state, action) {
       return { ...state, modalRecoveryData: action.payload }
@@ -54,6 +58,7 @@ export const {
   setLoading,
   setAuthenticated,
   unsetLogin,
+  setModalRegister,
   setModalRecovery,
   setModalRecoveryData,
   setModalRecoveryStep,

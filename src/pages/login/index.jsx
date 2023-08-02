@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
 import Recovery from './_Recovery'
-import { resetModalRecovery, setModalRecovery } from '@/redux/slices/login'
+import { resetModalRecovery, setModalRecovery, setModalRegister } from '@/redux/slices/login'
+import Register from './_Register'
 
 export default function LoginView() {
   const { token } = theme.useToken()
-  const { loading, modalRecovery } = useSelector(state => state.login)
+  const { loading, modalRegister, modalRecovery } = useSelector(state => state.login)
   const searchParams = useSearchParams()
   const { signIn } = useContext(AuthContext)
   const dispath = useDispatch()
@@ -38,6 +39,15 @@ export default function LoginView() {
         centered
       >
         <Recovery />
+      </Modal>
+      <Modal
+        title="Cadastre-se"
+        open={modalRegister}
+        footer={null}
+        onCancel={() => dispath(setModalRegister(false))}
+        centered
+      >
+        <Register />
       </Modal>
       <div className="w-100 p-6" style={{ maxWidth: 400 }}>
         <div className="logo">
@@ -89,9 +99,18 @@ export default function LoginView() {
             <small>Ao clicar em ENTRAR você concorda com os nossos termos.</small>
           </Typography.Paragraph>
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
-          <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
-            Esqueci minha senha
-          </Button>
+          <Row gutter={6}>
+            <Col span={12}>
+              <Button className="mb-4" type="primary" onClick={() => dispath(setModalRegister(true))} block>
+                Cadastre-se
+              </Button>
+            </Col>
+            <Col span={12}>
+              <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
+                Esqueci minha senha
+              </Button>
+            </Col>
+          </Row>
         </div>
       </div>
     </div>

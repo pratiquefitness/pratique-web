@@ -33,11 +33,13 @@ model wp_users {
   user_pass           String   @default("") @db.VarChar(255)
   user_nicename       String   @default("") @db.VarChar(50)
   user_email          String   @default("") @db.VarChar(100)
+  user_phone          String?  @db.VarChar(45)
   user_url            String   @default("") @db.VarChar(100)
   user_registered     DateTime @default(now()) @db.DateTime(0)
   user_activation_key String   @default("") @db.VarChar(255)
   user_status         Int      @default(0)
   display_name        String   @default("") @db.VarChar(250)
+  avatar_image        String?  @db.Text
 
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")

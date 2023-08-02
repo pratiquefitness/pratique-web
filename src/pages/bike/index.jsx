@@ -6,7 +6,7 @@ const items = [
   {
     key: '2',
     label: `Aulas`,
-    children: <AulasColetivas tema={'spinning'} />
+    children: <AulasColetivas tema={'netFit_spinning'} />
   },
   {
     key: '1',

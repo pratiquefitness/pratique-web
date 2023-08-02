@@ -1,6 +1,12 @@
 import api from '@/services/api'
 import { setThemeColor } from '../slices/global'
-import { resetModalRecovery, setLoading, setModalRecoveryData, setModalRecoveryStep } from '../slices/login'
+import {
+  resetModalRecovery,
+  setLoading,
+  setModalRecoveryData,
+  setModalRecoveryStep,
+  setModalRegister
+} from '../slices/login'
 import { message } from 'antd'
 
 export async function signInRequest(email, senha) {
@@ -80,6 +86,29 @@ export const changePassword = password => {
           dispatch(resetModalRecovery())
         } else {
           message.error('Erro ao alterar sua senha.')
+        }
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const register = values => {
+  return async dispatch => {
+    dispatch(setLoading(true))
+    return api
+      .post('/login/register', values)
+      .then(res => {
+        if (res.data.length) {
+          if (res.data[0] === 0) {
+            message.error('Este e-mail já foi cadastrado.')
+          } else {
+            message.success('Cadastro realizado com sucesso.')
+            dispatch(setModalRegister(false))
+          }
+        } else {
+          message.error('Erro ao realizar seu cadastro.')
         }
       })
       .finally(() => {
