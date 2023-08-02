@@ -48,8 +48,7 @@ export default async function handler(req, res) {
     })
 
     await sendEmail({
-      //to: usuarioExist[0].user_login,
-      to: 'henriquezolini@gmail.com',
+      to: usuarioExist[0].user_login,
       subject: 'Seu código de verificação Pratique em Casa',
       html: render(EmailVerificationCode(usuarioExist[0].user_nicename, code))
     })
