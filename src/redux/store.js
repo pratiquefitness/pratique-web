@@ -11,11 +11,13 @@ import cisSlice from './slices/cis'
 import pontoSlice from './slices/ponto'
 import unipowerSlice from './slices/unipower'
 import afiliadosSlice from './slices/afiliados'
+import contaSlice from './slices/conta'
 
 const store = configureStore({
   reducer: {
     global: globalSlice.reducer,
     login: loginSlice.reducer,
+    conta: contaSlice.reducer,
     treino: treinoSlice.reducer,
     diagnose: diagnoseSlice.reducer,
     meditacao: meditacaoSlice.reducer,

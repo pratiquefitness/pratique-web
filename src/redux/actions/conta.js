@@ -1,5 +1,6 @@
 import { setToken } from '@/contexts/AuthContext'
-import { setLoading, setLogin } from '../slices/login'
+import { setLogin } from '../slices/login'
+import { setLoading, setLoadingAvatar } from '../slices/conta'
 import api from '@/services/api'
 import { message } from 'antd'
 
@@ -16,6 +17,23 @@ export const updateConta = values => {
       })
       .finally(() => {
         dispatch(setLoading(false))
+      })
+  }
+}
+
+export const uploadAvatar = avatar_image => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoadingAvatar(true))
+    return api
+      .post('/conta/uploadAvatar', { id: login.usuario.ID, avatar_image })
+      .then(res => {
+        dispatch(setLogin({ ...login.usuario, ...res.data }))
+        setToken(res.data)
+        message.success('Avatar alterado com sucesso!')
+      })
+      .finally(() => {
+        dispatch(setLoadingAvatar(false))
       })
   }
 }

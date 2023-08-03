@@ -1,5 +1,6 @@
-import { Button, Col, Dropdown, Layout, Row, Space, Typography, theme } from 'antd'
+import { Avatar, Button, Col, Dropdown, Layout, Row, Space, Typography, theme } from 'antd'
 import { FaMoon, FaSignOutAlt, FaSun, FaUserCircle } from 'react-icons/fa'
+import { UserOutlined } from '@ant-design/icons'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext } from 'react'
 import Logo from '../Logo'
@@ -76,7 +77,11 @@ export default function Header() {
               <Dropdown menu={{ items, onClick }} placement="bottomRight" overlayStyle={{ marginRight: 4, width: 150 }}>
                 <Button className="header-button" type="text" style={{ color: token.colorBgBase }}>
                   <Space align="center">
-                    <FaUserCircle size={24} style={{ marginBottom: -4 }} />
+                    {usuario.avatar_image ? (
+                      <Avatar size={26} src={usuario.avatar_image} />
+                    ) : (
+                      <Avatar size={26} icon={<UserOutlined />} />
+                    )}
                   </Space>
                 </Button>
               </Dropdown>
