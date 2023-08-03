@@ -39,7 +39,7 @@ WHERE wp_posts.post_status = 'publish'
     cisList.map(async ci => {
       const usuarioExist = await apiNovoPower.wp_users.findMany({
         where: {
-          user_login: email
+          user_email: email
         }
       })
 
