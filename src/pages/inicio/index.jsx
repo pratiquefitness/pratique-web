@@ -1,7 +1,7 @@
-import { Col, Modal, Row, Space, Typography, message } from 'antd'
+import { Col, Modal, Row, Space, Typography } from 'antd'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Banners from './_Banners'
 
@@ -15,10 +15,6 @@ export default function Inicio() {
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER CLUB') && !usuario.isEmployee) || false
-
-  useEffect(() => {
-    message.info('Agora você pode alterar sua senha em Minha Conta')
-  }, [])
 
   return (
     <Space direction="vertical" className="w-100">
