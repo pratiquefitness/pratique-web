@@ -1,17 +1,12 @@
 import { createContext, useEffect } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { setLogin, unsetLogin, setLoading } from '@/redux/slices/login'
-import { setTheme, signInRequest } from '@/redux/actions/login'
+import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
 import { tokenName } from '@/configs/global'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 
 export const AuthContext = createContext({})
-
-export function setToken(user) {
-  const token = JSON.stringify(user)
-  setCookie(undefined, tokenName, token)
-}
 
 export function AuthProvider({ children }) {
   const dispatch = useDispatch()
@@ -19,33 +14,14 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkCookie()
-    window.addEventListener('message', handleMessage)
-    return () => {
-      window.removeEventListener('message', handleMessage)
-    }
   }, [])
-
-  const handleMessage = event => {
-    const message = event.data
-    if (message.type === 'LOGIN_MOBILE') {
-      const token = message.token
-      const login = JSON.parse(token)
-      if (login) {
-        dispatch(setLogin(login))
-        dispatch(setTheme(login.plano))
-      } else {
-        destroyCookie(undefined, tokenName)
-        dispatch(setLoading(false))
-      }
-    }
-  }
 
   async function signIn({ email, senha }) {
     dispatch(setLoading(true))
     const login = await signInRequest(email, senha)
 
     if (login?.ID) {
-      setToken(login)
+      setCookie(undefined, tokenName, login.ID)
 
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
@@ -59,12 +35,11 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function checkCookie() {
+  async function checkCookie() {
     const { [tokenName]: token } = parseCookies()
     if (token) {
       dispatch(setLoading(true))
-      //const login = await signInVerify(token)
-      const login = JSON.parse(token)
+      const login = await signInVerify(token)
       if (login) {
         dispatch(setLogin(login))
         dispatch(setTheme(login.plano))

@@ -18,6 +18,15 @@ export async function signInRequest(email, senha) {
   }
 }
 
+export async function signInVerify(id) {
+  const userRequest = await api.post('/login/signInVerify', { id })
+  if (userRequest.data.length) {
+    return userRequest.data[0]
+  } else {
+    return false
+  }
+}
+
 export const setTheme = plano => {
   return dispatch => {
     let theme = 'red'

@@ -100,12 +100,12 @@ export default function LoginView() {
           </Typography.Paragraph>
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
           <Row gutter={6}>
-            <Col span={12}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Button className="mb-4" type="primary" onClick={() => dispath(setModalRegister(true))} block>
                 Cadastre-se
               </Button>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12} md={12} lg={12}>
               <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
                 Esqueci minha senha
               </Button>
