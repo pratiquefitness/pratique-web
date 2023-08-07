@@ -1,4 +1,5 @@
-import { setData, setLoading } from '../slices/treino'
+import { message } from 'antd'
+import { setData, setLoading, setLoadingAnotacoes } from '../slices/treino'
 import api from '@/services/api'
 
 export const getTreino = () => {
@@ -12,6 +13,20 @@ export const getTreino = () => {
       })
       .finally(() => {
         dispatch(setLoading(false))
+      })
+  }
+}
+
+export const updateAnotacoes = data => {
+  return async dispatch => {
+    dispatch(setLoadingAnotacoes(true))
+    return api
+      .post('/treino/updateAnotacoes', data)
+      .then(() => {
+        message.success('Anotações salvas com sucesso!')
+      })
+      .finally(() => {
+        dispatch(setLoadingAnotacoes(false))
       })
   }
 }

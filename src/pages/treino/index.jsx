@@ -1,11 +1,11 @@
-import { Button, Col, Empty, Row, Spin, Statistic, Tabs, Tag, Typography, theme } from 'antd'
+import { Button, Col, Empty, Form, Input, Row, Space, Spin, Statistic, Tabs, Tag, Typography, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuAirplay, LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getTreino } from '@/redux/actions/treino'
+import { getTreino, updateAnotacoes } from '@/redux/actions/treino'
 import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
@@ -14,8 +14,12 @@ import { Collapse, Panel } from '@/components'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
-  const { data, loading } = useSelector(state => state.treino)
+  const { data, loading, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
+
+  const onSaveAnotacoes = values => {
+    dispatch(updateAnotacoes(values))
+  }
 
   useEffect(() => {
     dispatch(getTreino())
@@ -73,7 +77,7 @@ export default function MeuTreinoView() {
                         <Collapse className="collapse-treino">
                           {treino.videos.map((video, key) => (
                             <Panel header={video.exercicio_nome} key={key}>
-                              <p>
+                              <p className="mb-4">
                                 <iframe
                                   width="100%"
                                   height="200px"
@@ -86,9 +90,29 @@ export default function MeuTreinoView() {
                                 ></iframe>
                                 {video.exercicio_descricao}
                               </p>
+                              <Form layout="vertical" onFinish={values => console.log(values)}>
+                                <Form.Item name="id" initialValue={'teste'} noStyle />
+                                <Space.Compact>
+                                  <Form.Item name="user_nicename" noStyle>
+                                    <Input placeholder="Peso" />
+                                  </Form.Item>
+                                  <Button type="primary" htmlType="submit">
+                                    Salvar
+                                  </Button>
+                                </Space.Compact>
+                              </Form>
                             </Panel>
                           ))}
                         </Collapse>
+                        <Form layout="vertical" onFinish={onSaveAnotacoes} className="mt-4">
+                          <Form.Item name="id" initialValue={treino.id_ficha} noStyle />
+                          <Form.Item label="Anotações" name="anotacoes" initialValue={treino.anotacoes}>
+                            <Input.TextArea rows={4} placeholder="Suas anotações" />
+                          </Form.Item>
+                          <Button type="primary" htmlType="submit" loading={loadingAnotacoes} block>
+                            Salvar
+                          </Button>
+                        </Form>
                       </Panel>
                     )
                   })

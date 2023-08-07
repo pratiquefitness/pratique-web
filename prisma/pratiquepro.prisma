@@ -62,6 +62,7 @@ model fichas {
   prime        String   @db.VarChar(10)
   origem       String?  @db.VarChar(1)
   peso         String?  @db.VarChar(200)
+  anotacoes    String?  @db.Text
   data         DateTime @default(now()) @db.DateTime(0)
 }
 
