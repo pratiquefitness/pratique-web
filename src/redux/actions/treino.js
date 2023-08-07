@@ -1,5 +1,5 @@
 import { message } from 'antd'
-import { setData, setLoading, setLoadingAnotacoes } from '../slices/treino'
+import { setData, setLoading, setLoadingAnotacoes, setLoadingPeso } from '../slices/treino'
 import api from '@/services/api'
 
 export const getTreino = () => {
@@ -27,6 +27,20 @@ export const updateAnotacoes = data => {
       })
       .finally(() => {
         dispatch(setLoadingAnotacoes(false))
+      })
+  }
+}
+
+export const updatePeso = data => {
+  return async dispatch => {
+    dispatch(setLoadingPeso(true))
+    return api
+      .post('/treino/updatePeso', data)
+      .then(() => {
+        message.success('Peso salvo com sucesso!')
+      })
+      .finally(() => {
+        dispatch(setLoadingPeso(false))
       })
   }
 }
