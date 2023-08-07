@@ -52,11 +52,11 @@ const AvatarUploader = () => {
         style={{ width: '100%', display: 'block' }}
       >
         {loadingAvatar ? (
-          <Avatar size={64} icon={<SyncOutlined spin />} />
+          <Avatar size={100} icon={<SyncOutlined spin />} />
         ) : usuario.avatar_image ? (
-          <Avatar size={64} src={usuario.avatar_image} />
+          <Avatar size={100} src={usuario.avatar_image} />
         ) : (
-          <Avatar size={64} icon={<UserOutlined spi />} />
+          <Avatar size={100} icon={<UserOutlined spi />} />
         )}
         <div>
           <Typography.Text>

@@ -78,9 +78,9 @@ export default function Header() {
                 <Button className="header-button" type="text" style={{ color: token.colorBgBase }}>
                   <Space align="center">
                     {usuario.avatar_image ? (
-                      <Avatar size={26} src={usuario.avatar_image} />
+                      <Avatar size={32} src={usuario.avatar_image} />
                     ) : (
-                      <Avatar size={26} icon={<UserOutlined />} />
+                      <Avatar size={32} icon={<UserOutlined />} />
                     )}
                   </Space>
                 </Button>
