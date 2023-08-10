@@ -47,7 +47,7 @@ export default function Banners() {
       {data.length ? (
         <Carousel {...settings}>
           {data.map((live, key) => {
-            const datetime = new Date(`${live.live_datagravacao} ${live.live_horagravacao}:00`)
+            const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)
             if (new Date() >= datetime) {
               return false
             }
