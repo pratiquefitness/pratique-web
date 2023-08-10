@@ -51,8 +51,8 @@ export default function Banners() {
             if (new Date() >= datetime) {
               return false
             }
-            const dia = format(new Date(live.live_datagravacao + ' 00:00:00'), 'dd')
-            const mes = format(new Date(live.live_datagravacao + ' 00:00:00'), 'MM')
+            const dia = format(new Date(live.live_datagravacao + 'T00:00:00'), 'dd')
+            const mes = format(new Date(live.live_datagravacao + 'T00:00:00'), 'MM')
             return (
               <div key={key}>
                 <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
