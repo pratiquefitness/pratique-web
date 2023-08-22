@@ -42,27 +42,7 @@ const items = [
               <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </Space>
           </Panel>
-          <Panel header="2° Como Configurar o App de Monitoramento">
-            <Space direction="vertical">
-              <p>🚲 Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa. 📲</p>
-              <p>
-                👉 Com MAIS DE 2000 Treinos de Spinning de Dança, Yoga, Jump, Abdominal, Queima… Blog com dicas de saúde
-                e você pode assistir por temporada, professor e duração de aula (5, 10, 15, 30 minutos).
-              </p>
-              <div className="text-center">
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1"
-                  target="_blank"
-                >
-                  <img src="/images/bike/play.png" width={150} alt="" />
-                </a>
-                <a href="https://apps.apple.com/br/app/motosumo/id1069353073" target="_blank">
-                  <img src="/images/bike/store.png" width={150} alt="" />
-                </a>
-              </div>
-            </Space>
-          </Panel>
-          <Panel header="3º Acesso ao APP Pratique em Casa">
+          <Panel header="2º Acesso ao APP Pratique em Casa">
             <Space direction="vertical">
               <p>Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa.</p>
               <div className="text-center">
@@ -78,7 +58,7 @@ const items = [
               </div>
             </Space>
           </Panel>
-          <Panel header="4º Regulagem da Bike">
+          <Panel header="3º Regulagem da Bike">
             <iframe
               width="100%"
               height="200"
@@ -89,7 +69,7 @@ const items = [
               allowfullscreen=""
             ></iframe>
           </Panel>
-          <Panel header="5º Participar do Grupo Exclusivo Telegram">
+          <Panel header="4º Participar do Grupo Exclusivo Telegram">
             <Space direction="vertical">
               <p>Temos também um grupo do Telegram com todos professores e a turma do pedal Pratique em casa:</p>
               <p>
