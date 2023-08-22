@@ -22,67 +22,27 @@ const items = [
         </div>
         <Collapse>
           <Panel header="1º Assista aulas ao vivo no YouTube">
-            <Space direction="vertical">
-              <p>
-                Assista nossas aulas no YouTube pela sua TV ou Computador atráves dos canais NetFit Brasil e Pratique Em
-                Casa
+            <Space direction="vertical" className="w-100">
+              <p className="text-center">
+                Assista nossas aulas no YouTube pela sua TV ou Computador atráves do canal Power Cycle
               </p>
               <Row className="mt-10">
-                <Col span={12} className="text-center">
+                <Col span={24} className="text-center">
                   <img src="/images/bike/1.png" width={100} alt="" />
-                  <a href="https://www.youtube.com/channel/UCjM1lVj_OH7D0XAU1vKHcDQ?sub_confirmation=1">
-                    <Button type="primary" size="small">
-                      Inscreva-se no canal
-                    </Button>
-                  </a>
-                  <p>Se inscreva e ative o sininho🔔</p>
-                </Col>
-                <Col span={12} className="text-center">
-                  <img src="/images/bike/2.png" width={100} alt="" />
-                  <a href="https://www.youtube.com/channel/UCjM1lVj_OH7D0XAU1vKHcDQ?sub_confirmation=1">
-                    <Button type="primary" size="small">
-                      Inscreva-se no canal
-                    </Button>
-                  </a>
+                  <p>
+                    <a href="https://www.youtube.com/@powercycleoficial3593">
+                      <Button type="primary" size="small">
+                        Inscreva-se no canal
+                      </Button>
+                    </a>
+                  </p>
                   <p>Se inscreva e ative o sininho🔔</p>
                 </Col>
               </Row>
               <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </Space>
           </Panel>
-          <Panel header="2º Baixe o App de monitoramento">
-            <Space direction="vertical">
-              <p>
-                Pedale junto com todo Pelotão, se enxergue na Tela, interaja com Professor e todos na Sala NETFIT,
-                monitore em Tempo Real RPM, Distancia, Gasto calórico, Frequência. BAIXE:
-              </p>
-              <div className="text-center">
-                <img src="/images/bike/3.png" width={100} alt="" />
-              </div>
-              <div className="text-center">
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.mo2tion.indoorbike&hl=pt-BR&pli=1"
-                  target="_blank"
-                >
-                  <img src="/images/bike/play.png" width={150} alt="" />
-                </a>
-                <a href="https://apps.apple.com/br/app/motosumo/id1069353073" target="_blank">
-                  <img src="/images/bike/store.png" width={150} alt="" />
-                </a>
-              </div>
-              <p>Conecte-se a sala Momentum</p>
-              <iframe
-                width="100%"
-                height="200"
-                src="https://www.youtube.com/embed/18vhp_3SVb4"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen=""
-              ></iframe>
-            </Space>
-          </Panel>
-          <Panel header="3° Como Configurar o App de Monitoramento">
+          <Panel header="2° Como Configurar o App de Monitoramento">
             <Space direction="vertical">
               <p>🚲 Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa. 📲</p>
               <p>
@@ -102,7 +62,7 @@ const items = [
               </div>
             </Space>
           </Panel>
-          <Panel header="4º Acesso ao APP Pratique em Casa">
+          <Panel header="3º Acesso ao APP Pratique em Casa">
             <Space direction="vertical">
               <p>Locando a Bike você tem acesso PREMIUM ao App de treino do Pratique Em Casa.</p>
               <div className="text-center">
@@ -118,7 +78,7 @@ const items = [
               </div>
             </Space>
           </Panel>
-          <Panel header="5º Regulagem da Bike">
+          <Panel header="4º Regulagem da Bike">
             <iframe
               width="100%"
               height="200"
@@ -129,7 +89,7 @@ const items = [
               allowfullscreen=""
             ></iframe>
           </Panel>
-          <Panel header="6º Participar do Grupo Exclusivo Telegram">
+          <Panel header="5º Participar do Grupo Exclusivo Telegram">
             <Space direction="vertical">
               <p>Temos também um grupo do Telegram com todos professores e a turma do pedal Pratique em casa:</p>
               <p>

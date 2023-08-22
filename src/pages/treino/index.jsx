@@ -37,7 +37,7 @@ export default function MeuTreinoView() {
             <Row gutter={8}>
               <Col span={24} className="mb-2">
                 <a
-                  href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20Professor%20,%20estou%20vindo%20da%20pagina%20de%20treino%20do%20Aplicativo"
+                  href="https://api.whatsapp.com/send?phone=5531992118013&text=Ol%C3%A1%20Professor%20,%20estou%20vindo%20da%20pagina%20de%20treino%20do%20Aplicativo"
                   target="_blank"
                 >
                   <Button icon={<FaWhatsapp fill="#25D366" />} style={{ background: '#756483', color: 'white' }} block>
