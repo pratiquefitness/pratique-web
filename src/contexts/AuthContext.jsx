@@ -15,6 +15,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkCookie()
+    document.addEventListener('message', setCookieToken)
+    return () => document.removeEventListener('message', setCookieToken)
   }, [])
 
   async function signIn({ email, senha }) {
@@ -40,8 +42,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function checkCookie() {
-    const { [tokenName]: token } = parseCookies()
+  async function setCookieToken(token) {
     if (token) {
       dispatch(setLoading(true))
       const login = await signInVerify(token)
@@ -53,6 +54,11 @@ export function AuthProvider({ children }) {
         dispatch(setLoading(false))
       }
     }
+  }
+
+  async function checkCookie() {
+    const { [tokenName]: token } = parseCookies()
+    await setCookieToken(token)
   }
 
   function signOut() {
