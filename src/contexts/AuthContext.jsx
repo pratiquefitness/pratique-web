@@ -24,7 +24,9 @@ export function AuthProvider({ children }) {
     if (login?.ID) {
       setCookie(undefined, tokenName, login.ID)
       if (utils.isInWebView()) {
-        window.ReactNativeWebView.postMessage({ type: 'LOGIN_SUCCESS', token: login.ID })
+        if (typeof window !== 'undefined') {
+          window.ReactNativeWebView.postMessage(login.ID)
+        }
       }
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
