@@ -114,6 +114,10 @@ const utils = {
       }
       reader.onerror = error => reject(error)
     })
+  },
+  isInWebView: () => {
+    var userAgent = navigator.userAgent.toLowerCase()
+    return userAgent.indexOf('wv') > -1 || userAgent.indexOf('x-webview') > -1
   }
 }
 

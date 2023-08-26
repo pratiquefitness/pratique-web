@@ -5,6 +5,7 @@ import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
 import { tokenName } from '@/configs/global'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import utils from '@/utils'
 
 export const AuthContext = createContext({})
 
@@ -22,8 +23,8 @@ export function AuthProvider({ children }) {
 
     if (login?.ID) {
       setCookie(undefined, tokenName, login.ID)
-      if (typeof window !== 'undefined') {
-        window.postMessage({ type: 'LOGIN_SUCCESS', token: login.ID })
+      if (utils.isInWebView()) {
+        window.ReactNativeWebView.postMessage({ type: 'LOGIN_SUCCESS', token: login.ID })
       }
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
