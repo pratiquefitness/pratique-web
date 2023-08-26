@@ -22,7 +22,9 @@ export function AuthProvider({ children }) {
 
     if (login?.ID) {
       setCookie(undefined, tokenName, login.ID)
-
+      if (typeof window !== 'undefined') {
+        window.postMessage({ type: 'LOGIN_SUCCESS', token: login.ID })
+      }
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
 
