@@ -15,9 +15,14 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkCookie()
-    document.addEventListener('message', setCookieToken)
-    return () => document.removeEventListener('message', setCookieToken)
+    document.addEventListener('message', checkCookieOfWebView)
+    return () => document.removeEventListener('message', checkCookieOfWebView)
   }, [])
+
+  function checkCookieOfWebView(message) {
+    console.log('checkCookieOfWebView', message)
+    setCookieToken(message)
+  }
 
   async function signIn({ email, senha }) {
     dispatch(setLoading(true))
