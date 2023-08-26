@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   function checkCookieOfWebView(message) {
-    console.log('checkCookieOfWebView', message)
+    alert(message)
     setCookieToken(message)
   }
 
