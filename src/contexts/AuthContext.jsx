@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   function checkCookieOfWebView(message) {
-    if (typeof windows !== 'undefined') {
+    if (typeof window !== 'undefined') {
       alert(JSON.stringify(message))
       setCookieToken(message)
     }
