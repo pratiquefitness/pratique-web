@@ -20,8 +20,10 @@ export function AuthProvider({ children }) {
   }, [])
 
   function checkCookieOfWebView(message) {
-    alert(message)
-    setCookieToken(message)
+    if (typeof windows !== 'undefined') {
+      alert(JSON.stringify(message))
+      setCookieToken(message)
+    }
   }
 
   async function signIn({ email, senha }) {
