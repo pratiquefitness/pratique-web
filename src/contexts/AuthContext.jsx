@@ -19,10 +19,10 @@ export function AuthProvider({ children }) {
     return () => document.removeEventListener('message', checkCookieOfWebView)
   }, [])
 
-  function checkCookieOfWebView(message) {
+  function checkCookieOfWebView(event) {
     if (typeof window !== 'undefined') {
-      alert(JSON.stringify(message))
-      setCookieToken(message)
+      alert(JSON.stringify(event.data))
+      setCookieToken(event.data)
     }
   }
 
