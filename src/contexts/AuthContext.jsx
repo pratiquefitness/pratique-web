@@ -15,31 +15,53 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkCookie()
-    document.addEventListener('message', checkCookieOfWebView)
-    return () => document.removeEventListener('message', checkCookieOfWebView)
   }, [])
 
   function checkCookieOfWebView(event) {
-    if (typeof window !== 'undefined') {
-      alert(JSON.stringify(event.data))
-      setCookieToken(event.data)
+    if (utils.isInWebView()) {
+      if (typeof window !== 'undefined') {
+        const data = JSON.parse(event.data)
+        alert(JSON.stringify(event.data))
+        if (data.type === 'IOS_LOGIN_COOKIE') {
+          setCookieToken(data.message)
+        }
+      }
+    }
+  }
+
+  function setCookieInWebView() {
+    if (utils.isInWebView()) {
+      if (typeof window !== 'undefined') {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: 'IOS_LOGIN_POST',
+            message: login.ID
+          })
+        )
+      }
+    }
+  }
+
+  function clearCookieInWebView() {
+    if (utils.isInWebView()) {
+      if (typeof window !== 'undefined') {
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: 'IOS_LOGIN_CLEAR'
+          })
+        )
+      }
     }
   }
 
   async function signIn({ email, senha }) {
     dispatch(setLoading(true))
     const login = await signInRequest(email, senha)
-
     if (login?.ID) {
       setCookie(undefined, tokenName, login.ID)
-      if (utils.isInWebView()) {
-        if (typeof window !== 'undefined') {
-          window.ReactNativeWebView.postMessage(login.ID)
-        }
-      }
+      setCookieInWebView()
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
-
       router.push('/')
       dispatch(setLoading(false))
       return true
@@ -69,10 +91,11 @@ export function AuthProvider({ children }) {
   }
 
   function signOut() {
+    clearCookieInWebView()
     dispatch(unsetLogin())
     destroyCookie(undefined, tokenName)
     router.push('/')
   }
 
-  return <AuthContext.Provider value={{ signIn, signOut }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ signIn, signOut, checkCookieOfWebView }}>{children}</AuthContext.Provider>
 }

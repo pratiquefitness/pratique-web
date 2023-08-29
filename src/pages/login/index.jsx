@@ -2,7 +2,7 @@ import { Alert, Button, Checkbox, Col, Form, Input, Modal, Row, Typography, mess
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
 import Recovery from './_Recovery'
 import { resetModalRecovery, setModalRecovery, setModalRegister } from '@/redux/slices/login'
@@ -12,7 +12,7 @@ export default function LoginView() {
   const { token } = theme.useToken()
   const { loading, modalRegister, modalRecovery } = useSelector(state => state.login)
   const searchParams = useSearchParams()
-  const { signIn } = useContext(AuthContext)
+  const { signIn, checkCookieOfWebView } = useContext(AuthContext)
   const dispath = useDispatch()
   const router = useRouter()
 
@@ -28,6 +28,11 @@ export default function LoginView() {
       })
     }
   }
+
+  useEffect(() => {
+    document.addEventListener('message', checkCookieOfWebView)
+    return () => document.removeEventListener('message', checkCookieOfWebView)
+  }, [])
 
   return (
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
