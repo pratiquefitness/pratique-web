@@ -47,7 +47,8 @@ export function AuthProvider({ children }) {
       if (typeof window !== 'undefined') {
         window.ReactNativeWebView.postMessage(
           JSON.stringify({
-            type: 'IOS_LOGIN_CLEAR'
+            type: 'IOS_LOGIN_CLEAR',
+            message: ''
           })
         )
       }
