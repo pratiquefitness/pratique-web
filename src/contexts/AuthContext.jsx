@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  function setCookieInWebView() {
+  function setCookieInWebView(login) {
     if (utils.isInWebView()) {
       if (typeof window !== 'undefined') {
         window.ReactNativeWebView.postMessage(
@@ -60,7 +60,7 @@ export function AuthProvider({ children }) {
     const login = await signInRequest(email, senha)
     if (login?.ID) {
       setCookie(undefined, tokenName, login.ID)
-      setCookieInWebView()
+      setCookieInWebView(login)
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
       router.push('/')
