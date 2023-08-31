@@ -1,4 +1,13 @@
-import { setComissao, setGeral, setLoading, setProdutos } from '../slices/afiliados'
+import apiPratiqueFitness from '@/services/apiPratiqueFitness'
+import {
+  setComissao,
+  setGeral,
+  setLoading,
+  setPlanos,
+  setPlanosLoading,
+  setProdutos,
+  setUnidades
+} from '../slices/afiliados'
 import apiLojaAfiliados from '@/services/apiLojaAfiliados'
 
 export const getDadosAfiliado = () => {
@@ -48,6 +57,34 @@ export const getProdutosAfiliado = () => {
       })
       .finally(() => {
         dispatch(setLoading(false))
+      })
+  }
+}
+
+export const getUnidades = () => {
+  return async dispatch => {
+    dispatch(setLoading(true))
+    return apiPratiqueFitness
+      .get('getunidades/index.php')
+      .then(res => {
+        dispatch(setUnidades(res.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const getPlanos = (chave, separador) => {
+  return async dispatch => {
+    dispatch(setPlanosLoading(true))
+    return apiPratiqueFitness
+      .get(`getplanos/index.php?unidade=${chave}|${separador}`)
+      .then(res => {
+        dispatch(setPlanos(res.data))
+      })
+      .finally(() => {
+        dispatch(setPlanosLoading(false))
       })
   }
 }

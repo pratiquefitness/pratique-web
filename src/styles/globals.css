@@ -197,3 +197,7 @@ body .ant-layout-footer {
 .rounded {
   border-radius: 15px;
 }
+
+.planos_academia .ant-collapse-content-box {
+  padding: 0 !important;
+}

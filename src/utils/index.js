@@ -38,7 +38,16 @@ const utils = {
   },
   fieldSearch: (list, input, field) => {
     list = list.filter(item => {
-      return item[field].toLowerCase().includes(input.toLowerCase())
+      return item[field]
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .includes(
+          input
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/\p{Diacritic}/gu, '')
+        )
     })
 
     return list

@@ -1,11 +1,8 @@
-import { Button, Tabs } from 'antd'
+import { Tabs } from 'antd'
 import Geral from './_Geral'
 import Comissao from './_Comissao'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getDadosAfiliado } from '@/redux/actions/afiliados'
 import Produtos from './_Produtos'
-import { Loading } from '@/components'
+import PlanosAcademia from './_PlanosAcademia'
 
 const items = [
   {
@@ -22,6 +19,11 @@ const items = [
     key: 'produtos',
     label: `Produtos`,
     children: <Produtos />
+  },
+  {
+    key: 'planos',
+    label: `Planos Academia`,
+    children: <PlanosAcademia />
   }
 ]
 
