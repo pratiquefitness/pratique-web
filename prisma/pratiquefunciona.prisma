@@ -45,3 +45,10 @@ model wp_users {
   @@index([user_login], map: "user_login_key")
   @@index([user_nicename], map: "user_nicename")
 }
+
+model pix {
+  id    Int    @id @default(autoincrement())
+  email String @db.VarChar(120)
+  chave String @db.VarChar(120)
+  tipo  String @db.VarChar(10)
+}

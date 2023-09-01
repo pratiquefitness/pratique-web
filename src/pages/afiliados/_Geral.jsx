@@ -1,17 +1,27 @@
 import { Loading } from '@/components'
-import { getDadosAfiliado } from '@/redux/actions/afiliados'
-import { Button, Col, Form, Input, Row, Space, Statistic, theme } from 'antd'
+import { getDadosAfiliado, getPix, savePix } from '@/redux/actions/afiliados'
+import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, theme } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Geral() {
+  const [formPix] = Form.useForm()
   const dispatch = useDispatch()
-  const { geral, loading } = useSelector(state => state.afiliados)
+  const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
   const { token } = theme.useToken()
 
   useEffect(() => {
     dispatch(getDadosAfiliado())
+    dispatch(getPix())
   }, [])
+
+  useEffect(() => {
+    formPix.setFieldsValue(pix)
+  }, [pix])
+
+  const onSavePix = ({ tipo, chave }) => {
+    dispatch(savePix(tipo, chave))
+  }
 
   return (
     <Loading spinning={loading}>
@@ -41,18 +51,40 @@ export default function Geral() {
           </div>
         </Col>
       </Row>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Form layout="vertical">
-            <Form.Item name="chavePix" label="Chave PIX">
-              <Space.Compact style={{ width: '100%' }}>
+      <Card title="Cadastro de Pix">
+        <Form form={formPix} layout="vertical" onFinish={onSavePix}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Form.Item
+                name="tipo"
+                label="Tipo de Chave"
+                rules={[{ required: true, message: 'Selecione o tipo de chave' }]}
+              >
+                <Select
+                  placeholder="Selecione..."
+                  options={[
+                    { value: 'cpf', label: 'CPF' },
+                    { value: 'telefone', label: 'Telefone' },
+                    { value: 'email', label: 'E-mail' },
+                    { value: 'aleatoria', label: 'Aleatória' }
+                  ]}
+                  loading={pixLoading}
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
                 <Input placeholder="Sua chave PIX" />
-                <Button type="primary">Salvar</Button>
-              </Space.Compact>
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+              <Button type="primary" htmlType="submit" loading={pixLoading} block>
+                Salvar
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Card>
     </Loading>
   )
 }

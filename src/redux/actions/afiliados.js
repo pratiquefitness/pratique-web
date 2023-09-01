@@ -3,12 +3,51 @@ import {
   setComissao,
   setGeral,
   setLoading,
+  setPix,
+  setPixLoading,
   setPlanos,
   setPlanosLoading,
   setProdutos,
   setUnidades
 } from '../slices/afiliados'
 import apiLojaAfiliados from '@/services/apiLojaAfiliados'
+import api from '@/services/api'
+
+export const getPix = () => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setPixLoading(true))
+    return api
+      .post('/afiliados/getPix', {
+        email: login.usuario.user_email
+      })
+      .then(res => {
+        dispatch(setPix(res.data))
+      })
+      .finally(() => {
+        dispatch(setPixLoading(false))
+      })
+  }
+}
+
+export const savePix = (tipo, chave) => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setPixLoading(true))
+    return api
+      .post('/afiliados/savePix', {
+        email: login.usuario.user_email,
+        tipo,
+        chave
+      })
+      .then(res => {
+        dispatch(setPix(res.data))
+      })
+      .finally(() => {
+        dispatch(setPixLoading(false))
+      })
+  }
+}
 
 export const getDadosAfiliado = () => {
   return async (dispatch, getState) => {

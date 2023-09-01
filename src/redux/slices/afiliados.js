@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   geral: [],
+  pix: {},
+  pixLoading: true,
   comissao: [],
   produtos: [],
   unidades: [],
@@ -29,16 +31,31 @@ export const afiliadosSlice = createSlice({
     setPlanos(state, action) {
       return { ...state, planos: action.payload }
     },
-    setLoading(state, action) {
-      return { ...state, loading: action.payload }
-    },
     setPlanosLoading(state, action) {
       return { ...state, planosLoading: action.payload }
+    },
+    setPix(state, action) {
+      return { ...state, pix: action.payload }
+    },
+    setPixLoading(state, action) {
+      return { ...state, pixLoading: action.payload }
+    },
+    setLoading(state, action) {
+      return { ...state, loading: action.payload }
     }
   }
 })
 
-export const { setGeral, setComissao, setProdutos, setUnidades, setPlanos, setPlanosLoading, setLoading } =
-  afiliadosSlice.actions
+export const {
+  setGeral,
+  setComissao,
+  setProdutos,
+  setUnidades,
+  setPlanos,
+  setPlanosLoading,
+  setPix,
+  setPixLoading,
+  setLoading
+} = afiliadosSlice.actions
 
 export default afiliadosSlice
