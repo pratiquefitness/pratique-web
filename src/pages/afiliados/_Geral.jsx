@@ -1,10 +1,18 @@
 import { Loading } from '@/components'
 import { getDadosAfiliado, getPix, savePix } from '@/redux/actions/afiliados'
 import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, theme } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+const tiposPix = [
+  { value: 'cpf', label: 'CPF' },
+  { value: 'telefone', label: 'Telefone' },
+  { value: 'email', label: 'E-mail' },
+  { value: 'aleatoria', label: 'Aleatória' }
+]
+
 export default function Geral() {
+  const [editablePix, setEditablePix] = useState(false)
   const [formPix] = Form.useForm()
   const dispatch = useDispatch()
   const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
@@ -20,7 +28,7 @@ export default function Geral() {
   }, [pix])
 
   const onSavePix = ({ tipo, chave }) => {
-    dispatch(savePix(tipo, chave))
+    dispatch(savePix(tipo, chave, setEditablePix))
   }
 
   return (
@@ -51,39 +59,46 @@ export default function Geral() {
           </div>
         </Col>
       </Row>
-      <Card title="Cadastro de Pix">
-        <Form form={formPix} layout="vertical" onFinish={onSavePix}>
+      <Card title="Seu Pix">
+        {editablePix || pix.length ? (
+          <Form form={formPix} layout="vertical" onFinish={onSavePix}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  name="tipo"
+                  label="Tipo de Chave"
+                  rules={[{ required: true, message: 'Selecione o tipo de chave' }]}
+                >
+                  <Select placeholder="Selecione..." options={tiposPix} loading={pixLoading} />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
+                  <Input placeholder="Sua chave PIX" />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Button type="primary" htmlType="submit" loading={pixLoading} block>
+                  Salvar
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        ) : (
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <Form.Item
-                name="tipo"
-                label="Tipo de Chave"
-                rules={[{ required: true, message: 'Selecione o tipo de chave' }]}
-              >
-                <Select
-                  placeholder="Selecione..."
-                  options={[
-                    { value: 'cpf', label: 'CPF' },
-                    { value: 'telefone', label: 'Telefone' },
-                    { value: 'email', label: 'E-mail' },
-                    { value: 'aleatoria', label: 'Aleatória' }
-                  ]}
-                  loading={pixLoading}
-                />
-              </Form.Item>
+              Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}
             </Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
-                <Input placeholder="Sua chave PIX" />
-              </Form.Item>
+              Chave: {pix?.chave}
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-              <Button type="primary" htmlType="submit" loading={pixLoading} block>
-                Salvar
+              <Button onClick={() => setEditablePix(true)} block>
+                Editar
               </Button>
             </Col>
           </Row>
-        </Form>
+        )}
       </Card>
     </Loading>
   )

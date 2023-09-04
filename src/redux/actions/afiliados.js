@@ -12,6 +12,7 @@ import {
 } from '../slices/afiliados'
 import apiLojaAfiliados from '@/services/apiLojaAfiliados'
 import api from '@/services/api'
+import { message } from 'antd'
 
 export const getPix = () => {
   return async (dispatch, getState) => {
@@ -30,7 +31,7 @@ export const getPix = () => {
   }
 }
 
-export const savePix = (tipo, chave) => {
+export const savePix = (tipo, chave, callback) => {
   return async (dispatch, getState) => {
     const { login } = getState()
     dispatch(setPixLoading(true))
@@ -41,7 +42,10 @@ export const savePix = (tipo, chave) => {
         chave
       })
       .then(res => {
-        dispatch(setPix(res.data))
+        console.log('res', res)
+        dispatch(setPix(res.data[0]))
+        message.success('Pix salvo com sucesso!')
+        callback(false)
       })
       .finally(() => {
         dispatch(setPixLoading(false))
