@@ -63,7 +63,7 @@ export default function Geral() {
         {editablePix || pix.length ? (
           <Form form={formPix} layout="vertical" onFinish={onSavePix}>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
                 <Form.Item
                   name="tipo"
                   label="Tipo de Chave"
@@ -72,9 +72,33 @@ export default function Geral() {
                   <Select placeholder="Selecione..." options={tiposPix} loading={pixLoading} />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
                 <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
                   <Input placeholder="Sua chave PIX" />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+                <Form.Item
+                  label="Confirme a chave PIX"
+                  name="rChave"
+                  dependencies={['chave']}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Confirme a chave.'
+                    },
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('chave') === value) {
+                          return Promise.resolve()
+                        }
+                        return Promise.reject(new Error('As chaves devem ser iguais.'))
+                      }
+                    })
+                  ]}
+                  hasFeedback
+                >
+                  <Input placeholder="Confirme a chave PIX" />
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
