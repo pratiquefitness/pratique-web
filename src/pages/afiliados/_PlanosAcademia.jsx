@@ -28,7 +28,7 @@ const columns = (setLinkID, dados, usuario) => {
         <Button
           type="primary"
           onClick={() => {
-            const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}&|${
+            const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}|${
               dados.separador
             }&pl=${record.plano}&user=${46}&saver=${dados.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
               usuario.isAffiliate
