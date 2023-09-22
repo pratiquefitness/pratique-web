@@ -148,10 +148,10 @@ export default function Inicio() {
         <Col span={12}>
           <a href="https://linklist.bio/pratiquenutri" target="_blank">
             <RibbonWithEndDate
-              text="Novo"
+              text="Novo!"
               color="yellow"
               endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 22, padding: 10 }}
+              style={{ fontSize: 16, padding: '2px 8px' }}
             >
               <img src="/images/nutri.png" width="100%" />
             </RibbonWithEndDate>
@@ -160,10 +160,10 @@ export default function Inicio() {
         <Col span={12}>
           <a href="https://linklist.bio/metodologiapowergym" target="_blank">
             <RibbonWithEndDate
-              text="Novo"
+              text="Novo!"
               color="yellow"
               endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 22, padding: 10 }}
+              style={{ fontSize: 16, padding: '2px 8px' }}
             >
               <img src="/images/powergym.png" width="100%" />
             </RibbonWithEndDate>
