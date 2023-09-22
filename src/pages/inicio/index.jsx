@@ -1,9 +1,11 @@
-import { Col, Modal, Row, Space, Typography } from 'antd'
+import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
 
 import Link from 'next/link'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import Banners from './_Banners'
+import { RibbonWithEndDate } from '@/components'
+import { addDays } from 'date-fns'
 
 const { Title, Text } = Typography
 
@@ -144,6 +146,30 @@ export default function Inicio() {
       <Text type="secondary">Exercícios e conteúdos para você</Text>
       <Row gutter={[6, 6]} className="mb-2 mt-2">
         <Col span={12}>
+          <a href="https://linklist.bio/pratiquenutri" target="_blank">
+            <RibbonWithEndDate
+              text="Novo"
+              color="yellow"
+              endDate={addDays(new Date('2023-09-21'), 30)}
+              style={{ fontSize: 22, padding: 10 }}
+            >
+              <img src="/images/nutri.png" width="100%" />
+            </RibbonWithEndDate>
+          </a>
+        </Col>
+        <Col span={12}>
+          <a href="https://linklist.bio/metodologiapowergym" target="_blank">
+            <RibbonWithEndDate
+              text="Novo"
+              color="yellow"
+              endDate={addDays(new Date('2023-09-21'), 30)}
+              style={{ fontSize: 22, padding: 10 }}
+            >
+              <img src="/images/powergym.png" width="100%" />
+            </RibbonWithEndDate>
+          </a>
+        </Col>
+        <Col span={12}>
           <Link href="/meditacao">
             <img src="/images/meditacao.png" width="100%" />
           </Link>
@@ -153,7 +179,6 @@ export default function Inicio() {
             <img src="/images/aulas.png" width="100%" />
           </a>
         </Col>
-
         <Col span={12}>
           <Link href="/bike">
             <img src="/images/power.png" width="100%" />
