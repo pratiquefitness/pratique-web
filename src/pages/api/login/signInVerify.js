@@ -1,79 +1,90 @@
 import { apiPratiqueFunciona, apiPratiquePro } from '@/services'
+import jwt from 'jsonwebtoken'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
   //const email = 'adelmodesign@gmail.com' // nao afiliado
   // const email = 'bruna.vn.costa@gmail.com' // afiliado
 
-  const { id } = req.body
+  const { token } = req.body
 
-  let user = {}
+  jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    if (err) {
+      // Token inválido
+      res.status(200).json([])
+      return
+    }
 
-  if (isNaN(parseInt(id))) {
-    res.status(200).json([])
-  } else {
-    const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
-      where: {
-        ID: BigInt(id)
-      }
-    })
+    const id = decoded.ID
 
-    if (usuarioExist.length) {
-      user = usuarioExist[0]
+    let user = {}
 
-      const email = user.user_email
+    if (isNaN(parseInt(id))) {
+      res.status(200).json([])
+    } else {
+      const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
+        where: {
+          ID: BigInt(id)
+        }
+      })
 
-      // afiliados
-      if (user.user_status === 1) {
-        const afiliadoExist = await apiPratiquePro.afiliado.findMany({
+      if (usuarioExist.length) {
+        user = usuarioExist[0]
+
+        const email = user.user_email
+
+        // afiliados
+        if (user.user_status === 1) {
+          const afiliadoExist = await apiPratiquePro.afiliado.findMany({
+            where: {
+              email: email
+            }
+          })
+
+          if (afiliadoExist.length) {
+            user.isAffiliate = afiliadoExist.length ? afiliadoExist[0].idloja : 0
+          }
+        } else {
+          user.isAffiliate = 0
+        }
+
+        // funcionario
+        const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
           where: {
             email: email
           }
         })
 
-        if (afiliadoExist.length) {
-          user.isAffiliate = afiliadoExist.length ? afiliadoExist[0].idloja : 0
-        }
-      } else {
-        user.isAffiliate = 0
-      }
+        user.isEmployee = funcionarioExists.length ? 1 : 0
+        user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
 
-      // funcionario
-      const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
-        where: {
-          email: email
-        }
-      })
-
-      user.isEmployee = funcionarioExists.length ? 1 : 0
-      user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
-
-      // pacto
-      const pactoExist = await apiPratiquePro.matriz.findMany({
-        where: {
-          matriz_email: email
-        }
-      })
-
-      if (pactoExist.length) {
-        const unidadeExist = await apiPratiquePro.unidade.findMany({
+        // pacto
+        const pactoExist = await apiPratiquePro.matriz.findMany({
           where: {
-            unidade_numero: pactoExist[0].matriz_unidade
-          },
-          select: {
-            unidade_nome: true
+            matriz_email: email
           }
         })
-        user.status = pactoExist[0].matriz_situacao
-        user.plano = pactoExist[0].matriz_plano
-        user.unidade = unidadeExist[0].unidade_nome
-      } else {
-        user.status = null
-        user.plano = null
-        user.unidade = null
-      }
-    }
 
-    res.status(200).json(utils.clearDatabaseResult([user]))
-  }
+        if (pactoExist.length) {
+          const unidadeExist = await apiPratiquePro.unidade.findMany({
+            where: {
+              unidade_numero: pactoExist[0].matriz_unidade
+            },
+            select: {
+              unidade_nome: true
+            }
+          })
+          user.status = pactoExist[0].matriz_situacao
+          user.plano = pactoExist[0].matriz_plano
+          user.unidade = unidadeExist[0].unidade_nome
+        } else {
+          user.status = null
+          user.plano = null
+          user.unidade = null
+        }
+      }
+
+      res.status(200).json(utils.clearDatabaseResult([user]))
+    }
+  })
 }

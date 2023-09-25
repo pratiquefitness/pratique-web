@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
     dispatch(setLoading(true))
     const login = await signInRequest(email, senha)
     if (login?.ID) {
-      setCookie(undefined, tokenName, login.ID)
+      setCookie(undefined, tokenName, login.token)
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
       router.push('/')

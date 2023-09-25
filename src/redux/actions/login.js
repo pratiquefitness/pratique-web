@@ -18,8 +18,8 @@ export async function signInRequest(email, senha) {
   }
 }
 
-export async function signInVerify(id) {
-  const userRequest = await api.post('/login/signInVerify', { id })
+export async function signInVerify(token) {
+  const userRequest = await api.post('/login/signInVerify', { token })
   if (userRequest.data.length) {
     return userRequest.data[0]
   } else {

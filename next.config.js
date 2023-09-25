@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['img.youtube.com', 'pratiqueemcasa.com.br']
   },
+  env: {
+    JWT_SECRET: process.env.JWT_SECRET
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()]

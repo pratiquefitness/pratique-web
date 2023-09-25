@@ -1,4 +1,5 @@
 import { apiPratiqueFunciona, apiPratiquePro } from '@/services'
+import jwt from 'jsonwebtoken'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
@@ -18,6 +19,8 @@ export default async function handler(req, res) {
 
   if (usuarioExist.length) {
     user = usuarioExist[0]
+
+    user.token = jwt.sign({ ID: String(user.ID) }, process.env.JWT_SECRET)
 
     // afiliados
     if (user.user_status === 1) {

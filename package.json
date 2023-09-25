@@ -20,6 +20,7 @@
     "antd": "^5.5.2",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.4.4",
     "nodemailer": "^6.9.4",
     "nookies": "^2.5.2",
