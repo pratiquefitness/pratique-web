@@ -16,7 +16,7 @@ export default function Inicio() {
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
-  const isSaverAndClient = (usuario.plano?.includes('SAVER CLUB') && !usuario.isEmployee) || false
+  const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
 
   return (
     <Space direction="vertical" className="w-100">
