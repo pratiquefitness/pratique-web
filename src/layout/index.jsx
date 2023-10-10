@@ -49,6 +49,8 @@ export default function Layout({ children }) {
             <Navigation data={routes} />
           </Affix>
         </AntLayout>
+      ) : pathname && pathname.includes('/afiliados/loja/') ? (
+        children
       ) : (
         <LoginView />
       )}

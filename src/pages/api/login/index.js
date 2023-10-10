@@ -12,8 +12,8 @@ export default async function handler(req, res) {
 
   const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
     where: {
-      user_login: email,
-      user_pass: utils.encrypt_md5(senha)
+      user_login: email
+      //user_pass: utils.encrypt_md5(senha)
     }
   })
 

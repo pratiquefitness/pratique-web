@@ -12,7 +12,7 @@ const messageLink = () => {
   message.success('Link copiado!')
 }
 
-const columns = (setLinkID, dados, usuario) => {
+const columns = (setLinkID, dados, usuario, employee) => {
   return [
     {
       title: 'Plano',
@@ -24,28 +24,35 @@ const columns = (setLinkID, dados, usuario) => {
       dataIndex: 'link',
       key: 'link',
       width: 100,
-      render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={() => {
-            const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}|${
-              dados.separador
-            }&pl=${record.plano}&user=${46}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
-              usuario.isAffiliate
-            }|AFILIADO`
-            utils.copyTextToClipboard(linkFinal)
-            messageLink()
-            setLinkID(linkFinal)
-          }}
-        >
-          Link
-        </Button>
-      )
+      render: (_, record) => {
+        console.log(employee ? employee : usuario.isAffiliate)
+        const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}|${dados.separador}&pl=${
+          record.plano
+        }&user=${46}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
+          employee ? employee : usuario.isAffiliate
+        }|AFILIADO`
+        return employee ? (
+          <a href={linkFinal} target="_blank">
+            <Button type="primary">Link</Button>
+          </a>
+        ) : (
+          <Button
+            type="primary"
+            onClick={() => {
+              utils.copyTextToClipboard(linkFinal)
+              messageLink()
+              setLinkID(linkFinal)
+            }}
+          >
+            Link
+          </Button>
+        )
+      }
     }
   ]
 }
 
-export default function PlanosAcademia() {
+export default function PlanosAcademia({ employee }) {
   const [linkID, setLinkID] = useState('')
   const [dataSearch, setDataSearch] = useState([])
   const [search, setSearch] = useState('')
@@ -136,7 +143,7 @@ export default function PlanosAcademia() {
               <Loading spinning={planosLoading}>
                 <Table
                   dataSource={planos}
-                  columns={columns(setLinkID, unidade.dados, usuario)}
+                  columns={columns(setLinkID, unidade.dados, usuario, employee)}
                   pagination={false}
                   rowKey={'plano'}
                 />

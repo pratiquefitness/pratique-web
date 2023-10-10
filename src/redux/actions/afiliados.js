@@ -87,13 +87,12 @@ export const getComissoesAfiliado = () => {
   }
 }
 
-export const getProdutosAfiliado = () => {
-  return async (dispatch, getState) => {
-    const { login } = getState()
+export const getProdutosAfiliado = isAffiliate => {
+  return async dispatch => {
     dispatch(setLoading(true))
     return apiLojaAfiliados
       .post('getProdutosAfiliado.php', {
-        isAffiliate: login.usuario.isAffiliate
+        isAffiliate
       })
       .then(res => {
         dispatch(setProdutos(res.data))

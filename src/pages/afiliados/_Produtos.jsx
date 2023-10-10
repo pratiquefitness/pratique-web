@@ -60,7 +60,7 @@ const columns = (setLinkID, id) => {
   ]
 }
 
-export default function Produtos() {
+export default function Produtos({ employee }) {
   const dispatch = useDispatch()
 
   const [linkID, setLinkID] = useState('')
@@ -68,7 +68,7 @@ export default function Produtos() {
   const { produtos, loading } = useSelector(state => state.afiliados)
 
   useEffect(() => {
-    dispatch(getProdutosAfiliado())
+    dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate))
   }, [])
 
   return (
