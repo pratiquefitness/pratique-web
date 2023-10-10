@@ -87,9 +87,48 @@ export default function PlanosAcademia() {
       </Modal>
       <Space direction="vertical" className="w-100">
         <Input placeholder="Pesquisar..." onChange={searchData} />
+        <Collapse className="planos_academia" style={{ background: token.colorPrimary }} accordion>
+          <Panel header={'MATERIAL DE APOIO'}>
+            <div className="p-5">
+              <Space direction="vertical" className="w-100">
+                <Row>
+                  <Col span={12}>Saver Club</Col>
+                  <Col span={12} className="text-right">
+                    <a href="https://pratiquefitness.my.canva.site/site-saver-club-whatsapp" target="_blank">
+                      <Button type="primary" size="small">
+                        Link
+                      </Button>
+                    </a>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={12}>Conheça os benefícios</Col>
+                  <Col span={12} className="text-right">
+                    <a href="https://www.youtube.com/watch?v=F6K8ywhzggw" target="_blank">
+                      <Button type="primary" size="small">
+                        Link
+                      </Button>
+                    </a>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={12}>Conheça sua assinatura</Col>
+                  <Col span={12} className="text-right">
+                    <a href="https://www.youtube.com/watch?v=jt3Ueq5rDiM" target="_blank">
+                      <Button type="primary" size="small">
+                        Link
+                      </Button>
+                    </a>
+                  </Col>
+                </Row>
+              </Space>
+            </div>
+          </Panel>
+        </Collapse>
         <Collapse className="planos_academia" accordion>
-          {list.map(unidade => (
+          {list.map((unidade, key) => (
             <Panel
+              key={key++}
               header={unidade.unidade}
               onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador))}
               style={{ padding: 0 }}
