@@ -3,6 +3,7 @@ import { getDadosAfiliado, getPix, savePix } from '@/redux/actions/afiliados'
 import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, theme } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import QRCode from 'react-qr-code'
 
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
@@ -15,6 +16,7 @@ export default function Geral() {
   const [editablePix, setEditablePix] = useState(false)
   const [formPix] = Form.useForm()
   const dispatch = useDispatch()
+  const { usuario } = useSelector(state => state.login)
   const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
   const { token } = theme.useToken()
 
@@ -57,6 +59,13 @@ export default function Geral() {
               value={`R$ ${geral.valorReceber},00`}
             />
           </div>
+        </Col>
+      </Row>
+      <Row className="mb-2">
+        <Col span={24}>
+          <a href={`https://app.pratiqueemcasa.com.br/afiliados/loja/${usuario.isAffiliate}`}>
+            <Button block>Veja aqui Sua Loja</Button>
+          </a>
         </Col>
       </Row>
       <Card title="Seu Pix">
