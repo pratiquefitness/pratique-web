@@ -10,7 +10,7 @@ const messageLink = () => {
   message.success('Link copiado!')
 }
 
-const columns = (setLinkID, id) => {
+const columns = (setLinkID, userID, employee) => {
   return [
     {
       title: 'Produto',
@@ -37,25 +37,42 @@ const columns = (setLinkID, id) => {
       title: 'Link',
       dataIndex: 'nomeproduto',
       key: 'link',
-      render: (_, record) => (
-        <Button
-          type="primary"
-          onClick={async () => {
-            setLinkID(record.id)
-            const id = record.id.split('&')[0]
-            const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
-            const response = await fetch(url)
-            response.text().then(function (text) {
-              const linkFinal = `${text}?ref=${id}`
-              utils.copyTextToClipboard(linkFinal)
-              messageLink()
-              setLinkID(linkFinal)
-            })
-          }}
-        >
-          Link
-        </Button>
-      )
+      render: (_, record) => {
+        return employee ? (
+          <Button
+            type="primary"
+            onClick={async () => {
+              const id = record.id.split('&')[0]
+              const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
+              const response = await fetch(url)
+              response.text().then(function (text) {
+                const linkFinal = `${text}?ref=${employee}`
+                window.open(linkFinal, '_blank')
+              })
+            }}
+          >
+            Link
+          </Button>
+        ) : (
+          <Button
+            type="primary"
+            onClick={async () => {
+              setLinkID(record.id)
+              const id = record.id.split('&')[0]
+              const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
+              const response = await fetch(url)
+              response.text().then(function (text) {
+                const linkFinal = `${text}?ref=${userID}`
+                utils.copyTextToClipboard(linkFinal)
+                messageLink()
+                setLinkID(linkFinal)
+              })
+            }}
+          >
+            Link
+          </Button>
+        )
+      }
     }
   ]
 }
@@ -97,24 +114,24 @@ export default function Produtos({ employee }) {
             children: (
               <Table
                 dataSource={[...(produtos.bike || []), ...(produtos.suplementacao || []), ...(produtos.diversos || [])]}
-                columns={columns(setLinkID, usuario.ID)}
+                columns={columns(setLinkID, usuario.ID, employee)}
               />
             )
           },
           {
             key: 'bike',
             label: `Bike`,
-            children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.ID)} />
+            children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.ID, employee)} />
           },
           {
             key: 'suplementacao',
             label: `Suplementação`,
-            children: <Table dataSource={produtos.suplementacao} columns={columns(setLinkID, usuario.ID)} />
+            children: <Table dataSource={produtos.suplementacao} columns={columns(setLinkID, usuario.ID, employee)} />
           },
           {
             key: 'diversos',
             label: `Diversos`,
-            children: <Table dataSource={produtos.diversos} columns={columns(setLinkID, usuario.ID)} />
+            children: <Table dataSource={produtos.diversos} columns={columns(setLinkID, usuario.ID, employee)} />
           }
         ]}
       />
