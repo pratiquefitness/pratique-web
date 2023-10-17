@@ -10,7 +10,7 @@ const messageLink = () => {
   message.success('Link copiado!')
 }
 
-const columns = (setLinkID, userID, employee) => {
+const columns = (setLinkID, isAffiliate, employee) => {
   return [
     {
       title: 'Produto',
@@ -62,7 +62,7 @@ const columns = (setLinkID, userID, employee) => {
               const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
               const response = await fetch(url)
               response.text().then(function (text) {
-                const linkFinal = `${text}?ref=${userID}`
+                const linkFinal = `${text}?ref=${isAffiliate}`
                 utils.copyTextToClipboard(linkFinal)
                 messageLink()
                 setLinkID(linkFinal)
@@ -114,24 +114,28 @@ export default function Produtos({ employee }) {
             children: (
               <Table
                 dataSource={[...(produtos.bike || []), ...(produtos.suplementacao || []), ...(produtos.diversos || [])]}
-                columns={columns(setLinkID, usuario.ID, employee)}
+                columns={columns(setLinkID, usuario.isAffiliate, employee)}
               />
             )
           },
           {
             key: 'bike',
             label: `Bike`,
-            children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.ID, employee)} />
+            children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
           },
           {
             key: 'suplementacao',
             label: `Suplementação`,
-            children: <Table dataSource={produtos.suplementacao} columns={columns(setLinkID, usuario.ID, employee)} />
+            children: (
+              <Table dataSource={produtos.suplementacao} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
+            )
           },
           {
             key: 'diversos',
             label: `Diversos`,
-            children: <Table dataSource={produtos.diversos} columns={columns(setLinkID, usuario.ID, employee)} />
+            children: (
+              <Table dataSource={produtos.diversos} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
+            )
           }
         ]}
       />
