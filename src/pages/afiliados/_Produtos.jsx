@@ -92,6 +92,16 @@ export default function Produtos({ employee }) {
         defaultActiveKey="0"
         items={[
           {
+            key: 'todos',
+            label: `Todos`,
+            children: (
+              <Table
+                dataSource={[...(produtos.bike || []), ...(produtos.suplementacao || []), ...(produtos.diversos || [])]}
+                columns={columns(setLinkID, usuario.ID)}
+              />
+            )
+          },
+          {
             key: 'bike',
             label: `Bike`,
             children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.ID)} />
