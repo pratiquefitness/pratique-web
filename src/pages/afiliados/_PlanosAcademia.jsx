@@ -27,7 +27,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
       render: (_, record) => {
         const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}|${dados.separador}&pl=${
           record.plano
-        }&user=${46}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
+        }&user=${46}&nome=${record.nome}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
         return employee ? (
