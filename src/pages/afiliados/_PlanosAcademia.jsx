@@ -27,7 +27,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
       render: (_, record) => {
         const linkFinal = `https://pratiquefitness.com.br/pagamento/afiliado/?k=${dados.token}|${dados.separador}&pl=${
           record.plano
-        }&user=${46}&nome=${record.nome}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
+        }&user=${46}&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
         return employee ? (
@@ -136,7 +136,7 @@ export default function PlanosAcademia({ employee }) {
             <Panel
               key={key++}
               header={unidade.unidade}
-              onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador))}
+              onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador, unidade.unidade))}
               style={{ padding: 0 }}
             >
               <Loading spinning={planosLoading}>

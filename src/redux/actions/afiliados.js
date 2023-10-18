@@ -117,11 +117,11 @@ export const getUnidades = () => {
   }
 }
 
-export const getPlanos = (chave, separador) => {
+export const getPlanos = (chave, separador, nome) => {
   return async dispatch => {
     dispatch(setPlanosLoading(true))
     return apiPratiqueFitness
-      .get(`getplanos/index.php?unidade=${chave}|${separador}`)
+      .get(`getplanos/index.php?unidade=${chave}|${separador}&nome=${nome}`)
       .then(res => {
         dispatch(setPlanos(res.data))
       })
