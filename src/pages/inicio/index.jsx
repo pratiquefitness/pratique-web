@@ -59,21 +59,28 @@ export default function Inicio() {
       >
         <Space direction="vertical">
           <a
-            onClick={() =>
+            onClick={() => {
+              setSaverClubModal(false)
               dispatch(setBrowserURL('https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique'))
-            }
+            }}
             target="_blank"
           >
             <img src="/images/clube_certo.png" width={'100%'} className="rounded" />
           </a>
           <a
-            onClick={() => dispatch(setBrowserURL('https://grupopratique.typeform.com/cadas-desconto'))}
+            onClick={() => {
+              setSaverClubModal(false)
+              dispatch(setBrowserURL('https://grupopratique.typeform.com/cadas-desconto'))
+            }}
             target="_blank"
           >
             <img src="/images/igreen.png" width={'100%'} className="rounded" />
           </a>
           <a
-            onClick={() => dispatch(setBrowserURL('https://www.bolsamaisbrasil.com.br/unipower/bolsas'))}
+            onClick={() => {
+              setSaverClubModal(false)
+              dispatch(setBrowserURL('https://www.bolsamaisbrasil.com.br/unipower/bolsas'))
+            }}
             target="_blank"
           >
             <img src="/images/bolsa_brasil.png" width={'100%'} className="rounded" />
