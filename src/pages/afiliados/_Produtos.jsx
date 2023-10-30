@@ -79,7 +79,7 @@ const columns = (setLinkID, isAffiliate, employee) => {
 
 export default function Produtos({ employee }) {
   const dispatch = useDispatch()
-
+  const inputRef = useRef(null)
   const [linkID, setLinkID] = useState('')
   const { usuario } = useSelector(state => state.login)
   const { produtos, loading } = useSelector(state => state.afiliados)
@@ -97,6 +97,16 @@ export default function Produtos({ employee }) {
             <Typography.Title level={4} className="mb-4">
               Link Gerado!
             </Typography.Title>
+            <Input
+              ref={inputRef}
+              value={linkID}
+              onClick={() => {
+                inputRef.current.focus({
+                  cursor: 'all'
+                })
+              }}
+              className="mb-4"
+            />
             <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
             </Button>

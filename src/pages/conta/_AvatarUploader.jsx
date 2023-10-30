@@ -23,7 +23,6 @@ const AvatarUploader = () => {
   }
 
   const handleChange = info => {
-    console.log(info)
     if (info.file.status === 'uploading') {
       dispatch(setLoadingAvatar(true))
     }

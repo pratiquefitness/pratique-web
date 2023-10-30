@@ -13,7 +13,6 @@ export default function Dados() {
   const { loading } = useSelector(state => state.conta)
 
   const onUpdate = values => {
-    console.log(values)
     if (typeof values.user_pass !== 'undefined') {
       dispatch(updateConta(values))
     } else {

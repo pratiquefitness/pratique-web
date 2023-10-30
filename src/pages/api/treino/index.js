@@ -42,8 +42,6 @@ export default async function handler(req, res) {
       take: 3
     })
 
-    console.log(fichasExist)
-
     if (fichasExist.length) {
       user.fichas = fichasExist
       user.ficha = fichasExist[0]

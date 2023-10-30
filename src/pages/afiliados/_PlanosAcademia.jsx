@@ -2,7 +2,7 @@ import { ButtonCopyLink, Loading } from '@/components'
 import { getDadosAfiliado, getPlanos, getUnidades } from '@/redux/actions/afiliados'
 import utils from '@/utils'
 import { Button, Col, Collapse, Input, Modal, Row, Space, Table, Typography, message, theme } from 'antd'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { LuCheckCircle2 } from 'react-icons/lu'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -58,6 +58,7 @@ export default function PlanosAcademia({ employee }) {
   const dispatch = useDispatch()
   const { unidades, planos, planosLoading, loading } = useSelector(state => state.afiliados)
   const { usuario } = useSelector(state => state.login)
+  const inputRef = useRef(null)
 
   const { token } = theme.useToken()
 
@@ -83,6 +84,16 @@ export default function PlanosAcademia({ employee }) {
             <Typography.Title level={4} className="mb-4">
               Link Gerado!
             </Typography.Title>
+            <Input
+              ref={inputRef}
+              value={linkID}
+              onClick={() => {
+                inputRef.current.focus({
+                  cursor: 'all'
+                })
+              }}
+              className="mb-4"
+            />
             <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
             </Button>
@@ -132,23 +143,25 @@ export default function PlanosAcademia({ employee }) {
           </Panel>
         </Collapse>
         <Collapse className="planos_academia" accordion>
-          {list.map((unidade, key) => (
-            <Panel
-              key={key++}
-              header={unidade.unidade}
-              onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador, unidade.unidade))}
-              style={{ padding: 0 }}
-            >
-              <Loading spinning={planosLoading}>
-                <Table
-                  dataSource={planos}
-                  columns={columns(setLinkID, unidade.dados, usuario, employee)}
-                  pagination={false}
-                  rowKey={'plano'}
-                />
-              </Loading>
-            </Panel>
-          ))}
+          {list.map((unidade, key) => {
+            return (
+              <Panel
+                key={key++}
+                header={unidade.unidade}
+                onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador, unidade.unidade))}
+                style={{ padding: 0 }}
+              >
+                <Loading spinning={planosLoading}>
+                  <Table
+                    dataSource={planos}
+                    columns={columns(setLinkID, unidade.dados, usuario, employee)}
+                    pagination={false}
+                    rowKey={'plano'}
+                  />
+                </Loading>
+              </Panel>
+            )
+          })}
         </Collapse>
       </Space>
     </Loading>

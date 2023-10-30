@@ -42,7 +42,6 @@ export const savePix = (tipo, chave, callback) => {
         chave
       })
       .then(res => {
-        console.log('res', res)
         dispatch(setPix(res.data[0]))
         message.success('Pix salvo com sucesso!')
         callback(false)

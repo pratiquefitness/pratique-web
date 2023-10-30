@@ -22,8 +22,6 @@ export default function CanalEquipe() {
     disptach(setPonto())
   }
 
-  console.log(dataCis)
-
   const refreshCI = () => {
     disptach(getCis())
   }
