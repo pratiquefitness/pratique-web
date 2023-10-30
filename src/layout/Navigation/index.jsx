@@ -2,10 +2,12 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import utils from '@/utils'
 import { theme } from 'antd'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
+import { setBrowserURL } from '@/redux/slices/global'
 
 export default function Navigation({ data }) {
+  const dispatch = useDispatch()
   const { token } = theme.useToken()
   const { usuario } = useSelector(state => state.login)
   const router = useRouter()
@@ -23,6 +25,7 @@ export default function Navigation({ data }) {
   }, [pathname])
 
   const onNavigate = item => () => {
+    dispatch(setBrowserURL(null))
     setSelected(item.href)
     router.push(item.href)
   }

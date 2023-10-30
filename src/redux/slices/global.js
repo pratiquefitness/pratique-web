@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isAuthenticated: false,
   themeColor: 'red',
-  themeMode: 'light'
+  themeMode: 'light',
+  browserURL: null
 }
 
 export const globalSlice = createSlice({
@@ -27,10 +28,16 @@ export const globalSlice = createSlice({
         ...state,
         themeMode: action.payload
       }
+    },
+    setBrowserURL(state, action) {
+      return {
+        ...state,
+        browserURL: action.payload
+      }
     }
   }
 })
 
-export const { setIsAuthenticated, setThemeColor, setThemeMode } = globalSlice.actions
+export const { setIsAuthenticated, setThemeColor, setThemeMode, setBrowserURL } = globalSlice.actions
 
 export default globalSlice

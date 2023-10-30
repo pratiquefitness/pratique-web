@@ -1,5 +1,6 @@
 import { ButtonCopyLink, Loading } from '@/components'
 import { getDadosAfiliado, getPlanos, getUnidades } from '@/redux/actions/afiliados'
+import { setBrowserURL } from '@/redux/slices/global'
 import utils from '@/utils'
 import { Button, Col, Collapse, Input, Modal, Row, Space, Table, Typography, message, theme } from 'antd'
 import { useEffect, useRef, useState } from 'react'
@@ -111,7 +112,12 @@ export default function PlanosAcademia({ employee }) {
                 <Row>
                   <Col span={12}>Saver Club</Col>
                   <Col span={12} className="text-right">
-                    <a href="https://pratiquefitness.my.canva.site/site-saver-club-whatsapp" target="_blank">
+                    <a
+                      onClick={() =>
+                        dispatch(setBrowserURL('https://pratiquefitness.my.canva.site/site-saver-club-whatsapp'))
+                      }
+                      target="_blank"
+                    >
                       <Button type="primary" size="small">
                         Link
                       </Button>

@@ -1,5 +1,6 @@
 import Loading from '@/components/Loading'
 import { getCursos } from '@/redux/actions/unipower'
+import { setBrowserURL } from '@/redux/slices/global'
 import utils from '@/utils'
 import { Button, Col, Collapse, Input, Row, Typography } from 'antd'
 import Image from 'next/image'
@@ -52,7 +53,13 @@ export default function Unipower() {
             <Col span={16}>
               <Title level={3}>{curso.post_title}</Title>
               <a
-                href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/courses/${curso.post_name}`}
+                onClick={() =>
+                  dispatch(
+                    setBrowserURL(
+                      '`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/courses/${curso.post_name}`'
+                    )
+                  )
+                }
                 target="_blank"
               >
                 <Button type="primary">Ver Curso</Button>

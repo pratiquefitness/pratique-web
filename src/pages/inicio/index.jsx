@@ -2,14 +2,17 @@ import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
 import { RibbonWithEndDate } from '@/components'
 import { addDays } from 'date-fns'
+import Browser from '@/components/Browser'
+import { setBrowserURL } from '@/redux/slices/global'
 
 const { Title, Text } = Typography
 
 export default function Inicio() {
+  const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
   const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
@@ -55,13 +58,24 @@ export default function Inicio() {
         centered
       >
         <Space direction="vertical">
-          <a href="https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique" target="_blank">
+          <a
+            onClick={() =>
+              dispatch(setBrowserURL('https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique'))
+            }
+            target="_blank"
+          >
             <img src="/images/clube_certo.png" width={'100%'} className="rounded" />
           </a>
-          <a href="https://grupopratique.typeform.com/cadas-desconto" target="_blank">
+          <a
+            onClick={() => dispatch(setBrowserURL('https://grupopratique.typeform.com/cadas-desconto'))}
+            target="_blank"
+          >
             <img src="/images/igreen.png" width={'100%'} className="rounded" />
           </a>
-          <a href="https://www.bolsamaisbrasil.com.br/unipower/bolsas" target="_blank">
+          <a
+            onClick={() => dispatch(setBrowserURL('https://www.bolsamaisbrasil.com.br/unipower/bolsas'))}
+            target="_blank"
+          >
             <img src="/images/bolsa_brasil.png" width={'100%'} className="rounded" />
           </a>
           <a
@@ -98,7 +112,7 @@ export default function Inicio() {
           </Row>
           <Row gutter={6} className="mb-2 mt-2">
             <Col span={12}>
-              <a href="https://www.clubecertosaude.com.br/saude/saversaude/" target="_blank">
+              <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
                 <img src="/images/saver_saude.png" width="100%" className="rounded" />
               </a>
             </Col>

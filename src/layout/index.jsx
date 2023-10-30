@@ -1,5 +1,5 @@
 import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography } from 'antd'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
 import Header from './Header'
@@ -11,13 +11,16 @@ import LoginView from '@/pages/login'
 import { FaArrowLeft } from 'react-icons/fa'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Browser from '@/components/Browser'
+import { setBrowserURL } from '@/redux/slices/global'
 
 const { Content } = AntLayout
 const { Title } = Typography
 
 export default function Layout({ children }) {
+  const dispatch = useDispatch()
   const router = useRouter()
-  const { themeColor, themeMode } = useSelector(state => state.global)
+  const { themeColor, themeMode, browserURL } = useSelector(state => state.global)
   const { authenticated, usuario } = useSelector(state => state.login)
   const pathname = usePathname()
 
@@ -27,6 +30,7 @@ export default function Layout({ children }) {
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
         <AntLayout className="app">
+          <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
           <Header />
           <Content>
             <div className="container">
@@ -45,7 +49,7 @@ export default function Layout({ children }) {
               {children}
             </div>
           </Content>
-          <Affix offsetBottom={12}>
+          <Affix offsetBottom={12} style={{ zIndex: 99999 }}>
             <Navigation data={routes} />
           </Affix>
         </AntLayout>
