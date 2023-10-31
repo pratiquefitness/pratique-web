@@ -26,7 +26,11 @@ const columns = (setLinkID, dados, usuario, employee) => {
       key: 'link',
       width: 100,
       render: (_, record) => {
-        const linkFinal = `https://pratiquefitness.vercel.app/checkout/${record.unidade.slug}?pl=${record.plano}`
+        const linkFinal = `https://pratiquefitness.vercel.app/checkout/${record.unidade.slug}?pl=${
+          record.plano
+        }&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
+          employee ? employee : usuario.isAffiliate
+        }|AFILIADO`
         return employee ? (
           <a href={linkFinal} target="_blank">
             <Button type="primary">Link</Button>
