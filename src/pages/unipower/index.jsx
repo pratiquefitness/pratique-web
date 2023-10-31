@@ -56,7 +56,7 @@ export default function Unipower() {
                 onClick={() =>
                   dispatch(
                     setBrowserURL(
-                      '`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/courses/${curso.post_name}`'
+                      `https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/copia/courses/${curso.post_name}`
                     )
                   )
                 }
