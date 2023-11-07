@@ -2,6 +2,23 @@ import { months } from '@/constants'
 import crypto from 'crypto'
 
 const utils = {
+  getUserLocation: callback => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords
+          callback({ latitude, longitude })
+        },
+        error => {
+          console.error(error.message)
+          return false
+        }
+      )
+    } else {
+      console.error('Geolocalização não é suportada pelo seu navegador.')
+      return false
+    }
+  },
   getFirstLevelRoute: path => {
     if (path === null) return '/'
     const segments = path.split('/').filter(function (segment) {

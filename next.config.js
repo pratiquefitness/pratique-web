@@ -6,7 +6,9 @@ const nextConfig = {
     domains: ['img.youtube.com', 'pratiqueemcasa.com.br']
   },
   env: {
-    JWT_SECRET: process.env.JWT_SECRET
+    JWT_SECRET: process.env.JWT_SECRET,
+    STRAPI_URL: process.env.STRAPI_URL,
+    STRAPI_TOKEN: process.env.STRAPI_TOKEN
   },
   webpack: (config, { isServer }) => {
     if (isServer) {

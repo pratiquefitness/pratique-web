@@ -1,8 +1,9 @@
 import Loading from '@/components/Loading'
 import { getCis } from '@/redux/actions/cis'
 import { getPonto, setPonto } from '@/redux/actions/ponto'
+import utils from '@/utils'
 import { Button, Card, Space, Table, Typography } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { LuMegaphone } from 'react-icons/lu'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,12 +15,21 @@ const ButtonCI = (
 
 export default function CanalEquipe() {
   const disptach = useDispatch()
+  const [userLocation, setUserLocation] = useState({ latitude: '', longitude: '' })
   const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis)
   const { data: ponto, loading: loadingPonto } = useSelector(state => state.ponto)
   const { usuario } = useSelector(state => state.login)
 
+  useEffect(() => {
+    utils.getUserLocation(setUserLocation)
+  }, [])
+
   const insertPonto = () => {
-    disptach(setPonto())
+    if (userLocation.latitude && userLocation.longitude) {
+      disptach(setPonto(userLocation))
+    } else {
+      utils.getUserLocation(setUserLocation)
+    }
   }
 
   const refreshCI = () => {

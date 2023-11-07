@@ -2,14 +2,23 @@ import { message } from 'antd'
 import { setData, setLoading } from '../slices/ponto'
 import api from '@/services/api'
 
-export const setPonto = () => {
+export const setPonto = userLocation => {
   return async (dispatch, getState) => {
     const { login } = getState()
     dispatch(setLoading(true))
     return api
-      .post('/ponto', { id: login.usuario.ID })
+      .post('/ponto', { id: login.usuario.ID, chave: login.usuario.chave, ...userLocation })
       .then(res => {
-        message.success('Ponto registrado com sucesso!')
+        if (res.data.status === 1) {
+          message.success('Ponto registrado com sucesso!')
+        } else {
+          if (res.data.status === 2) {
+            message.error('Você não está na sua unidade!')
+          } else {
+            message.error('Erro ao registrar ponto!')
+          }
+        }
+
         dispatch(getPonto())
       })
       .finally(() => {

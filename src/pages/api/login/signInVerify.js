@@ -69,14 +69,12 @@ export default async function handler(req, res) {
           const unidadeExist = await apiPratiquePro.unidade.findMany({
             where: {
               unidade_numero: pactoExist[0].matriz_unidade
-            },
-            select: {
-              unidade_nome: true
             }
           })
           user.status = pactoExist[0].matriz_situacao
           user.plano = pactoExist[0].matriz_plano
           user.unidade = unidadeExist[0].unidade_nome
+          user.chave = unidadeExist[0]?.unidade_pacto
         } else {
           user.status = null
           user.plano = null
