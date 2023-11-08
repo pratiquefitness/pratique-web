@@ -49,7 +49,7 @@ export default function Layout({ children }) {
               {children}
             </div>
           </Content>
-          <Affix offsetBottom={12} style={{ zIndex: 99999 }}>
+          <Affix offsetBottom={12}>
             <Navigation data={routes} />
           </Affix>
         </AntLayout>
