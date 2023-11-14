@@ -232,6 +232,6 @@ body .ant-layout-footer {
 }
 .browser-iframe {
   width: 100%;
-  height: calc(100% - 40px); /* Descontando a altura da barra superior */
+  height: calc(100% - 96px);
   border: none;
 }
