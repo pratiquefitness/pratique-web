@@ -40,7 +40,7 @@ export default function CanalEquipe() {
               title={ci.post_title}
               extra={
                 <a
-                  href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=teste&url=https://www.metodologiapowergym.com.br/copia/courses/${ci.post_name}`}
+                  href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=teste&url=https://www.metodologiapowergym.com.br/novo/courses/${ci.post_name}`}
                   target="_blank"
                 >
                   {ButtonCI}
