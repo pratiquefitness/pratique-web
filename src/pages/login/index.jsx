@@ -7,6 +7,7 @@ import { AuthContext } from '@/contexts/AuthContext'
 import Recovery from './_Recovery'
 import { resetModalRecovery, setModalRecovery, setModalRegister } from '@/redux/slices/login'
 import Register from './_Register'
+import { FaWhatsapp } from 'react-icons/fa'
 
 export default function LoginView() {
   const { token } = theme.useToken()
@@ -18,6 +19,12 @@ export default function LoginView() {
 
   const error = searchParams.get('error')
 
+  const openWhatsApp = () => {
+    window.open(
+      'https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1,%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa',
+      '_blank'
+    )
+  }
   const onFinish = async values => {
     const login = await signIn(values)
     if (!login) {
@@ -97,17 +104,37 @@ export default function LoginView() {
 
           <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: -10 }}>
             <small>Ao clicar em ENTRAR você concorda com os nossos termos.</small>
+            <br></br>
           </Typography.Paragraph>
+          <br></br>
           <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
+
           <Row gutter={6}>
-            <Col xs={24} sm={12} md={12} lg={12}>
-              <Button className="mb-4" type="primary" onClick={() => dispath(setModalRegister(true))} block>
+            <Col xs={24} sm={12} md={12} lg={12} className="mb-4">
+              <Button type="primary" onClick={() => dispath(setModalRegister(true))} block>
                 Cadastre-se
               </Button>
             </Col>
-            <Col xs={24} sm={12} md={12} lg={12}>
-              <Button className="mb-4" onClick={() => dispath(setModalRecovery(true))} block>
+            <Col xs={24} sm={12} md={12} lg={12} className="mb-4">
+              <Button onClick={() => dispath(setModalRecovery(true))} block>
                 Esqueci minha senha
+              </Button>
+            </Col>
+            <Col xs={24} className="mb-12">
+              <Button
+                icon={<FaWhatsapp fill="#fff" size={30} />}
+                onClick={openWhatsApp}
+                block
+                style={{
+                  backgroundColor: 'green',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '100%' // Definir a largura como 100%
+                }}
+              >
+                Precisa de ajuda para acessar ?
               </Button>
             </Col>
           </Row>
