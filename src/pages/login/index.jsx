@@ -21,7 +21,7 @@ export default function LoginView() {
 
   const openWhatsApp = () => {
     window.open(
-      'https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1,%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa',
+      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa',
       '_blank'
     )
   }
@@ -122,7 +122,7 @@ export default function LoginView() {
             </Col>
             <Col xs={24} className="mb-12">
               <a
-                href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1,%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa"
+                href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa"
                 target="_blank"
               >
                 <Button
