@@ -121,21 +121,18 @@ export default function LoginView() {
               </Button>
             </Col>
             <Col xs={24} className="mb-12">
-              <Button
-                icon={<FaWhatsapp fill="#fff" size={30} />}
-                onClick={openWhatsApp}
-                block
-                style={{
-                  backgroundColor: 'green',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '100%' // Definir a largura como 100%
-                }}
+              <a
+                href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1,%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa"
+                target="_blank"
               >
-                Precisa de ajuda para acessar ?
-              </Button>
+                <Button
+                  icon={<FaWhatsapp fill="#fff" size={30} />}
+                  style={{ background: 'green', color: 'white' }}
+                  block
+                >
+                  Precisa de ajuda para acessar ?
+                </Button>
+              </a>
             </Col>
           </Row>
         </div>
