@@ -26,7 +26,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
       key: 'link',
       width: 100,
       render: (_, record) => {
-        const linkFinal = `https://pratiquefitness.com.br/checkoutpageplano/${record.unidade.slug}?pl=${
+        const linkFinal = `https://novo.pratiquefitness.com.br/checkoutpageplano/${record.unidade.slug}?pl=${
           record.plano
         }&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
           employee ? employee : usuario.isAffiliate
