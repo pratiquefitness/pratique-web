@@ -5,8 +5,6 @@ import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, message,
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
   { value: 'telefone', label: 'Telefone' },
@@ -132,7 +130,7 @@ export default function Geral() {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               Chave: {pix?.chave}
             <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
-              Copiar Link
+              Copiar Chave
             </Button>
             </Col>
 
