@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const { Panel } = Collapse
 
-// const messageLink = () => {
-//   message.success('Link copiado!')
-// }
+const messageLink = () => {
+  message.success('Link copiado!')
+}
 
 const columns = (setLinkID, dados, usuario, employee) => {
   return [
@@ -40,7 +40,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
             type="primary"
             onClick={() => {
               utils.copyTextToClipboard(linkFinal)
-              // messageLink()
+              messageLink()
               setLinkID(linkFinal)
             }}
           >
@@ -95,9 +95,9 @@ export default function PlanosAcademia({ employee }) {
               }}
               className="mb-4"
             />
-            {/* <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
-            </Button> */}
+            </Button>
           </div>
         ) : (
           <Loading spinning />
