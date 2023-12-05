@@ -67,34 +67,31 @@ const utils = {
     return list
   },
 
-  copyTextToClipboard: text => {
+  copyTextToClipboard: async (text) => {
     if (!navigator.clipboard) {
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      textarea.setAttribute('readonly', '')
-      textarea.style.position = 'absolute'
-      textarea.style.left = '-9999px'
-      document.body.appendChild(textarea)
-      const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      if (selected) {
-        document.getSelection().removeAllRanges()
-        document.getSelection().addRange(selected)
-      }
-      return true
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'absolute';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+  
+      textarea.select();
+      document.execCommand('copy');
+  
+      document.body.removeChild(textarea);
+      return true;
     }
-    navigator.clipboard.writeText(text).then(
-      function () {
-        return true
-      },
-      function (err) {
-        console.error(err)
-        return false
-      }
-    )
+  
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
   },
+  
   encrypt_md5: text => crypto.createHash('md5').update(text).digest('hex'),
   getRndInteger: (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min

@@ -1,14 +1,14 @@
 import { Loading } from '@/components'
 import { getProdutosAfiliado } from '@/redux/actions/afiliados'
 import utils from '@/utils'
-import { Alert, Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
+import {  Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { LuCheckCircle2 } from 'react-icons/lu'
 import { useDispatch, useSelector } from 'react-redux'
 
-// const messageLink = () => {
-//   message.success('Link copiado!')
-// }
+const messageLink = () => {
+  message.success('Link copiado!')
+}
 
 const columns = (setLinkID, isAffiliate, employee) => {
   return [
@@ -64,7 +64,7 @@ const columns = (setLinkID, isAffiliate, employee) => {
               response.text().then(function (text) {
                 const linkFinal = `${text}?ref=${isAffiliate}`
                 utils.copyTextToClipboard(linkFinal)
-                // messageLink()
+                messageLink()
                 setLinkID(linkFinal)
               })
             }}
@@ -88,6 +88,8 @@ export default function Produtos({ employee }) {
     dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate))
   }, [])
 
+
+
   return (
     <Loading spinning={loading}>
       <Modal title="Link" open={linkID.length} onCancel={() => setLinkID('')} footer={null} width={300} centered>
@@ -107,9 +109,9 @@ export default function Produtos({ employee }) {
               }}
               className="mb-4"
             />
-            {/* <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
-            </Button> */}
+            </Button>
           </div>
         ) : (
           <Loading spinning />

@@ -1,9 +1,9 @@
 import { Loading } from '@/components'
 import { getDadosAfiliado, getPix, savePix } from '@/redux/actions/afiliados'
-import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, theme } from 'antd'
+import utils from '@/utils'
+import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, message, theme } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import QRCode from 'react-qr-code'
 
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
@@ -31,6 +31,11 @@ export default function Geral() {
 
   const onSavePix = ({ tipo, chave }) => {
     dispatch(savePix(tipo, chave, setEditablePix))
+  }
+
+  const messageLink = () => {
+    message.success('Link copiado!')
+    utils.copyTextToClipboard(pix?.chave); 
   }
 
   return (
@@ -122,9 +127,14 @@ export default function Geral() {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}
             </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               Chave: {pix?.chave}
+            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+              Copiar Chave
+            </Button>
             </Col>
+
+
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Button onClick={() => setEditablePix(true)} block>
                 Editar
