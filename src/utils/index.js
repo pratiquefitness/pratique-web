@@ -68,26 +68,23 @@ const utils = {
   },
 
   copyTextToClipboard: async (text) => {
-    if (!navigator.clipboard) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.setAttribute('readonly', '');
-      textarea.style.position = 'absolute';
-      textarea.style.left = '-9999px';
-      document.body.appendChild(textarea);
-  
-      textarea.select();
-      document.execCommand('copy');
-  
-      document.body.removeChild(textarea);
-      return true;
-    }
-  
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        // Código específico para o Safari
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       return true;
     } catch (err) {
-      console.error(err);
+      console.error('Clipboard API falhou:', err);
       return false;
     }
   },
