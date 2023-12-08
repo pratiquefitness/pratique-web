@@ -20,11 +20,13 @@ export default function Produtos({ employee }) {
   const handleLinkButtonClick = async (record) => {
     const id = record.id.split('&')[0];
     const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`;
-  
+
     try {
       const response = await fetch(url);
       const text = await response.text();
-      const linkFinal = `${text}?ref=${employee}`;
+      const employeOrAffiliate = employee ? employee : usuario.isAffiliate
+
+      const linkFinal = `${text}?ref=${employeOrAffiliate}`;
     
       setLinkID(linkFinal);
     } catch (error) {
@@ -33,8 +35,8 @@ export default function Produtos({ employee }) {
   };
   
   const messageLink = async () => {
-    message.success('Link copiado!');
     await utils.copyTextToClipboard(linkID);
+    message.success('Link copiado!');
   };
   
   const columns = [
