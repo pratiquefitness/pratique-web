@@ -21,6 +21,11 @@ export default function Afiliados() {
             key: 'planos',
             label: `Planos Academia`,
             children: <PlanosAcademia employee={employee} />
+          },
+          {
+            key: 'jumperfit',
+            label: `Jumper Fit`,
+            children: <JumperFit employee={employee} />
           }
         ]}
       />
