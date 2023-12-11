@@ -63,8 +63,13 @@ export default function JumperFit({ employee }) {
   const list = search ? dataSearch : unidades
 
   const handleButtonClick = credits => {
-    // Construct the link based on the selected credits
-    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=418&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+    // Set the plan based on the selected credits
+    const selectedPlan = credits === '12' ? '418' : '419'
+
+    // Construct the link based on the selected plan
+    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${
+      selectedPlan === '418' ? '418' : '419'
+    }&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
       employee ? employee : usuario.isAffiliate
     }|AFILIADO`
 
