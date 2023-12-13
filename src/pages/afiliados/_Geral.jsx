@@ -35,7 +35,7 @@ export default function Geral() {
 
   const messageLink = () => {
     message.success('Link copiado!')
-    utils.copyTextToClipboard(pix?.chave); 
+    utils.copyTextToClipboard(pix?.chave)
   }
 
   return (
@@ -66,6 +66,7 @@ export default function Geral() {
           </div>
         </Col>
       </Row>
+      {/*
       <Row className="mb-2">
         <Col span={24}>
           <a href={`https://app.pratiqueemcasa.com.br/afiliados/loja/${usuario.isAffiliate}`}>
@@ -73,6 +74,7 @@ export default function Geral() {
           </a>
         </Col>
       </Row>
+      */}
       <Card title="Seu Pix">
         {editablePix || pix.length ? (
           <Form form={formPix} layout="vertical" onFinish={onSavePix}>
@@ -127,13 +129,20 @@ export default function Geral() {
             <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
               Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}
             </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              xl={12}
+              xxl={12}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+            >
               Chave: {pix?.chave}
-            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
-              Copiar Chave
-            </Button>
+              <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+                Copiar Chave
+              </Button>
             </Col>
-
 
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Button onClick={() => setEditablePix(true)} block>
