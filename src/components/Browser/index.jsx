@@ -1,7 +1,9 @@
-import { Button, Typography } from 'antd'
+import { Affix, Button, Typography } from 'antd'
 import { FaArrowLeft } from 'react-icons/fa'
 import Header from '@/layout/Header'
 import React from 'react'
+import { routes } from '@/constants'
+import Navigation from '@/layout/Navigation'
 
 const { Title } = Typography
 
@@ -20,6 +22,9 @@ const Browser = ({ url, onClose }) => {
         </div>
       </div>
       <iframe className="browser-iframe" src={url} />
+      <Affix offsetBottom={12}>
+        <Navigation data={routes} />
+      </Affix>
     </div>
   ) : null
 }

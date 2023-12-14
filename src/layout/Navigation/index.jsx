@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import utils from '@/utils'
 import { theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import Link from 'next/link'
 import { setBrowserURL } from '@/redux/slices/global'
 
 export default function Navigation({ data }) {

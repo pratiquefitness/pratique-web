@@ -1,12 +1,10 @@
 import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
-
 import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
 import { RibbonWithEndDate } from '@/components'
 import { addDays } from 'date-fns'
-import Browser from '@/components/Browser'
 import { setBrowserURL } from '@/redux/slices/global'
 
 const { Title, Text } = Typography
@@ -91,7 +89,13 @@ export default function Inicio() {
           >
             <img src="/images/rdc.png" width={'100%'} className="rounded" />
           </a>
-          <a href="https://pratiquefitness.com.br/" target="_blank">
+          <a
+            onClick={() => {
+              setSaverClubModal(false)
+              dispatch(setBrowserURL('https://pratiquefitness.com.br/'))
+            }}
+            target="_blank"
+          >
             <img src="/images/pratique.png" width={'100%'} className="rounded" />
           </a>
         </Space>
@@ -167,7 +171,7 @@ export default function Inicio() {
       <Text type="secondary">Exercícios e conteúdos para você</Text>
       <Row gutter={[6, 6]} className="mb-2 mt-2">
         <Col span={12}>
-          <a href="https://linklist.bio/pratiquenutri" target="_blank">
+          <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
             <RibbonWithEndDate
               text="Novo!"
               color="yellow"
@@ -179,7 +183,7 @@ export default function Inicio() {
           </a>
         </Col>
         <Col span={12}>
-          <a href="https://linklist.bio/metodologiapowergym" target="_blank">
+          <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
             <RibbonWithEndDate
               text="Novo!"
               color="yellow"
@@ -206,7 +210,7 @@ export default function Inicio() {
           </Link>
         </Col>
         <Col span={12}>
-          <a href="https://pratiquefitness.com.br/blog/" target="_blank">
+          <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))}>
             <img src="/images/blog.png" width="100%" />
           </a>
         </Col>
