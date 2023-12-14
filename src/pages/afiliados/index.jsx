@@ -23,7 +23,7 @@ const items = [
   },
   {
     key: 'planos',
-    label: `Planos Academia`,
+    label: `Planos`,
     children: <PlanosAcademia />
   },
   {

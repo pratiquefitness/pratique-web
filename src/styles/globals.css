@@ -236,3 +236,29 @@ body .ant-layout-footer {
   height: calc(100% - 96px);
   border: none;
 }
+.ant-table-content {
+  font-size: 10px;
+  text-align: center;
+}
+.ant-table-wrapper {
+  padding: 5px 5px;
+  text-align: center;
+}
+.ant-table-cell {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  padding: 5px 5px !important;
+}
+.ant-table-wrapper .ant-table-thead > tr {
+  padding: 5px 5px !important;
+}
+.ant-tabs .ant-tabs-tab {
+  font-size: 13px;
+}
+.ant-tabs .ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 15px;
+}
