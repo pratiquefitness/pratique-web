@@ -1,51 +1,51 @@
-import { Loading } from '@/components';
-import { getProdutosAfiliado } from '@/redux/actions/afiliados';
-import utils from '@/utils';
-import { Button, Input, Modal, Table, Tabs, Typography, message } from 'antd';
-import { useEffect, useRef, useState } from 'react';
-import { LuCheckCircle2 } from 'react-icons/lu';
-import { useDispatch, useSelector } from 'react-redux';
+import { Loading } from '@/components'
+import { getProdutosAfiliado } from '@/redux/actions/afiliados'
+import utils from '@/utils'
+import { Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { LuCheckCircle2 } from 'react-icons/lu'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Produtos({ employee }) {
-  const dispatch = useDispatch();
-  const inputRef = useRef(null);
-  const [linkID, setLinkID] = useState('');
-  const { usuario } = useSelector(state => state.login);
-  const { produtos, loading } = useSelector(state => state.afiliados);
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const [linkID, setLinkID] = useState('')
+  const { usuario } = useSelector(state => state.login)
+  const { produtos, loading } = useSelector(state => state.afiliados)
 
   useEffect(() => {
-    dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate));
-  }, []);
+    dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate))
+  }, [])
 
-  const handleLinkButtonClick = async (record) => {
-    const id = record.id.split('&')[0];
-    const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`;
+  const handleLinkButtonClick = async record => {
+    const id = record.id.split('&')[0]
+    const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
 
     try {
-      const response = await fetch(url);
-      const text = await response.text();
+      const response = await fetch(url)
+      const text = await response.text()
       const employeOrAffiliate = employee ? employee : usuario.isAffiliate
 
-      const linkFinal = `${text}?ref=${employeOrAffiliate}`;
-    
-      setLinkID(linkFinal);
+      const linkFinal = `${text}?ref=${employeOrAffiliate}`
+
+      setLinkID(linkFinal)
     } catch (error) {
-      console.error('Error fetching or copying link:', error);
+      console.error('Error fetching or copying link:', error)
     }
-  };
-  
+  }
+
   const messageLink = async () => {
-    await utils.copyTextToClipboard(linkID);
-    message.success('Link copiado!');
-  };
-  
+    await utils.copyTextToClipboard(linkID)
+    message.success('Link copiado!')
+  }
+
   const columns = [
     {
       title: 'Produto',
       dataIndex: 'imagem',
       key: 'produto',
       width: 100,
-      render: (_, record) => <img src={record.imagem} width={'100%'} />,
+      render: (_, record) => <img src={record.imagem} width={'100%'} />
     },
     {
       title: 'Desc.',
@@ -59,7 +59,7 @@ export default function Produtos({ employee }) {
             Comissão: {record.comissao}
           </span>
         </>
-      ),
+      )
     },
     {
       title: 'Link',
@@ -69,9 +69,9 @@ export default function Produtos({ employee }) {
         <Button type="primary" onClick={() => handleLinkButtonClick(record)}>
           Link
         </Button>
-      ),
-    },
-  ];
+      )
+    }
+  ]
 
   return (
     <Loading spinning={loading}>
@@ -87,8 +87,8 @@ export default function Produtos({ employee }) {
               value={linkID}
               onClick={() => {
                 inputRef.current.focus({
-                  cursor: 'all',
-                });
+                  cursor: 'all'
+                })
               }}
               className="mb-4"
             />
@@ -104,27 +104,12 @@ export default function Produtos({ employee }) {
         defaultActiveKey="0"
         items={[
           {
-            key: 'todos',
-            label: `Todos`,
-            children: <Table dataSource={[...(produtos.bike || []), ...(produtos.suplementacao || []), ...(produtos.diversos || [])]} columns={columns} />,
-          },
-          {
-            key: 'bike',
-            label: `Bike`,
-            children: <Table dataSource={produtos.bike} columns={columns} />,
-          },
-          {
             key: 'suplementacao',
             label: `Suplementação`,
-            children: <Table dataSource={produtos.suplementacao} columns={columns} />,
-          },
-          {
-            key: 'diversos',
-            label: `Diversos`,
-            children: <Table dataSource={produtos.diversos} columns={columns} />,
-          },
+            children: <Table dataSource={produtos.suplementacao} columns={columns} />
+          }
         ]}
       />
     </Loading>
-  );
+  )
 }
