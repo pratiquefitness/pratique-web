@@ -109,6 +109,7 @@ export default function Produtos({ employee }) {
             children: <Table dataSource={produtos.suplementacao} columns={columns} />
           }
         ]}
+        style={{ marginBottom: '100px' }}
       />
       {'\n\n'}
       {'\n\n'}
