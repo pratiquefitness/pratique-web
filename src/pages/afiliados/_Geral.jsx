@@ -151,6 +151,7 @@ export default function Geral() {
                 Editar
               </Button>
               <br /> <br />
+              <p style={{ marginTop: '10px', textAlign: 'center' }}>Precisas de apoio?</p>
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 <Button
                   shape="round"
