@@ -164,7 +164,7 @@ export default function Geral() {
                     style={{ background: 'green', color: 'white' }}
                     block
                   >
-                    Precisas de apoio?
+                    SUPORTE AFILIADO
                   </Button>
                 </a>
               </Col>
