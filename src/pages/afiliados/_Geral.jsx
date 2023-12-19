@@ -39,7 +39,8 @@ export default function Geral() {
     utils.copyTextToClipboard(pix?.chave)
   }
 
-  const whatsappLink = 'https://bit.ly/SuporteAppAfiliados'
+  const whatsappLink =
+    'https://api.whatsapp.com/send?phone=5531984861766&text=Ol%C3%A1%2C%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda.'
 
   return (
     <Loading spinning={loading}>
