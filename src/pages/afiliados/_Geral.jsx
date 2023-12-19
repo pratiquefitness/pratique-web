@@ -5,6 +5,7 @@ import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, message,
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { WhatsAppOutlined } from '@ant-design/icons'
+import { FaWhatsapp } from 'react-icons/fa'
 
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
@@ -151,18 +152,21 @@ export default function Geral() {
               <Button onClick={() => setEditablePix(true)} block>
                 Editar
               </Button>
-              <br /> <br />
+              <br />
               <p style={{ marginTop: '10px', textAlign: 'center' }}>Precisas de apoio?</p>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                <Button
-                  shape="round"
-                  icon={<WhatsAppOutlined />}
-                  style={{ background: '#25d366', borderColor: '#25d366' }}
-                  block
-                  onClick={() => window.open(whatsappLink, '_blank')}
+              <Col xs={24} className="mb-12">
+                <a
+                  href="https://api.whatsapp.com/send?phone=5531984861766&text=Ol%C3%A1%2C%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda"
+                  target="_blank"
                 >
-                  SUPORTE AFILIADO
-                </Button>
+                  <Button
+                    icon={<FaWhatsapp fill="#fff" size={30} />}
+                    style={{ background: 'green', color: 'white' }}
+                    block
+                  >
+                    Precisas de apoio?
+                  </Button>
+                </a>
               </Col>
             </Col>{' '}
             <br /> <br /> <br /> <br />
