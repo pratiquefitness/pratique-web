@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const { Panel } = Collapse
 
-const columns = (setLinkID, dados, usuario, employee) => {
+const columns = (setLinkID, dados, usuario, employee, showModal) => {
   return [
     {
       title: 'Jumper Fit',
@@ -32,7 +32,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
           <Button
             type="primary"
             onClick={() => {
-              utils.copyTextToClipboard(linkFinal)
+              showModal(linkFinal)
               setLinkID(linkFinal)
             }}
           >
@@ -48,6 +48,8 @@ export default function JumperFit({ employee }) {
   const [linkID, setLinkID] = useState('')
   const [dataSearch, setDataSearch] = useState([])
   const [search, setSearch] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalLink, setModalLink] = useState('')
   const dispatch = useDispatch()
   const { unidades, planos, planosLoading, loading } = useSelector(state => state.afiliados)
   const { usuario } = useSelector(state => state.login)
@@ -74,12 +76,56 @@ export default function JumperFit({ employee }) {
     }|AFILIADO`
 
     // Use the link as needed, for example, open in a new tab
-    window.open(link, '_blank')
+    showModal(link)
+  }
+
+  const showModal = link => {
+    setModalLink(link)
+    setModalVisible(true)
+  }
+
+  const closeModal = () => {
+    setModalLink('')
+    setModalVisible(false)
   }
 
   return (
     <Loading spinning={loading}>
       {/* ... (existing code) */}
+      <Modal title="Link" visible={modalVisible} onCancel={closeModal} footer={null} width={300} centered>
+        {modalLink.includes('http') ? (
+          <div className="text-center">
+            <LuCheckCircle2 style={{ fontSize: 50, color: '#25D366' }} />
+            <Typography.Title level={4} className="mb-4">
+              Link Gerado!
+            </Typography.Title>
+            <Input
+              ref={inputRef}
+              value={modalLink}
+              onClick={() => {
+                inputRef.current.focus({
+                  cursor: 'all'
+                })
+              }}
+              className="mb-4"
+            />
+            <Button
+              type="primary"
+              style={{ background: '#1677ff' }}
+              size="small"
+              onClick={() => {
+                utils.copyTextToClipboard(modalLink)
+                message.success('Link copiado!')
+                closeModal()
+              }}
+            >
+              Copiar Link
+            </Button>
+          </div>
+        ) : (
+          <Loading spinning />
+        )}
+      </Modal>
       <Space direction="vertical" className="w-100">
         {/* ... (existing code) */}
         <Space direction="horizontal" align="center">
