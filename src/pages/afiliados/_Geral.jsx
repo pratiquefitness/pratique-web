@@ -4,6 +4,7 @@ import utils from '@/utils'
 import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, message, theme } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { WhatsAppOutlined } from '@ant-design/icons'
 
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
@@ -37,6 +38,8 @@ export default function Geral() {
     message.success('Link copiado!')
     utils.copyTextToClipboard(pix?.chave)
   }
+
+  const whatsappLink = 'https://bit.ly/SuporteAppAfiliados'
 
   return (
     <Loading spinning={loading}>
@@ -143,14 +146,27 @@ export default function Geral() {
                 Copiar Chave
               </Button>
             </Col>
-
             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
               <Button onClick={() => setEditablePix(true)} block>
                 Editar
               </Button>
-            </Col>
+              <br /> <br />
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Button
+                  shape="round"
+                  icon={<WhatsAppOutlined />}
+                  style={{ background: '#25d366', borderColor: '#25d366' }}
+                  block
+                  onClick={() => window.open(whatsappLink, '_blank')}
+                >
+                  SUPORTE AFILIADO
+                </Button>
+              </Col>
+            </Col>{' '}
+            <br /> <br /> <br /> <br />
           </Row>
         )}
+        <br /> <br /> <br /> <br /> <br /> <br />
       </Card>
     </Loading>
   )
