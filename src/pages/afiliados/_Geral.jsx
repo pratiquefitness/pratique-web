@@ -156,7 +156,7 @@ export default function Geral() {
               <p style={{ marginTop: '10px', textAlign: 'center' }}>Precisas de apoio?</p>
               <Col xs={24} className="mb-12">
                 <a
-                  href="https://api.whatsapp.com/send?phone=5531984861766&text=Olá,%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda"
+                  href="https://wa.me/+5531984861766?text=Ol%C3%A1,%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{ display: 'block', textDecoration: 'none' }}
