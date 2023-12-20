@@ -160,10 +160,7 @@ export default function Geral() {
                   style={{ background: 'green', color: 'white' }}
                   block
                   onClick={() => {
-                    window.open(
-                      'https://api.whatsapp.com/send?phone=5531984861766&text=Ol%C3%A1%2C%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda',
-                      '_blank'
-                    )
+                    window.open('https://wa.me/5531984861766', '_blank')
                   }}
                 >
                   SUPORTE AFILIADO
