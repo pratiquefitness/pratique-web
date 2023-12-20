@@ -1,4 +1,4 @@
-import { Alert, Button, Checkbox, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
+import { Alert, Button, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,22 +19,30 @@ export default function LoginView() {
 
   const error = searchParams.get('error')
 
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+
   const openWhatsApp = () => {
-    window.open(
-      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa',
-      '_blank'
-    )
-  }
+    const whatsappUrl =
+      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa';
+
+    if (isMobile) {
+      window.location.href = whatsappUrl;
+      return;
+    }
+
+    window.open(whatsappUrl, '_blank');
+  };
+
   const onFinish = async values => {
-    const login = await signIn(values)
+    const login = await signIn(values);
     if (!login) {
-      message.error('Usuário ou senha invalidos!')
+      message.error('Usuário ou senha invalidos!');
       router.push({
         pathname: '/',
         query: { error: 'true' }
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
@@ -91,10 +99,6 @@ export default function LoginView() {
               Senha padrão: 123
             </Typography.Paragraph>
 
-            {/* <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item> */}
-
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={loading} block>
                 Entrar
@@ -125,12 +129,7 @@ export default function LoginView() {
                 icon={<FaWhatsapp fill="#fff" size={30} />}
                 style={{ background: 'green', color: 'white' }}
                 block
-                onClick={() => {
-                  window.open(
-                    'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa',
-                    '_blank'
-                  )
-                }}
+                onClick={openWhatsApp}
               >
                 Precisa de ajuda para acessar?
               </Button>
@@ -139,5 +138,5 @@ export default function LoginView() {
         </div>
       </div>
     </div>
-  )
+  );
 }

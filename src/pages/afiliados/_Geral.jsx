@@ -40,8 +40,19 @@ export default function Geral() {
     utils.copyTextToClipboard(pix?.chave)
   }
 
-  const whatsappLink =
-    'https://api.whatsapp.com/send?phone=5531984861766&text=Ol%C3%A1%2C%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda'
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+
+  const openWhatsApp = () => {
+    const whatsappUrl =
+      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa';
+
+    if (isMobile) {
+      window.location.href = whatsappUrl;
+      return;
+    }
+
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <Loading spinning={loading}>
@@ -159,12 +170,7 @@ export default function Geral() {
                   icon={<FaWhatsapp fill="#fff" size={30} />}
                   style={{ background: 'green', color: 'white' }}
                   block
-                  onClick={() => {
-                    window.open(
-                      'https://api.whatsapp.com/send?phone=5531984861766&text=Ol%C3%A1%2C%20sou%20afiliado%20Pratique%20e%20gostaria%20de%20ajuda',
-                      '_blank'
-                    )
-                  }}
+                  onClick={openWhatsApp}
                 >
                   SUPORTE AFILIADO
                 </Button>
