@@ -174,6 +174,7 @@ export default function Geral() {
                 >
                   SUPORTE AFILIADO
                 </Button>
+                <p style={{ marginTop: '10px', textAlign: 'center' }}>(31) 98486-1766</p>
               </Col>
             </Col>{' '}
             <br /> <br /> <br /> <br />
