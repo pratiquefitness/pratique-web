@@ -17,11 +17,6 @@ const items = [
     children: <Comissao />
   },
   {
-    key: 'produtos',
-    label: `Produtos`,
-    children: <Produtos />
-  },
-  {
     key: 'planos',
     label: `Planos`,
     children: <PlanosAcademia />
