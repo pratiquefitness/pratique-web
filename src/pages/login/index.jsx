@@ -19,30 +19,29 @@ export default function LoginView() {
 
   const error = searchParams.get('error')
 
-  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa';
-
+      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa'
     if (isMobile) {
-      window.location.href = whatsappUrl;
-      return;
+      window.location.href = whatsappUrl
+      return
     }
 
-    window.open(whatsappUrl, '_blank');
-  };
+    window.open(whatsappUrl, '_blank')
+  }
 
   const onFinish = async values => {
-    const login = await signIn(values);
+    const login = await signIn(values)
     if (!login) {
-      message.error('Usuário ou senha invalidos!');
+      message.error('Usuário ou senha invalidos!')
       router.push({
         pathname: '/',
         query: { error: 'true' }
-      });
+      })
     }
-  };
+  }
 
   return (
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
@@ -138,5 +137,5 @@ export default function LoginView() {
         </div>
       </div>
     </div>
-  );
+  )
 }

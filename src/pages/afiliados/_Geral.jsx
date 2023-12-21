@@ -44,7 +44,7 @@ export default function Geral() {
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%2C%20estou%20vindo%20do%20suporte%20do%20Aplicativo%20da%20Pratique%20em%20Casa';
+      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa';
 
     if (isMobile) {
       window.location.href = whatsappUrl;
