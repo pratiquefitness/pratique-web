@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Browser from '@/components/Browser'
 import { setBrowserURL } from '@/redux/slices/global'
+import { Footer } from 'antd/es/layout/layout'
 
 const { Content } = AntLayout
 const { Title } = Typography
@@ -29,30 +30,38 @@ export default function Layout({ children }) {
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
-        <AntLayout className="app">
-          <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
-          <Header />
-          <Content>
-            <div className="container">
-              <div className="d-flex justify-space-between">
-                <Title level={3}>
-                  {utils
-                    .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
-                    .title.replace('#USUARIO#', usuario.user_nicename.split('@')[0])}
-                </Title>
-                {pathname !== '/' && (
-                  <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
-                    Voltar
-                  </Button>
-                )}
+        <>
+          <AntLayout className="app">
+            <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
+            <Header />
+            <Content
+              style={{
+                
+                paddingBottom:"50px"
+              }}
+            >
+              <div className="container">
+                <div className="d-flex justify-space-between">
+                  <Title level={3}>
+                    {utils
+                      .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+                      .title.replace('#USUARIO#', usuario.user_nicename.split('@')[0])}
+                  </Title>
+                  {pathname !== '/' && (
+                    <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
+                      Voltar
+                    </Button>
+                  )}
+                </div>
+                {children}
               </div>
-              {children}
-            </div>
-          </Content>
-          <Affix offsetBottom={12}>
-            <Navigation data={routes} />
-          </Affix>
-        </AntLayout>
+            </Content>
+            <Footer
+            >
+              <Navigation data={routes} />
+            </Footer>
+          </AntLayout>
+        </>
       ) : pathname && pathname.includes('/afiliados/loja/') ? (
         children
       ) : (

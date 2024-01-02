@@ -29,16 +29,17 @@ export default function Navigation({ data }) {
     router.push(item.href)
   }
 
-  const getWidth = () => {
-    const widthPerItem = 70
-    let width = 210
-    if (isHomeUser) width = width + widthPerItem
-    if (isAffiliate) width = width + widthPerItem
-    return width
-  }
+//   const getWidth = () => {
+//     const widthPerItem = 20
+//     let width = 300
+//     if (isHomeUser) width = width + widthPerItem
+//     if (isAffiliate) width = width + widthPerItem
+//     return width
+//   }
 
   return (
-    <div className="navigation" style={{ background: token.colorPrimary, width: getWidth() }}>
+    // <div className="navigation" style={{ background: token.colorPrimary, width: getWidth() }}>
+    <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
         {data.map((item, key) => {
           const checkBike = item.href === '/bike' ? isHomeUser : true
@@ -49,15 +50,15 @@ export default function Navigation({ data }) {
             checkAfiliate && (
               <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
                 <a style={{ pointerEvents: 'none' }}>
-                  <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}>
-                    {item.icon}
+                  {/* <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}> */}
+                  <span className="icon" style={{ color: item.href === selected ? 'white' : 'white' }}>
+                    {item.href === selected ? item.activeIcon : item.icon}
                   </span>
                 </a>
               </li>
             )
           )
         })}
-        <div className="indicator"></div>
       </ul>
     </div>
   )
