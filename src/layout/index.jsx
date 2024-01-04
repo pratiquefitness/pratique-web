@@ -13,7 +13,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Browser from '@/components/Browser'
 import { setBrowserURL } from '@/redux/slices/global'
-import { Footer } from 'antd/es/layout/layout'
 
 const { Content } = AntLayout
 const { Title } = Typography
@@ -36,8 +35,8 @@ export default function Layout({ children }) {
             <Header />
             <Content
               style={{
-                
-                paddingBottom:"50px"
+                paddingTop:"1rem",
+                paddingBottom:"60px"
               }}
             >
               <div className="container">
@@ -56,10 +55,7 @@ export default function Layout({ children }) {
                 {children}
               </div>
             </Content>
-            <Footer
-            >
-              <Navigation data={routes} />
-            </Footer>
+            <Navigation data={routes} />
           </AntLayout>
         </>
       ) : pathname && pathname.includes('/afiliados/loja/') ? (

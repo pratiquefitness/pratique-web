@@ -24,21 +24,16 @@ export default function Navigation({ data }) {
   }, [pathname])
 
   const onNavigate = item => () => {
-    dispatch(setBrowserURL(null))
-    setSelected(item.href)
-    router.push(item.href)
+    if (item === 'blog') {
+      dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
+    } else {
+      dispatch(setBrowserURL(null))
+      setSelected(item.href)
+      router.push(item.href)
+    }
   }
 
-//   const getWidth = () => {
-//     const widthPerItem = 20
-//     let width = 300
-//     if (isHomeUser) width = width + widthPerItem
-//     if (isAffiliate) width = width + widthPerItem
-//     return width
-//   }
-
   return (
-    // <div className="navigation" style={{ background: token.colorPrimary, width: getWidth() }}>
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
         {data.map((item, key) => {
@@ -50,8 +45,7 @@ export default function Navigation({ data }) {
             checkAfiliate && (
               <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
                 <a style={{ pointerEvents: 'none' }}>
-                  {/* <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}> */}
-                  <span className="icon" style={{ color: item.href === selected ? 'white' : 'white' }}>
+                  <span className="icon" style={{ color: 'white' }}>
                     {item.href === selected ? item.activeIcon : item.icon}
                   </span>
                 </a>

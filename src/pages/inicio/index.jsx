@@ -6,6 +6,9 @@ import Banners from './_Banners'
 import { RibbonWithEndDate } from '@/components'
 import { addDays } from 'date-fns'
 import { setBrowserURL } from '@/redux/slices/global'
+import NewContent from './newContent'
+import NewContent2 from './newContent2'
+import NewContent3 from './newContent3'
 
 const { Title, Text } = Typography
 
@@ -103,13 +106,38 @@ export default function Inicio() {
 
       <Banners />
 
+      <div className='mt-4 mb-2'>
+        <Title level={3} className="m-0 ">
+          Novas Atividades
+        </Title>
+        <Text>Beneficios e conteúdos para você</Text>
+      </div>
+      <NewContent />
+
+
+      <div className='mt-4 mb-2'>
+        <Title level={3} className="m-0 ">
+			Banner vertical
+        </Title>
+        <Text>lorem ipsum sit amet...</Text>
+      </div>
+      <NewContent2 />
+
+      <div className='mt-4 mb-2'>
+        <Title level={3} className="m-0 ">
+			Banner retangular
+        </Title>
+        <Text>lorem ipsum sit amet...</Text>
+      </div>
+      <NewContent3 />
+
       {usuario.isEmployee ? (
-        <>
+        <div className="mt-4">
           <Title level={4} className="m-0">
             Área do Colaborador!
           </Title>
           <Text type="secondary">Beneficios e conteúdos para você</Text>
-          <Row gutter={6} className="mb-2 mt-2">
+          <Row gutter={6} className="my-2">
             <Col span={12}>
               <Link href="/canal_equipe">
                 <img src="/images/canal_equipe.png" width="100%" />
@@ -133,15 +161,17 @@ export default function Inicio() {
               </a>
             </Col>
           </Row>
-        </>
+        </div>
       ) : null}
 
       {isClient ? (
         <>
-          <Title level={4} className="m-0">
-            Área do Cliente!
-          </Title>
-          <Text type="secondary">Beneficios e conteúdos para você</Text>
+          <div>
+            <Title level={4} className="m-0">
+              Área do Cliente!
+            </Title>
+            <Text type="secondary">Beneficios e conteúdos para você</Text>
+          </div>
           <Row gutter={[6, 6]} className="mb-2 mt-2">
             {isSaverAndClient ? (
               <Col span={12}>
@@ -165,10 +195,12 @@ export default function Inicio() {
         </>
       ) : null}
 
-      <Title level={4} className="m-0">
-        Você, Feliz e Saudável!
-      </Title>
-      <Text type="secondary">Exercícios e conteúdos para você</Text>
+      <div>
+        <Title level={4} className="m-0">
+          Você, Feliz e Saudável!
+        </Title>
+        <Text type="secondary">Exercícios e conteúdos para você</Text>
+      </div>
       <Row gutter={[6, 6]} className="mb-2 mt-2">
         <Col span={12}>
           <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
@@ -216,10 +248,12 @@ export default function Inicio() {
         </Col>
       </Row>
 
-      <Title level={4} className="m-0 mt-6">
-        SAC
-      </Title>
-      <Text type="secondary">Canais de atendimento da Pratique</Text>
+      <div>
+        <Title level={4} className="m-0 mt-6">
+          SAC
+        </Title>
+        <Text type="secondary">Canais de atendimento da Pratique</Text>
+      </div>
       <Row gutter={6} className="mb-2 mt-2">
         <Col span={12}>
           <a

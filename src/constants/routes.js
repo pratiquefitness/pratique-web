@@ -1,5 +1,4 @@
-import { LuHome, LuDumbbell, LuBike, LuHelpCircle, LuUser } from 'react-icons/lu'
-//import { GoHome } from 'react-icons/go'
+import { LuDumbbell } from 'react-icons/lu'
 import {
   IoHomeOutline,
   IoHomeSharp,
@@ -8,9 +7,10 @@ import {
   IoPeopleCircleOutline,
   IoPeopleCircle,
   IoBicycleOutline,
-  IoBicycle
+  IoBicycle,
+  IoNewspaper,
+  IoNewspaperOutline
 } from 'react-icons/io5'
-import { HiUserGroup } from 'react-icons/hi'
 
 const routes = [
   {
@@ -46,6 +46,13 @@ const routes = [
     href: '/conta',
     icon: <IoPersonOutline />,
     activeIcon: <IoPerson />,
+    showInNavigation: true
+  },
+  {
+    title: 'Blog',
+    href: '/blog',
+    icon: <IoNewspaperOutline />,
+    activeIcon: <IoNewspaper />,
     showInNavigation: true
   },
   {
