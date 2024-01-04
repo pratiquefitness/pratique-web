@@ -124,7 +124,7 @@ export default function Inicio() {
       <NewContent2 />
 
       {usuario.isEmployee ? (
-        <div className="mt-4">
+        <div className="mt-6">
           <div>
             <Title level={4} className="m-0">
               Área do Colaborador!
@@ -135,7 +135,7 @@ export default function Inicio() {
             arrows={false}
             autoPlay={false}
             centerMode={false}
-            className="mt-4"
+            className="mt-2"
             containerClass="container"
             draggable
             focusOnSelect={false}
@@ -182,17 +182,17 @@ export default function Inicio() {
             swipeable
           >
             <Link href="/canal_equipe">
-              <img src="/images/canal_equipe.png" className="w-95 rounded-extra" />
+              <img src="/images/canal_equipe.png" className="w-95 rounded-xl" />
             </Link>
             <Link href="/unipower">
-              <img src="/images/unipower.png" className="w-95 rounded-extra" />
+              <img src="/images/unipower.png" className="w-95 rounded-xl" />
             </Link>
 
             <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
-              <img src="/images/pratique_med.png" className="w-95 rounded-extra" />
+              <img src="/images/pratique_med.png" className="w-95 rounded-xl" />
             </a>
             <a onClick={() => setSaverClubModal(true)}>
-              <img src="/images/saver_club.png" className="w-95 rounded-extra" />
+              <img src="/images/saver_club.png" className="w-95 rounded-xl" />
             </a>
           </Carousel>
         </div>
@@ -229,58 +229,100 @@ export default function Inicio() {
         </>
       ) : null}
 
-      <div>
-        <Title level={4} className="m-0">
+      <div className='mt-6 flex flex-column mb-0'>
+        <Title level={4} className="mb-0">
           Você, Feliz e Saudável!
         </Title>
         <Text type="secondary">Exercícios e conteúdos para você</Text>
       </div>
-      <Row gutter={[6, 6]} className="mb-2 mt-2">
-        <Col span={12}>
-          <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
-            <RibbonWithEndDate
-              text="Novo!"
-              color="yellow"
-              endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 16, padding: '2px 8px' }}
-            >
-              <img src="/images/nutri.png" width="100%" />
-            </RibbonWithEndDate>
-          </a>
-        </Col>
-        <Col span={12}>
-          <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
-            <RibbonWithEndDate
-              text="Novo!"
-              color="yellow"
-              endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 16, padding: '2px 8px' }}
-            >
-              <img src="/images/powergym.png" width="100%" />
-            </RibbonWithEndDate>
-          </a>
-        </Col>
-        <Col span={12}>
-          <Link href="/meditacao">
-            <img src="/images/meditacao.png" width="100%" />
-          </Link>
-        </Col>
-        <Col span={12}>
-          <a onClick={() => setAulasColetivasModal(true)}>
-            <img src="/images/aulas.png" width="100%" />
-          </a>
-        </Col>
-        <Col span={12}>
-          <Link href="/bike">
-            <img src="/images/power.png" width="100%" />
-          </Link>
-        </Col>
-        <Col span={12}>
-          <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))}>
-            <img src="/images/blog.png" width="100%" />
-          </a>
-        </Col>
-      </Row>
+      <Carousel
+        arrows={false}
+        autoPlay={false}
+        centerMode={false}
+        className="mt-2"
+        containerClass="container"
+        draggable
+        focusOnSelect={false}
+        infinite={false}
+        keyBoardControl={false}
+        minimumTouchDrag={80}
+        partialVisible
+        renderArrowsWhenDisabled={false}
+        renderButtonGroupOutside={false}
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {
+              max: 3000,
+              min: 1024
+            },
+            items: 3,
+            height: 260,
+            partialVisibilityGutter: 40,
+            slidesToSlide: 2
+          },
+          mobile: {
+            breakpoint: {
+              max: 575,
+              min: 0
+            },
+            items: 1,
+            partialVisibilityGutter: 80
+          },
+          tablet: {
+            breakpoint: {
+              max: 1024,
+              min: 464
+            },
+            items: 2,
+            partialVisibilityGutter: 40
+          }
+        }}
+        rewind={false}
+        rewindWithAnimation={false}
+        rtl={false}
+        showDots={false}
+        slidesToSlide={1}
+        swipeable
+      >
+        <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
+          <RibbonWithEndDate
+            text="Novo!"
+            color="yellow"
+            endDate={addDays(new Date('2023-09-21'), 30)}
+            style={{ fontSize: 16, padding: '2px 8px' }}
+          >
+            <img src="/images/nutri.png" className='rounded-xl w-95' />
+          </RibbonWithEndDate>
+        </a>
+
+        {/* <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
+          <RibbonWithEndDate
+            text="Novo!"
+            color="yellow"
+            endDate={addDays(new Date('2023-09-21'), 30)}
+            style={{ fontSize: 16, padding: '2px 8px' }}
+          >
+            <img src="/images/powergym.png" className='rounded-xl w-95' />
+          </RibbonWithEndDate>
+        </a> */}
+
+        <Link href="/meditacao">
+          <img src="/images/meditacao.png" className='rounded-xl w-95' />
+        </Link>
+
+        {/* <a onClick={() => setAulasColetivasModal(true)}>
+          <img src="/images/aulas.png" className='rounded-xl w-95' />
+        </a> */}
+
+        <Link href="/bike">
+          <img src="/images/power.png" className='rounded-xl w-95' />
+        </Link>
+
+        {/* <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))}>
+          <img src="/images/blog.png" className='rounded-xl w-95' />
+        </a> */}
+      </Carousel>
 
       <div>
         <Title level={4} className="m-0 mt-6">
@@ -289,7 +331,7 @@ export default function Inicio() {
         <Text type="secondary">Nossos canais de atendimento</Text>
       </div>
       <Row gutter={6} className="mb-2 mt-2">
-        <Col span={12}>
+        <Col span={24}>
           <a
             href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
             target="_blank"
@@ -297,7 +339,7 @@ export default function Inicio() {
             <img src="/images/sac.png" width="100%" />
           </a>
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
           </a>
