@@ -10,13 +10,11 @@ export default function NewContent2() {
         autoPlay={false}
         autoPlaySpeed={3000}
         centerMode={false}
-        className=""
+        
         containerClass="container"
-        dotListClass=""
         draggable
         focusOnSelect={false}
-        infinite
-        itemClass=""
+        infinite={false}
         keyBoardControl={false}
         minimumTouchDrag={80}
         partialVisible

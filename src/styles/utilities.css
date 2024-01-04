@@ -982,6 +982,25 @@
 .d-grid {
   display: grid !important;
 }
+/*Border radius*/
+.rounded-sm{
+	border-radius: 2px!important;
+}
+.rounded{
+	border-radius: 4px!important;
+}
+.rounded-md{
+	border-radius: 6px!important;
+}
+.rounded-lg{
+	border-radius: 8px!important;
+}
+.rounded-xl{
+	border-radius: 10px!important;
+}
+.rounded-extra{
+	border-radius: 20px!important;
+}
 
 /*OVERFLOW*/
 .overflow-visible {

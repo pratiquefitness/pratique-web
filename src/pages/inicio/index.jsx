@@ -8,7 +8,8 @@ import { addDays } from 'date-fns'
 import { setBrowserURL } from '@/redux/slices/global'
 import NewContent from './newContent'
 import NewContent2 from './newContent2'
-import NewContent3 from './newContent3'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
 
 const { Title, Text } = Typography
 
@@ -106,7 +107,7 @@ export default function Inicio() {
 
       <Banners />
 
-      <div className='mt-4 mb-2'>
+      <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
           Novas Atividades
         </Title>
@@ -114,53 +115,86 @@ export default function Inicio() {
       </div>
       <NewContent />
 
-
-      <div className='mt-4 mb-2'>
+      <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
-			Banner vertical
+          Banner vertical
         </Title>
         <Text>lorem ipsum sit amet...</Text>
       </div>
       <NewContent2 />
 
-      <div className='mt-4 mb-2'>
-        <Title level={3} className="m-0 ">
-			Banner retangular
-        </Title>
-        <Text>lorem ipsum sit amet...</Text>
-      </div>
-      <NewContent3 />
-
       {usuario.isEmployee ? (
         <div className="mt-4">
-          <Title level={4} className="m-0">
-            Área do Colaborador!
-          </Title>
-          <Text type="secondary">Beneficios e conteúdos para você</Text>
-          <Row gutter={6} className="my-2">
-            <Col span={12}>
-              <Link href="/canal_equipe">
-                <img src="/images/canal_equipe.png" width="100%" />
-              </Link>
-            </Col>
-            <Col span={12}>
-              <Link href="/unipower">
-                <img src="/images/unipower.png" width="100%" />
-              </Link>
-            </Col>
-          </Row>
-          <Row gutter={6} className="mb-2 mt-2">
-            <Col span={12}>
-              <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
-                <img src="/images/saver_saude.png" width="100%" className="rounded" />
-              </a>
-            </Col>
-            <Col span={12}>
-              <a onClick={() => setSaverClubModal(true)}>
-                <img src="/images/saver_club.png" width="100%" className="rounded" />
-              </a>
-            </Col>
-          </Row>
+          <div>
+            <Title level={4} className="m-0">
+              Área do Colaborador!
+            </Title>
+            <Text type="secondary">Beneficios e conteúdos para você</Text>
+          </div>
+          <Carousel
+            arrows={false}
+            autoPlay={false}
+            centerMode={false}
+            className="mt-4"
+            containerClass="container"
+            draggable
+            focusOnSelect={false}
+            infinite={false}
+            keyBoardControl={false}
+            minimumTouchDrag={80}
+            partialVisible
+            renderArrowsWhenDisabled={false}
+            renderButtonGroupOutside={false}
+            renderDotsOutside={false}
+            responsive={{
+              desktop: {
+                breakpoint: {
+                  max: 3000,
+                  min: 1024
+                },
+                items: 2,
+                height: 260,
+                partialVisibilityGutter: 40,
+                slidesToSlide: 2
+              },
+              mobile: {
+                breakpoint: {
+                  max: 575,
+                  min: 0
+                },
+                items: 1,
+                partialVisibilityGutter: 80
+              },
+              tablet: {
+                breakpoint: {
+                  max: 1024,
+                  min: 464
+                },
+                items: 2,
+                partialVisibilityGutter: 40
+              }
+            }}
+            rewind={false}
+            rewindWithAnimation={false}
+            rtl={false}
+            showDots={false}
+            slidesToSlide={1}
+            swipeable
+          >
+            <Link href="/canal_equipe">
+              <img src="/images/canal_equipe.png" className="w-95 rounded-extra" />
+            </Link>
+            <Link href="/unipower">
+              <img src="/images/unipower.png" className="w-95 rounded-extra" />
+            </Link>
+
+            <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
+              <img src="/images/pratique_med.png" className="w-95 rounded-extra" />
+            </a>
+            <a onClick={() => setSaverClubModal(true)}>
+              <img src="/images/saver_club.png" className="w-95 rounded-extra" />
+            </a>
+          </Carousel>
         </div>
       ) : null}
 
