@@ -55,7 +55,7 @@ export default function Banners() {
         <Carousel
           additionalTransfrom={0}
           arrows={false}
-          autoPlay={false}
+          autoPlay={true}
           autoPlaySpeed={3000}
           centerMode={false}
           className=""
@@ -90,7 +90,7 @@ export default function Banners() {
               },
               height: 400,
               items: 1,
-              partialVisibilityGutter: 40
+              //partialVisibilityGutter: 40
             },
             tablet: {
               breakpoint: {
@@ -105,19 +105,19 @@ export default function Banners() {
           rewindWithAnimation={false}
           rtl={false}
           shouldResetAutoplay
-          showDots={false}
+          showDots={true}
           sliderClass=""
           slidesToSlide={1}
           swipeable
         >
           <div className=''>
-            <img src="/images/banner_home/1.png" className='w-95 rounded-extra' />
+            <img src="/images/banner_home/1.png" className='w-100 rounded-extra' />
           </div>
           <div className=''>
-            <img src="/images/banner_home/2.png" className='w-95 rounded-extra' />
+            <img src="/images/banner_home/2.png" className='w-100 rounded-extra' />
           </div>
           <div className=''>
-            <img src="/images/banner_home/3.png" className='w-95 rounded-extra' />
+            <img src="/images/banner_home/3.png" className='w-100 rounded-extra' />
           </div>
           {/* {data.map((live, key) => {
             const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)

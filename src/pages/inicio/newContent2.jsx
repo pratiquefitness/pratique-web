@@ -28,7 +28,7 @@ export default function NewContent2() {
               max: 3000,
               min: 1024
             },
-            items: 2,
+            items: 4,
             height: 260,
             partialVisibilityGutter: 40,
             slidesToSlide: 2

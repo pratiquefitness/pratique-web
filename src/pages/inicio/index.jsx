@@ -152,7 +152,7 @@ export default function Inicio() {
                   max: 3000,
                   min: 1024
                 },
-                items: 2,
+                items: 3,
                 height: 260,
                 partialVisibilityGutter: 40,
                 slidesToSlide: 2
@@ -284,9 +284,9 @@ export default function Inicio() {
 
       <div>
         <Title level={4} className="m-0 mt-6">
-          SAC
+          Fale com a Pratique
         </Title>
-        <Text type="secondary">Canais de atendimento da Pratique</Text>
+        <Text type="secondary">Nossos canais de atendimento</Text>
       </div>
       <Row gutter={6} className="mb-2 mt-2">
         <Col span={12}>
