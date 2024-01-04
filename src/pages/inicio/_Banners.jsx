@@ -111,13 +111,13 @@ export default function Banners() {
           swipeable
         >
           <div className=''>
-            <img src="/images/banner_home/1.png" className='w-100 rounded-extra' />
+            <img src="/images/banner_home/1.png" className='w-95 rounded-extra' />
           </div>
           <div className=''>
-            <img src="/images/banner_home/2.png" className='w-100 rounded-extra' />
+            <img src="/images/banner_home/2.png" className='w-95 rounded-extra' />
           </div>
           <div className=''>
-            <img src="/images/banner_home/3.png" className='w-100 rounded-extra' />
+            <img src="/images/banner_home/3.png" className='w-95 rounded-extra' />
           </div>
           {/* {data.map((live, key) => {
             const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)

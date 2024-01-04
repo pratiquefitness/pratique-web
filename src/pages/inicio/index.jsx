@@ -331,7 +331,7 @@ export default function Inicio() {
         <Text type="secondary">Nossos canais de atendimento</Text>
       </div>
       <Row gutter={6} className="mb-2 mt-2">
-        <Col span={24}>
+        <Col span={12}>
           <a
             href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
             target="_blank"
@@ -339,7 +339,7 @@ export default function Inicio() {
             <img src="/images/sac.png" width="100%" />
           </a>
         </Col>
-        <Col span={24}>
+        <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
           </a>
