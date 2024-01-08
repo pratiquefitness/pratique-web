@@ -105,11 +105,17 @@ export default function Inicio() {
         </Space>
       </Modal>
 
+      <div>
+        <Title level={3} className="m-0">
+          Novidades
+        </Title>
+        <Text type="secondary">Veja as novidades para 2024</Text>
+      </div>
       <Banners />
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
-          Novas Atividades
+          Atividades On Demand
         </Title>
         <Text>Beneficios e conteúdos para você</Text>
       </div>
@@ -117,7 +123,7 @@ export default function Inicio() {
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
-          Aulas Coletivas
+          Bem-estar físico e emocional
         </Title>
       </div>
       <NewContent2 />
@@ -228,7 +234,7 @@ export default function Inicio() {
         </>
       ) : null}
 
-      <div className='mt-6 flex flex-column mb-0'>
+      <div className="mt-6 flex flex-column mb-0">
         <Title level={4} className="mb-0">
           Você, Feliz e Saudável!
         </Title>
@@ -291,7 +297,7 @@ export default function Inicio() {
             endDate={addDays(new Date('2023-09-21'), 30)}
             style={{ fontSize: 16, padding: '2px 8px' }}
           >
-            <img src="/images/nutri.png" className='rounded-xl w-95' />
+            <img src="/images/nutri.png" className="rounded-xl w-95" />
           </RibbonWithEndDate>
         </a>
 
@@ -305,15 +311,14 @@ export default function Inicio() {
             <img src="/images/powergym.png" className='rounded-xl w-95' />
           </RibbonWithEndDate>
         </a> */}
-
+        {/* 
         <Link href="/meditacao">
           <img src="/images/meditacao.png" className='rounded-xl w-95' />
-        </Link>
+        </Link> */}
 
         <Link href="/bike">
-          <img src="/images/power.png" className='rounded-xl w-95' />
+          <img src="/images/power.png" className="rounded-xl w-95" />
         </Link>
-
       </Carousel>
 
       <div>

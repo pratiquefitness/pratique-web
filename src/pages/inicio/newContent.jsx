@@ -59,7 +59,7 @@ export default function NewContent() {
         swipeable
       >
         <div>
-          <img src="/images/banner_home/vertical_banner/energy_jump.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/energy_jump2.png" className="w-95" />
         </div>
         <div>
           <img src="/images/banner_home/vertical_banner/intensive_jump.png" className="w-95" />

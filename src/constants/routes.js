@@ -9,19 +9,21 @@ import {
   IoBicycleOutline,
   IoBicycle,
   IoNewspaper,
-  IoNewspaperOutline
+  IoNewspaperOutline,
+  IoCalendarOutline,
+  IoCalendar
 } from 'react-icons/io5'
 
 const routes = [
   {
-    title: 'Olá #USUARIO#!',
+    title: 'Olá, #USUARIO#!',
     href: '/',
     icon: <IoHomeOutline />,
     activeIcon: <IoHomeSharp />,
     showInNavigation: true
   },
   {
-    title: 'Olá #USUARIO#! Tenha um bom treino.',
+    title: 'Olá, #USUARIO#! Tenha um bom treino.',
     href: '/treino',
     icon: <LuDumbbell />,
     activeIcon: <LuDumbbell />,
@@ -39,7 +41,7 @@ const routes = [
     href: '/afiliados',
     icon: <IoPeopleCircleOutline />,
     activeIcon: <IoPeopleCircle />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: 'Minha Conta',
@@ -53,6 +55,13 @@ const routes = [
     href: '/blog',
     icon: <IoNewspaperOutline />,
     activeIcon: <IoNewspaper />,
+    showInNavigation: true
+  },
+  {
+    title: 'Calendário',
+    href: '/calendario',
+    icon: <IoCalendarOutline />,
+    activeIcon: <IoCalendar />,
     showInNavigation: true
   },
   {

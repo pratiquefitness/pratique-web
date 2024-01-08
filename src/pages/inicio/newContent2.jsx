@@ -61,12 +61,17 @@ export default function NewContent2() {
         slidesToSlide={1}
         swipeable
       >
-        <Link href="/aulas_coletivas/jump">
-          <img src="/images/jump.png" className="w-95 rounded-xl" alt="exercicios_jump"/>
-        </Link>
+        {/* <Link href="/aulas_coletivas/jump">
+          <img src="/images/banner_home/energy_jump.png" className="w-95 rounded-xl" alt="exercicios_jump"/>
+        </Link> */}
         <Link href="/aulas_coletivas/yoga">
           <img src="/images/yoga2.png" className="w-95 rounded-xl" alt="exercicios_yoga" />
         </Link>
+
+        <Link href="/meditacao">
+          <img src="/images/meditacao.png" className='rounded-xl w-95' />
+        </Link>
+
       </Carousel>
     </div>
   )
