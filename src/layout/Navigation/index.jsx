@@ -24,11 +24,13 @@ export default function Navigation({ data }) {
   }, [pathname])
 
   const onNavigate = item => () => {
-    if (item === 'blog') {
+    setSelected(item.href)
+
+    if (item.title === 'Blog') {
+      router.push('/')
       dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
     } else {
       dispatch(setBrowserURL(null))
-      setSelected(item.href)
       router.push(item.href)
     }
   }

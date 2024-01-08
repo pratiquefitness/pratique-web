@@ -117,7 +117,7 @@ export default function Inicio() {
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
-          Banner vertical
+          Fitness
         </Title>
         <Text>lorem ipsum sit amet...</Text>
       </div>

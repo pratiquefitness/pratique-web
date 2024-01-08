@@ -60,19 +60,13 @@ export default function NewContent2() {
         swipeable
       >
         <div className="">
-          <img src="/images/banner_home/vertical_banner/6.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/flow.png" className="w-95" />
         </div>
         <div className="">
-          <img src="/images/banner_home/vertical_banner/7.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/power_bumbum.png" className="w-95" />
         </div>
         <div className="">
-          <img src="/images/banner_home/vertical_banner/8.png" className="w-95" />
-        </div>
-        <div className="">
-          <img src="/images/banner_home/vertical_banner/9.png" className="w-95" />
-        </div>
-        <div className="">
-          <img src="/images/banner_home/vertical_banner/10.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/power_core.png" className="w-95" />
         </div>
       </Carousel>
     </div>

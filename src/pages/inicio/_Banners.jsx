@@ -67,7 +67,7 @@ export default function Banners() {
           itemClass=""
           keyBoardControl
           minimumTouchDrag={80}
-          partialVisible
+          //partialVisible
           pauseOnHover
           renderArrowsWhenDisabled={false}
           renderButtonGroupOutside={false}
@@ -110,14 +110,14 @@ export default function Banners() {
           slidesToSlide={1}
           swipeable
         >
-          <div className=''>
-            <img src="/images/banner_home/1.png" className='w-95 rounded-extra' />
+          <div className='d-flex justify-center'>
+            <img src="/images/banner_home/treino_em_casa.png" className='w-95 rounded-extra ' />
           </div>
-          <div className=''>
-            <img src="/images/banner_home/2.png" className='w-95 rounded-extra' />
+          <div className='d-flex justify-center'>
+            <img src="/images/banner_home/abdominais.png" className='w-95 rounded-extra' />
           </div>
-          <div className=''>
-            <img src="/images/banner_home/3.png" className='w-95 rounded-extra' />
+          <div className='d-flex justify-center'>
+            <img src="/images/banner_home/queime_casa.png" className='w-95 rounded-extra' />
           </div>
           {/* {data.map((live, key) => {
             const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)

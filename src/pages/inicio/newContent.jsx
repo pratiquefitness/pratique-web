@@ -59,19 +59,19 @@ export default function NewContent() {
         swipeable
       >
         <div>
-          <img src="/images/banner_home/vertical_banner/1.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/energy_jump.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/2.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/intensive_jump.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/3.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/power_dance.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/4.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/power_training_woman.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/5.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/treinos_diarios.png" className="w-95" />
         </div>
       </Carousel>
     </div>
