@@ -41,7 +41,7 @@ const routes = [
     href: '/afiliados',
     icon: <IoPeopleCircleOutline />,
     activeIcon: <IoPeopleCircle />,
-    showInNavigation: false
+    showInNavigation: true
   },
   {
     title: 'Minha Conta',
