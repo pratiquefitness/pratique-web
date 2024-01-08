@@ -33,7 +33,7 @@ export default function Inicio() {
           height={500}
         ></iframe>
       </Modal>
-      <Modal
+      {/* <Modal
         title="Aulas Coletivas"
         open={aulasColtivasModal}
         onCancel={() => setAulasColetivasModal(false)}
@@ -49,7 +49,7 @@ export default function Inicio() {
             <img src="/images/yoga2.png" width={'100%'} alt="" />
           </Link>
         </Space>
-      </Modal>
+      </Modal> */}
 
       <Modal
         title="Saver Club"
@@ -117,9 +117,8 @@ export default function Inicio() {
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
-          Fitness
+          Aulas Coletivas
         </Title>
-        <Text>lorem ipsum sit amet...</Text>
       </div>
       <NewContent2 />
 
@@ -311,17 +310,10 @@ export default function Inicio() {
           <img src="/images/meditacao.png" className='rounded-xl w-95' />
         </Link>
 
-        {/* <a onClick={() => setAulasColetivasModal(true)}>
-          <img src="/images/aulas.png" className='rounded-xl w-95' />
-        </a> */}
-
         <Link href="/bike">
           <img src="/images/power.png" className='rounded-xl w-95' />
         </Link>
 
-        {/* <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))}>
-          <img src="/images/blog.png" className='rounded-xl w-95' />
-        </a> */}
       </Carousel>
 
       <div>

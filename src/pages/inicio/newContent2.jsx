@@ -1,16 +1,18 @@
+import Link from 'next/link'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function NewContent2() {
+  const dispatch = useDispatch()
   return (
-    <div className=''>
+    <div className="">
       <Carousel
         additionalTransfrom={0}
         arrows={false}
         autoPlay={false}
         autoPlaySpeed={3000}
         centerMode={false}
-        
         containerClass="container"
         draggable
         focusOnSelect={false}
@@ -38,7 +40,7 @@ export default function NewContent2() {
               max: 575,
               min: 0
             },
-            items: 2,
+            items: 1,
             partialVisibilityGutter: 10
           },
           tablet: {
@@ -59,15 +61,12 @@ export default function NewContent2() {
         slidesToSlide={1}
         swipeable
       >
-        <div className="">
-          <img src="/images/banner_home/vertical_banner/flow.png" className="w-95" />
-        </div>
-        <div className="">
-          <img src="/images/banner_home/vertical_banner/power_bumbum.png" className="w-95" />
-        </div>
-        <div className="">
-          <img src="/images/banner_home/vertical_banner/power_core.png" className="w-95" />
-        </div>
+        <Link href="/aulas_coletivas/jump">
+          <img src="/images/jump.png" className="w-95 rounded-xl" alt="exercicios_jump"/>
+        </Link>
+        <Link href="/aulas_coletivas/yoga">
+          <img src="/images/yoga2.png" className="w-95 rounded-xl" alt="exercicios_yoga" />
+        </Link>
       </Carousel>
     </div>
   )
