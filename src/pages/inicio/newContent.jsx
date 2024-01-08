@@ -1,5 +1,6 @@
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import Link from 'next/link'
 
 export default function NewContent() {
   return (
@@ -58,9 +59,9 @@ export default function NewContent() {
         slidesToSlide={1}
         swipeable
       >
-        <div>
+		<Link href="/aulas_coletivas/jump">
           <img src="/images/banner_home/vertical_banner/energy_jump2.png" className="w-95" />
-        </div>
+        </Link>
         <div>
           <img src="/images/banner_home/vertical_banner/intensive_jump.png" className="w-95" />
         </div>
