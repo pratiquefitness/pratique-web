@@ -62,7 +62,7 @@ const routes = [
     href: '/calendario',
     icon: <IoCalendarOutline />,
     activeIcon: <IoCalendar />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: 'Meditação',
