@@ -113,25 +113,10 @@ export default function Inicio() {
       </div>
       <Banners />
 
-      <div className="mt-4 mb-2">
-        <Title level={3} className="m-0 ">
-          Atividades On Demand
-        </Title>
-        <Text>Beneficios e conteúdos para você</Text>
-      </div>
-      <NewContent />
-
-      <div className="mt-4 mb-2">
-        <Title level={3} className="m-0 ">
-          Bem-estar físico e emocional
-        </Title>
-      </div>
-      <NewContent2 />
-
       {usuario.isEmployee ? (
         <div className="mt-6">
           <div>
-            <Title level={4} className="m-0">
+            <Title level={3} className="m-0">
               Área do Colaborador!
             </Title>
             <Text type="secondary">Beneficios e conteúdos para você</Text>
@@ -206,7 +191,7 @@ export default function Inicio() {
       {isClient ? (
         <>
           <div>
-            <Title level={4} className="m-0">
+            <Title level={3} className="m-0">
               Área do Cliente!
             </Title>
             <Text type="secondary">Beneficios e conteúdos para você</Text>
@@ -234,8 +219,23 @@ export default function Inicio() {
         </>
       ) : null}
 
+      <div className="mt-4 mb-2">
+        <Title level={3} className="m-0 ">
+          Atividades On Demand
+        </Title>
+        <Text>Beneficios e conteúdos para você</Text>
+      </div>
+      <NewContent />
+
+      <div className="mt-4 mb-2">
+        <Title level={3} className="m-0 ">
+          Bem-estar físico e emocional
+        </Title>
+      </div>
+      <NewContent2 />
+
       <div className="mt-6 flex flex-column mb-0">
-        <Title level={4} className="mb-0">
+        <Title level={3} className="mb-0">
           Você, Feliz e Saudável!
         </Title>
         <Text type="secondary">Exercícios e conteúdos para você</Text>
@@ -322,7 +322,7 @@ export default function Inicio() {
       </Carousel>
 
       <div>
-        <Title level={4} className="m-0 mt-6">
+        <Title level={3} className="m-0 mt-6">
           Fale com a Pratique
         </Title>
         <Text type="secondary">Nossos canais de atendimento</Text>

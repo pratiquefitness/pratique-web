@@ -69,10 +69,19 @@ export default function NewContent() {
           <img src="/images/banner_home/vertical_banner/power_dance.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/power_training_woman.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/treinos_diarios.png" className="w-95" />
         </div>
         <div>
-          <img src="/images/banner_home/vertical_banner/treinos_diarios.png" className="w-95" />
+          <img src="/images/banner_home/vertical_banner/abdominais.png" className="w-95" />
+        </div>
+        <div>
+          <img src="/images/banner_home/vertical_banner/fit_dance.png" className="w-95" />
+        </div>
+        <div>
+          <img src="/images/banner_home/vertical_banner/flow.png" className="w-95" />
+        </div>
+        <div>
+          <img src="/images/banner_home/vertical_banner/queime_casa.png" className="w-95" />
         </div>
       </Carousel>
     </div>
