@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { Button } from 'antd/lib'
+import { useState } from 'react'
 
 const { Title, Text } = Typography
 
@@ -111,6 +112,8 @@ export default function Calendario() {
   const dispatch = useDispatch()
   const { usuario } = useSelector(state => state.login)
 
+  const [retorno, setRetorno] = useState("vazio")
+
   const onPanelChange = (value, mode) => {
     console.log(value.format('YYYY-MM-DD'), mode)
   }
@@ -153,14 +156,14 @@ export default function Calendario() {
   const btn = document.querySelector('button')
   const resultPara = document.querySelector('.result')
 
-  btn.addEventListener('click', async () => {
+  const shareLink = async () => {
     try {
-      await navigator.share(shareData)
-      resultPara.textContent = 'MDN shared successfully'
+      await navigator.share(shareData);
+      setRetorno('MDN shared successfully');
     } catch (err) {
-      resultPara.textContent = `Error: ${err}`
+      setRetorno(`Error: ${err}`);
     }
-  })
+  }
 
   return (
     <>
@@ -228,10 +231,10 @@ export default function Calendario() {
       </Carousel> */}
 
       <div className="d-flex justify-center my-14">
-        
-          <Button>Share MDN!</Button>
-        
-        <p class="result"></p>
+        <Button onClick={shareLink} >Share MDN!</Button>
+      </div>
+      <div className="d-flex justify-center my-14">
+        <p>{retorno}</p>
       </div>
 
       <Calendar onPanelChange={onPanelChange} cellRender={cellRender} />
