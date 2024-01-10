@@ -52,7 +52,7 @@ console.log("all data",children)
                 <div className="d-flex flex-column justify-space-between">
                   {pathname !== '/' && (
                     <Breadcrumb
-                      separator={<DoubleRightOutlined className="text-gray" />}
+                      separator={<DoubleRightOutlined className="text-black" />}
                       className="mb-4 ml-2 text-capitalize d-flex items-center"
                       items={[
                         {

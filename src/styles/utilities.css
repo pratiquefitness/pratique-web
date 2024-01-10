@@ -1061,6 +1061,9 @@
 }
 
 /*HEIGHT&WIDTH*/
+.w-80 {
+  width: 80% !important;
+}
 .w-90 {
   width: 90% !important;
 }
@@ -1117,6 +1120,12 @@
 .text-gray{
 	color:#aaa !important;
 }
+
+/*Font size*/
+.text-large{
+	font-size:large !important;
+}
+
 
 /*RESPONSIVE*/
 
