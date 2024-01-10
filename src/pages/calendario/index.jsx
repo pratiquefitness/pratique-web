@@ -112,7 +112,7 @@ export default function Calendario() {
   const dispatch = useDispatch()
   const { usuario } = useSelector(state => state.login)
 
-  const [retorno, setRetorno] = useState("vazio")
+  const [retorno, setRetorno] = useState('vazio')
 
   const onPanelChange = (value, mode) => {
     console.log(value.format('YYYY-MM-DD'), mode)
@@ -158,10 +158,10 @@ export default function Calendario() {
 
   const shareLink = async () => {
     try {
-      await navigator.share(shareData);
-      setRetorno('MDN shared successfully');
+      await navigator.share(shareData)
+      setRetorno('MDN shared successfully')
     } catch (err) {
-      setRetorno(`Error: ${err}`);
+      setRetorno(`Error: ${err}`)
     }
   }
 
@@ -231,7 +231,7 @@ export default function Calendario() {
       </Carousel> */}
 
       <div className="d-flex justify-center my-14">
-        <Button onClick={shareLink} >Share MDN!</Button>
+        {navigator.canShare && <Button onClick={shareLink}>Share MDN!</Button>}
       </div>
       <div className="d-flex justify-center my-14">
         <p>{retorno}</p>

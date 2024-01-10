@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { useDispatch, useSelector } from 'react-redux'
 
-export default function NewContent2() {
+export default function BemEstar() {
   const dispatch = useDispatch()
   return (
     <div className="">

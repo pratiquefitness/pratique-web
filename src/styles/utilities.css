@@ -818,6 +818,9 @@
 .text-uppercase {
   text-transform: uppercase !important;
 }
+.text-capitalize {
+  text-transform: capitalize !important;
+}
 .text-lowercase {
   text-transform: lowercase !important;
 }
@@ -1103,6 +1106,15 @@
 .h-35vh{
 	height:35vh!important;
 }
+
+/*Color*/
+.text-black{
+	color:#000 !important;
+}
+.text-white{
+	color:#fff !important;
+}
+
 /*RESPONSIVE*/
 
 @media (min-width: 576px) {

@@ -6,8 +6,8 @@ import Banners from './_Banners'
 import { RibbonWithEndDate } from '@/components'
 import { addDays } from 'date-fns'
 import { setBrowserURL } from '@/redux/slices/global'
-import NewContent from './newContent'
-import NewContent2 from './newContent2'
+import AtividadesOnDemand from './_AtividadesOnDemand'
+import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 
@@ -225,14 +225,14 @@ export default function Inicio() {
         </Title>
         <Text>Beneficios e conteúdos para você</Text>
       </div>
-      <NewContent />
+      <AtividadesOnDemand />
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
           Bem-estar físico e emocional
         </Title>
       </div>
-      <NewContent2 />
+      <BemEstar />
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">

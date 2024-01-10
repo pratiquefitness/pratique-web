@@ -2,7 +2,7 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import Link from 'next/link'
 
-export default function NewContent() {
+export default function AtividadesOnDemand() {
   return (
     <div>
       <Carousel
@@ -11,7 +11,6 @@ export default function NewContent() {
         autoPlay={false}
         autoPlaySpeed={3000}
         centerMode={false}
-        
         containerClass="container"
         draggable
         focusOnSelect={false}
@@ -59,30 +58,35 @@ export default function NewContent() {
         slidesToSlide={1}
         swipeable
       >
-		<Link href="/aulas_coletivas/jump">
+        <Link href="/aulas_coletivas/jump">
           <img src="/images/banner_home/vertical_banner/energy_jump2.png" className="w-95" />
         </Link>
-        <div>
+        <Link href="/aulas_coletivas/intensivejump">
           <img src="/images/banner_home/vertical_banner/intensive_jump.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+        <Link href="/aulas_coletivas/powerdance">
           <img src="/images/banner_home/vertical_banner/power_dance.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+
+        <Link href="/aulas_coletivas/treinosdiarios">
           <img src="/images/banner_home/vertical_banner/treinos_diarios.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+
+        <Link href="/aulas_coletivas/abdominais">
           <img src="/images/banner_home/vertical_banner/abdominais.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+
+        <Link href="/aulas_coletivas/fitdance">
           <img src="/images/banner_home/vertical_banner/fit_dance.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+
+        <Link href="/aulas_coletivas/flow">
           <img src="/images/banner_home/vertical_banner/flow.png" className="w-95" />
-        </div>
-        <div>
+        </Link>
+
+        <Link href="/aulas_coletivas/queimeacasa">
           <img src="/images/banner_home/vertical_banner/queime_casa.png" className="w-95" />
-        </div>
+        </Link>
       </Carousel>
     </div>
   )
