@@ -1,4 +1,5 @@
-import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography } from 'antd'
+import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography, Breadcrumb } from 'antd'
+import { HomeOutlined, UserOutlined, DoubleRightOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
@@ -26,6 +27,10 @@ export default function Layout({ children }) {
 
   const isApp = typeof window !== 'undefined' && window.self === window.parent ? true : false
 
+  const fraseInicial = utils
+    .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+    .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`).split('!');
+
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
@@ -35,22 +40,32 @@ export default function Layout({ children }) {
             <Header />
             <Content
               style={{
-                paddingTop:"1rem",
-                paddingBottom:"60px"
+                paddingTop: '1rem',
+                paddingBottom: '60px'
               }}
             >
               <div className="container">
-                <div className="d-flex justify-space-between">
-                  <Title level={3}>
-                    {utils
-                      .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
-                      .title.replace('#USUARIO#', usuario.user_nicename.split('@')[0])}
-                  </Title>
+                <div className="d-flex flex-column justify-space-between">
                   {pathname !== '/' && (
-                    <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
-                      Voltar
-                    </Button>
+                    <Breadcrumb
+                      separator={<DoubleRightOutlined />}
+                      className="mb-4 ml-1 text-capitalize d-flex items-center"
+                      items={[
+                        {
+                          title: <HomeOutlined className="text-black" />,
+                          onClick: () => router.back()
+                        },
+                        {
+                          style: 'line-height: 1.7;',
+                          title: `${pathname.substring(1)}`
+                        }
+                      ]}
+                    />
                   )}
+                  <Title level={3}>
+                    {fraseInicial[0]}<br />
+					{fraseInicial[1]}
+                  </Title>
                 </div>
                 {children}
               </div>

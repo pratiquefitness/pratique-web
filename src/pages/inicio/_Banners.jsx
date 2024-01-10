@@ -1,39 +1,12 @@
 import Loading from '@/components/Loading'
 import { getLives } from '@/redux/actions/lives'
-import utils from '@/utils'
-import { Typography, theme } from 'antd'
-import { format } from 'date-fns'
+import { theme } from 'antd'
 import { useEffect } from 'react'
-import Countdown from 'react-countdown'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-
-const contentStyle = {
-  margin: 5,
-  height: 180,
-  color: 'black',
-  borderRadius: 10,
-  backgroundSize: 'cover',
-  backgroundPosition: 'right',
-  backgroundRepeat: 'no-repeat',
-  backgroundColor: 'white'
-}
-
-const settings = {
-  className: 'left',
-  centerMode: true,
-  slidesToShow: 1,
-  swipeToSlide: true,
-  draggable: true,
-  autoplay: false,
-  autoplaySpeed: 2000,
-  style: {
-    marginBottom: 20,
-    width: '100%'
-  }
-}
+import Link from 'next/link'
 
 /*
 5 min - em instantes
@@ -89,8 +62,7 @@ export default function Banners() {
                 min: 0
               },
               height: 400,
-              items: 1,
-              //partialVisibilityGutter: 40
+              items: 1
             },
             tablet: {
               breakpoint: {
@@ -110,56 +82,15 @@ export default function Banners() {
           slidesToSlide={1}
           swipeable
         >
-          <div className='d-flex justify-center'>
-            <img src="/images/banner_home/treino_em_casa.png" className='w-95 rounded-extra ' />
-          </div>
-          <div className='d-flex justify-center'>
-            <img src="/images/banner_home/abdominais.png" className='w-95 rounded-extra' />
-          </div>
-          <div className='d-flex justify-center'>
-            <img src="/images/banner_home/queime_casa.png" className='w-95 rounded-extra' />
-          </div>
-          {/* {data.map((live, key) => {
-            const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)
-            if (new Date() >= datetime) {
-              return false
-            }
-            const dia = format(new Date(live.live_datagravacao + 'T00:00:00'), 'dd')
-            const mes = format(new Date(live.live_datagravacao + 'T00:00:00'), 'MM')
-            return (
-              <div key={key}>
-                <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
-                  <div
-				  	className='h-40 lg-h-60'
-                    style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}
-                  >
-                    <div className="p-4">
-                      <h3>
-                        {`${dia} de ${utils.getMonthNames(mes).name} `}
-                      </h3>
-					  <p><small>às {live.live_horagravacao}H</small></p>
-                      <h2 style={{ color: token.colorPrimary }}>{live.live_nome}</h2>
-                      <p>
-                        <Countdown
-                          date={datetime}
-                          renderer={({ hours, minutes, seconds, completed }) => {
-                            return (
-                              <>
-                                Começa em: <br />
-                                <span style={{ fontWeight: 'bold', fontSize: 20 }}>
-                                  {hours}h {minutes}m {seconds}s
-                                </span>
-                              </>
-                            )
-                          }}
-                        />
-                      </p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            )
-          })} */}
+          <Link href="/aulas_coletivas/abdominais" className="d-flex justify-center">
+            <img src="/images/banner_home/treino_em_casa.png" className="w-100 rounded-extra " />
+          </Link>
+          <Link href="/aulas_coletivas/abdominais" className="d-flex justify-center">
+            <img src="/images/banner_home/abdominais.png" className="w-100 rounded-extra" />
+          </Link>
+          <Link href="/aulas_coletivas/queimeacasa" className="d-flex justify-center">
+            <img src="/images/banner_home/queime_casa.png" className="w-100 rounded-extra" />
+          </Link>
         </Carousel>
       ) : null}
     </Loading>
