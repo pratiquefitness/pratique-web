@@ -26,10 +26,14 @@ export default function Layout({ children }) {
   const pathname = usePathname()
 
   const isApp = typeof window !== 'undefined' && window.self === window.parent ? true : false
-
-  const fraseInicial = utils
-    .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
-    .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`).split('!');
+  var fraseInicial = ''
+  
+  authenticated &&
+    (fraseInicial = utils
+      .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+      .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`)
+      .split('!')
+	)
 
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
@@ -48,7 +52,7 @@ export default function Layout({ children }) {
                 <div className="d-flex flex-column justify-space-between">
                   {pathname !== '/' && (
                     <Breadcrumb
-                      separator={<DoubleRightOutlined />}
+                      separator={<DoubleRightOutlined className="text-gray" />}
                       className="mb-4 ml-1 text-capitalize d-flex items-center"
                       items={[
                         {
@@ -56,6 +60,7 @@ export default function Layout({ children }) {
                           onClick: () => router.back()
                         },
                         {
+                          className: 'text-black',
                           style: 'line-height: 1.7;',
                           title: `${pathname.substring(1)}`
                         }
@@ -63,8 +68,7 @@ export default function Layout({ children }) {
                     />
                   )}
                   <Title level={3}>
-                    {fraseInicial[0]}<br />
-					{fraseInicial[1]}
+                    {fraseInicial[0]} <br /> {fraseInicial[1]}
                   </Title>
                 </div>
                 {children}
