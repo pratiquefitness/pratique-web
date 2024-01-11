@@ -40,19 +40,19 @@ export default function Geral() {
     utils.copyTextToClipboard(pix?.chave)
   }
 
-  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa';
+      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa'
 
     if (isMobile) {
-      window.location.href = whatsappUrl;
-      return;
+      window.location.href = whatsappUrl
+      return
     }
 
-    window.open(whatsappUrl, '_blank');
-  };
+    window.open(whatsappUrl, '_blank')
+  }
 
   return (
     <Loading spinning={loading}>
@@ -95,7 +95,7 @@ export default function Geral() {
         {editablePix || pix.length ? (
           <Form form={formPix} layout="vertical" onFinish={onSavePix}>
             <Row gutter={[16, 16]}>
-              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <Col xs={24} lg={8}>
                 <Form.Item
                   name="tipo"
                   label="Tipo de Chave"
@@ -104,12 +104,12 @@ export default function Geral() {
                   <Select placeholder="Selecione..." options={tiposPix} loading={pixLoading} />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <Col xs={24} lg={8}>
                 <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
                   <Input placeholder="Sua chave PIX" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={8} xl={8} xxl={8}>
+              <Col xs={24} lg={8}>
                 <Form.Item
                   label="Confirme a chave PIX"
                   name="rChave"
@@ -133,7 +133,7 @@ export default function Geral() {
                   <Input placeholder="Confirme a chave PIX" />
                 </Form.Item>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+              <Col xs={24}>
                 <Button type="primary" htmlType="submit" loading={pixLoading} block>
                   Salvar
                 </Button>
@@ -142,29 +142,19 @@ export default function Geral() {
           </Form>
         ) : (
           <Row gutter={[16, 16]}>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-              Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}
-            </Col>
-            <Col
-              xs={24}
-              sm={24}
-              md={24}
-              lg={12}
-              xl={12}
-              xxl={12}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-            >
+            <Col xs={24}>Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}</Col>
+            <Col xs={24} lg={12} className='d-flex align-center justify-space-between'>
               Chave: {pix?.chave}
               <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
                 Copiar Chave
               </Button>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+            <Col xs={24}>
               <Button onClick={() => setEditablePix(true)} block>
                 Editar
               </Button>
               <br />
-              <p style={{ marginTop: '10px', textAlign: 'center' }}>Precisas de apoio?</p>
+              <p className="my-2 text-center">Precisa de apoio?</p>
               <Col xs={24} className="mb-12">
                 <Button
                   icon={<FaWhatsapp fill="#fff" size={30} />}
@@ -174,13 +164,12 @@ export default function Geral() {
                 >
                   SUPORTE AFILIADO
                 </Button>
-                <p style={{ marginTop: '10px', textAlign: 'center' }}>(31) 98486-1766</p>
+                <p className="my-2 text-center">(31) 98486-1766</p>
               </Col>
-            </Col>{' '}
-            <br /> <br /> <br /> <br />
+            </Col>
+            
           </Row>
         )}
-        <br /> <br /> <br /> <br /> <br /> <br />
       </Card>
     </Loading>
   )

@@ -10,18 +10,56 @@ import AtividadesOnDemand from './_AtividadesOnDemand'
 import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
+import CarouselItem from './_CarouselItem'
 
 const { Title, Text } = Typography
 
 export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
-  const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
+  //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+
+  const dispatchSaverSaude = () => {
+    dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
+  }
+
+  const abreSaverClubModal = () => {
+    setSaverClubModal(true);
+  }
+
+  const listaCarousel = [
+    {
+      href: '/canal_equipe',
+      image: '/images/canal_equipe.png',
+      isRounded: true,
+      alt: 'canal_equipe'
+    },
+    {
+      href: '/unipower',
+      image: '/images/unipower.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: dispatchSaverSaude,
+      image: '/images/pratique_med.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: abreSaverClubModal,
+      image: '/images/saver_club.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    }
+  ]
 
   return (
     <Space direction="vertical" className="w-100">
@@ -33,23 +71,6 @@ export default function Inicio() {
           height={500}
         ></iframe>
       </Modal>
-      {/* <Modal
-        title="Aulas Coletivas"
-        open={aulasColtivasModal}
-        onCancel={() => setAulasColetivasModal(false)}
-        footer={null}
-        width={300}
-        centered
-      >
-        <Space direction="vertical">
-          <Link href="/aulas_coletivas/jump">
-            <img src="/images/jump.png" width={'100%'} alt="" />
-          </Link>
-          <Link href="/aulas_coletivas/yoga">
-            <img src="/images/yoga2.png" width={'100%'} alt="" />
-          </Link>
-        </Space>
-      </Modal> */}
 
       <Modal
         title="Saver Club"
@@ -171,19 +192,9 @@ export default function Inicio() {
             slidesToSlide={1}
             swipeable
           >
-            <Link href="/canal_equipe">
-              <img src="/images/canal_equipe.png" className="w-95 rounded-xl" />
-            </Link>
-            <Link href="/unipower">
-              <img src="/images/unipower.png" className="w-95 rounded-xl" />
-            </Link>
-
-            <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
-              <img src="/images/pratique_med.png" className="w-95 rounded-xl" />
-            </a>
-            <a onClick={() => setSaverClubModal(true)}>
-              <img src="/images/saver_club.png" className="w-95 rounded-xl" />
-            </a>
+            {listaCarousel.map(({ href, image, isRounded, action, alt }, index) => (
+              <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+            ))}
           </Carousel>
         </div>
       ) : null}

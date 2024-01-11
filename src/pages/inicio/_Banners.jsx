@@ -7,11 +7,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import Link from 'next/link'
+import CarouselItem from './_CarouselItem'
 
 /*
 5 min - em instantes
 agora - acontecendo
 */
+
+const listaCarousel = [
+	{
+	  href: '/aulas_coletivas/abdominais',
+	  image: '/images/banner_home/treino_em_casa.png',
+	  isRounded: true
+	},
+	{
+	  href: '/aulas_coletivas/abdominais',
+	  image: '/images/banner_home/abdominais.png',
+	  isRounded: true
+	},
+	{
+	  href: '/aulas_coletivas/queimeacasa"',
+	  image: '/images/banner_home/queime_casa.png',
+	  isRounded: true
+	},
+]
+
 
 export default function Banners() {
   const dispatch = useDispatch()
@@ -40,7 +60,6 @@ export default function Banners() {
           itemClass=""
           keyBoardControl
           minimumTouchDrag={80}
-          //partialVisible
           pauseOnHover
           renderArrowsWhenDisabled={false}
           renderButtonGroupOutside={false}
@@ -51,10 +70,10 @@ export default function Banners() {
                 max: 3000,
                 min: 1024
               },
-              items: 2,
-              height: 260,
-              partialVisibilityGutter: 40,
-              slidesToSlide: 2
+              items: 3,
+              height: 300,
+              slidesToSlide: 1,
+              partialVisible: 'false'
             },
             mobile: {
               breakpoint: {
@@ -69,8 +88,7 @@ export default function Banners() {
                 max: 1024,
                 min: 464
               },
-              items: 2,
-              partialVisibilityGutter: 40
+              items: 2
             }
           }}
           rewind={false}
@@ -82,15 +100,9 @@ export default function Banners() {
           slidesToSlide={1}
           swipeable
         >
-          <Link href="/aulas_coletivas/abdominais" className="d-flex justify-center">
-            <img src="/images/banner_home/treino_em_casa.png" className="w-100 rounded-extra " />
-          </Link>
-          <Link href="/aulas_coletivas/abdominais" className="d-flex justify-center">
-            <img src="/images/banner_home/abdominais.png" className="w-100 rounded-extra" />
-          </Link>
-          <Link href="/aulas_coletivas/queimeacasa" className="d-flex justify-center">
-            <img src="/images/banner_home/queime_casa.png" className="w-100 rounded-extra" />
-          </Link>
+          {listaCarousel.map(({ href, image, isRounded }, index) => (
+            <CarouselItem key={index} href={href} image={image} isRounded={isRounded} />
+          ))}
         </Carousel>
       ) : null}
     </Loading>

@@ -24,28 +24,25 @@ export default function Layout({ children }) {
   const pathname = usePathname()
 
   const isApp = typeof window !== 'undefined' && window.self === window.parent ? true : false
-  var fraseInicial = ''
-  
-  authenticated &&
-    (fraseInicial = utils
-      .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
-      .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`)
-      .split('!')
-	)
 
-console.log("all data",children)
+  const fraseInicial = authenticated
+    ? utils
+        .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+        .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`)
+        .split('!')
+    : ''
 
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
-		  <>
-		  <AntLayout className="app">
+        <>
+          <AntLayout className="app">
             <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
             <Header />
             <Content
               style={{
                 paddingTop: '1rem',
-                paddingBottom: '60px'
+                paddingBottom: '3.75rem'
               }}
             >
               <div className="container">

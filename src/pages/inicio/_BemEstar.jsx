@@ -1,10 +1,23 @@
-import Link from 'next/link'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
-import { useDispatch, useSelector } from 'react-redux'
+import CarouselItem from './_CarouselItem'
+
+const listaCarousel = [
+  {
+    href: '/aulas_coletivas/yoga',
+    image: '/images/yoga2.png',
+    isRounded: true,
+    alt: 'exercicios_yoga'
+  },
+  {
+    href: '/meditacao',
+    image: '/images/meditacao.png',
+    isRounded: true,
+    alt: 'exercicios_meditacao'
+  }
+]
 
 export default function BemEstar() {
-  const dispatch = useDispatch()
   return (
     <div className="">
       <Carousel
@@ -61,17 +74,9 @@ export default function BemEstar() {
         slidesToSlide={1}
         swipeable
       >
-        {/* <Link href="/aulas_coletivas/jump">
-          <img src="/images/banner_home/energy_jump.png" className="w-95 rounded-xl" alt="exercicios_jump"/>
-        </Link> */}
-        <Link href="/aulas_coletivas/yoga">
-          <img src="/images/yoga2.png" className="w-95 rounded-xl" alt="exercicios_yoga" />
-        </Link>
-
-        <Link href="/meditacao">
-          <img src="/images/meditacao.png" className='rounded-xl w-95' />
-        </Link>
-
+        {listaCarousel.map(({ href, image, isRounded }, index) => (
+          <CarouselItem key={index} href={href} image={image} isRounded={isRounded} />
+        ))}
       </Carousel>
     </div>
   )
