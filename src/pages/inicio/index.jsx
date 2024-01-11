@@ -135,7 +135,7 @@ export default function Inicio() {
       <Banners />
 
       {usuario.isEmployee ? (
-        <div className="mt-6">
+        <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
               Área do Colaborador!

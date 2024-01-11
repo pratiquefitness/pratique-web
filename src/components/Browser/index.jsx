@@ -28,7 +28,7 @@ const Browser = ({ url, title, onClose }) => {
                       path: 'https://www.clubecertosaude.com.br/saude/saversaude/',
                       title: 'Saver Saúde'
                     }
-                  : url === '' && {
+                  : {
                       style: 'line-height: 1.7;',
                       title: `${url.substring(21)}`
                     }
