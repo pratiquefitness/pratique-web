@@ -1125,6 +1125,13 @@
 .text-large{
 	font-size:large !important;
 }
+.text-xlarge{
+	font-size:x-large !important;
+}
+
+.gap-2{
+	gap: 0.5rem !important;
+}
 
 
 /*RESPONSIVE*/
