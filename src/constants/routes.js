@@ -53,6 +53,46 @@ const routes = [
     showInNavigation: false
   },
   {
+    title: 'abdominais',
+    href: '/abdominais',
+    showInNavigation: false
+  },
+  {
+    title: 'intensivejump',
+    href: '/intensivejump',
+    showInNavigation: false
+  },
+  {
+    title: 'powerdance',
+    href: '/powerdance',
+    showInNavigation: false
+  },
+  {
+    title: 'treinosdiarios',
+    href: '/treinosdiarios',
+    showInNavigation: false
+  },
+  {
+    title: 'abdominais',
+    href: '/abdominais',
+    showInNavigation: false
+  },
+  {
+    title: 'fitdance',
+    href: '/fitdance',
+    showInNavigation: false
+  },
+  {
+    title: 'flow',
+    href: '/flow',
+    showInNavigation: false
+  },
+  {
+    title: 'queimeacasa',
+    href: '/queimeacasa',
+    showInNavigation: false
+  },
+  {
     title: 'Unipower',
     href: '/unipower',
     showInNavigation: false
