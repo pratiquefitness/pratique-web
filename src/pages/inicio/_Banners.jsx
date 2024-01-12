@@ -57,7 +57,15 @@ export default function Banners() {
               <div key={key}>
                 <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
                   <div
-                    style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}
+                    style={{
+                      backgroundImage: `url('${live.live_link}')`,
+                      backgroundSize: 'cover',
+                      backgroundSize: 'contain',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right',
+                      backgroundColor: 'white',
+                      ...contentStyle
+                    }}
                   >
                     <div className="p-4">
                       <h3>
