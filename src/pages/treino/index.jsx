@@ -105,7 +105,7 @@ export default function MeuTreinoView() {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen=""
                                   ></iframe>
-                                  {video.exercicio_descricao}
+                                  {utils.utf8Decode(video.exercicio_descricao)}
                                 </p>
                               </Panel>
                             )
@@ -125,21 +125,24 @@ export default function MeuTreinoView() {
                   })
                 : null}
             </Collapse>
-			<Col span={24} className="mb-2 mt-6">
-                <p className='text-large text-center'>
-					Quer ajustar seu treino?
-				</p>
-              </Col>
-              <Col span={24} className="mb-2">
-                <a
-                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
-                  target="_blank"
+            <Col span={24} className="mb-2 mt-6">
+              <p className="text-large text-center">Quer ajustar seu treino?</p>
+            </Col>
+            <Col span={24} className="mb-2">
+              <a
+                href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
+                target="_blank"
+              >
+                <Button
+                  icon={<FaWhatsapp fill="#25D366" />}
+                  className="text-white text-large"
+                  style={{ background: 'green' }}
+                  block
                 >
-                  <Button icon={<FaWhatsapp fill="#25D366" />} className='text-white text-large' style={{ background: 'green'}} block>
-                    Fale com o professor
-                  </Button>
-                </a>
-              </Col>
+                  Fale com o professor
+                </Button>
+              </a>
+            </Col>
           </>
         ) : (
           <Empty className="my-8" />
