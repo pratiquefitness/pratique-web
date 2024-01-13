@@ -35,27 +35,17 @@ export default function MeuTreinoView() {
         {typeof data.treinos !== 'undefined' && data.treinos.length ? (
           <>
             <Row gutter={8}>
-              <Col span={24} className="mb-2">
-                <a
-                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
-                  target="_blank"
-                >
-                  <Button icon={<FaWhatsapp fill="#25D366" />} style={{ background: '#756483', color: 'white' }} block>
-                    Ajuste seu Treino
-                  </Button>
-                </a>
+              <Col span={12}>
+                <InfoBox icon={<LuUser className="text-xlarge" />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
               </Col>
-              <Col span={6}>
-                <InfoBox icon={<LuUser />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
+              <Col span={12}>
+                <InfoBox icon={<LuClipboardCheck className="text-xlarge" />} title="3 SÉRIES" />
               </Col>
-              <Col span={6}>
-                <InfoBox icon={<LuClipboardCheck />} title="3 SÉRIES" />
+              <Col span={12}>
+                <InfoBox icon={<BsFire className="text-xlarge" />} title="10 A 12 REPETIÇÕES" />
               </Col>
-              <Col span={6}>
-                <InfoBox icon={<BsFire />} title="10 A 12 REPETIÇÕES" />
-              </Col>
-              <Col span={6}>
-                <InfoBox icon={<LuClock />} title="RECUPERAÇÃO 1 MIN" />
+              <Col span={12}>
+                <InfoBox icon={<LuClock className="text-xlarge" />} title="RECUPERAÇÃO 1 MIN" />
               </Col>
             </Row>
             <div className="text-center pb-4">
@@ -115,7 +105,7 @@ export default function MeuTreinoView() {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen=""
                                   ></iframe>
-                                  {video.exercicio_descricao}
+                                  {utils.utf8Decode(video.exercicio_descricao)}
                                 </p>
                               </Panel>
                             )
@@ -135,6 +125,24 @@ export default function MeuTreinoView() {
                   })
                 : null}
             </Collapse>
+            <Col span={24} className="mb-2 mt-6">
+              <p className="text-large text-center">Quer ajustar seu treino?</p>
+            </Col>
+            <Col span={24} className="mb-2">
+              <a
+                href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
+                target="_blank"
+              >
+                <Button
+                  icon={<FaWhatsapp fill="#25D366" />}
+                  className="text-white text-large"
+                  style={{ background: 'green' }}
+                  block
+                >
+                  Fale com o professor
+                </Button>
+              </a>
+            </Col>
           </>
         ) : (
           <Empty className="my-8" />

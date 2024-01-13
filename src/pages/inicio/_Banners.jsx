@@ -9,21 +9,21 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const contentStyle = {
   margin: 5,
-  height: 160,
+  height: 200,
   color: 'black',
   borderRadius: 10
 }
 
 const settings = {
   className: 'center',
-  centerMode: true,
+  centerMode: false,
   slidesToShow: 1,
   swipeToSlide: true,
   draggable: true,
-  autoplay: false,
-  autoplaySpeed: 2000,
+  autoplay: true,
+  dots: true,
+  autoplaySpeed: 3000,
   style: {
-    marginBottom: 20,
     width: '100%'
   }
 }
@@ -57,7 +57,15 @@ export default function Banners() {
               <div key={key}>
                 <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
                   <div
-                    style={{ backgroundImage: `url('${live.live_link}')`, backgroundSize: 'cover', ...contentStyle }}
+                    style={{
+                      backgroundImage: `url('${live.live_link}')`,
+                      backgroundSize: 'cover',
+                      backgroundSize: 'contain',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right',
+                      backgroundColor: 'white',
+                      ...contentStyle
+                    }}
                   >
                     <div className="p-4">
                       <h3>

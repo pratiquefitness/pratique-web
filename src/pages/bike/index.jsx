@@ -122,7 +122,7 @@ export default function Bike() {
       <div className="text-center">
         <img src="images/bike/cycle.png" width={'50%'} alt="" style={{ maxWidth: 200 }} />
       </div>
-      <Tabs defaultActiveKey="0" items={items} centered />
+      <Tabs defaultActiveKey="0" items={items} centered size='large' />
     </>
   )
 }
