@@ -13,11 +13,11 @@ const listaCarousel = [
     image: '/images/banner_home/vertical_banner/intensive_jump.png',
     isRounded: true
   },
-  {
-    href: '/aulas_coletivas/powerdance',
-    image: '/images/banner_home/vertical_banner/power_dance.png',
-    isRounded: true
-  },
+//   {
+//     href: '/aulas_coletivas/powerdance',
+//     image: '/images/banner_home/vertical_banner/power_dance.png',
+//     isRounded: true
+//   },
   {
     href: '/aulas_coletivas/treinosdiarios',
     image: '/images/banner_home/vertical_banner/treinos_diarios.png',
@@ -28,11 +28,11 @@ const listaCarousel = [
     image: '/images/banner_home/vertical_banner/abdominais.png',
     isRounded: true
   },
-  {
-    href: '/aulas_coletivas/fitdance',
-    image: '/images/banner_home/vertical_banner/fit_dance.png',
-    isRounded: true
-  },
+//   {
+//     href: '/aulas_coletivas/fitdance',
+//     image: '/images/banner_home/vertical_banner/fit_dance.png',
+//     isRounded: true
+//   },
   {
     href: '/aulas_coletivas/flow',
     image: '/images/banner_home/vertical_banner/flow.png',
