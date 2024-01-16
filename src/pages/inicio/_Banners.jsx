@@ -15,23 +15,22 @@ agora - acontecendo
 */
 
 const listaCarousel = [
-	{
-	  href: '/bike',
-	  image: '/images/power.png',
-	  isRounded: true
-	},
-	{
-	  href: '/aulas_coletivas/abdominais',
-	  image: '/images/banner_home/abdominais.png',
-	  isRounded: true
-	},
-	{
-	  href: '/aulas_coletivas/queimeacasa"',
-	  image: '/images/banner_home/queime_casa.png',
-	  isRounded: true
-	},
+  {
+    href: '/bike',
+    image: '/images/banner_home/power_cycle.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/abdominais',
+    image: '/images/banner_home/abdominais.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/queime_em_casa',
+    image: '/images/banner_home/queime_casa.png',
+    isRounded: true
+  }
 ]
-
 
 export default function Banners() {
   const dispatch = useDispatch()

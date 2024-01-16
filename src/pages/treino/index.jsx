@@ -1,6 +1,6 @@
-import { Button, Col, Empty, Form, Input, Row, Space, Spin, Statistic, Tabs, Tag, Typography, theme } from 'antd'
+import { Button, Col, Empty, Form, Input, Row, Space, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
-import { LuAirplay, LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
+import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +16,8 @@ export default function MeuTreinoView() {
   const dispatch = useDispatch()
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
+
+  const { themeMode } = useSelector(state => state.global)
 
   const onSaveAnotacoes = values => {
     dispatch(updateAnotacoes(values))
@@ -125,24 +127,28 @@ export default function MeuTreinoView() {
                   })
                 : null}
             </Collapse>
-            <Col span={24} className="mb-2 mt-6">
-              <p className="text-large text-center">Quer ajustar seu treino?</p>
-            </Col>
-            <Col span={24} className="mb-2">
-              <a
-                href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
-                target="_blank"
-              >
-                <Button
-                  icon={<FaWhatsapp fill="#25D366" />}
-                  className="text-white text-large"
-                  style={{ background: 'green' }}
-                  block
+            <div className="p-4 mt-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+              <Col span={24} className="mb-2">
+                <p className={`text-large text-center ${themeMode === 'light' ? 'text-black' : 'text-white'}`}>
+                  Quer ajustar seu treino?
+                </p>
+              </Col>
+              <Col span={24} className="mb-2">
+                <a
+                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
+                  target="_blank"
                 >
-                  Fale com o professor
-                </Button>
-              </a>
-            </Col>
+                  <Button
+                    icon={<FaWhatsapp fill="#25D366" />}
+                    className="text-white text-large"
+                    style={{ background: 'green' }}
+                    block
+                  >
+                    Fale com o professor
+                  </Button>
+                </a>
+              </Col>
+            </div>
           </>
         ) : (
           <Empty className="my-8" />

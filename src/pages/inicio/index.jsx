@@ -29,7 +29,7 @@ export default function Inicio() {
   }
 
   const abreSaverClubModal = () => {
-    setSaverClubModal(true);
+    setSaverClubModal(true)
   }
 
   const listaCarousel = [
@@ -200,34 +200,34 @@ export default function Inicio() {
       ) : null}
 
       {isClient ? (
-        <>
-          <div>
-            <Title level={3} className="m-0">
-              Área do Cliente!
-            </Title>
-            <Text type="secondary">Beneficios e conteúdos para você</Text>
-          </div>
-          <Row gutter={[6, 6]} className="mb-2 mt-2">
-            {isSaverAndClient ? (
-              <Col span={12}>
-                <a onClick={() => setSaverClubModal(true)}>
-                  <img src="/images/saver_club.png" width="100%" className="rounded" />
-                </a>
-              </Col>
-            ) : null}
+      <>
+        <div>
+          <Title level={3} className="mt-4 mb-0">
+            Área do Cliente!
+          </Title>
+          <Text type="secondary">Beneficios e conteúdos para você</Text>
+        </div>
+        <Row gutter={[6, 6]} className="mb-2 mt-2">
+          {isSaverAndClient ? (
+            <Col span={12}>
+              <a onClick={() => setSaverClubModal(true)}>
+                <img src="/images/saver_saude.png" width="100%" className="rounded" />
+              </a>
+            </Col>
+          ) : null}
 
-            <Col span={12}>
-              <a href="https://pratiquefitness.com.br/trabalhe-na-academia-pratique/" target="_blank">
-                <img src="/images/trabalhe_conosco.png" width="100%" />
-              </a>
-            </Col>
-            <Col span={12}>
-              <a href="https://pratiquefitness.com.br/sobre-a-pratique/" target="_blank">
-                <img src="/images/sua_pratique.png" width="100%" />
-              </a>
-            </Col>
-          </Row>
-        </>
+          <Col span={12}>
+            <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))}>
+              <img src="/images/trabalhe_conosco.png" width="100%" />
+            </a>
+          </Col>
+          <Col span={12}>
+            <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))}>
+              <img src="/images/sua_pratique.png" width="100%" />
+            </a>
+          </Col>
+        </Row>
+      </>
       ) : null}
 
       <div className="mt-4 mb-2">

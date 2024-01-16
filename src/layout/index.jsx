@@ -58,7 +58,7 @@ export default function Layout({ children }) {
                         },
                         {
                           style: 'line-height: 1.7;',
-                          title: `${pathname.substring(1)}`
+						  title: `${pathname.substring(1)}`
                         }
                       ]}
                     />

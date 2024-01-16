@@ -39,7 +39,7 @@ const listaCarousel = [
     isRounded: true
   },
   {
-    href: '/aulas_coletivas/queimeacasa',
+    href: '/aulas_coletivas/queime_em_casa',
     image: '/images/banner_home/vertical_banner/queime_casa.png',
     isRounded: true
   }
