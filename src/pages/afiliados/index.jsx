@@ -4,6 +4,7 @@ import Comissao from './_Comissao'
 import Produtos from './_Produtos'
 import PlanosAcademia from './_PlanosAcademia'
 import JumperFit from './_JumperFit'
+import PratiqueMed from './_PratiqueMed'
 
 const items = [
   {
