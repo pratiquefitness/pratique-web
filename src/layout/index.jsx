@@ -37,39 +37,44 @@ export default function Layout({ children }) {
       {authenticated ? (
         <>
           <AntLayout className="app">
-            <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
-            <Header />
-            <Content
-              style={{
-                paddingTop: '1rem',
-                paddingBottom: '3.75rem'
-              }}
-            >
-              <div className="container">
-                <div className="d-flex flex-column justify-space-between">
-                  {pathname !== '/' && (
-                    <Breadcrumb
-                      separator={<DoubleRightOutlined className="text-black" />}
-                      className="mb-4 ml-2 text-capitalize d-flex items-center"
-                      items={[
-                        {
-                          title: <HomeOutlined />,
-                          onClick: () => router.back()
-                        },
-                        {
-                          style: 'line-height: 1.7;',
-						  title: `${pathname.substring(1)}`
-                        }
-                      ]}
-                    />
-                  )}
-                  <Title level={3}>
-                    {fraseInicial[0]} <br /> {fraseInicial[1]}
-                  </Title>
-                </div>
-                {children}
-              </div>
-            </Content>
+            {browserURL ? (
+              <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
+            ) : (
+              <>
+                <Header />
+                <Content
+                  style={{
+                    paddingTop: '1rem',
+                    paddingBottom: '3.75rem'
+                  }}
+                >
+                  <div className="container">
+                    <div className="d-flex flex-column justify-space-between">
+                      {pathname !== '/' && (
+                        <Breadcrumb
+                          separator={<DoubleRightOutlined className="text-black" />}
+                          className="mb-4 text-capitalize d-flex items-center"
+                          items={[
+                            {
+                              title: <HomeOutlined />,
+                              onClick: () => router.back()
+                            },
+                            {
+                              style: 'line-height: 1.7;',
+                              title: `${pathname.substring(1)}`
+                            }
+                          ]}
+                        />
+                      )}
+                      <Title level={3}>
+                        {fraseInicial[0]} <br /> {fraseInicial[1]}
+                      </Title>
+                    </div>
+                    {children}
+                  </div>
+                </Content>
+              </>
+            )}
             <Navigation data={routes} />
           </AntLayout>
         </>

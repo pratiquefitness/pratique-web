@@ -21,18 +21,18 @@ export default function MeditacaoView() {
       <div className="p-1">
         {data.map((meditacao, key) => (
           <Row gutter={[16, 16]} key={key} className="pb-4" align="middle">
-            <Col span={8}>
+            <Col span={10}>
               <img src={meditacao.modalidademeditacao_capa} width={'100%'} />
             </Col>
-            <Col span={12}>
-              <Title level={3}>{meditacao.modalidademeditacao_nome}</Title>
-              <Paragraph>{meditacao.modalidademeditacao_descricao}</Paragraph>
-            </Col>
-            <Col span={4}>
+            <Col span={14}>
+              <Title className='mb-2' level={4}>{meditacao.modalidademeditacao_nome}</Title>
+              <Paragraph className='mb-2'>{meditacao.modalidademeditacao_descricao}</Paragraph>
               <Link href={`/meditacao/${meditacao.modalidademeditacao_id}`}>
-                <Button type="primary">Ver</Button>
+                <Button className='px-5 py-1 h-100 text-capitalize' type='primary'>Ver</Button>
               </Link>
             </Col>
+            {/* <Col span={4}>
+            </Col> */}
           </Row>
         ))}
       </div>

@@ -140,7 +140,7 @@ export default function Inicio() {
             <Title level={3} className="m-0">
               Área do Colaborador!
             </Title>
-            <Text type="secondary">Beneficios e conteúdos para você</Text>
+            <Text type="">Beneficios e conteúdos para você</Text>
           </div>
           <Carousel
             arrows={false}
@@ -207,34 +207,83 @@ export default function Inicio() {
           </Title>
           <Text type="secondary">Beneficios e conteúdos para você</Text>
         </div>
-        <Row gutter={[6, 6]} className="mb-2 mt-2">
-          {isSaverAndClient ? (
+
+        <Carousel
+          arrows={false}
+          autoPlay={false}
+          centerMode={false}
+          className="mt-2"
+          containerClass="container"
+          draggable
+          focusOnSelect={false}
+          infinite={false}
+          keyBoardControl={false}
+          minimumTouchDrag={80}
+          partialVisible
+          renderArrowsWhenDisabled={false}
+          renderButtonGroupOutside={false}
+          renderDotsOutside={false}
+          responsive={{
+            desktop: {
+              breakpoint: {
+                max: 3000,
+                min: 1024
+              },
+              items: 3,
+              height: 260,
+              partialVisibilityGutter: 40,
+              slidesToSlide: 2
+            },
+            mobile: {
+              breakpoint: {
+                max: 575,
+                min: 0
+              },
+              items: 1,
+              partialVisibilityGutter: 80
+            },
+            tablet: {
+              breakpoint: {
+                max: 1024,
+                min: 464
+              },
+              items: 2,
+              partialVisibilityGutter: 40
+            }
+          }}
+          rewind={false}
+          rewindWithAnimation={false}
+          rtl={false}
+          showDots={false}
+          slidesToSlide={1}
+          swipeable
+        >
+          {/* <Row gutter={[6, 6]} className="mb-2 mt-2"> */}
+          {/* {isSaverAndClient ? (
             <Col span={12}>
               <a onClick={() => setSaverClubModal(true)}>
                 <img src="/images/saver_saude.png" width="100%" className="rounded" />
               </a>
             </Col>
-          ) : null}
+          ) : null} */}
 
-          <Col span={12}>
+          
             <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))}>
-              <img src="/images/trabalhe_conosco.png" width="100%" />
+              <img src="/images/trabalhe_conosco.png" className='rounded-xl w-95' />
             </a>
-          </Col>
-          <Col span={12}>
             <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))}>
-              <img src="/images/sua_pratique.png" width="100%" />
+              <img src="/images/sua_pratique.png" className='rounded-xl w-95' />
             </a>
-          </Col>
-        </Row>
+          {/* </Row> */}
+        </Carousel>
       </>
-      ) : null}
+       ) : null}
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
           Atividades On Demand
         </Title>
-        <Text>Beneficios e conteúdos para você</Text>
+        <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
       <AtividadesOnDemand />
 
