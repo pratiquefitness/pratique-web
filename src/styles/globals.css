@@ -259,6 +259,11 @@ body .ant-layout-footer {
   height: calc(100% - 138px);
   border: none;
 }
+.browser-iframe-blog {
+  width: 100%;
+  height: calc(100% - 50px);
+  border: none;
+}
 .ant-table-content {
   font-size: 10px;
   text-align: center;
