@@ -69,7 +69,7 @@ export default function PratiqueMed({ employee }) {
     const selectedPlan = credits === '1' ? '764' : credits === '2' ? '762' : credits === '3' ? '763' : '765'
 
     // Construct the link based on the selected plan
-    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/?pl=${selectedPlan}&saver=teste&obs=AFILIADO|d826fbbdd2c37d1342b8d16dfa5c75fd|1|NULL|${
+    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pratique-em-casa?pl=${selectedPlan}&saver=teste&obs=AFILIADO|d826fbbdd2c37d1342b8d16dfa5c75fd|1|NULL|${
       employee ? employee : usuario.isAffiliate
     }|AFILIADOMED`
 
