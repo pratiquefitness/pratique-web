@@ -30,7 +30,7 @@ const items = [
   {
     key: "pratiquemed",
     label: `Pratique Med`,
-    children: <JumperFit />,
+    children: <PratiqueMed />,
   },
 ];
 
