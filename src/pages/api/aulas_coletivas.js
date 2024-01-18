@@ -5,9 +5,6 @@ export default async function handler(req, res) {
   const data = await apiPratiqueAulas.aulas.findMany({
     where: {
       aula_categoria: String(aula_categoria),
-    },
-    orderBy: {
-      aula_data: "desc",
     }
   });
   res.status(200).json(data);
