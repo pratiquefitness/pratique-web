@@ -26,6 +26,11 @@ export default function Afiliados() {
             key: 'jumperfit',
             label: `Jumper Fit`,
             children: <JumperFit employee={employee} />
+          },
+          {
+            key: 'pratiquemed',
+            label: `Pratique Med`,
+            children: <PratiqueMed employee={employee} />
           }
         ]}
       />
