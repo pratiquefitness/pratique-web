@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import Produtos from '../_Produtos'
 import PlanosAcademia from '../_PlanosAcademia'
+import PratiqueMed from '../_PratiqueMed'
 import { useRouter } from 'next/router'
 
 export default function Afiliados() {
