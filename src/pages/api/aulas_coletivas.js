@@ -8,8 +8,8 @@ export default async function handler(req, res) {
       aula_datagravacao: {
         gte: format(new Date(), "yyyy-MM-dd"),
       },
+      aula_categoria: String(aula_categoria), // Colocado dentro de la cláusula where
     },
-    aula_categoria: String(aula_categoria),
     orderBy: {
       aula_datagravacao: "desc",
     },
