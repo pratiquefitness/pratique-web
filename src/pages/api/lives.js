@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       }
     },
     orderBy: {
-      live_datagravacao: 'asc'
+      live_datagravacao: 'desc'
     }
   })
   res.status(200).json(data.slice(0, 5))
