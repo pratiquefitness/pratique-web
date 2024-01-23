@@ -30,7 +30,7 @@ const routes = [
     showInNavigation: true
   },
   {
-    title: 'Power Cycle',
+    title: '',
     href: '/bike',
     icon: <IoBicycleOutline />,
     activeIcon: <IoBicycle />,

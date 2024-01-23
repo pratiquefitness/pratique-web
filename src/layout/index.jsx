@@ -66,9 +66,11 @@ export default function Layout({ children }) {
                           ]}
                         />
                       )}
-                      <Title level={3}>
-                        {fraseInicial[0]} <br /> {fraseInicial[1]}
-                      </Title>
+                      {fraseInicial[0] !== '' && (
+                        <Title level={3}>
+                          {fraseInicial[0]} <br /> {fraseInicial[1]}
+                        </Title>
+                      )}
                     </div>
                     {children}
                   </div>
