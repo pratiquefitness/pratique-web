@@ -234,52 +234,47 @@ export default function Inicio() {
       ) : null}
 
       {isClient ? (
-      <>
-        <div>
-          <Title level={3} className="mt-4 mb-0">
-            Área do Cliente!
-          </Title>
-          <Text type="secondary">Beneficios e conteúdos para você</Text>
-        </div>
+        <>
+          <div>
+            <Title level={3} className="mt-4 mb-0">
+              Área do Cliente!
+            </Title>
+            <Text type="secondary">Beneficios e conteúdos para você</Text>
+          </div>
 
-        <Carousel
-          arrows={false}
-          autoPlay={false}
-          centerMode={false}
-          className="mt-2"
-          containerClass="container"
-          draggable
-          focusOnSelect={false}
-          infinite={false}
-          keyBoardControl={false}
-          minimumTouchDrag={80}
-          partialVisible
-          renderArrowsWhenDisabled={false}
-          renderButtonGroupOutside={false}
-          renderDotsOutside={false}
-          responsive={{
-            desktop: {
-              breakpoint: {
-                max: 3000,
-                min: 1024
+          <Carousel
+            arrows={false}
+            autoPlay={false}
+            centerMode={false}
+            className="mt-2"
+            containerClass="container"
+            draggable
+            focusOnSelect={false}
+            infinite={false}
+            keyBoardControl={false}
+            minimumTouchDrag={80}
+            partialVisible
+            renderArrowsWhenDisabled={false}
+            renderButtonGroupOutside={false}
+            renderDotsOutside={false}
+            responsive={{
+              desktop: {
+                breakpoint: {
+                  max: 3000,
+                  min: 1024
+                },
+                items: 3,
+                height: 260,
+                partialVisibilityGutter: 40,
+                slidesToSlide: 2
               },
-              items: 3,
-              height: 260,
-              partialVisibilityGutter: 40,
-              slidesToSlide: 2
-            },
-            mobile: {
-              breakpoint: {
-                max: 575,
-                min: 0
-              },
-              items: 1,
-              partialVisibilityGutter: 80
-            },
-            tablet: {
-              breakpoint: {
-                max: 1024,
-                min: 464
+              mobile: {
+                breakpoint: {
+                  max: 575,
+                  min: 0
+                },
+                items: 1,
+                partialVisibilityGutter: 80
               },
               items: 2,
               partialVisibilityGutter: 40
@@ -297,6 +292,7 @@ export default function Inicio() {
           ))}
         </Carousel>
       </>
+
       ) : null}
 
       <div className="mt-4 mb-2">
