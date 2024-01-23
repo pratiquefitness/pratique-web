@@ -41,7 +41,7 @@ const listaLinks = [
     title: 'Sobre a Pratique'
   },
   {
-    path: 'https://linklist.bio/pratiquenutri',
+    path: 'https://pratiquefitness.com.br/pratiquenutri/',
     title: 'Pratique Nutri'
   }
 ]

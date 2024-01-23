@@ -350,7 +350,7 @@ export default function Inicio() {
         slidesToSlide={1}
         swipeable
       >
-        <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
+        <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
           <RibbonWithEndDate
             text="Novo!"
             color="yellow"
