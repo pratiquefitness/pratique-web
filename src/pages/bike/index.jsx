@@ -1,6 +1,7 @@
 import { Button, Col, Row, Space, Tabs, Typography, theme } from 'antd'
 import { Collapse, Panel } from '@/components'
 import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
+import BannersPowerCycle from './_BannersPowerCycle'
 
 const items = [
   {
@@ -122,7 +123,10 @@ export default function Bike() {
       <div className="text-center">
         <img src="images/bike/cycle.png" width={'50%'} alt="" style={{ maxWidth: 200 }} />
       </div>
-      <Tabs defaultActiveKey="0" items={items} centered size='large' />
+      <div className='mt-4'>
+        <BannersPowerCycle />
+      </div>
+      <Tabs defaultActiveKey="0" items={items} centered size="large" />
     </>
   )
 }

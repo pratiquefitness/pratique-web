@@ -13,6 +13,7 @@ import {
   IoCalendarOutline,
   IoCalendar
 } from 'react-icons/io5'
+import PratiqueIcon from '@/components/PratiqueIcon/PratiqueIcon'
 
 const routes = [
   {
@@ -30,7 +31,7 @@ const routes = [
     showInNavigation: true
   },
   {
-    title: 'Power Cycle',
+    title: '',
     href: '/bike',
     icon: <IoBicycleOutline />,
     activeIcon: <IoBicycle />,
@@ -44,11 +45,18 @@ const routes = [
     showInNavigation: true
   },
   {
+    title: '',
+    href: '/powerflix',
+    icon: <PratiqueIcon />,
+    activeIcon: <PratiqueIcon />,
+    showInNavigation: true
+  },
+  {
     title: 'Minha Conta',
     href: '/conta',
     icon: <IoPersonOutline />,
     activeIcon: <IoPerson />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: 'Blog',

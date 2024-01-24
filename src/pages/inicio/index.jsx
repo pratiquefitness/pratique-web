@@ -28,6 +28,14 @@ export default function Inicio() {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
   }
 
+  const dispatchTrabalhePratique = () => {
+    dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))
+  }
+
+  const dispatchSobrePratique = () => {
+    dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))
+  }
+
   const abreSaverClubModal = () => {
     setSaverClubModal(true)
   }
@@ -60,6 +68,32 @@ export default function Inicio() {
       alt: 'unipower_banner'
     }
   ]
+
+  const listaCarouselAreaCliente = [
+    {
+      href: '',
+      image: '/images/trabalhe_conosco.png',
+      isRounded: true,
+      alt: 'trabalhe_conosco',
+      action: dispatchTrabalhePratique
+    },
+    {
+      href: '',
+      image: '/images/sua_pratique.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      action: dispatchSobrePratique
+    }
+  ]
+
+  isSaverAndClient &&
+    listaCarouselAreaCliente.push({
+      href: '',
+      image: '/images/saver_saude.png',
+      isRounded: true,
+      alt: 'saver_saude',
+      action: abreSaverClubModal
+    })
 
   return (
     <Space direction="vertical" className="w-100">
@@ -242,14 +276,8 @@ export default function Inicio() {
                 items: 1,
                 partialVisibilityGutter: 80
               },
-              tablet: {
-                breakpoint: {
-                  max: 1024,
-                  min: 464
-                },
-                items: 2,
-                partialVisibilityGutter: 40
-              }
+              items: 2,
+              partialVisibilityGutter: 40
             }}
             rewind={false}
             rewindWithAnimation={false}
@@ -258,27 +286,9 @@ export default function Inicio() {
             slidesToSlide={1}
             swipeable
           >
-            {/* <Row gutter={[6, 6]} className="mb-2 mt-2"> */}
-            {/* {isSaverAndClient ? (
-            <Col span={12}>
-              <a onClick={() => setSaverClubModal(true)}>
-                <img src="/images/saver_saude.png" width="100%" className="rounded" />
-              </a>
-            </Col>
-          ) : null} */}
-            {isSaverAndClient ? (
-              <a onClick={() => setSaverClubModal(true)}>
-                <img src="/images/saver_club.png" className="rounded-xl w-95" />
-              </a>
-            ) : null}
-
-            <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))}>
-              <img src="/images/trabalhe_conosco.png" className="rounded-xl w-95" />
-            </a>
-            <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))}>
-              <img src="/images/sua_pratique.png" className="rounded-xl w-95" />
-            </a>
-            {/* </Row> */}
+            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+              <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
+            ))}
           </Carousel>
         </>
       ) : null}
@@ -354,7 +364,7 @@ export default function Inicio() {
         slidesToSlide={1}
         swipeable
       >
-        <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/pratiquenutri'))}>
+        <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
           <RibbonWithEndDate
             text="Novo!"
             color="yellow"
