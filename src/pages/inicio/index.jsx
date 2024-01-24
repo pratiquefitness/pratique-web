@@ -278,21 +278,19 @@ export default function Inicio() {
               },
               items: 2,
               partialVisibilityGutter: 40
-            }
-          }}
-          rewind={false}
-          rewindWithAnimation={false}
-          rtl={false}
-          showDots={false}
-          slidesToSlide={1}
-          swipeable
-        >
-          {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
-            <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
-          ))}
-        </Carousel>
-      </>
-
+            }}
+            rewind={false}
+            rewindWithAnimation={false}
+            rtl={false}
+            showDots={false}
+            slidesToSlide={1}
+            swipeable
+          >
+            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+              <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
+            ))}
+          </Carousel>
+        </>
       ) : null}
 
       <div className="mt-4 mb-2">

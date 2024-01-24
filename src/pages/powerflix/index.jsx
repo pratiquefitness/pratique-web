@@ -139,7 +139,7 @@ export default function Inicio() {
   return (
     <Space direction="vertical" className="w-100 mb-6">
       <Modal
-        title="Treino"
+        title={"Seu Treino"}
         open={exercicioModal}
         onCancel={closeExercicioModal}
         footer={null}
