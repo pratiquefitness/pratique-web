@@ -1444,6 +1444,10 @@
   .md-position-sticky {
     position: sticky !important;
   }
+
+  .md-w-50 {
+	width: 50% !important;
+  }
 }
 
 @media (min-width: 992px) {

@@ -151,7 +151,7 @@ export default function Inicio() {
       </Modal>
 
       <div className="text-center mt-2">
-        <img src="images/powerflix/powerflix.png" width={'100%'} alt="" style={{ maxWidth: 275 }} />
+        <img src="/powerflix.png" className='w-90 md-w-50' />
       </div>
 
       <div className="mt-6 flex flex-column mb-0">
