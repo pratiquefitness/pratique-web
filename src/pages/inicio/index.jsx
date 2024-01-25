@@ -86,14 +86,15 @@ export default function Inicio() {
     }
   ]
 
-  isSaverAndClient &&
-    listaCarouselAreaCliente.push({
+  if (isSaverAndClient) {
+    listaCarouselAreaCliente.unshift({
       href: '',
       image: '/images/saver_club.png',
       isRounded: true,
       alt: 'saver_saude',
       action: abreSaverClubModal
     })
+  }
 
   return (
     <Space direction="vertical" className="w-100">
