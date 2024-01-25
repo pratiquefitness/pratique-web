@@ -89,7 +89,7 @@ export default function Inicio() {
   isSaverAndClient &&
     listaCarouselAreaCliente.push({
       href: '',
-      image: '/images/saver_saude.png',
+      image: '/images/saver_club.png',
       isRounded: true,
       alt: 'saver_saude',
       action: abreSaverClubModal
