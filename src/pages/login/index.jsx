@@ -73,11 +73,10 @@ export default function LoginView() {
           />
         </div>
         <div className="box-login">
-          <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} autoComplete="off">
+          <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} autoCapitalize='off' autoComplete="off">
             <Form.Item name="email" rules={[{ required: true, message: 'Preencha seu e-mail...' }]}>
               <Input placeholder="E-mail" />
             </Form.Item>
-
             <Form.Item name="senha" rules={[{ required: true, message: 'Preencha sua senha...' }]}>
               <Input.Password placeholder="Senha" />
             </Form.Item>
