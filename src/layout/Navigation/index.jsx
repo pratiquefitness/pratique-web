@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import utils from '@/utils'
 import { theme } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import Link from 'next/link'
 import { setBrowserURL } from '@/redux/slices/global'
 
 export default function Navigation({ data }) {
@@ -24,41 +23,40 @@ export default function Navigation({ data }) {
     setSelected(utils.getFirstLevelRoute(pathname))
   }, [pathname])
 
-  const onNavigate = item => () => {
-    dispatch(setBrowserURL(null))
-    setSelected(item.href)
-    router.push(item.href)
-  }
+  const onNavigate = (href, title) => () => {
+    setSelected(href)
 
-  const getWidth = () => {
-    const widthPerItem = 70
-    let width = 210
-    if (isHomeUser) width = width + widthPerItem
-    if (isAffiliate) width = width + widthPerItem
-    return width
+    if (title === 'Blog') {
+      router.push('/')
+      dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
+      return
+    }
+    dispatch(setBrowserURL(null))
+    router.push(href)
   }
 
   return (
-    <div className="navigation" style={{ background: token.colorPrimary, width: getWidth() }}>
+    <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
-        {data.map((item, key) => {
-          const checkBike = item.href === '/bike' ? isHomeUser : true
-          const checkAfiliate = item.href === '/afiliados' ? isAffiliate : true
+        {data.map(({ href, showInNavigation, activeIcon, icon,title }, key) => {
+          const checkBike = href !== '/bike' || isHomeUser
+          const checkAfiliate = href !== '/afiliados' || isAffiliate
           return (
-            item.showInNavigation &&
+            showInNavigation &&
             checkBike &&
             checkAfiliate && (
-              <li className={item.href === selected ? 'list active' : 'list'} onClick={onNavigate(item)} key={key}>
+              <li
+                className={href === selected ? 'list active' : 'list'}
+                onClick={onNavigate( href, title )}
+                key={key}
+              >
                 <a style={{ pointerEvents: 'none' }}>
-                  <span className="icon" style={{ color: item.href === selected ? token.colorPrimary : 'white' }}>
-                    {item.icon}
-                  </span>
+                  <span className="icon text-white">{href === selected ? activeIcon : icon}</span>
                 </a>
               </li>
             )
           )
         })}
-        <div className="indicator"></div>
       </ul>
     </div>
   )

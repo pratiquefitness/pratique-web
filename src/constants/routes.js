@@ -1,36 +1,76 @@
-import { LuHome, LuDumbbell, LuBike, LuHelpCircle, LuUser } from 'react-icons/lu'
-import { HiUserGroup } from 'react-icons/hi'
+import { LuDumbbell } from 'react-icons/lu'
+import {
+  IoHomeOutline,
+  IoHomeSharp,
+  IoPerson,
+  IoPersonOutline,
+  IoPeopleCircleOutline,
+  IoPeopleCircle,
+  IoBicycleOutline,
+  IoBicycle,
+  IoNewspaper,
+  IoNewspaperOutline,
+  IoCalendarOutline,
+  IoCalendar
+} from 'react-icons/io5'
+import PratiqueIcon from '@/components/PratiqueIcon/PratiqueIcon'
 
 const routes = [
   {
     title: 'Olá, #USUARIO#!',
     href: '/',
-    icon: <LuHome />,
+    icon: <IoHomeOutline />,
+    activeIcon: <IoHomeSharp />,
     showInNavigation: true
   },
   {
     title: 'Olá, #USUARIO#! Tenha um bom treino.',
     href: '/treino',
     icon: <LuDumbbell />,
+    activeIcon: <LuDumbbell />,
     showInNavigation: true
   },
   {
-    title: 'Power Cycle',
+    title: '',
     href: '/bike',
-    icon: <LuBike />,
+    icon: <IoBicycleOutline />,
+    activeIcon: <IoBicycle />,
     showInNavigation: true
   },
   {
     title: 'Afiliados',
     href: '/afiliados',
-    icon: <HiUserGroup />,
+    icon: <IoPeopleCircleOutline />,
+    activeIcon: <IoPeopleCircle />,
+    showInNavigation: true
+  },
+  {
+    title: '',
+    href: '/powerflix',
+    icon: <PratiqueIcon />,
+    activeIcon: <PratiqueIcon />,
     showInNavigation: true
   },
   {
     title: 'Minha Conta',
     href: '/conta',
-    icon: <LuUser />,
+    icon: <IoPersonOutline />,
+    activeIcon: <IoPerson />,
+    showInNavigation: false
+  },
+  {
+    title: 'Blog',
+    href: '/blog',
+    icon: <IoNewspaperOutline />,
+    activeIcon: <IoNewspaper />,
     showInNavigation: true
+  },
+  {
+    title: 'Calendário',
+    href: '/calendario',
+    icon: <IoCalendarOutline />,
+    activeIcon: <IoCalendar />,
+    showInNavigation: false
   },
   {
     title: 'Meditação',
@@ -53,7 +93,52 @@ const routes = [
     showInNavigation: false
   },
   {
+    title: 'abdominais',
+    href: '/abdominais',
+    showInNavigation: false
+  },
+  {
+    title: 'intensivejump',
+    href: '/intensivejump',
+    showInNavigation: false
+  },
+  {
+    title: 'powerdance',
+    href: '/powerdance',
+    showInNavigation: false
+  },
+  {
+    title: 'treinosdiarios',
+    href: '/treinosdiarios',
+    showInNavigation: false
+  },
+  {
+    title: 'abdominais',
+    href: '/abdominais',
+    showInNavigation: false
+  },
+  {
+    title: 'fitdance',
+    href: '/fitdance',
+    showInNavigation: false
+  },
+  {
+    title: 'flow',
+    href: '/flow',
+    showInNavigation: false
+  },
+  {
+    title: 'queimeacasa',
+    href: '/queimeacasa',
+    showInNavigation: false
+  },
+  {
     title: 'Unipower',
+    href: '/unipower',
+    showInNavigation: false
+  },
+  {
+    title: 'Sócio',
     href: '/unipower',
     showInNavigation: false
   }

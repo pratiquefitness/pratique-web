@@ -1,15 +1,14 @@
-import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography } from 'antd'
+import { Affix, Layout as AntLayout, Button, ConfigProvider, Space, Typography, Breadcrumb } from 'antd'
+import { HomeOutlined, DoubleRightOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
 import Header from './Header'
 import routes from '@/constants/routes'
 import utils from '@/utils'
-import theme, { getTheme } from '@/configs/theme'
+import { getTheme } from '@/configs/theme'
 import ptBR from 'antd/locale/pt_BR'
 import LoginView from '@/pages/login'
-import { FaArrowLeft } from 'react-icons/fa'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Browser from '@/components/Browser'
 import { setBrowserURL } from '@/redux/slices/global'
@@ -26,33 +25,61 @@ export default function Layout({ children }) {
 
   const isApp = typeof window !== 'undefined' && window.self === window.parent ? true : false
 
+  const fraseInicial = authenticated
+    ? utils
+        .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
+        .title.replace('#USUARIO#!', `${usuario.user_nicename.split('@')[0]}!`)
+        .split('!')
+    : ''
+
   return (
     <ConfigProvider theme={getTheme(themeColor, themeMode)} locale={ptBR}>
       {authenticated ? (
-        <AntLayout className="app">
-          <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
-          <Header />
-          <Content>
-            <div className="container">
-              <div className="d-flex justify-space-between">
-                <Title level={3}>
-                  {utils
-                    .getByObjectKeyValue(routes, 'href', utils.getFirstLevelRoute(pathname))
-                    .title.replace('#USUARIO#', usuario.user_nicename.split('@')[0])}
-                </Title>
-                {pathname !== '/' && (
-                  <Button onClick={() => router.back()} size="small" type="text" icon={<FaArrowLeft />}>
-                    Voltar
-                  </Button>
-                )}
-              </div>
-              {children}
-            </div>
-          </Content>
-          <Affix offsetBottom={12}>
+        <>
+          <AntLayout className="app">
+            {browserURL ? (
+              <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
+            ) : (
+              <>
+                <Header />
+                <Content
+                  style={{
+                    paddingTop: '1rem',
+                    paddingBottom: '3.75rem'
+                  }}
+                >
+                  <div className="container">
+                    <div className="d-flex flex-column justify-space-between">
+                      {pathname !== '/' && (
+                        <Breadcrumb
+                          separator={<DoubleRightOutlined className="text-black" />}
+                          className="mb-4 text-capitalize d-flex items-center"
+                          items={[
+                            {
+                              title: <HomeOutlined />,
+                              onClick: () => router.back()
+                            },
+                            {
+                              style: 'line-height: 1.7;',
+                              title: `${pathname.substring(1)}`
+                            }
+                          ]}
+                        />
+                      )}
+                      {fraseInicial[0] !== '' && (
+                        <Title level={3}>
+                          {fraseInicial[0]} <br /> {fraseInicial[1]}
+                        </Title>
+                      )}
+                    </div>
+                    {children}
+                  </div>
+                </Content>
+              </>
+            )}
             <Navigation data={routes} />
-          </Affix>
-        </AntLayout>
+          </AntLayout>
+        </>
       ) : pathname && pathname.includes('/afiliados/loja/') ? (
         children
       ) : (

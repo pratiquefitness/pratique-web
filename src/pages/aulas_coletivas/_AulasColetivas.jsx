@@ -22,7 +22,7 @@ export default function AulasColetivas({ tema }) {
           {data.map(
             (aula, key) =>
               aula.aula_capa.length && (
-                <Col span={12} key={key} className="pb-4">
+                <Col xs={{span:24}} md={{span:12}} key={key} className="pb-4">
                   <Card
                     title={aula.aula_nome}
                     size="small"

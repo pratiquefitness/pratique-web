@@ -1,11 +1,18 @@
-import Layout from '@/layout'
-import store from '@/redux/store'
+import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { AuthProvider } from '@/contexts/AuthContext'
-import '@/styles/globals.css'
 import Head from 'next/head'
+import Layout from '@/layout'
+import store from '@/redux/store'
+import OneSignal from 'react-onesignal' // Importe o react-onesignal
 
 export default function App({ Component, pageProps }) {
+  // Inicialize o OneSignal no início do aplicativo
+  useEffect(() => {
+    OneSignal.initialize('fef4bca8-b29c-43b2-8587-4447f7dbc98b')
+    OneSignal.showNativePrompt()
+  }, [])
+
   return (
     <>
       <Head>

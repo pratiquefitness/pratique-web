@@ -67,34 +67,28 @@ const utils = {
     return list
   },
 
-  copyTextToClipboard: text => {
-    if (!navigator.clipboard) {
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      textarea.setAttribute('readonly', '')
-      textarea.style.position = 'absolute'
-      textarea.style.left = '-9999px'
-      document.body.appendChild(textarea)
-      const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      if (selected) {
-        document.getSelection().removeAllRanges()
-        document.getSelection().addRange(selected)
+  copyTextToClipboard: async text => {
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(text)
+      } else {
+        // Código específico para o Safari
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.position = 'fixed'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
       }
       return true
+    } catch (err) {
+      console.error('Clipboard API falhou:', err)
+      return false
     }
-    navigator.clipboard.writeText(text).then(
-      function () {
-        return true
-      },
-      function (err) {
-        console.error(err)
-        return false
-      }
-    )
   },
+
   encrypt_md5: text => crypto.createHash('md5').update(text).digest('hex'),
   getRndInteger: (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min
@@ -141,6 +135,21 @@ const utils = {
   isInWebView: () => {
     var userAgent = navigator.userAgent.toLowerCase()
     return userAgent.indexOf('wv') > -1 || userAgent.indexOf('x-webview') > -1
+  },
+
+  utf8Decode: (utf8String) => {
+    if (typeof utf8String != 'string') throw new TypeError('parameter ‘utf8String’ is not a string')
+
+    const unicodeString = utf8String
+      .replace(/[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g, c => {
+        return String.fromCharCode(
+          ((c.charCodeAt(0) & 0x0f) << 12) | ((c.charCodeAt(1) & 0x3f) << 6) | (c.charCodeAt(2) & 0x3f)
+        )
+      })
+      .replace(/[\u00c0-\u00df][\u0080-\u00bf]/g, c => {
+        return String.fromCharCode(((c.charCodeAt(0) & 0x1f) << 6) | (c.charCodeAt(1) & 0x3f))
+      })
+    return unicodeString
   }
 }
 

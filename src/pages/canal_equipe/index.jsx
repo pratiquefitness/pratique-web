@@ -93,7 +93,7 @@ export default function CanalEquipe() {
               key: 'ci',
               render: (_, record) => (
                 <a
-                  href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=teste&url=https://www.metodologiapowergym.com.br/copia/courses/${record.post_name}`}
+                  href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=teste&url=https://www.metodologiapowergym.com.br/novo/courses/${record.post_name}`}
                   target="_blank"
                 >
                   <Button shape="round" size="small" block>

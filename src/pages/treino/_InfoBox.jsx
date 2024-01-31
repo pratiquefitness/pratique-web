@@ -7,17 +7,12 @@ export default function InfoBox({ title, icon }) {
       style={{
         border: `1px solid ${token.colorBorder}`,
         borderRadius: token.borderRadius,
-        color: 'white',
-        textAlign: 'center',
-        padding: 10,
-        height: 54,
-        marginBottom: 12,
-        background: '#756483'
+        background: '#756483',
       }}
+      className="d-flex flex-column align-center justify-center mb-3 py-3 gap-2 text-white"
     >
-      {icon}
-      <br />
-      <div style={{ fontSize: 8, lineHeight: '10px', height: 30 }}>{title}</div>
+      <>{icon}</>
+      <div style={{ fontSize: 12, lineHeight: '10px' }}>{title}</div>
     </div>
   )
 }

@@ -1,25 +1,100 @@
 import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
-
 import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
 import { RibbonWithEndDate } from '@/components'
 import { addDays } from 'date-fns'
-import Browser from '@/components/Browser'
 import { setBrowserURL } from '@/redux/slices/global'
+import AtividadesOnDemand from './_AtividadesOnDemand'
+import BemEstar from './_BemEstar'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
+import CarouselItem from './_CarouselItem'
 
 const { Title, Text } = Typography
 
 export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
-  const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
+  //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+
+  const dispatchSaverSaude = () => {
+    dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
+  }
+
+  const dispatchTrabalhePratique = () => {
+    dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))
+  }
+
+  const dispatchSobrePratique = () => {
+    dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))
+  }
+
+  const abreSaverClubModal = () => {
+    setSaverClubModal(true)
+  }
+
+  const listaCarousel = [
+    {
+      href: '/canal_equipe',
+      image: '/images/canal_equipe.png',
+      isRounded: true,
+      alt: 'canal_equipe'
+    },
+    {
+      href: '/unipower',
+      image: '/images/unipower.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: dispatchSaverSaude,
+      image: '/images/pratique_med.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: abreSaverClubModal,
+      image: '/images/saver_club.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    }
+  ]
+
+  const listaCarouselAreaCliente = [
+    {
+      href: '',
+      image: '/images/trabalhe_conosco.png',
+      isRounded: true,
+      alt: 'trabalhe_conosco',
+      action: dispatchTrabalhePratique
+    },
+    {
+      href: '',
+      image: '/images/sua_pratique.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      action: dispatchSobrePratique
+    }
+  ]
+
+  if (isSaverAndClient) {
+    listaCarouselAreaCliente.unshift({
+      href: '',
+      image: '/images/saver_club.png',
+      isRounded: true,
+      alt: 'saver_saude',
+      action: abreSaverClubModal
+    })
+  }
 
   return (
     <Space direction="vertical" className="w-100">
@@ -30,23 +105,6 @@ export default function Inicio() {
           width={'100%'}
           height={500}
         ></iframe>
-      </Modal>
-      <Modal
-        title="Aulas Coletivas"
-        open={aulasColtivasModal}
-        onCancel={() => setAulasColetivasModal(false)}
-        footer={null}
-        width={300}
-        centered
-      >
-        <Space direction="vertical">
-          <Link href="/aulas_coletivas/jump">
-            <img src="/images/jump.png" width={'100%'} alt="" />
-          </Link>
-          <Link href="/aulas_coletivas/yoga">
-            <img src="/images/yoga2.png" width={'100%'} alt="" />
-          </Link>
-        </Space>
       </Modal>
 
       <Modal
@@ -91,131 +149,223 @@ export default function Inicio() {
           >
             <img src="/images/rdc.png" width={'100%'} className="rounded" />
           </a>
-          <a href="https://pratiquefitness.com.br/" target="_blank">
+          <a
+            onClick={() => {
+              setSaverClubModal(false)
+              dispatch(setBrowserURL('https://pratiquefitness.com.br/'))
+            }}
+            target="_blank"
+          >
             <img src="/images/pratique.png" width={'100%'} className="rounded" />
           </a>
         </Space>
       </Modal>
 
+      <div>
+        <Title level={3} className="m-0">
+          Novidades
+        </Title>
+        <Text type="secondary">Veja as novidades para 2024</Text>
+      </div>
       <Banners />
 
       {usuario.isEmployee ? (
-        <>
-          <Title level={4} className="m-0">
-            Área do Colaborador!
-          </Title>
-          <Text type="secondary">Beneficios e conteúdos para você</Text>
-          <Row gutter={6} className="mb-2 mt-2">
-            <Col span={12}>
-              <Link href="/canal_equipe">
-                <img src="/images/canal_equipe.png" width="100%" />
-              </Link>
-            </Col>
-            <Col span={12}>
-              <Link href="/unipower">
-                <img src="/images/unipower.png" width="100%" />
-              </Link>
-            </Col>
-          </Row>
-          <Row gutter={6} className="mb-2 mt-2">
-            <Col span={12}>
-              <a onClick={() => dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))}>
-                <img src="/images/saver_saude.png" width="100%" className="rounded" />
-              </a>
-            </Col>
-            <Col span={12}>
-              <a onClick={() => setSaverClubModal(true)}>
-                <img src="/images/saver_club.png" width="100%" className="rounded" />
-              </a>
-            </Col>
-          </Row>
-        </>
+        <div className="mt-4">
+          <div>
+            <Title level={3} className="m-0">
+              Área do Colaborador!
+            </Title>
+            <Text type="">Beneficios e conteúdos para você</Text>
+          </div>
+          <Carousel
+            arrows={false}
+            autoPlay={false}
+            centerMode={false}
+            className="mt-2"
+            containerClass="container"
+            draggable
+            focusOnSelect={false}
+            infinite={false}
+            keyBoardControl={false}
+            minimumTouchDrag={80}
+            partialVisible
+            renderArrowsWhenDisabled={false}
+            renderButtonGroupOutside={false}
+            renderDotsOutside={false}
+            responsive={{
+              desktop: {
+                breakpoint: { max: 3000, min: 1024 },
+                items: 3
+              },
+              tablet: {
+                breakpoint: { max: 1024, min: 464 },
+                items: 2
+              },
+              mobile: {
+                breakpoint: { max: 464, min: 0 },
+                items: 1
+              }
+            }}
+            rewind={false}
+            rewindWithAnimation={false}
+            rtl={false}
+            showDots={false}
+            slidesToSlide={1}
+            swipeable
+          >
+            {listaCarousel.map(({ href, image, isRounded, action, alt }, index) => (
+              <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+            ))}
+          </Carousel>
+        </div>
       ) : null}
 
       {isClient ? (
         <>
-          <Title level={4} className="m-0">
-            Área do Cliente!
-          </Title>
-          <Text type="secondary">Beneficios e conteúdos para você</Text>
-          <Row gutter={[6, 6]} className="mb-2 mt-2">
-            {isSaverAndClient ? (
-              <Col span={12}>
-                <a onClick={() => setSaverClubModal(true)}>
-                  <img src="/images/saver_club.png" width="100%" className="rounded" />
-                </a>
-              </Col>
-            ) : null}
+          <div>
+            <Title level={3} className="mt-4 mb-0">
+              Área do Cliente!
+            </Title>
+            <Text type="secondary">Beneficios e conteúdos para você</Text>
+          </div>
 
-            <Col span={12}>
-              <a href="https://pratiquefitness.com.br/trabalhe-na-academia-pratique/" target="_blank">
-                <img src="/images/trabalhe_conosco.png" width="100%" />
-              </a>
-            </Col>
-            <Col span={12}>
-              <a href="https://pratiquefitness.com.br/sobre-a-pratique/" target="_blank">
-                <img src="/images/sua_pratique.png" width="100%" />
-              </a>
-            </Col>
-          </Row>
+          <Carousel
+            arrows={false}
+            autoPlay={false}
+            centerMode={false}
+            className="mt-2"
+            containerClass="container"
+            draggable
+            focusOnSelect={false}
+            infinite={false}
+            keyBoardControl={false}
+            minimumTouchDrag={80}
+            partialVisible
+            renderArrowsWhenDisabled={false}
+            renderButtonGroupOutside={false}
+            renderDotsOutside={false}
+            responsive={{
+              desktop: {
+                breakpoint: { max: 3000, min: 1024 },
+                items: 3
+              },
+              tablet: {
+                breakpoint: { max: 1024, min: 464 },
+                items: 2
+              },
+              mobile: {
+                breakpoint: { max: 464, min: 0 },
+                items: 1
+              }
+            }}
+            rewind={false}
+            rewindWithAnimation={false}
+            rtl={false}
+            showDots={false}
+            slidesToSlide={1}
+            swipeable
+          >
+            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+              <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
+            ))}
+          </Carousel>
         </>
       ) : null}
 
-      <Title level={4} className="m-0">
-        Você, Feliz e Saudável!
-      </Title>
-      <Text type="secondary">Exercícios e conteúdos para você</Text>
-      <Row gutter={[6, 6]} className="mb-2 mt-2">
-        <Col span={12}>
-          <a href="https://linklist.bio/pratiquenutri" target="_blank">
-            <RibbonWithEndDate
-              text="Novo!"
-              color="yellow"
-              endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 16, padding: '2px 8px' }}
-            >
-              <img src="/images/nutri.png" width="100%" />
-            </RibbonWithEndDate>
-          </a>
-        </Col>
-        <Col span={12}>
-          <a href="https://linklist.bio/metodologiapowergym" target="_blank">
-            <RibbonWithEndDate
-              text="Novo!"
-              color="yellow"
-              endDate={addDays(new Date('2023-09-21'), 30)}
-              style={{ fontSize: 16, padding: '2px 8px' }}
-            >
-              <img src="/images/powergym.png" width="100%" />
-            </RibbonWithEndDate>
-          </a>
-        </Col>
-        <Col span={12}>
-          <Link href="/meditacao">
-            <img src="/images/meditacao.png" width="100%" />
-          </Link>
-        </Col>
-        <Col span={12}>
-          <a onClick={() => setAulasColetivasModal(true)}>
-            <img src="/images/aulas.png" width="100%" />
-          </a>
-        </Col>
-        <Col span={12}>
-          <Link href="/bike">
-            <img src="/images/power.png" width="100%" />
-          </Link>
-        </Col>
-        <Col span={12}>
-          <a href="https://pratiquefitness.com.br/blog/" target="_blank">
-            <img src="/images/blog.png" width="100%" />
-          </a>
-        </Col>
-      </Row>
+      <div className="mt-4 mb-2">
+        <Title level={3} className="m-0 ">
+          Atividades On Demand
+        </Title>
+        <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
+      </div>
+      <AtividadesOnDemand />
 
-      <Title level={4} className="m-0 mt-6">
-        SAC
-      </Title>
-      <Text type="secondary">Canais de atendimento da Pratique</Text>
+      <div className="mt-4 mb-2">
+        <Title level={3} className="m-0 ">
+          Bem-estar físico e emocional
+        </Title>
+      </div>
+      <BemEstar />
+
+      <div className="mt-6 flex flex-column mb-0">
+        <Title level={3} className="mb-0">
+          Você, Feliz e Saudável!
+        </Title>
+        <Text type="secondary">Exercícios e conteúdos para você</Text>
+      </div>
+      <Carousel
+        arrows={false}
+        autoPlay={false}
+        centerMode={false}
+        className="mt-2"
+        containerClass="container"
+        draggable
+        focusOnSelect={false}
+        infinite={false}
+        keyBoardControl={false}
+        minimumTouchDrag={80}
+        partialVisible
+        renderArrowsWhenDisabled={false}
+        renderButtonGroupOutside={false}
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3
+          },
+          tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2
+          },
+          mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1
+          }
+        }}
+        rewind={false}
+        rewindWithAnimation={false}
+        rtl={false}
+        showDots={false}
+        slidesToSlide={1}
+        swipeable
+      >
+        <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
+          <RibbonWithEndDate
+            text="Novo!"
+            color="yellow"
+            endDate={addDays(new Date('2023-09-21'), 30)}
+            style={{ fontSize: 16, padding: '2px 8px' }}
+          >
+            <img src="/images/nutri.png" className="rounded-xl w-95" />
+          </RibbonWithEndDate>
+        </a>
+
+        {/* <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
+          <RibbonWithEndDate
+            text="Novo!"
+            color="yellow"
+            endDate={addDays(new Date('2023-09-21'), 30)}
+            style={{ fontSize: 16, padding: '2px 8px' }}
+          >
+            <img src="/images/powergym.png" className='rounded-xl w-95' />
+          </RibbonWithEndDate>
+        </a> */}
+        {/* 
+        <Link href="/meditacao">
+          <img src="/images/meditacao.png" className='rounded-xl w-95' />
+        </Link> */}
+
+        <Link href="/bike">
+          <img src="/images/power.png" className="rounded-xl w-95" />
+        </Link>
+      </Carousel>
+
+      <div>
+        <Title level={3} className="m-0 mt-6">
+          Fale com a Pratique
+        </Title>
+        <Text type="secondary">Nossos canais de atendimento</Text>
+      </div>
       <Row gutter={6} className="mb-2 mt-2">
         <Col span={12}>
           <a

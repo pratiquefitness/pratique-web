@@ -1,32 +1,39 @@
-import { Tabs } from 'antd'
-import Geral from './_Geral'
-import Comissao from './_Comissao'
-import Produtos from './_Produtos'
-import PlanosAcademia from './_PlanosAcademia'
+import { Tabs } from "antd";
+import Geral from "./_Geral";
+import Comissao from "./_Comissao";
+import Produtos from "./_Produtos";
+import PlanosAcademia from "./_PlanosAcademia";
+import JumperFit from "./_JumperFit";
+import PratiqueMed from "./_PratiqueMed";
 
 const items = [
   {
-    key: 'geral',
+    key: "geral",
     label: `Geral`,
-    children: <Geral />
+    children: <Geral />,
   },
   {
-    key: 'comissao',
+    key: "comissao",
     label: `Comissão`,
-    children: <Comissao />
+    children: <Comissao />,
   },
   {
-    key: 'produtos',
-    label: `Produtos`,
-    children: <Produtos />
+    key: "planos",
+    label: `Planos`,
+    children: <PlanosAcademia />,
   },
   {
-    key: 'planos',
-    label: `Planos Academia`,
-    children: <PlanosAcademia />
-  }
-]
+    key: "jumperfit",
+    label: `Jumper Fit`,
+    children: <JumperFit />,
+  },
+  {
+    key: "pratiquemed",
+    label: `Pratique Med`,
+    children: <PratiqueMed />,
+  },
+];
 
 export default function Afiliados() {
-  return <Tabs defaultActiveKey="0" items={items} />
+  return <Tabs defaultActiveKey="0" items={items} />;
 }

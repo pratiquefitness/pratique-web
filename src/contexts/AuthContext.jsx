@@ -20,7 +20,10 @@ export function AuthProvider({ children }) {
     dispatch(setLoading(true))
     const login = await signInRequest(email, senha)
     if (login?.ID) {
-      setCookie(undefined, tokenName, login.token)
+      setCookie(undefined, tokenName, login.token, {
+        maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+        path: '/'
+      })
       dispatch(setLogin(login))
       dispatch(setTheme(login.plano))
       router.push('/')

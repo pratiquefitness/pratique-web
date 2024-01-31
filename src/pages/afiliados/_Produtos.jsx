@@ -1,17 +1,45 @@
 import { Loading } from '@/components'
 import { getProdutosAfiliado } from '@/redux/actions/afiliados'
 import utils from '@/utils'
-import { Alert, Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
+import { Button, Input, Modal, Table, Tabs, Typography, message } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { LuCheckCircle2 } from 'react-icons/lu'
 import { useDispatch, useSelector } from 'react-redux'
 
-// const messageLink = () => {
-//   message.success('Link copiado!')
-// }
+export default function Produtos({ employee }) {
+  const dispatch = useDispatch()
+  const inputRef = useRef(null)
+  const [linkID, setLinkID] = useState('')
+  const { usuario } = useSelector(state => state.login)
+  const { produtos, loading } = useSelector(state => state.afiliados)
 
-const columns = (setLinkID, isAffiliate, employee) => {
-  return [
+  useEffect(() => {
+    dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate))
+  }, [])
+
+  const handleLinkButtonClick = async record => {
+    const id = record.id.split('&')[0]
+    const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
+
+    try {
+      const response = await fetch(url)
+      const text = await response.text()
+      const employeOrAffiliate = employee ? employee : usuario.isAffiliate
+
+      const linkFinal = `${text}?ref=${employeOrAffiliate}`
+
+      setLinkID(linkFinal)
+    } catch (error) {
+      console.error('Error fetching or copying link:', error)
+    }
+  }
+
+  const messageLink = async () => {
+    await utils.copyTextToClipboard(linkID)
+    message.success('Link copiado!')
+  }
+
+  const columns = [
     {
       title: 'Produto',
       dataIndex: 'imagem',
@@ -37,56 +65,13 @@ const columns = (setLinkID, isAffiliate, employee) => {
       title: 'Link',
       dataIndex: 'nomeproduto',
       key: 'link',
-      render: (_, record) => {
-        return employee ? (
-          <Button
-            type="primary"
-            onClick={async () => {
-              const id = record.id.split('&')[0]
-              const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
-              const response = await fetch(url)
-              response.text().then(function (text) {
-                const linkFinal = `${text}?ref=${employee}`
-                window.open(linkFinal, '_blank')
-              })
-            }}
-          >
-            Link
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            onClick={async () => {
-              setLinkID(record.id)
-              const id = record.id.split('&')[0]
-              const url = `https://pratiqueemcasa.com.br/pratique-em-casa/admin/produto.php?p=${id}`
-              const response = await fetch(url)
-              response.text().then(function (text) {
-                const linkFinal = `${text}?ref=${isAffiliate}`
-                utils.copyTextToClipboard(linkFinal)
-                // messageLink()
-                setLinkID(linkFinal)
-              })
-            }}
-          >
-            Link
-          </Button>
-        )
-      }
+      render: (_, record) => (
+        <Button type="primary" onClick={() => handleLinkButtonClick(record)}>
+          Link
+        </Button>
+      )
     }
   ]
-}
-
-export default function Produtos({ employee }) {
-  const dispatch = useDispatch()
-  const inputRef = useRef(null)
-  const [linkID, setLinkID] = useState('')
-  const { usuario } = useSelector(state => state.login)
-  const { produtos, loading } = useSelector(state => state.afiliados)
-
-  useEffect(() => {
-    dispatch(getProdutosAfiliado(employee ? employee : usuario.isAffiliate))
-  }, [])
 
   return (
     <Loading spinning={loading}>
@@ -107,9 +92,9 @@ export default function Produtos({ employee }) {
               }}
               className="mb-4"
             />
-            {/* <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
               Copiar Link
-            </Button> */}
+            </Button>
           </div>
         ) : (
           <Loading spinning />
@@ -119,36 +104,25 @@ export default function Produtos({ employee }) {
         defaultActiveKey="0"
         items={[
           {
-            key: 'todos',
-            label: `Todos`,
-            children: (
-              <Table
-                dataSource={[...(produtos.bike || []), ...(produtos.suplementacao || []), ...(produtos.diversos || [])]}
-                columns={columns(setLinkID, usuario.isAffiliate, employee)}
-              />
-            )
-          },
-          {
-            key: 'bike',
-            label: `Bike`,
-            children: <Table dataSource={produtos.bike} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
-          },
-          {
             key: 'suplementacao',
             label: `Suplementação`,
-            children: (
-              <Table dataSource={produtos.suplementacao} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
-            )
-          },
-          {
-            key: 'diversos',
-            label: `Diversos`,
-            children: (
-              <Table dataSource={produtos.diversos} columns={columns(setLinkID, usuario.isAffiliate, employee)} />
-            )
+            children: <Table dataSource={produtos.suplementacao} columns={columns} />
           }
         ]}
+        style={{ marginBottom: '100px' }}
       />
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
+      {'\n\n'}
     </Loading>
   )
 }

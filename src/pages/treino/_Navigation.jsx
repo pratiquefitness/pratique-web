@@ -34,7 +34,7 @@ export default function Navigation() {
             style={{ height: 'auto', display: 'block' }}
             block
           >
-            <div>{item.icon}</div>
+            <div className='text-xlarge'>{item.icon}</div>
             <div>{item.title}</div>
           </Button>
         </Col>

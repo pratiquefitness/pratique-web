@@ -1,26 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url(./utilities.css);
 
 :root {
   --color-primary: #ed143d;
   --color-white: #fff;
+  --color-gray:#1a1a1a;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Karla' !important;
+  font-family: 'Inter',sans-serif!important;
 }
 html,
 body {
-  position: fixed;
   width: 100vw;
   overflow-x: hidden;
   height: 100%;
 }
 body #__next {
-  position: fixed;
   width: 100vw;
   height: 100%;
   overflow-y: scroll;
@@ -35,10 +35,10 @@ body .ant-layout-header {
   line-height: normal;
 }
 body .ant-layout-content {
-  padding: 10px;
+  padding: 0 0.625rem;
 }
 body .ant-layout-footer {
-  padding: 10px 0px;
+  padding: 0.625rem 0px;
 }
 .ant-btn {
   display: inline-flex;
@@ -49,7 +49,7 @@ body .ant-layout-footer {
   height: auto;
 }
 .header-logo {
-  padding: 8px;
+  padding: 0.5rem;
 }
 
 .header-button {
@@ -60,17 +60,21 @@ body .ant-layout-footer {
 }
 
 .header-button .ant-btn-icon {
-  font-size: 22px;
+  font-size: 1.375rem;
 }
 
 .navigation {
-  margin: auto;
-  position: relative;
-  width: 350px;
-  height: 70px;
-  border-radius: 40px;
-  box-shadow: 0px 10px 21px 17px rgba(0, 0, 0, 0.2);
-  z-index: 99999;
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 600px;
+  height: 3.125rem;
+  //border-radius: 40px;
+  //box-shadow: 0px 10px 21px 17px rgba(0, 0, 0, 0.2);
+  z-index: 999999;
+  cursor: pointer;
 }
 
 .navigation ul {
@@ -79,14 +83,19 @@ body .ant-layout-footer {
   left: 0;
   width: 100%;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
 }
+
 .navigation ul li {
   position: relative;
   list-style: none;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   z-index: 1;
 }
+
 .navigation ul li a {
   position: relative;
   display: flex;
@@ -100,53 +109,70 @@ body .ant-layout-footer {
 .navigation ul li a .icon {
   position: relative;
   display: block;
-  line-height: 78px;
+  line-height: 58px;
   text-align: center;
-  transition: 0.5s;
+  transition: 0.5s ease-in;
   font-size: 20px;
 }
 .navigation ul li.active a .icon {
-  color: var(--color-primary);
+	font-size: 20px;
+  }
+.navigation ul li.active a .icon {
+  color: var(--color-white);
+}
+.navigation ul li.active a::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px; /* Altura da barra */
+  background-color: var(--color-white); /* Cor da barra */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s ease-in;
 }
 .navigation ul li a .icon i {
   font-size: 20px;
 }
-.navigation ul .indicator {
+/* .navigation ul .indicator {
   position: absolute;
-  left: 0;
-  width: 70px;
-  height: 70px;
+  left: 10;
+  top: 0;
+  width: 50px;
+  height: 5px;
   transition: all 0.5s;
-}
-.navigation ul .indicator::before {
+  background-color: var(--color-white);
+} */
+/* .navigation ul .indicator::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   transition: 0.5s;
-}
-.navigation ul li:nth-child(1).active ~ .indicator {
-  transform: translateX(calc(70px * 0));
+} */
+/* .navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(90px * 0));
 }
 .navigation ul li:nth-child(2).active ~ .indicator {
-  transform: translateX(calc(70px * 1));
+  transform: translateX(calc(90px * 1));
 }
 .navigation ul li:nth-child(3).active ~ .indicator {
-  transform: translateX(calc(70px * 2));
+  transform: translateX(calc(90px * 2));
 }
 .navigation ul li:nth-child(4).active ~ .indicator {
-  transform: translateX(calc(70px * 3));
+  transform: translateX(calc(90px * 3));
 }
 .navigation ul li:nth-child(5).active ~ .indicator {
-  transform: translateX(calc(70px * 4));
-}
+  transform: translateX(calc(90px * 4));
+}*/
 .navigation ul li.active ~ .indicator::before {
   background-color: var(--color-white);
 }
+
 .login-background {
   background: url(/images/people-login.png) no-repeat center top fixed;
   -webkit-background-size: cover;
@@ -191,12 +217,12 @@ body .ant-layout-footer {
 
 .youtube-close svg {
   font-size: 22px;
-  margin-top: 4px;
-  margin-left: -2px;
+  margin-top: 0.25rem;
+  margin-left: -0.125rem;
 }
 
 .rounded {
-  border-radius: 15px;
+  border-radius: 16px;
 }
 
 .planos_academia .ant-collapse-content-box {
@@ -209,8 +235,6 @@ body .ant-layout-footer {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: white;
-  z-index: 9999;
 }
 .browser-header {
   background-color: #333;
@@ -232,6 +256,37 @@ body .ant-layout-footer {
 }
 .browser-iframe {
   width: 100%;
-  height: calc(100% - 96px);
+  height: calc(100% - 138px);
   border: none;
+}
+.browser-iframe-blog {
+  width: 100%;
+  height: calc(100% - 50px);
+  border: none;
+}
+.ant-table-content {
+  font-size: 10px;
+  text-align: center;
+}
+.ant-table-wrapper {
+  padding: 5px 5px;
+  text-align: center;
+}
+.ant-table-cell {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  padding: 5px 5px !important;
+}
+.ant-table-wrapper .ant-table-thead > tr {
+  padding: 5px 5px !important;
+}
+.ant-tabs .ant-tabs-tab {
+  font-size: 13px;
+}
+.ant-tabs .ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 15px;
 }

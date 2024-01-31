@@ -818,6 +818,9 @@
 .text-uppercase {
   text-transform: uppercase !important;
 }
+.text-capitalize {
+  text-transform: capitalize !important;
+}
 .text-lowercase {
   text-transform: lowercase !important;
 }
@@ -982,6 +985,25 @@
 .d-grid {
   display: grid !important;
 }
+/*Border radius*/
+.rounded-sm{
+	border-radius: 2px!important;
+}
+.rounded{
+	border-radius: 4px!important;
+}
+.rounded-md{
+	border-radius: 6px!important;
+}
+.rounded-lg{
+	border-radius: 8px!important;
+}
+.rounded-xl{
+	border-radius: 10px!important;
+}
+.rounded-extra{
+	border-radius: 20px!important;
+}
 
 /*OVERFLOW*/
 .overflow-visible {
@@ -1039,8 +1061,14 @@
 }
 
 /*HEIGHT&WIDTH*/
+.w-80 {
+  width: 80% !important;
+}
 .w-90 {
   width: 90% !important;
+}
+.w-95 {
+  width: 95% !important;
 }
 .w-100 {
   width: 100% !important;
@@ -1057,9 +1085,58 @@
 .h-auto {
   height: auto !important;
 }
+.h-40 {
+  height: 160px !important;
+}
+.h-44 {
+  height: 176px !important;
+}
+.h-48 {
+  height: 192px !important;
+}
+.h-52 {
+  height: 208px !important;
+}
+.h-56 {
+  height: 224px !important;
+}
+.h-60 {
+  height: 240px !important;
+}
+.h-72 {
+  height: 272px !important;
+}
+.h-35vh{
+	height:35vh!important;
+}
+
+/*Color*/
+.text-black{
+	color:#000 !important;
+}
+.text-white{
+	color:#fff !important;
+}
+.text-gray{
+	color:#aaa !important;
+}
+
+/*Font size*/
+.text-large{
+	font-size:large !important;
+}
+.text-xlarge{
+	font-size:x-large !important;
+}
+
+.gap-2{
+	gap: 0.5rem !important;
+}
+
+
 /*RESPONSIVE*/
 
-@media (max-width: 576px) {
+@media (min-width: 576px) {
   /*FLEX*/
   .sm-flex-fill {
     flex: 1 1 auto !important;
@@ -1214,7 +1291,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   /*FLEX*/
   .md-flex-fill {
     flex: 1 1 auto !important;
@@ -1367,9 +1444,13 @@
   .md-position-sticky {
     position: sticky !important;
   }
+
+  .md-w-50 {
+	width: 50% !important;
+  }
 }
 
-@media (max-width: 992px) {
+@media (min-width: 992px) {
   /*FLEX*/
   .lg-flex-fill {
     flex: 1 1 auto !important;
@@ -1522,9 +1603,15 @@
   .lg-position-sticky {
     position: sticky !important;
   }
+  .lg-h-48 {
+    height: 192px !important;
+  }
+  .lg-h-60 {
+    height: 240px !important;
+  }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1200px) {
   /*FLEX*/
   .xlg-flex-fill {
     flex: 1 1 auto !important;
@@ -1692,7 +1779,12 @@
     padding-left: 0px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 577px){
+  .container {
+    width: 540px;
+  }
+}
+@media (min-width: 768px){
   .container {
     width: 720px;
   }

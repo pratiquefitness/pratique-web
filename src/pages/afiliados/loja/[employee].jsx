@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import Produtos from '../_Produtos'
 import PlanosAcademia from '../_PlanosAcademia'
+import PratiqueMed from '../_PratiqueMed'
 import { useRouter } from 'next/router'
 
 export default function Afiliados() {
@@ -19,8 +20,18 @@ export default function Afiliados() {
           },
           {
             key: 'planos',
-            label: `Planos Academia`,
+            label: `Planos`,
             children: <PlanosAcademia employee={employee} />
+          },
+          {
+            key: 'jumperfit',
+            label: `Jumper Fit`,
+            children: <JumperFit employee={employee} />
+          },
+          {
+            key: 'pratiquemed',
+            label: `Pratique Med`,
+            children: <PratiqueMed employee={employee} />
           }
         ]}
       />

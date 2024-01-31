@@ -47,16 +47,16 @@ export default function Unipower() {
         </div>
         {list.map((curso, key) => (
           <Row gutter={[16, 16]} key={key} className="pb-4" align="middle">
-            <Col span={8}>
-              <img src={curso.post_image} width={'80%'} />
+            <Col className='d-flex justify-center' span={8}>
+              <img src={curso.post_image}  className='w-100 rounded-extra' />
             </Col>
             <Col span={16}>
-              <Title level={3}>{curso.post_title}</Title>
+              <Title level={5}>{curso.post_title}</Title>
               <a
                 href={`https://pratiqueemcasa.com.br/pratique-em-casa/powergym/verifica.php?email=${usuario.user_email}&nome=${usuario.user_nicename}&url=https://www.metodologiapowergym.com.br/novo/courses/${curso.post_name}`}
                 target="_blank"
               >
-                <Button type="primary">Ver Curso</Button>
+                <Button type="primary" size='small'>Ver Curso</Button>
               </a>
             </Col>
           </Row>
