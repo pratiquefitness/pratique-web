@@ -38,9 +38,7 @@ export default function Layout({ children }) {
         <>
           <AntLayout className="app">
             {browserURL ? (
-              <>
-                <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
-              </>
+              <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
             ) : (
               <>
                 <Header />
