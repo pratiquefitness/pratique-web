@@ -11,6 +11,7 @@ import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import CarouselItem from './_CarouselItem'
+import Powerflix from '../powerflix'
 
 const { Title, Text } = Typography
 
@@ -278,6 +279,8 @@ export default function Inicio() {
         <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
       <AtividadesOnDemand />
+	  
+	  <Powerflix />
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
@@ -285,6 +288,7 @@ export default function Inicio() {
         </Title>
       </div>
       <BemEstar />
+
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
@@ -318,7 +322,8 @@ export default function Inicio() {
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
-            items: 1
+            items: 1,
+			partialVisibilityGutter: 30
           }
         }}
         rewind={false}
@@ -338,21 +343,6 @@ export default function Inicio() {
             <img src="/images/nutri.png" className="rounded-xl w-95" />
           </RibbonWithEndDate>
         </a>
-
-        {/* <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/powergym.png" className='rounded-xl w-95' />
-          </RibbonWithEndDate>
-        </a> */}
-        {/* 
-        <Link href="/meditacao">
-          <img src="/images/meditacao.png" className='rounded-xl w-95' />
-        </Link> */}
 
         <Link href="/bike">
           <img src="/images/power.png" className="rounded-xl w-95" />

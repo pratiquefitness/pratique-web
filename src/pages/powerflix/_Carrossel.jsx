@@ -31,8 +31,8 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
         },
         mobile: {
           breakpoint: { max: 464, min: 0 },
-          items: 1,
-		  partialVisibilityGutter: 100
+          items: 2,
+		  partialVisibilityGutter: 10
         }
       }}
       rewind={false}

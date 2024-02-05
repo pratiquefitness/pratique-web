@@ -2,9 +2,9 @@ import { Modal, Space, Typography } from 'antd'
 import { useState } from 'react'
 import Carrossel from './_Carrossel'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 
-export default function Inicio() {
+export default function Powerflix() {
   const [exercicioModal, setExercicioModal] = useState(false)
   const [imageModal, setImageModal] = useState('')
 
@@ -139,7 +139,7 @@ export default function Inicio() {
   return (
     <Space direction="vertical" className="w-100 mb-6">
       <Modal
-        title={"Seu Treino"}
+        title={'Seu Treino'}
         open={exercicioModal}
         onCancel={closeExercicioModal}
         footer={null}
@@ -150,9 +150,10 @@ export default function Inicio() {
         <img src={`/images/powerflix/${imageModal}_treino.png`} className="rounded w-100" />
       </Modal>
 
-      <div className="text-center mt-2">
-        <img src="/powerflix.png" className='w-90 md-w-50' />
+      <div className="text-left mt-12">
+        <img src="/powerflixsemtexto.png" className="w-50 md-w-50" />
       </div>
+      <Text>Você no controle do seu treino</Text>
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
