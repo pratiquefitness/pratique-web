@@ -26,6 +26,7 @@ export default function Inicio() {
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
   const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
+
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
   }
