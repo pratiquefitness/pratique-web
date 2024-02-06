@@ -27,12 +27,12 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
         tablet: {
           breakpoint: { max: 992, min: 465 },
           items: 2,
-		  partialVisibilityGutter: 60
+          partialVisibilityGutter: 60
         },
         mobile: {
           breakpoint: { max: 464, min: 0 },
           items: 2,
-		  partialVisibilityGutter: 10
+          partialVisibilityGutter: 10
         }
       }}
       rewind={false}

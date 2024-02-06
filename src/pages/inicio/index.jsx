@@ -96,6 +96,23 @@ export default function Inicio() {
       action: abreSaverClubModal
     })
 
+  const novaListaCarouselAreaCliente = [
+    ...listaCarouselAreaCliente,
+    ...(isSaverAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/saver_saude.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: abreSaverClubModal
+          }
+        ]
+      : [])
+  ]
+
+
+
   return (
     <Space direction="vertical" className="w-100">
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
@@ -265,7 +282,7 @@ export default function Inicio() {
             slidesToSlide={1}
             swipeable
           >
-            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+            {novaListaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
               <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
             ))}
           </Carousel>
@@ -279,8 +296,8 @@ export default function Inicio() {
         <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
       <AtividadesOnDemand />
-	  
-	  <Powerflix />
+
+      <Powerflix />
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
@@ -288,7 +305,6 @@ export default function Inicio() {
         </Title>
       </div>
       <BemEstar />
-
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
@@ -323,7 +339,7 @@ export default function Inicio() {
           mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
-			partialVisibilityGutter: 30
+            partialVisibilityGutter: 30
           }
         }}
         rewind={false}
