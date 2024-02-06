@@ -150,12 +150,12 @@ export default function Powerflix() {
         <img src={`/images/powerflix/${imageModal}_treino.png`} className="rounded w-100" />
       </Modal>
 
-      <div className="text-left mt-12">
+      <div className="text-left mt-8">
         <img src="/powerflixsemtexto.png" className="w-50 md-w-50" />
       </div>
       <Text>Você no controle do seu treino</Text>
 
-      <div className="mt-6 flex flex-column mb-0">
+      <div className="mt-4 flex flex-column mb-0">
         <Title level={3} className="mb-0">
           Membros Inferiores
         </Title>

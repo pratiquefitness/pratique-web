@@ -114,8 +114,6 @@ export default function Inicio() {
 		: [])
   ]
 
-  console.log(novaListaCarouselAreaCliente);
-
   return (
     <Space direction="vertical" className="w-100">
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
@@ -223,7 +221,8 @@ export default function Inicio() {
               },
               mobile: {
                 breakpoint: { max: 464, min: 0 },
-                items: 1
+                items: 1,
+				partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -275,7 +274,8 @@ export default function Inicio() {
               },
               mobile: {
                 breakpoint: { max: 464, min: 0 },
-                items: 1
+                items: 1,
+				partialVisibilityGutter: 100
               }
             }}
             rewind={false}
