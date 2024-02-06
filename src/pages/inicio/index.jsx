@@ -3,8 +3,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
-import { RibbonWithEndDate } from '@/components'
-import { addDays } from 'date-fns'
 import { setBrowserURL } from '@/redux/slices/global'
 import AtividadesOnDemand from './_AtividadesOnDemand'
 import BemEstar from './_BemEstar'
@@ -18,14 +16,12 @@ const { Title, Text } = Typography
 export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
-  //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
   const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
-
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
@@ -101,18 +97,18 @@ export default function Inicio() {
           }
         ]
       : []),
-	  ...listaCarouselAreaCliente,
-	  ...(isSaverAndClient
-		? [
-			{
-			  href: '',
-			  image: '/images/saver_saude.png',
-			  isRounded: true,
-			  alt: 'saver_saude',
-			  action: abreSaverClubModal
-			}
-		  ]
-		: [])
+    ...listaCarouselAreaCliente,
+    ...(isSaverAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/saver_saude.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: abreSaverClubModal
+          }
+        ]
+      : [])
   ]
 
   return (
@@ -223,7 +219,7 @@ export default function Inicio() {
               mobile: {
                 breakpoint: { max: 464, min: 0 },
                 items: 1,
-				partialVisibilityGutter: 100
+                partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -276,7 +272,7 @@ export default function Inicio() {
               mobile: {
                 breakpoint: { max: 464, min: 0 },
                 items: 1,
-				partialVisibilityGutter: 100
+                partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -354,14 +350,7 @@ export default function Inicio() {
         swipeable
       >
         <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/nutri.png" className="rounded-xl w-95" />
-          </RibbonWithEndDate>
+          <img src="/images/nutri.png" className="rounded-xl w-95" />
         </a>
 
         <Link href="/bike">
