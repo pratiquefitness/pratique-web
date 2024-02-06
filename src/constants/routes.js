@@ -49,14 +49,14 @@ const routes = [
     href: '/powerflix',
     icon: <PratiqueIcon />,
     activeIcon: <PratiqueIcon />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: 'Minha Conta',
     href: '/conta',
     icon: <IoPersonOutline />,
     activeIcon: <IoPerson />,
-    showInNavigation: false
+    showInNavigation: true
   },
   {
     title: 'Blog',
