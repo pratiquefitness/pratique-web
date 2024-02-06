@@ -24,6 +24,7 @@ export default function Inicio() {
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
@@ -87,31 +88,33 @@ export default function Inicio() {
     }
   ]
 
-  isSaverAndClient &&
-    listaCarouselAreaCliente.push({
-      href: '',
-      image: '/images/saver_saude.png',
-      isRounded: true,
-      alt: 'saver_saude',
-      action: abreSaverClubModal
-    })
-
   const novaListaCarouselAreaCliente = [
-    ...listaCarouselAreaCliente,
-    ...(isSaverAndClient
+    ...(isSaverSaudeAndClient
       ? [
           {
             href: '',
-            image: '/images/saver_saude.png',
+            image: '/images/pratique_med.png',
             isRounded: true,
             alt: 'saver_saude',
-            action: abreSaverClubModal
+            action: dispatchSaverSaude
           }
         ]
-      : [])
+      : []),
+	  ...listaCarouselAreaCliente,
+	  ...(isSaverAndClient
+		? [
+			{
+			  href: '',
+			  image: '/images/saver_saude.png',
+			  isRounded: true,
+			  alt: 'saver_saude',
+			  action: abreSaverClubModal
+			}
+		  ]
+		: [])
   ]
 
-
+  console.log(novaListaCarouselAreaCliente);
 
   return (
     <Space direction="vertical" className="w-100">
