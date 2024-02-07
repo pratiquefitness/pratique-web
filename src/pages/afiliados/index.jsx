@@ -14,7 +14,7 @@ const items = [
   },
   {
     key: "comissao",
-    label: `Comissão`,
+    label: `Premiação`,
     children: <Comissao />,
   },
   {
