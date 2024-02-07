@@ -66,7 +66,6 @@ export default function JumperFit({ employee }) {
 
   const handleButtonClick = credits => {
     let selectedPlan
-    let link
 
     if (credits === '12') {
       selectedPlan = '418'
@@ -75,16 +74,21 @@ export default function JumperFit({ employee }) {
     } else if (credits === 'diaria') {
       selectedPlan = '110'
       // Use um link diferente para 'diaria'
-      link = `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=produto&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
-        employee ? employee : usuario.isAffiliate
-      }|AFILIADO`
+      showModal(
+        `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=prodtuo&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+          employee ? employee : usuario.isAffiliate
+        }|AFILIADO`
+      )
+      return
     } else {
       // Se nenhum dos casos acima, use o link padrão
       selectedPlan = 'default' // ajuste conforme necessário
-      link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
-        employee ? employee : usuario.isAffiliate
-      }|AFILIADO`
     }
+
+    // Construa o link padrão
+    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+      employee ? employee : usuario.isAffiliate
+    }|AFILIADO`
 
     // Use o link como necessário, por exemplo, abrir em uma nova aba
     showModal(link)
@@ -104,7 +108,7 @@ export default function JumperFit({ employee }) {
     <Loading spinning={loading}>
       {/* ... (existing code) */}
       <Modal title="Link" visible={modalVisible} onCancel={closeModal} footer={null} width={300} centered>
-        {modalLink.includes('http') ? (
+        {modalLink ? (
           <div className="text-center">
             <LuCheckCircle2 style={{ fontSize: 50, color: '#25D366' }} />
             <Typography.Title level={4} className="mb-4">
@@ -125,9 +129,11 @@ export default function JumperFit({ employee }) {
               style={{ background: '#1677ff' }}
               size="small"
               onClick={() => {
-                utils.copyTextToClipboard(modalLink)
-                message.success('Link copiado!')
-                closeModal()
+                if (typeof modalLink === 'string') {
+                  utils.copyTextToClipboard(modalLink)
+                  message.success('Link copiado!')
+                  closeModal()
+                }
               }}
             >
               Copiar Link
