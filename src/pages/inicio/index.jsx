@@ -3,27 +3,25 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
-import { RibbonWithEndDate } from '@/components'
-import { addDays } from 'date-fns'
 import { setBrowserURL } from '@/redux/slices/global'
 import AtividadesOnDemand from './_AtividadesOnDemand'
 import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import CarouselItem from './_CarouselItem'
+import Powerflix from '../powerflix'
 
 const { Title, Text } = Typography
 
 export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
-  //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  const isSaverSaudeAndClient = (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || false;
+  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
@@ -87,24 +85,31 @@ export default function Inicio() {
     }
   ]
 
-  if (isSaverAndClient) {
-    listaCarouselAreaCliente.unshift({
-      href: '',
-      image: '/images/saver_club.png',
-      isRounded: true,
-      alt: 'saver_saude',
-      action: abreSaverClubModal
-    })
-  }
-  if (isSaverSaudeAndClient) {
-    listaCarouselAreaCliente.unshift({
-      href: "",
-      image: "/images/pratique_med.png",
-      isRounded: true,
-      alt: "saver_saude",
-      action: dispatchSaverSaude
-    });
-  }
+  const novaListaCarouselAreaCliente = [
+    ...(isSaverSaudeAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/pratique_med.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: dispatchSaverSaude
+          }
+        ]
+      : []),
+    ...listaCarouselAreaCliente,
+    ...(isSaverAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/saver_saude.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: abreSaverClubModal
+          }
+        ]
+      : [])
+  ]
 
   return (
     <Space direction="vertical" className="w-100">
@@ -213,7 +218,8 @@ export default function Inicio() {
               },
               mobile: {
                 breakpoint: { max: 464, min: 0 },
-                items: 1
+                items: 1,
+                partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -265,7 +271,8 @@ export default function Inicio() {
               },
               mobile: {
                 breakpoint: { max: 464, min: 0 },
-                items: 1
+                items: 1,
+                partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -275,7 +282,7 @@ export default function Inicio() {
             slidesToSlide={1}
             swipeable
           >
-            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+            {novaListaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
               <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
             ))}
           </Carousel>
@@ -289,6 +296,8 @@ export default function Inicio() {
         <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
       <AtividadesOnDemand />
+
+      <Powerflix />
 
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
@@ -329,7 +338,8 @@ export default function Inicio() {
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
-            items: 1
+            items: 1,
+            partialVisibilityGutter: 30
           }
         }}
         rewind={false}
@@ -340,30 +350,8 @@ export default function Inicio() {
         swipeable
       >
         <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/nutri.png" className="rounded-xl w-95" />
-          </RibbonWithEndDate>
+          <img src="/images/nutri.png" className="rounded-xl w-95" />
         </a>
-
-        {/* <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/powergym.png" className='rounded-xl w-95' />
-          </RibbonWithEndDate>
-        </a> */}
-        {/* 
-        <Link href="/meditacao">
-          <img src="/images/meditacao.png" className='rounded-xl w-95' />
-        </Link> */}
 
         <Link href="/bike">
           <img src="/images/power.png" className="rounded-xl w-95" />

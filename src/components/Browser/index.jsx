@@ -76,7 +76,7 @@ const Browser = ({ url, onClose }) => {
           </div>
         </>
       )}
-      <iframe className={url === 'https://pratiquefitness.com.br/blog/' ? "browser-iframe-blog" : "browser-iframe"} src={url} />
+      <iframe target="_self" className={url === 'https://pratiquefitness.com.br/blog/' ? "browser-iframe-blog" : "browser-iframe"} src={url} />
       <Affix offsetBottom={12}>
         <Navigation data={routes} />
       </Affix>

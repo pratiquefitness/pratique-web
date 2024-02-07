@@ -1061,6 +1061,15 @@
 }
 
 /*HEIGHT&WIDTH*/
+.w-50 {
+  width: 50% !important;
+}
+.w-60 {
+  width: 60% !important;
+}
+.w-70 {
+  width: 70% !important;
+}
 .w-80 {
   width: 80% !important;
 }
@@ -1131,6 +1140,9 @@
 
 .gap-2{
 	gap: 0.5rem !important;
+}
+.gap-4{
+	gap: 1rem !important;
 }
 
 

@@ -13,11 +13,6 @@ const listaCarousel = [
     image: '/images/banner_home/vertical_banner/intensive_jump.png',
     isRounded: true
   },
-//   {
-//     href: '/aulas_coletivas/powerdance',
-//     image: '/images/banner_home/vertical_banner/power_dance.png',
-//     isRounded: true
-//   },
   {
     href: '/aulas_coletivas/treinosdiarios',
     image: '/images/banner_home/vertical_banner/treinos_diarios.png',
@@ -28,11 +23,6 @@ const listaCarousel = [
     image: '/images/banner_home/vertical_banner/abdominais.png',
     isRounded: true
   },
-//   {
-//     href: '/aulas_coletivas/fitdance',
-//     image: '/images/banner_home/vertical_banner/fit_dance.png',
-//     isRounded: true
-//   },
   {
     href: '/aulas_coletivas/flow',
     image: '/images/banner_home/vertical_banner/flow.png',
@@ -61,22 +51,23 @@ export default function AtividadesOnDemand() {
         keyBoardControl={false}
         minimumTouchDrag={80}
         partialVisible
-        pauseOnHover
         renderArrowsWhenDisabled={false}
         renderButtonGroupOutside={false}
         renderDotsOutside={false}
         responsive={{
           desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
+            breakpoint: { max: 3000, min: 993 },
+            items: 4
           },
           tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
+			breakpoint: { max: 992, min: 465 },
+            items: 2,
+			partialVisibilityGutter: 60
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
-            items: 1
+            items: 2,
+			partialVisibilityGutter: 10
           }
         }}
         rewind={false}
