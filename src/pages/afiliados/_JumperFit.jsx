@@ -65,17 +65,28 @@ export default function JumperFit({ employee }) {
   const list = search ? dataSearch : unidades
 
   const handleButtonClick = credits => {
-    // Set the plan based on the selected credits
-    const selectedPlan = credits === '12' ? '418' : '419'
+    let selectedPlan
+    let link
 
-    // Construct the link based on the selected plan
-    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${
-      selectedPlan === '418' ? '418' : '419'
-    }&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
-      employee ? employee : usuario.isAffiliate
-    }|AFILIADO`
+    if (credits === '12') {
+      selectedPlan = '418'
+    } else if (credits === '24') {
+      selectedPlan = '419'
+    } else if (credits === 'diaria') {
+      selectedPlan = '110'
+      // Use um link diferente para 'diaria'
+      link = `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=produto&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+        employee ? employee : usuario.isAffiliate
+      }|AFILIADO`
+    } else {
+      // Se nenhum dos casos acima, use o link padrão
+      selectedPlan = 'default' // ajuste conforme necessário
+      link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=teste&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+        employee ? employee : usuario.isAffiliate
+      }|AFILIADO`
+    }
 
-    // Use the link as needed, for example, open in a new tab
+    // Use o link como necessário, por exemplo, abrir em uma nova aba
     showModal(link)
   }
 
@@ -134,6 +145,9 @@ export default function JumperFit({ employee }) {
           </Button>
           <Button type="primary" onClick={() => handleButtonClick('24')}>
             24 créditos
+          </Button>
+          <Button type="primary" onClick={() => handleButtonClick('diaria')}>
+            Diaria
           </Button>
         </Space>
         <Collapse className="planos_academia" accordion>
