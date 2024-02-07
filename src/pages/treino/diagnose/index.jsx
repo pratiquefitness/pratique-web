@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
 import Link from 'next/link'
+import Diagnose from './Cards'
 
 const columns = [
   {
@@ -50,9 +51,10 @@ export default function DiagnoseView() {
 
   return (
     <TreinoLayout>
-      <Loading spinning={loading}>
+      {/* <Loading spinning={loading}>
         <Table dataSource={data} columns={columns} pagination={false} />
-      </Loading>
+      </Loading> */}
+      <Diagnose />
     </TreinoLayout>
   )
 }
