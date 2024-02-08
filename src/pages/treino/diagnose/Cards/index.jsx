@@ -33,7 +33,8 @@ export default function Diagnose() {
   }
 
   const onRegisterPerguntas = values => {
-    console.log('valores',perguntas)
+    
+	console.log('valores',values)
 
     //setDiagnoseData([...diagnoseData, values])
 
@@ -43,7 +44,7 @@ export default function Diagnose() {
 
   return (
     <Loading spinning={loading}>
-      {!iniciarPergunta ? (
+      {/* {!iniciarPergunta ? (
         <div className="d-flex justify-center">
           <div className="p-4 w-95 " style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
             <div className="text-center">
@@ -105,9 +106,9 @@ export default function Diagnose() {
             </Form>
           </div>
         </div>
-      ) : (
+      ) : ( */}
         <FormularioPrincipal onRegisterPerguntas={onRegisterPerguntas} />
-      )}
+      {/* )} */}
     </Loading>
   )
 }

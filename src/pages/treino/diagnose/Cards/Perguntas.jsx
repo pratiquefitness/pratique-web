@@ -8,15 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
 
 const FormularioPrincipal = ({ onRegisterPerguntas }) => {
-
   const [etapaAtual, setEtapaAtual] = useState(1)
   const [aguardaDiagnose, setAguardaDiagnose] = useState(false)
   const [respostas, setRespostas] = useState([])
   const { token } = theme.useToken()
   const { data, loading } = useSelector(state => state.diagnose)
 
-
-  console.log('listaPerguntas', data)
+  //  console.log('listaPerguntas', data)
 
   const handleResposta = resposta => {
     if (resposta === '2') {
@@ -28,6 +26,8 @@ const FormularioPrincipal = ({ onRegisterPerguntas }) => {
 
     setRespostas([...respostas, { pergunta: perguntaAtual, resposta }])
 
+    console.log('respostas', respostas)
+
     const regraAtual = listaPerguntas.find(item => item.id === etapaAtual)?.regra
 
     const proximaPergunta = regraAtual ? regraAtual.find(item => Object.keys(item)[0] === resposta)?.[resposta] : null
@@ -37,6 +37,7 @@ const FormularioPrincipal = ({ onRegisterPerguntas }) => {
 
   const proximaEtapa = proximaPergunta => {
     if (proximaPergunta > listaPerguntas.length) {
+      setEtapaAtual(proximaPergunta)
       onRegisterPerguntas(respostas)
       return
     }

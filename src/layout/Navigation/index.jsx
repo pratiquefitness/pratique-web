@@ -28,7 +28,7 @@ export default function Navigation({ data }) {
 
     if (title === 'Blog') {
       dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
-      //router.push('/blog')
+      router.push('/blog')
       return
     }
     dispatch(setBrowserURL(null))
