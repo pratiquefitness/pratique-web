@@ -75,7 +75,7 @@ export default function JumperFit({ employee }) {
       selectedPlan = '110'
       // Use um link diferente para 'diaria'
       showModal(
-        `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=prodtuo&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+        `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=produto&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
       )
