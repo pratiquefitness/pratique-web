@@ -8,18 +8,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
 
 const FormularioPrincipal = ({ onRegisterPerguntas }) => {
-  const [etapaAtual, setEtapaAtual] = useState(1)
-  const [aguardaDiagnose, setaguardaDiagnose] = useState(false)
-  const [respostas, setRespostas] = useState([])
 
+  const [etapaAtual, setEtapaAtual] = useState(1)
+  const [aguardaDiagnose, setAguardaDiagnose] = useState(false)
+  const [respostas, setRespostas] = useState([])
   const { token } = theme.useToken()
-  const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
 
-  useEffect(() => {
-    dispatch(getPerguntasDiagnose())
-    console.log('listaPerguntas', data)
-  }, [])
+
+  console.log('listaPerguntas', data)
 
   const handleResposta = resposta => {
     if (resposta === '2') {

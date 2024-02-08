@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading'
-import { getDiagnose } from '@/redux/actions/diagnose'
+import { getDiagnose,getPerguntasDiagnose } from '@/redux/actions/diagnose'
 import { Button, Table, Tag } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -46,8 +46,11 @@ export default function DiagnoseView() {
   const { data, loading } = useSelector(state => state.diagnose)
 
   useEffect(() => {
-    dispatch(getDiagnose())
+    //dispatch(getDiagnose())
+	dispatch(getPerguntasDiagnose())
+	
   }, [])
+
 
   return (
     <TreinoLayout>
