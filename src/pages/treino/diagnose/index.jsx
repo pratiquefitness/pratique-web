@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading'
-import { getDiagnose,getPerguntasDiagnose } from '@/redux/actions/diagnose'
+import { getDiagnose, getPerguntasDiagnose } from '@/redux/actions/diagnose'
 import { Button, Table, Tag } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -45,19 +45,16 @@ export default function DiagnoseView() {
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
 
-  useEffect(() => {
-    //dispatch(getDiagnose())
-	dispatch(getPerguntasDiagnose())
-	
-  }, [])
-
+//   useEffect(() => {
+//     //dispatch(getDiagnose())
+//   }, [])
 
   return (
     <TreinoLayout>
       {/* <Loading spinning={loading}>
         <Table dataSource={data} columns={columns} pagination={false} />
       </Loading> */}
-      <Diagnose />
+      <Diagnose/>
     </TreinoLayout>
   )
 }

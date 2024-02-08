@@ -1,18 +1,24 @@
 import { Loading } from '@/components'
 import { Input, Form, Select, Button, theme, InputNumber } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import FormularioPrincipal from './Perguntas'
+import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
 
 export default function Diagnose() {
   const { loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
-  const [ iniciarPergunta, setIniciarPergunta ] = useState(false)
+  const [iniciarPergunta, setIniciarPergunta] = useState(false)
   const { token } = theme.useToken()
+  const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
   const [diagnoseData, setDiagnoseData] = useState([])
 
   const { themeMode } = useSelector(state => state.global)
+
+  useEffect(() => {
+    dispatch(getPerguntasDiagnose())
+  }, [])
 
   const handleIniciarPergunta = () => {
     setIniciarPergunta(!iniciarPergunta)
@@ -20,15 +26,14 @@ export default function Diagnose() {
   const [formRegister] = Form.useForm()
 
   const onRegisterPersonalData = values => {
-  
-	setDiagnoseData([...diagnoseData, values])
+    setDiagnoseData([...diagnoseData, values])
 
     formRegister.resetFields()
     handleIniciarPergunta()
   }
 
   const onRegisterPerguntas = values => {
-    console.log('valores', values)
+    console.log('valores',perguntas)
 
     //setDiagnoseData([...diagnoseData, values])
 
@@ -94,7 +99,7 @@ export default function Diagnose() {
                   <Select.Option value="feminino">Feminino</Select.Option>
                 </Select>
               </div>
-              <Button className='mt-8' type="primary" htmlType="submit" loading={loading}>
+              <Button className="mt-8" type="primary" htmlType="submit" loading={loading}>
                 Próximo
               </Button>
             </Form>

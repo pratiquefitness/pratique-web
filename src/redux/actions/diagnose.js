@@ -17,6 +17,21 @@ export const getDiagnose = () => {
   }
 }
 
+// export const getPerguntasDiagnose = () => {
+//   return async (dispatch, getState) => {
+//     const { login } = getState()
+//     dispatch(setLoading(true))
+//     return apiPratiqueTecnologia
+//       .get('/app/diagnose', { email: login.usuario.user_email })
+//       .then(res => {
+//         dispatch(setData(res.data))
+//       })
+//       .finally(() => {
+//         dispatch(setLoading(false))
+//       })
+//   }
+// }
+
 export const getPerguntasDiagnose = () => {
   return async (dispatch, getState) => {
     const { login } = getState()
