@@ -20,11 +20,22 @@ export default function Inicio() {
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
-  const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  // const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  const isSaverAndClient = true
+
   const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
+  }
+
+  const dispatchSac = () => {
+    dispatch(
+      setBrowserURL(
+        'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
+        '_blank'
+      )
+    )
   }
 
   const dispatchTrabalhePratique = () => {
@@ -86,6 +97,24 @@ export default function Inicio() {
   ]
 
   const novaListaCarouselAreaCliente = [
+    ...(isSaverAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/saver_club.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: abreSaverClubModal
+          }
+        ]
+      : []),
+    {
+      href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
+      image: '/images/sac.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      target: '_blank'
+    },
     ...(isSaverSaudeAndClient
       ? [
           {
@@ -97,18 +126,7 @@ export default function Inicio() {
           }
         ]
       : []),
-    ...listaCarouselAreaCliente,
-    ...(isSaverAndClient
-      ? [
-          {
-            href: '',
-            image: '/images/saver_saude.png',
-            isRounded: true,
-            alt: 'saver_saude',
-            action: abreSaverClubModal
-          }
-        ]
-      : [])
+    ...listaCarouselAreaCliente
   ]
 
   return (
