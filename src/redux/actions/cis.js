@@ -3,15 +3,29 @@ import api from '@/services/api'
 
 export const getCis = () => {
   return async (dispatch, getState) => {
-    const { login } = getState()
-    dispatch(setLoading(true))
-    return api
-      .post('/cis', { email: login.usuario.user_email, cargo: login.usuario.cargo })
-      .then(res => {
-        dispatch(setData(res.data))
+    try {
+      const { login } = getState()
+      console.log('Estado atual de login:', login)
+      dispatch(setLoading(true))
+
+      console.log('Enviando requisição para /cis:', {
+        email: login.usuario.user_email,
+        cargo: login.usuario.cargo
       })
-      .finally(() => {
-        dispatch(setLoading(false))
+
+      const res = await api.post('/cis', {
+        email: login.usuario.user_email,
+        cargo: login.usuario.cargo
       })
+
+      console.log('Resposta da API:', cargo)
+
+      dispatch(setData(res.data))
+    } catch (error) {
+      console.error('Erro ao obter cis:', error)
+    } finally {
+      console.log('Finalizando requisição')
+      dispatch(setLoading(false))
+    }
   }
 }
