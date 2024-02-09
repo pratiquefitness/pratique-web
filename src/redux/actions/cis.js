@@ -6,7 +6,7 @@ export const getCis = () => {
     const { login } = getState()
     dispatch(setLoading(true))
     return api
-      .post('/cis', { email: login.usuario.user_email, cargo: login.cargo })
+      .post('/cis', { email: login.usuario.user_email, cargo: login.usuario.cargo })
       .then(res => {
         dispatch(setData(res.data))
       })
