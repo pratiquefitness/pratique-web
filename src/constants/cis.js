@@ -1,155 +1,147 @@
 const cis = [
   {
-    cargo: 'SUPERVISÃO',
-    ci: 'CI SUPERVISÃO'
-  },
-  {
     cargo: 'ADMINISTRAÇÃO',
-    ci: 'CI ADMINISTRATIVO'
+    ci: ['CI ADMINISTRATIVO']
   },
   {
     cargo: 'SAC',
-    ci: 'CI SAC'
+    ci: ['CI SAC']
   },
   {
     cargo: 'SECRETARIA',
-    ci: 'CI SECRETARIA'
+    ci: ['CI SECRETARIA']
   },
   {
     cargo: 'MUSCULAÇÃO',
-    ci: 'CI MUSCULACAO'
+    ci: ['CI MUSCULACAO']
   },
   {
     cargo: 'LIMPEZA',
-    ci: 'CI LIMPEZA'
+    ci: ['CI LIMPEZA']
   },
   {
     cargo: 'COLETIVAS',
-    ci: 'CI COLETIVAS'
+    ci: ['CI COLETIVAS']
   },
   {
     cargo: 'ZUMBA',
-    ci: 'CI COLETIVAS'
+    ci: ['CI COLETIVAS']
   },
   {
     cargo: 'COORDENAÇÃO(CONFIANÇA)',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'COORDENACAO(CONFIANCA)',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'COORDENACAO CONFIANCA',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'GINASTICA',
-    ci: 'CI GINÁSTICA'
+    ci: ['CI GINÁSTICA', 'CI TESTE', 'CI TESTE 2']
   },
   {
     cargo: 'GINÁSTICA',
-    ci: 'CI GINÁSTICA'
+    ci: ['CI GINÁSTICA']
   },
   {
     cargo: 'RITMOS',
-    ci: 'CI RITMOS'
+    ci: ['CI RITMOS']
   },
   {
     cargo: 'ARTES MARCIAIS',
-    ci: 'CI ARTES MARCIAIS'
+    ci: ['CI ARTES MARCIAIS']
   },
   {
     cargo: 'COORDENADOR(GERÊNCIA)',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'PISCINA',
-    ci: 'CI PISCINA'
+    ci: ['CI PISCINA']
   },
   {
     cargo: 'PERSONAL CLASS',
-    ci: 'CI PERSONAL'
+    ci: ['CI PERSONAL']
   },
   {
     cargo: 'ZELADOR',
-    ci: 'CI ZELADOR'
+    ci: ['CI ZELADOR']
   },
   {
     cargo: 'MUSCULACAO',
-    ci: 'CI MUSCULACAO'
+    ci: ['CI MUSCULACAO']
   },
   {
     cargo: 'MUSCULAÇÃO',
-    ci: 'CI MUSCULACAO'
+    ci: ['CI MUSCULACAO']
   },
   {
     cargo: 'LOGISTICA',
-    ci: 'CI LOGISTICA'
+    ci: ['CI LOGISTICA']
   },
   {
     cargo: 'PRATIQUE EM CASA',
-    ci: 'CI PRATIQUE EM CASA'
+    ci: ['CI PRATIQUE EM CASA']
   },
   {
     cargo: 'DEFESA',
-    ci: 'CI DEFESA'
+    ci: ['CI DEFESA']
   },
   {
     cargo: 'PILATES',
-    ci: 'CI PILATES'
+    ci: ['CI PILATES']
   },
   {
     cargo: 'SECRETARIA(CONFIANÇA)',
-    ci: 'CI SECRETARIA'
+    ci: ['CI SECRETARIA']
   },
   {
     cargo: 'ADMINISTRAÇÃO',
-    ci: 'CI ADMINISTRATIVO'
+    ci: ['CI ADMINISTRATIVO']
   },
   {
     cargo: 'MANUTENÇÃO',
-    ci: 'CI MANUTENÇÃO'
+    ci: ['CI MANUTENÇÃO']
   },
   {
     cargo: 'MARKETING',
-    ci: 'CI MARKETING'
+    ci: ['CI MARKETING']
   },
   {
     cargo: 'ADMINISTRATIVO',
-    ci: 'CI ADMINISTRATIVO'
+    ci: ['CI ADMINISTRATIVO']
   },
   {
     cargo: 'SUPERVISAO',
-    ci: 'CI SUPERVISÃO'
+    ci: ['CI SUPERVISAO', 'CI ADMINISTRATIVO', 'CI DEFESA']
   },
   {
     cargo: 'SUPERVISÃO',
-    ci: 'CI SUPERVISÃO'
-  },
-  {
-    cargo: 'SUPERVISÃO',
-    ci: 'CI SUPERVISÃO'
+    ci: ['CI SUPERVISAO', 'CI ADMINISTRATIVO', 'CI DEFESA']
   },
   {
     cargo: 'GESTOR',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'LIDER',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'MENTOR NIVEL 1',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'MENTOR NIVEL 2',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   },
   {
     cargo: 'MENTOR NIVEL 3',
-    ci: 'CI CONFIANÇA'
+    ci: ['CI CONFIANÇA']
   }
 ]
 
