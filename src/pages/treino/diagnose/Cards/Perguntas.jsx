@@ -7,86 +7,32 @@ import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
 
-const FormularioPrincipal = ({ onRegisterPerguntas }) => {
+const FormularioPrincipal = ({ onRegisterPerguntas, listaPerguntas }) => {
   const [etapaAtual, setEtapaAtual] = useState(1)
   const [aguardaDiagnose, setAguardaDiagnose] = useState(false)
   const [respostas, setRespostas] = useState([])
   const { token } = theme.useToken()
   const { data, loading } = useSelector(state => state.diagnose)
 
-  //  console.log('listaPerguntas', data)
-
   const handleResposta = resposta => {
     if (resposta === '2') {
-      setEtapaAtual(prevEtapaAtual => prevEtapaAtual + 1)
+      setEtapaAtual(prevEtapaAtual => prevEtapaAtual - 1)
       return
     }
-
     const perguntaAtual = listaPerguntas.find(item => item.id === etapaAtual)?.pergunta
-
     setRespostas([...respostas, { pergunta: perguntaAtual, resposta }])
-
-    console.log('respostas', respostas)
-
     const regraAtual = listaPerguntas.find(item => item.id === etapaAtual)?.regra
-
     const proximaPergunta = regraAtual ? regraAtual.find(item => Object.keys(item)[0] === resposta)?.[resposta] : null
-
     proximaEtapa(proximaPergunta)
   }
 
   const proximaEtapa = proximaPergunta => {
-    if (proximaPergunta > listaPerguntas.length) {
-      setEtapaAtual(proximaPergunta)
-      onRegisterPerguntas(respostas)
-      return
-    }
-    setEtapaAtual(prevEtapaAtual => {
-      if (proximaPergunta !== null) {
-        return proximaPergunta
-      }
-      return prevEtapaAtual + 1
-    })
+    setEtapaAtual(parseInt(proximaPergunta))
   }
 
-  const listaPerguntas = [
-    {
-      id: 1,
-      pergunta: 'pergunta 1',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 2 }, { nao: 2 }]
-    },
-    {
-      id: 2,
-      pergunta: 'pergunta 2',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 3 }, { nao: 4 }]
-    },
-    {
-      id: 3,
-      pergunta: 'pergunta 3',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 4 }, { nao: 4 }]
-    },
-    {
-      id: 4,
-      pergunta: 'pergunta 4',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 5 }, { nao: 5 }]
-    },
-    {
-      id: 5,
-      pergunta: 'pergunta 5',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 999 }, { nao: 6 }]
-    },
-    {
-      id: 6,
-      pergunta: 'pergunta 6',
-      respostas: ['sim', 'nao'],
-      regra: [{ sim: 999 }, { nao: 999 }]
-    }
-  ]
+  if (etapaAtual > listaPerguntas.length) {
+    onRegisterPerguntas(respostas)
+  }
 
   return (
     <Loading spinning={loading}>

@@ -4,11 +4,16 @@ import { useEffect, useState } from 'react'
 import ReactInputMask from 'react-input-mask'
 import { useDispatch, useSelector } from 'react-redux'
 import FormularioPrincipal from './Perguntas'
-import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
+//import { getPerguntasDiagnose } from '@/redux/actions/diagnose'
+//import { apiPratiqueTec } from '@/pages/api/novoDiagnose'
+import { setData, setLoading } from '@/redux/slices/diagnose'
+import axios from 'axios'
 
 export default function Diagnose() {
   const { loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const [iniciarPergunta, setIniciarPergunta] = useState(false)
+  const [listaPerguntas, setListaPerguntas] = useState(false)
+
   const { token } = theme.useToken()
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
@@ -16,8 +21,41 @@ export default function Diagnose() {
 
   const { themeMode } = useSelector(state => state.global)
 
+  const getPerguntasDiagnose = async () => {
+    try {
+      const response = await axios.get('/api/novoDiagnose')
+      const data = response.data
+      if (!data) {
+        throw new Error('Falha ao obter o token público.')
+      }
+      dispatch(setLoading(false))
+      setListaPerguntas(data)
+      return
+    } catch (error) {
+      console.error('Erro ao resgatar data:', error)
+      throw error
+    }
+  }
+
+  const setPerguntasDiagnose = async jsonDiagnose => {
+    try {
+      //console.log("jsonDiagnose",jsonDiagnose)
+
+      const response = await axios.post('/api/envioDiagnose', jsonDiagnose)
+      //console.log("response", response)
+      const data = response.data
+      if (!data) {
+        throw new Error('Falha ao enviar a diagnose')
+      }
+      //   return
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error)
+      throw error
+    }
+  }
+
   useEffect(() => {
-    dispatch(getPerguntasDiagnose())
+    getPerguntasDiagnose()
   }, [])
 
   const handleIniciarPergunta = () => {
@@ -33,18 +71,14 @@ export default function Diagnose() {
   }
 
   const onRegisterPerguntas = values => {
-    
-	console.log('valores',values)
-
-    //setDiagnoseData([...diagnoseData, values])
-
-    //formRegister.resetFields()
-    //handleIniciarPergunta()
+    const dadosDiagnose = diagnoseData.concat(values)
+    const jsonDiagnose = JSON.stringify(dadosDiagnose)
+    setPerguntasDiagnose(jsonDiagnose)
   }
 
   return (
     <Loading spinning={loading}>
-      {/* {!iniciarPergunta ? (
+      {!iniciarPergunta ? (
         <div className="d-flex justify-center">
           <div className="p-4 w-95 " style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
             <div className="text-center">
@@ -106,9 +140,9 @@ export default function Diagnose() {
             </Form>
           </div>
         </div>
-      ) : ( */}
-        <FormularioPrincipal onRegisterPerguntas={onRegisterPerguntas} />
-      {/* )} */}
+      ) : (
+        <FormularioPrincipal listaPerguntas={listaPerguntas} onRegisterPerguntas={onRegisterPerguntas} />
+      )}
     </Loading>
   )
 }

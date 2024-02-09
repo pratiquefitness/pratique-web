@@ -12,9 +12,9 @@ const EtapaFormulario = ({ pergunta, respostas, regra, onResposta }) => {
   return (
     <div className="d-flex flex-column items-center gap-4 mt-4">
       <h3>{pergunta}</h3>
-      <div className="d-flex justify-center gap-4">
+	  <div className="d-flex justify-center flex-wrap gap-4">
         {respostas.map((opcao, index) => (
-          <Button type="primary" key={index} onClick={() => handleResposta(opcao)}>
+          <Button type="primary" className='text-capitalize' key={index} onClick={() => handleResposta(opcao)}>
             {opcao}
           </Button>
         ))}
