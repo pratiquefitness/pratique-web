@@ -52,14 +52,9 @@ export default function Inicio() {
 
   const listaCarousel = [
     {
-      href: '/canal_equipe',
-      image: '/images/canal_equipe.png',
-      isRounded: true,
-      alt: 'canal_equipe'
-    },
-    {
-      href: '/unipower',
-      image: '/images/unipower.png',
+      href: '',
+      action: abreSaverClubModal,
+      image: '/images/saver_club.png',
       isRounded: true,
       alt: 'unipower_banner'
     },
@@ -71,11 +66,23 @@ export default function Inicio() {
       alt: 'unipower_banner'
     },
     {
-      href: '',
-      action: abreSaverClubModal,
-      image: '/images/saver_club.png',
+      href: '/unipower',
+      image: '/images/unipower.png',
       isRounded: true,
       alt: 'unipower_banner'
+    },
+    {
+      href: '/canal_equipe',
+      image: '/images/canal_equipe.png',
+      isRounded: true,
+      alt: 'canal_equipe'
+    },
+    {
+      href: 'https://bit.ly/FalarRH',
+      image: '/images/rh.png',
+      isRounded: true,
+      alt: 'RH',
+      target: '_blank'
     }
   ]
 
