@@ -3,70 +3,90 @@ import { apiNovoPower } from '@/services'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
-  // const email = 'design@pratiquefitness.com.br'
-  // const cargo = 'MARKETING'
-  const { email, cargo } = req.body
+  try {
+    const { email, cargo } = req.body
 
-  const ciTerm = cis.find(i => i.cargo === cargo)?.ci || 'CI MUSCULAÇÃO'
+    // Adicione logs para verificar os valores recebidos
+    console.log('Corpo da solicitação:', req.body)
+    console.log('Valor de cargo:', cargo)
 
-  const cisList = await apiNovoPower.$queryRawUnsafe(
-    `SELECT DISTINCT wp_posts.id, wp_posts.post_title, wp_posts.post_name, wp_posts.post_excerpt, wp_posts.guid, wp_posts.post_type, featured_image.guid as post_image, wp_posts.post_modified, wp_users.display_name
-FROM wp_posts 
-INNER JOIN wp_postmeta ON wp_posts.id = wp_postmeta.post_id AND wp_postmeta.meta_key = '_thumbnail_id' 
-INNER JOIN wp_posts AS featured_image ON featured_image.id = wp_postmeta.meta_value
-INNER JOIN wp_users ON wp_users.id = wp_posts.post_author
-INNER JOIN wp_term_relationships rel ON wp_posts.ID = rel.object_id
-INNER JOIN wp_term_taxonomy taxonomy ON rel.term_taxonomy_id = taxonomy.term_taxonomy_id
-INNER JOIN wp_terms terms ON taxonomy.term_id = terms.term_id
-WHERE wp_posts.post_status = 'publish' 
-  AND terms.name = '${ciTerm}' AND wp_posts.post_modified >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)`
-  )
+    const matchingCIs = cis.filter(i => i.cargo.toLowerCase() === cargo.toLowerCase())
 
-  const anteriores = await apiNovoPower.$queryRawUnsafe(
-    `SELECT DISTINCT wp_posts.id, wp_posts.post_title, wp_posts.post_name, wp_posts.post_excerpt, wp_posts.guid, wp_posts.post_type, featured_image.guid as post_image, wp_posts.post_modified, wp_users.display_name
-FROM wp_posts 
-INNER JOIN wp_postmeta ON wp_posts.id = wp_postmeta.post_id AND wp_postmeta.meta_key = '_thumbnail_id' 
-INNER JOIN wp_posts AS featured_image ON featured_image.id = wp_postmeta.meta_value
-INNER JOIN wp_users ON wp_users.id = wp_posts.post_author
-INNER JOIN wp_term_relationships rel ON wp_posts.ID = rel.object_id
-INNER JOIN wp_term_taxonomy taxonomy ON rel.term_taxonomy_id = taxonomy.term_taxonomy_id
-INNER JOIN wp_terms terms ON taxonomy.term_id = terms.term_id
-WHERE wp_posts.post_status = 'publish' 
-  AND terms.name = '${ciTerm}' AND wp_posts.post_modified >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)`
-  )
+    // Se houver correspondências, use os termos, caso contrário, use um valor padrão
+    const ciTerm = matchingCIs.length > 0 ? matchingCIs.flatMap(item => item.ci) : ['CI MUSCULACAO']
 
-  const data = await Promise.all(
-    cisList.map(async ci => {
-      const usuarioExist = await apiNovoPower.wp_users.findMany({
-        where: {
-          user_email: email
-        }
-      })
+    const cisList = await apiNovoPower.$queryRawUnsafe(
+      `SELECT DISTINCT wp_posts.id, wp_posts.post_title, wp_posts.post_name, wp_posts.post_excerpt, wp_posts.guid, wp_posts.post_type, featured_image.guid as post_image, wp_posts.post_modified, wp_users.display_name
+      FROM wp_posts 
+      INNER JOIN wp_postmeta ON wp_posts.id = wp_postmeta.post_id AND wp_postmeta.meta_key = '_thumbnail_id' 
+      INNER JOIN wp_posts AS featured_image ON featured_image.id = wp_postmeta.meta_value
+      INNER JOIN wp_users ON wp_users.id = wp_posts.post_author
+      INNER JOIN wp_term_relationships rel ON wp_posts.ID = rel.object_id
+      INNER JOIN wp_term_taxonomy taxonomy ON rel.term_taxonomy_id = taxonomy.term_taxonomy_id
+      INNER JOIN wp_terms terms ON taxonomy.term_id = terms.term_id
+      WHERE wp_posts.post_status = 'publish' 
+        AND terms.name = '${ciTerm}' AND wp_posts.post_modified >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)`
+    )
+    console.log(
+      'Consulta SQL:',
+      `SELECT DISTINCT ... WHERE wp_posts.post_status = 'publish' AND terms.name = '${ciTerm}' AND wp_posts.post_modified >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)`
+    )
 
-      if (usuarioExist.length) {
-        const passou = await apiNovoPower.wp_comments.findMany({
+    const anteriores = await apiNovoPower.$queryRawUnsafe(
+      `SELECT DISTINCT wp_posts.id, wp_posts.post_title, wp_posts.post_name, wp_posts.post_excerpt, wp_posts.guid, wp_posts.post_type, featured_image.guid as post_image, wp_posts.post_modified, wp_users.display_name
+      FROM wp_posts 
+      INNER JOIN wp_postmeta ON wp_posts.id = wp_postmeta.post_id AND wp_postmeta.meta_key = '_thumbnail_id' 
+      INNER JOIN wp_posts AS featured_image ON featured_image.id = wp_postmeta.meta_value
+      INNER JOIN wp_users ON wp_users.id = wp_posts.post_author
+      INNER JOIN wp_term_relationships rel ON wp_posts.ID = rel.object_id
+      INNER JOIN wp_term_taxonomy taxonomy ON rel.term_taxonomy_id = taxonomy.term_taxonomy_id
+      INNER JOIN wp_terms terms ON taxonomy.term_id = terms.term_id
+      WHERE wp_posts.post_status = 'publish' 
+        AND terms.name = '${ciTerm}' AND wp_posts.post_modified >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)`
+    )
+
+    const data = await Promise.all(
+      cisList.map(async ci => {
+        const usuarioExist = await apiNovoPower.wp_users.findMany({
           where: {
-            comment_type: 'course_completed',
-            user_id: usuarioExist[0].ID,
-            comment_post_ID: ci.id,
-            comment_approved: 'approved'
+            user_email: email
           }
         })
-        if (passou.length) {
-          return false
+
+        if (usuarioExist.length) {
+          const passou = await apiNovoPower.wp_comments.findMany({
+            where: {
+              comment_type: 'course_completed',
+              user_id: usuarioExist[0].ID,
+              comment_post_ID: ci.id,
+              comment_approved: 'approved'
+            }
+          })
+
+          if (passou.length) {
+            return false
+          } else {
+            return ci
+          }
         } else {
           return ci
         }
-      } else {
-        return ci
-      }
-    })
-  )
-  res.setHeader('Cache-Control', 'no-store')
-  res.status(200).json(
-    utils.clearDatabaseResult({
-      anteriores: anteriores,
-      disponiveis: data.filter(n => n)
-    })
-  )
+      })
+    )
+
+    res.setHeader('Cache-Control', 'no-store')
+    res.status(200).json(
+      utils.clearDatabaseResult({
+        anteriores: anteriores,
+        disponiveis: data.filter(n => n)
+      })
+    )
+  } catch (error) {
+    console.error('Erro no handler:', error)
+
+    // Adicione logs para verificar o erro específico
+    console.error('Erro específico:', error.response?.data)
+
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
 }
