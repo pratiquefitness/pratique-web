@@ -23,10 +23,15 @@ export default function Inicio() {
   // const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
   const isSaverAndClient = true
 
-  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
+  const isSaverSaudeAndClient = true
+  //  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
+  }
+
+  const dispatchPratiqueMed = () => {
+    dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
   }
 
   const dispatchSac = () => {
@@ -61,7 +66,7 @@ export default function Inicio() {
     {
       href: '',
       action: dispatchSaverSaude,
-      image: '/images/pratique_med.png',
+      image: '/images/saver_saude.png',
       isRounded: true,
       alt: 'unipower_banner'
     },
@@ -129,7 +134,7 @@ export default function Inicio() {
             image: '/images/pratique_med.png',
             isRounded: true,
             alt: 'saver_saude',
-            action: dispatchSaverSaude
+            action: dispatchPratiqueMed
           }
         ]
       : []),
