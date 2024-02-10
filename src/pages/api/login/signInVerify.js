@@ -57,7 +57,7 @@ export default async function handler(req, res) {
 
         user.isEmployee = funcionarioExists.length ? 1 : 0
         user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
-
+        user.companyId = 'bW08tjvRF3'
         // pacto
         const pactoExist = await apiPratiquePro.matriz.findMany({
           where: {
@@ -77,10 +77,12 @@ export default async function handler(req, res) {
           user.status = pactoExist[0].matriz_situacao
           user.plano = pactoExist[0].matriz_plano
           user.unidade = unidadeExist[0].unidade_nome
+          user.telefone = pactoExist[0].matriz_tel
         } else {
           user.status = null
           user.plano = null
           user.unidade = null
+          user.telefone = null
         }
       }
 
