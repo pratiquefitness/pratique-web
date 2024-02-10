@@ -1,19 +1,22 @@
-import { Button, Col, Row, Space, Tabs, Typography, theme } from 'antd'
-import { Collapse, Panel } from '@/components'
+import React from 'react'
+import { Button, Col, Row, Space, Typography, Collapse, Tabs, theme } from 'antd'
+import { Panel } from '@/components'
 import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
 import BannersPowerCycle from './_BannersPowerCycle'
+
+const { TabPane } = Tabs
 
 const items = [
   {
     key: '2',
-    label: `Aulas`,
+    label: 'Aulas',
     children: <AulasColetivas tema={'netFit_spinning'} />
   },
   {
     key: '1',
-    label: `Instruções`,
+    label: 'Instruções',
     children: (
-      <>
+      <div>
         <div className="text-center">
           <Typography.Title level={2}>Instruções</Typography.Title>
           <Typography.Paragraph>
@@ -25,7 +28,7 @@ const items = [
           <Panel header="1º Assista aulas ao vivo no YouTube">
             <Space direction="vertical" className="w-100">
               <p className="text-center">
-                Assista nossas aulas no YouTube pela sua TV ou Computador atráves do canal Power Cycle
+                Assista nossas aulas no YouTube pela sua TV ou Computador através do canal Power Cycle
               </p>
               <Row className="mt-10">
                 <Col span={24} className="text-center">
@@ -70,21 +73,6 @@ const items = [
               allowfullscreen=""
             ></iframe>
           </Panel>
-          <Panel header="4º Participar do Grupo Exclusivo Telegram">
-            <Space direction="vertical">
-              <p>Temos também um grupo do Telegram com todos professores e a turma do pedal Pratique em casa:</p>
-              <p>
-                <a href="http://bit.ly/turmapedalpratiqueemcasa" target="_blank">
-                  🌐 bit.ly/turmapedalpratiqueemcasa
-                </a>
-              </p>
-            </Space>
-          </Panel>
-          <Panel header="Quadro de Horários">
-            <p>
-              <img src="/images/bike/horarios.png" width={'100%'} alt="" />
-            </p>
-          </Panel>
           <Panel header="Solicitar manutenção">
             <iframe
               src="https://form.typeform.com/to/tANzURg0"
@@ -97,7 +85,7 @@ const items = [
           <Panel header="Loja Pratique">
             <p className="p-10 text-center">
               <a href="https://lojapratique.com.br/" target="_blank">
-                <img src="/images/bike/loja.png" width={200} alt="" />
+                <img src="/images/bike/loja.webp" width={200} alt="" className="mx-auto" />
               </a>
             </p>
           </Panel>
@@ -107,26 +95,32 @@ const items = [
                 href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
                 target="_blank"
               >
-                <img src="/images/bike/whats.png" width={150} alt="" />
+                <img src="/images/bike/whats.png" width={200} alt="" style={{ display: 'block', margin: 'auto' }} />
               </a>
             </p>
           </Panel>
         </Collapse>
-      </>
+      </div>
     )
   }
 ]
 
 export default function Bike() {
   return (
-    <>
+    <div>
       <div className="text-center">
         <img src="images/bike/cycle.png" width={'50%'} alt="" style={{ maxWidth: 200 }} />
       </div>
-      <div className='mt-4'>
+      <div className="mt-4">
         <BannersPowerCycle />
       </div>
-      <Tabs defaultActiveKey="0" items={items} centered size="large" />
-    </>
+      <Tabs defaultActiveKey="0" centered size="large">
+        {items.map(item => (
+          <TabPane tab={item.label} key={item.key}>
+            {item.children}
+          </TabPane>
+        ))}
+      </Tabs>
+    </div>
   )
 }
