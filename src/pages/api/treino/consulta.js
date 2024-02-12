@@ -6,6 +6,10 @@ import { format, parseISO } from 'date-fns'
 export default async function handler(req, res) {
   let user = {}
 
+  if (!req.body || !req.body.email) {
+    return res.status(400).json({ message: 'O parâmetro email é obrigatório na requisição.' });
+  }
+
   const { email } = req.body
 
   const usuarioExist = await apiPratiqueFunciona.wp_users.findMany({
@@ -13,6 +17,8 @@ export default async function handler(req, res) {
       user_email: email
     }
   })
+
+  console.log("usuarioExist", usuarioExist)
 
   if (usuarioExist.length) {
     user = {
