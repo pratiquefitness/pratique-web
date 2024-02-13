@@ -18,6 +18,7 @@ export default function Inicio() {
   const [horariosModal, setHorariosModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
+  const { svaData } = useSelector(state => state.clubeCertoSva)
 
   const isClient = !usuario.isEmployee
   // const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
@@ -32,6 +33,10 @@ export default function Inicio() {
 
   const dispatchPratiqueMed = () => {
     dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
+  }
+
+  const dispatchClubeCertoSva = (url) => {
+    dispatch(setBrowserURL(url))
   }
 
   const dispatchSac = () => {
@@ -141,6 +146,59 @@ export default function Inicio() {
     ...listaCarouselAreaCliente
   ]
 
+  const SvaCarousel = () => {
+    return Object.keys(svaData).length > 0 ? (
+      <Carousel
+        additionalTransfrom={0}
+        arrows={false}
+        autoPlay={true}
+        autoPlaySpeed={3000}
+        centerMode={false}
+        className=""
+        containerClass="container"
+        dotListClass=""
+        draggable
+        focusOnSelect={false}
+        infinite
+        itemClass=""
+        keyBoardControl
+        minimumTouchDrag={80}
+        pauseOnHover
+        renderArrowsWhenDisabled={false}
+        renderButtonGroupOutside={false}
+        renderDotsOutside={false}
+        responsive={{
+          desktop: {
+            breakpoint: {max: 3000, min: 1024},
+            items: 3
+          },
+          tablet: {
+            breakpoint: {max: 1024, min: 464},
+            items: 2
+          },
+          mobile: {
+            breakpoint: {max: 464, min: 0},
+            items: 1
+          }
+        }}
+        rewind={false}
+        rewindWithAnimation={false}
+        rtl={false}
+        shouldResetAutoplay
+        showDots={true}
+        sliderClass=""
+        slidesToSlide={1}
+        swipeable
+      >
+        {
+          svaData.banners.map((banner, index) => (
+            <CarouselItem key={index} href={''} action={() => dispatch(setBrowserURL(banner.url))} alt={banner.image} image={banner.image} isRounded={true}/>
+          ))
+        }
+      </Carousel>
+    ) : <></>
+  }
+
   return (
     <Space direction="vertical" className="w-100">
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
@@ -222,6 +280,7 @@ export default function Inicio() {
             </Title>
             <Text type="">Beneficios e conteúdos para você</Text>
           </div>
+          <SvaCarousel />
           <Carousel
             arrows={false}
             autoPlay={false}
@@ -274,7 +333,7 @@ export default function Inicio() {
             </Title>
             <Text type="secondary">Beneficios e conteúdos para você</Text>
           </div>
-
+          <SvaCarousel />
           <Carousel
             arrows={false}
             autoPlay={false}

@@ -2,6 +2,7 @@ import { createContext, useEffect } from 'react'
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { setLogin, unsetLogin, setLoading } from '@/redux/slices/login'
 import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
+import { getClubeCertoSva } from '@/redux/actions/clubeCertoSva'
 import { tokenName } from '@/configs/global'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
@@ -16,6 +17,14 @@ export function AuthProvider({ children }) {
     checkCookie()
   }, [])
 
+  async function setClubeCertoSvaStyle(login) {
+    if(login?.companyId !== undefined && login?.companyId !== null && login?.companyId !== '') {
+      dispatch(getClubeCertoSva(login));
+    } else {
+      dispatch(setTheme(login.plano))
+    }
+  }
+
   async function signIn({ email, senha }) {
     dispatch(setLoading(true))
     const login = await signInRequest(email, senha)
@@ -25,7 +34,7 @@ export function AuthProvider({ children }) {
         path: '/'
       })
       dispatch(setLogin(login))
-      dispatch(setTheme(login.plano))
+      await setClubeCertoSvaStyle(login)
       router.push('/')
       dispatch(setLoading(false))
       return true
@@ -41,7 +50,7 @@ export function AuthProvider({ children }) {
       const login = await signInVerify(token)
       if (login) {
         dispatch(setLogin(login))
-        dispatch(setTheme(login.plano))
+        await setClubeCertoSvaStyle(login)
       } else {
         destroyCookie(undefined, tokenName)
         dispatch(setLoading(false))
