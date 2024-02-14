@@ -1,6 +1,5 @@
-import React from 'react'
-import { Button, Col, Row, Space, Typography, Collapse, Tabs, theme } from 'antd'
-import { Panel } from '@/components'
+import { Button, Col, Row, Space, Tabs, Typography, theme } from 'antd'
+import { Collapse, Panel } from '@/components'
 import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
 import BannersPowerCycle from './_BannersPowerCycle'
 
@@ -10,7 +9,14 @@ const items = [
   {
     key: '2',
     label: 'Aulas',
-    children: <AulasColetivas tema={'netFit_spinning'} />
+    children: (
+      <div>
+        <div className="mt-4">
+          <BannersPowerCycle />
+        </div>
+        <AulasColetivas tema={'netFit_spinning'} />
+      </div>
+    )
   },
   {
     key: '1',
@@ -18,9 +24,18 @@ const items = [
     children: (
       <div>
         <div className="text-center">
+          <iframe
+            width="100%"
+            height="200"
+            src="https://www.youtube.com/embed/UQ4NWXJfDCc"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
           <Typography.Title level={2}>Instruções</Typography.Title>
           <Typography.Paragraph>
-            Para uma melhor experiência, assista as aulas em uma tela maior. Sugestão - Smart TV
+            Para uma melhor experiência, assista às aulas em uma tela maior. Sugestão - Smart TV
           </Typography.Paragraph>
           <Typography.Paragraph>Siga o Passo a passo para participar das aulas:</Typography.Paragraph>
         </div>
@@ -28,7 +43,7 @@ const items = [
           <Panel header="1º Assista aulas ao vivo no YouTube">
             <Space direction="vertical" className="w-100">
               <p className="text-center">
-                Assista nossas aulas no YouTube pela sua TV ou Computador através do canal Power Cycle
+                Assista às nossas aulas no YouTube pela sua TV ou Computador através do canal Power Cycle
               </p>
               <Row className="mt-10">
                 <Col span={24} className="text-center">
@@ -43,7 +58,6 @@ const items = [
                   <p>Se inscreva e ative o sininho🔔</p>
                 </Col>
               </Row>
-              <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </Space>
           </Panel>
           <Panel header="2º Acesso ao APP Pratique em Casa">
@@ -68,34 +82,33 @@ const items = [
               height="200"
               src="https://www.youtube.com/embed/3WygiR4emL8"
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen=""
+              allowFullScreen
             ></iframe>
           </Panel>
-          <Panel header="Solicitar manutenção">
-            <iframe
-              src="https://form.typeform.com/to/tANzURg0"
-              width="100%"
-              height="400"
-              frameborder="0"
-              allowfullscreen="true"
-            ></iframe>
-          </Panel>
-          <Panel header="Loja Pratique">
-            <p className="p-10 text-center">
-              <a href="https://lojapratique.com.br/" target="_blank">
-                <img src="/images/bike/loja.webp" width={200} alt="" className="mx-auto" />
-              </a>
+          <Panel header="Quadro de Horários">
+            <p>
+              <img src="/images/bike/horarios.png" width={'100%'} alt="" />
             </p>
           </Panel>
+          <Panel header="Solicitar manutenção">
+            <a href="https://api.whatsapp.com/send?phone=5531984272283&text=Ol%C3%A1%2C%20solicito%20manuten%C3%A7%C3%A3o%20da%20bike">
+              <br />
+              <center>
+                <img src="img/whats.png" style={{ width: '300px' }} />
+              </center>
+              <br />
+            </a>
+          </Panel>
+
           <Panel header="Whatsapp">
             <p className="p-10 text-center">
               <a
                 href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
                 target="_blank"
               >
-                <img src="/images/bike/whats.png" width={200} alt="" style={{ display: 'block', margin: 'auto' }} />
+                <img src="/images/bike/whats.png" width={150} alt="" />
               </a>
             </p>
           </Panel>
@@ -111,16 +124,8 @@ export default function Bike() {
       <div className="text-center">
         <img src="images/bike/cycle.png" width={'50%'} alt="" style={{ maxWidth: 200 }} />
       </div>
-      <div className="mt-4">
-        <BannersPowerCycle />
-      </div>
-      <Tabs defaultActiveKey="0" centered size="large">
-        {items.map(item => (
-          <TabPane tab={item.label} key={item.key}>
-            {item.children}
-          </TabPane>
-        ))}
-      </Tabs>
+
+      <Tabs defaultActiveKey="0" items={items} centered size="large" />
     </div>
   )
 }
