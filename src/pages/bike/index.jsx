@@ -96,7 +96,7 @@ const items = [
             <a href="https://api.whatsapp.com/send?phone=5531984272283&text=Ol%C3%A1%2C%20solicito%20manuten%C3%A7%C3%A3o%20da%20bike">
               <br />
               <center>
-                <img src="img/whats.png" style={{ width: '300px' }} />
+                <img src="/images/bike/whats.png" style={{ width: '300px' }} />
               </center>
               <br />
             </a>
