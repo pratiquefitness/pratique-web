@@ -108,7 +108,7 @@ const items = [
                 href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
                 target="_blank"
               >
-                <img src="/images/bike/whats.png" width={150} alt="" />
+                <img src="/images/bike/whats.png" style={{ width: '300px' }} />
               </a>
             </p>
           </Panel>
