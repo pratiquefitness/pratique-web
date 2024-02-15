@@ -63,30 +63,32 @@ export default function JumperFit({ employee }) {
   }
 
   const list = search ? dataSearch : unidades
-
   const handleButtonClick = credits => {
-    let selectedPlan
+    let selectedPlan, saverParam
 
     if (credits === '12') {
       selectedPlan = '418'
+      saverParam = 'produto'
     } else if (credits === '24') {
       selectedPlan = '419'
+      saverParam = 'produto'
     } else if (credits === 'diaria') {
       selectedPlan = '110'
-      // Use um link diferente para 'diaria'
-      showModal(
-        `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=produto&jumper=sim&par=nao&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
-          employee ? employee : usuario.isAffiliate
-        }|AFILIADO`
-      )
-      return
+      saverParam = 'produto'
+    } else if (credits === 'mensal5dias') {
+      selectedPlan = '421'
+      saverParam = 'plano'
+    } else if (credits === 'mensal7dias') {
+      selectedPlan = '422'
+      saverParam = 'plano'
     } else {
       // Se nenhum dos casos acima, use o link padrão
       selectedPlan = 'default' // ajuste conforme necessário
+      saverParam = 'produto'
     }
 
     // Construa o link padrão
-    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=produto&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=${saverParam}&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
       employee ? employee : usuario.isAffiliate
     }|AFILIADO`
 
@@ -103,7 +105,6 @@ export default function JumperFit({ employee }) {
     setModalLink('')
     setModalVisible(false)
   }
-
   return (
     <Loading spinning={loading}>
       {/* ... (existing code) */}
@@ -143,23 +144,30 @@ export default function JumperFit({ employee }) {
           <Loading spinning />
         )}
       </Modal>
-      <Space direction="vertical" className="w-100">
+      <div className="w-100 text-center mb-4 button-container">
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('12')}>
+          12 créditos
+        </Button>
+        <br /> <br />
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('24')}>
+          24 créditos
+        </Button>
+        <br /> <br />
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('diaria')}>
+          Diária
+        </Button>
+        <br /> <br />
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('mensal5dias')}>
+          Mensal 5 dias
+        </Button>
+        <br /> <br />
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('mensal7dias')}>
+          Mensal 7 dias
+        </Button>
+      </div>
+      <Collapse className="planos_academia" accordion>
         {/* ... (existing code) */}
-        <Space direction="horizontal" align="center">
-          <Button type="primary" onClick={() => handleButtonClick('12')}>
-            12 créditos
-          </Button>
-          <Button type="primary" onClick={() => handleButtonClick('24')}>
-            24 créditos
-          </Button>
-          <Button type="primary" onClick={() => handleButtonClick('diaria')}>
-            Diaria
-          </Button>
-        </Space>
-        <Collapse className="planos_academia" accordion>
-          {/* ... (existing code) */}
-        </Collapse>
-      </Space>
+      </Collapse>
     </Loading>
   )
 }
