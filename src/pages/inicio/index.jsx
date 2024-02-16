@@ -25,7 +25,7 @@ export default function Inicio() {
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  const isSaverSaudeAndClient = (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || false;
+  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
@@ -47,7 +47,7 @@ export default function Inicio() {
     dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
   }
 
-  const dispatchClubeCertoSva = (url) => {
+  const dispatchClubeCertoSva = url => {
     dispatch(setBrowserURL(url))
   }
 
@@ -117,12 +117,12 @@ export default function Inicio() {
   }
   if (isSaverSaudeAndClient) {
     listaCarouselAreaCliente.unshift({
-      href: "",
-      image: "/images/pratique_med.png",
+      href: '',
+      image: '/images/pratique_med.png',
       isRounded: true,
-      alt: "saver_saude",
+      alt: 'saver_saude',
       action: dispatchSaverSaude
-    });
+    })
   }
 
   const SvaCarousel = () => {
@@ -148,15 +148,15 @@ export default function Inicio() {
         renderDotsOutside={false}
         responsive={{
           desktop: {
-            breakpoint: {max: 3000, min: 1024},
+            breakpoint: { max: 3000, min: 1024 },
             items: 3
           },
           tablet: {
-            breakpoint: {max: 1024, min: 464},
+            breakpoint: { max: 1024, min: 464 },
             items: 2
           },
           mobile: {
-            breakpoint: {max: 464, min: 0},
+            breakpoint: { max: 464, min: 0 },
             items: 1
           }
         }}
@@ -169,13 +169,20 @@ export default function Inicio() {
         slidesToSlide={1}
         swipeable
       >
-        {
-          svaData.banners.map((banner, index) => (
-            <CarouselItem key={index} href={''} action={() => dispatch(setBrowserURL(banner.url))} alt={banner.image} image={banner.image} isRounded={true}/>
-          ))
-        }
+        {svaData.banners.map((banner, index) => (
+          <CarouselItem
+            key={index}
+            href={''}
+            action={() => dispatch(setBrowserURL(banner.url))}
+            alt={banner.image}
+            image={banner.image}
+            isRounded={true}
+          />
+        ))}
       </Carousel>
-    ) : <></>
+    ) : (
+      <></>
+    )
   }
 
   return (

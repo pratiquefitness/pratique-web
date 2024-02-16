@@ -9,7 +9,6 @@ export default function Navigation({ data }) {
   const dispatch = useDispatch()
   const { token } = theme.useToken()
   const { usuario } = useSelector(state => state.login)
-  const { svaData } = useSelector(state => state.clubeCertoSva)
   const router = useRouter()
   const pathname = usePathname()
   const [selected, setSelected] = useState(
@@ -28,24 +27,18 @@ export default function Navigation({ data }) {
     setSelected(href)
 
     if (title === 'Blog') {
-      //dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
-	    dispatch(setBrowserURL(null))
-      router.push('/blog')
+      router.push('/')
+      dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
       return
     }
     dispatch(setBrowserURL(null))
     router.push(href)
   }
 
-  const newData = Object.keys(svaData).length > 0 && isAffiliate ?
-    data.filter((afiliado, index) => {
-      return afiliado.title !== 'Afiliados'
-    }) : data
-
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
-        {newData.map(({ href, showInNavigation, activeIcon, icon,title }, key) => {
+        {data.map(({ href, showInNavigation, activeIcon, icon, title }, key) => {
           const checkBike = href !== '/bike' || isHomeUser
           const checkAfiliate = href !== '/afiliados' || isAffiliate
           return (

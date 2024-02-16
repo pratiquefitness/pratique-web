@@ -21,16 +21,14 @@ const routes = [
     href: '/',
     icon: <IoHomeOutline />,
     activeIcon: <IoHomeSharp />,
-    showInNavigation: true,
-    style: { fontSize: '13px' }
+    showInNavigation: true
   },
   {
     title: 'Olá, #USUARIO#! Tenha um bom treino.',
     href: '/treino',
     icon: <LuDumbbell />,
     activeIcon: <LuDumbbell />,
-    showInNavigation: true,
-    style: { fontSize: '13px' }
+    showInNavigation: true
   },
   {
     title: '',
@@ -51,14 +49,14 @@ const routes = [
     href: '/powerflix',
     icon: <PratiqueIcon />,
     activeIcon: <PratiqueIcon />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: 'Minha Conta',
     href: '/conta',
     icon: <IoPersonOutline />,
     activeIcon: <IoPerson />,
-    showInNavigation: false
+    showInNavigation: true
   },
   {
     title: 'Blog',
