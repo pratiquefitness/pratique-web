@@ -135,7 +135,7 @@ export default function MeuTreinoView() {
               </Col>
               <Col span={24} className="mb-2">
                 <a
-                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
+                  href="https://bit.ly/FalarcomProfessorPratique"
                   target="_blank"
                 >
                   <Button
