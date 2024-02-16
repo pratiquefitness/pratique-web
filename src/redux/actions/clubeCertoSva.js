@@ -1,4 +1,4 @@
-import { setLoading, setSvaData } from '../slices/clubeCertoSva'
+import { setLoading, setSvaClientParameters } from '../slices/clubeCertoSva'
 import apiClubeCertoSva from '@/services/apiClubeCertoSva'
 import { setTheme } from "@/redux/actions/login";
 import { message } from "antd";
@@ -11,7 +11,7 @@ export const getClubeCertoSva = (login) => {
       .then(res => {
         if (Object.keys(res.data).length) {
           dispatch(setTheme(login.plano, res.data.primaryColor))
-          dispatch(setSvaData(res.data));
+          dispatch(setSvaClientParameters(res.data));
         } else {
           message.error('Erro ao obter dados.')
         }

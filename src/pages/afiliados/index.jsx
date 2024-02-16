@@ -40,20 +40,20 @@ const items = [
 
 export default function Afiliados() {
   const { usuario } = useSelector(state => state.login)
-  const { svaData } = useSelector(state => state.clubeCertoSva)
+  const { svaClientParameters } = useSelector(state => state.clubeCertoSva)
   const pathname = usePathname()
   const router = useRouter()
   const isAffiliate = !!usuario.isAffiliate
 
   useEffect(() => {
     if (
-      Object.keys(svaData).length > 0 &&
+      Object.keys(svaClientParameters).length > 0 &&
       isAffiliate &&
       (pathname.includes('/afiliados/loja/') || pathname.includes('/afiliados'))
     ) {
       router.push('/')
     }
-  }, [isAffiliate, svaData]);
+  }, [isAffiliate, svaClientParameters]);
 
   return <Tabs defaultActiveKey="0" items={items} />;
 }

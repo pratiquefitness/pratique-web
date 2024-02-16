@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  svaData: {},
+  svaClientParameters: {},
   loading: true
 }
 
@@ -9,8 +9,8 @@ export const clubeCertoSvaSlice = createSlice({
   name: 'clubeCertoSva',
   initialState,
   reducers: {
-    setSvaData(state, action) {
-      return { ...state, svaData: action.payload }
+    setSvaClientParameters(state, action) {
+      return { ...state, svaClientParameters: action.payload }
     },
     setLoading(state, action) {
       return { ...state, loading: action.payload }
@@ -18,6 +18,6 @@ export const clubeCertoSvaSlice = createSlice({
   }
 })
 
-export const { setSvaData, setLoading } = clubeCertoSvaSlice.actions
+export const { setSvaClientParameters, setLoading } = clubeCertoSvaSlice.actions
 
 export default clubeCertoSvaSlice

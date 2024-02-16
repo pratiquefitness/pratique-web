@@ -21,7 +21,7 @@ export default function Inicio() {
   //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
-  const { svaData } = useSelector(state => state.clubeCertoSva)
+  const { svaClientParameters } = useSelector(state => state.clubeCertoSva)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
@@ -41,23 +41,6 @@ export default function Inicio() {
 
   const abreSaverClubModal = () => {
     setSaverClubModal(true)
-  }
-
-  const dispatchPratiqueMed = () => {
-    dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
-  }
-
-  const dispatchClubeCertoSva = url => {
-    dispatch(setBrowserURL(url))
-  }
-
-  const dispatchSac = () => {
-    dispatch(
-      setBrowserURL(
-        'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
-        '_blank'
-      )
-    )
   }
 
   const listaCarousel = [
@@ -126,7 +109,7 @@ export default function Inicio() {
   }
 
   const SvaCarousel = () => {
-    return Object.keys(svaData).length > 0 ? (
+    return Object.keys(svaClientParameters).length > 0 ? (
       <Carousel
         additionalTransfrom={0}
         arrows={false}
@@ -169,7 +152,7 @@ export default function Inicio() {
         slidesToSlide={1}
         swipeable
       >
-        {svaData.banners.map((banner, index) => (
+        {svaClientParameters.banners.map((banner, index) => (
           <CarouselItem
             key={index}
             href={''}
@@ -319,46 +302,49 @@ export default function Inicio() {
             <Text type="secondary">Beneficios e conteúdos para você</Text>
           </div>
           <SvaCarousel />
-          <Carousel
-            arrows={false}
-            autoPlay={false}
-            centerMode={false}
-            className="mt-2"
-            containerClass="container"
-            draggable
-            focusOnSelect={false}
-            infinite={false}
-            keyBoardControl={false}
-            minimumTouchDrag={80}
-            partialVisible
-            renderArrowsWhenDisabled={false}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={{
-              desktop: {
-                breakpoint: { max: 3000, min: 1024 },
-                items: 3
-              },
-              tablet: {
-                breakpoint: { max: 1024, min: 464 },
-                items: 2
-              },
-              mobile: {
-                breakpoint: { max: 464, min: 0 },
-                items: 1
-              }
-            }}
-            rewind={false}
-            rewindWithAnimation={false}
-            rtl={false}
-            showDots={false}
-            slidesToSlide={1}
-            swipeable
-          >
-            {listaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
-              <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
-            ))}
-          </Carousel>
+          {
+            !Object.keys(svaClientParameters).length &&
+              <Carousel
+                arrows={false}
+                autoPlay={false}
+                centerMode={false}
+                className="mt-2"
+                containerClass="container"
+                draggable
+                focusOnSelect={false}
+                infinite={false}
+                keyBoardControl={false}
+                minimumTouchDrag={80}
+                partialVisible
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                  desktop: {
+                    breakpoint: {max: 3000, min: 1024},
+                    items: 3
+                  },
+                  tablet: {
+                    breakpoint: {max: 1024, min: 464},
+                    items: 2
+                  },
+                  mobile: {
+                    breakpoint: {max: 464, min: 0},
+                    items: 1
+                  }
+                }}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                showDots={false}
+                slidesToSlide={1}
+                swipeable
+              >
+                {listaCarouselAreaCliente.map(({href, image, alt, isRounded, action}, index) => (
+                  <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action}/>
+                ))}
+              </Carousel>
+          }
         </>
       ) : null}
 
@@ -372,12 +358,17 @@ export default function Inicio() {
 
       <Powerflix />
 
-      <div className="mt-4 mb-2">
-        <Title level={3} className="m-0 ">
-          Bem-estar físico e emocional
-        </Title>
-      </div>
-      <BemEstar />
+      {
+        !Object.keys(svaClientParameters).length &&
+        <>
+          <div className="mt-4 mb-2">
+            <Title level={3} className="m-0 ">
+              Bem-estar físico e emocional
+            </Title>
+          </div>
+          <BemEstar/>
+        </>
+      }
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
@@ -452,27 +443,32 @@ export default function Inicio() {
         </Link>
       </Carousel>
 
-      <div>
-        <Title level={3} className="m-0 mt-6">
-          Fale com a Pratique
-        </Title>
-        <Text type="secondary">Nossos canais de atendimento</Text>
-      </div>
-      <Row gutter={6} className="mb-2 mt-2">
-        <Col span={12}>
-          <a
-            href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
-            target="_blank"
-          >
-            <img src="/images/sac.png" width="100%" />
-          </a>
-        </Col>
-        <Col span={12}>
-          <a onClick={() => setHorariosModal(true)}>
-            <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
-          </a>
-        </Col>
-      </Row>
+       {
+         !Object.keys(svaClientParameters).length &&
+         <>
+           <div>
+             <Title level={3} className="m-0 mt-6">
+               Fale com a Pratique
+             </Title>
+             <Text type="secondary">Nossos canais de atendimento</Text>
+           </div>
+           <Row gutter={6} className="mb-2 mt-2">
+             <Col span={12}>
+               <a
+                 href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
+                 target="_blank"
+               >
+                 <img src="/images/sac.png" width="100%"/>
+               </a>
+             </Col>
+             <Col span={12}>
+               <a onClick={() => setHorariosModal(true)}>
+                 <img src="/images/horarios.png" width="100%" style={{filter: 'sepia(1)'}}/>
+               </a>
+             </Col>
+           </Row>
+         </>
+       }
     </Space>
   )
 }
