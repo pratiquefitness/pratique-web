@@ -27,8 +27,9 @@ export default function Navigation({ data }) {
     setSelected(href)
 
     if (title === 'Blog') {
-      router.push('/')
-      dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
+      //dispatch(setBrowserURL('https://pratiquefitness.com.br/blog/'))
+	  dispatch(setBrowserURL(null))
+      router.push('/blog')
       return
     }
     dispatch(setBrowserURL(null))
@@ -38,18 +39,14 @@ export default function Navigation({ data }) {
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
-        {data.map(({ href, showInNavigation, activeIcon, icon,title }, key) => {
+        {data.map(({ href, showInNavigation, activeIcon, icon, title }, key) => {
           const checkBike = href !== '/bike' || isHomeUser
           const checkAfiliate = href !== '/afiliados' || isAffiliate
           return (
             showInNavigation &&
             checkBike &&
             checkAfiliate && (
-              <li
-                className={href === selected ? 'list active' : 'list'}
-                onClick={onNavigate( href, title )}
-                key={key}
-              >
+              <li className={href === selected ? 'list active' : 'list'} onClick={onNavigate(href, title)} key={key}>
                 <a style={{ pointerEvents: 'none' }}>
                   <span className="icon text-white">{href === selected ? activeIcon : icon}</span>
                 </a>
