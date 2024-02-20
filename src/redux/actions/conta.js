@@ -9,7 +9,7 @@ export const excluirConta = () => {
     const { login } = getState()
     dispatch(setLoading(true))
     try {
-      await api.delete('/conta', { id: login.usuario.ID })
+      await api.post('/deletarUsuario', { id: login.usuario.ID })
       message.success('Dados excluídos com sucesso!')
     } catch (error) {
       console.error('Erro ao excluir conta:', error)
