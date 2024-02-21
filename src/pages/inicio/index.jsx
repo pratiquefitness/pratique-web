@@ -130,11 +130,11 @@ export default function Inicio() {
     ...(isSaverSaudeAndClient
       ? [
           {
-            href: '',
+            href: 'https://www.pratiquemed.com.br/login.php',
             image: '/images/pratique_med.png',
             isRounded: true,
             alt: 'saver_saude',
-            action: dispatchPratiqueMed
+            target: '_blank'
           }
         ]
       : []),
