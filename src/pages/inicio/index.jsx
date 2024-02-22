@@ -18,7 +18,6 @@ const { Title, Text } = Typography
 export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
-  //const [aulasColtivasModal, setAulasColetivasModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
   const { usuario } = useSelector(state => state.login)
   const { svaClientParameters } = useSelector(state => state.clubeCertoSva)
