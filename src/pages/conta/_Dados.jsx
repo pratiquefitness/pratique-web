@@ -49,6 +49,9 @@ export default function Dados() {
           Atualizar
         </Button>
       </Form>
+      <a href="https://www.pratiquemed.com.br/login.php" target="_blank">
+        ...
+      </a>
     </>
   )
 }
