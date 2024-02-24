@@ -136,7 +136,13 @@ const routes = [
     title: 'Unipower',
     href: '/unipower',
     showInNavigation: false
-  }
+  },
+  {
+    //title: 'Olá, #USUARIO#! Tenha um bom treino.',
+    title: '',
+    href: '/demonstracao',
+    showInNavigation: false
+  },
 ]
 
 export default routes

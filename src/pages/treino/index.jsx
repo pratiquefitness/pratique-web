@@ -1,4 +1,4 @@
-import { Button, Col, Empty, Form, Input, Row, Space, Tag, theme } from 'antd'
+import {Button, Col, Empty, Flex, Form, Input, Row, Space, Tag, theme} from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
@@ -11,11 +11,13 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
+import { useRouter } from 'next/router'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
+  const router = useRouter()
 
   const { themeMode } = useSelector(state => state.global)
 
@@ -58,6 +60,15 @@ export default function MeuTreinoView() {
               <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
                 {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
               </Tag>
+
+
+              <Flex wrap="wrap" gap="small">
+                <Button type="primary" onClick={() => { router.push('/demonstracao') }}>
+                  Primary
+                </Button>
+              </Flex>
+
+
             </div>
             <Collapse className="collapse-treino">
               {!loading

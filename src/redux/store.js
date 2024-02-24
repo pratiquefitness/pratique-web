@@ -12,6 +12,7 @@ import pontoSlice from './slices/ponto'
 import unipowerSlice from './slices/unipower'
 import afiliadosSlice from './slices/afiliados'
 import contaSlice from './slices/conta'
+import demonstracaoSlice from './slices/demonstracao'
 
 const store = configureStore({
   reducer: {
@@ -26,7 +27,8 @@ const store = configureStore({
     cis: cisSlice.reducer,
     ponto: pontoSlice.reducer,
     unipower: unipowerSlice.reducer,
-    afiliados: afiliadosSlice.reducer
+    afiliados: afiliadosSlice.reducer,
+    demonstracao: demonstracaoSlice.reducer,
   }
 })
 
