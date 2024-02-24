@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  data: [],
   loading: true,
   loadingPeso: false,
 }
@@ -10,9 +9,6 @@ export const demonstracaoSlice = createSlice({
   name: 'demonstracao',
   initialState,
   reducers: {
-    setData(state, action) {
-      return { ...state, data: action.payload }
-    },
     setLoading(state, action) {
       return { ...state, loading: action.payload }
     },
@@ -22,6 +18,6 @@ export const demonstracaoSlice = createSlice({
   }
 })
 
-export const { setData, setLoading, setLoadingPeso } = demonstracaoSlice.actions
+export const { setLoading, setLoadingPeso } = demonstracaoSlice.actions
 
 export default demonstracaoSlice

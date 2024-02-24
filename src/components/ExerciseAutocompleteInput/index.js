@@ -50,7 +50,7 @@ export const ExerciseAutocompleteInput = ({
   );
 };
 
-/*export const ExerciseChoiceInput = ({
+export const ExerciseChoiceInput = ({
   selectedChoice = () => {},
   hasFilterChoice = () => {}
 }) => {
@@ -88,7 +88,7 @@ export const ExerciseAutocompleteInput = ({
     <>
       <Space
         style={{
-          width: '100%',
+          width: 400,
         }}
         direction="vertical"
       >
@@ -107,6 +107,6 @@ export const ExerciseAutocompleteInput = ({
       </Space>
     </>
   );
-};*/
+};
 
 
