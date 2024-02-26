@@ -336,57 +336,30 @@ export default function Inicio() {
       </div>
       <BemEstar />
 
-      <div className="mt-6 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
-          Você, Feliz e Saudável!
-        </Title>
+      <div className="mt-126 flex flex-col mb-0">
         <Text type="secondary">Exercícios e conteúdos para você</Text>
-      </div>
-      <Carousel
-        arrows={false}
-        autoPlay={false}
-        centerMode={false}
-        className="mt-2"
-        containerClass="container"
-        draggable
-        focusOnSelect={false}
-        infinite={false}
-        keyBoardControl={false}
-        minimumTouchDrag={80}
-        partialVisible
-        renderArrowsWhenDisabled={false}
-        renderButtonGroupOutside={false}
-        renderDotsOutside={false}
-        responsive={{
-          desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-          },
-          tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-          },
-          mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-            partialVisibilityGutter: 30
-          }
-        }}
-        rewind={false}
-        rewindWithAnimation={false}
-        rtl={false}
-        showDots={false}
-        slidesToSlide={1}
-        swipeable
-      >
-        <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
-          <img src="/images/nutri.png" className="rounded-xl w-95" />
-        </a>
+        <br />
+        <br />
 
-        <Link href="/bike">
-          <img src="/images/power.png" className="rounded-xl w-95" />
-        </Link>
-      </Carousel>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
+          <a className="sm:flex-1" href="/exercicios">
+            <img src="/images/demonstracao.png" width="100%" />
+          </a>
+          <a
+            className="sm:flex-1"
+            onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}
+          >
+            <img src="/images/fale_nutri.png" width="100%" />
+          </a>
+          <a
+            className="sm:flex-1"
+            href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
+            target="_blank"
+          >
+            <img src="/images/fale_professor.png" width="100%" />
+          </a>
+        </div>
+      </div>
 
       <div>
         <Title level={3} className="m-0 mt-6">
