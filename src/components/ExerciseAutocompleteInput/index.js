@@ -4,20 +4,26 @@ import { AutoComplete, Select, Space } from 'antd'
 export const ExerciseAutocompleteInput = ({
   selectedExercise = () => {},
   options = [],
-  hasFilter = () => {}
+  hasFilter = () => {},
+  focus = () => {},
+  resetInput = false
 }) => {
   const [ value, setValue ] = useState('');
   const [ autoCompleteOptions, setAutoCompleteOptions ] = useState([]);
 
   const onSelect = (data) => {
-    console.log('onSelect', data);
     selectedExercise(data);
   };
 
   const onSearch = (data) => {
-    console.log('onSearch', data);
     hasFilter(data);
   };
+
+  useEffect(() => {
+    let hasReset = false
+    if(resetInput) hasReset = true
+    setValue(hasReset ? '' : value)
+  }, [resetInput]);
 
   useEffect(() => {
     let opt = [];
@@ -32,6 +38,7 @@ export const ExerciseAutocompleteInput = ({
   return (
     <>
       <AutoComplete
+        id={'pesquisa_exercicio'}
         value={value}
         options={autoCompleteOptions}
         style={{
@@ -45,6 +52,7 @@ export const ExerciseAutocompleteInput = ({
         }
         placeholder="PESQUISE O EXERCÍCIO DESEJADO"
         allowClear
+        onFocus={focus}
       />
     </>
   );
@@ -52,8 +60,10 @@ export const ExerciseAutocompleteInput = ({
 
 export const ExerciseChoiceInput = ({
   selectedChoice = () => {},
-  hasFilterChoice = () => {}
+  focus = () => {},
+  resetInput = false
 }) => {
+  const [selectedValues, setSelectedValues] = useState([]);
   const [ options, setOptions ] = useState([
     {label: 'Abdomen' , value: 1},
     {label: 'Abdutor de Quadril' , value: 2},
@@ -72,16 +82,16 @@ export const ExerciseChoiceInput = ({
     {label: 'Triceps' , value: 14},
     {label: 'Aduto de Quadril' , value: 15},
   ]);
-  const [ choiceOptions, setAutoCompleteOptions ] = useState([]);
 
-  const onSearch = (data) => {
-    console.log('onSearch', data);
-    hasFilterChoice(data);
-  };
+  useEffect(() => {
+    let hasReset = false
+    if(resetInput) hasReset = true
+    setSelectedValues(hasReset ? [] : selectedValues)
+  }, [resetInput]);
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
     selectedChoice(value)
+    setSelectedValues(value)
   };
 
   return (
@@ -93,6 +103,7 @@ export const ExerciseChoiceInput = ({
         direction="vertical"
       >
         <Select
+          id={'filtro_grupamento_muscular'}
           mode="multiple"
           allowClear
           style={{
@@ -102,7 +113,11 @@ export const ExerciseChoiceInput = ({
           placeholder="FILTRE PELO GRUPAMENTO MUSCULAR"
           onChange={handleChange}
           options={options}
-          onSearch={onSearch}
+          value={selectedValues}
+          onFocus={focus}
+          filterOption={(inputValue, option) =>
+            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          }
         />
       </Space>
     </>

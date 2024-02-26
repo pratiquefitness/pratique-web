@@ -60,15 +60,6 @@ export default function MeuTreinoView() {
               <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
                 {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
               </Tag>
-
-
-              <Flex wrap="wrap" gap="small">
-                <Button type="primary" onClick={() => { router.push('/demonstracao') }}>
-                  Primary
-                </Button>
-              </Flex>
-
-
             </div>
             <Collapse className="collapse-treino">
               {!loading
@@ -86,7 +77,6 @@ export default function MeuTreinoView() {
                             <b>Observações:</b> {treino.observacao}
                           </p>
                         )}
-
                         <Collapse className="collapse-treino">
                           {treino.videos.map((video, key) => {
                             return (

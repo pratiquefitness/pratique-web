@@ -1,4 +1,4 @@
-import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Flex} from 'antd'
+import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Flex, Collapse} from 'antd'
 import Loading from '@/components/Loading'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
@@ -6,24 +6,17 @@ import {updatePeso, getTreino} from '@/redux/actions/treino'
 import {setLoading} from '@/redux/slices/demonstracao'
 import {ExerciseAutocompleteInput, ExerciseChoiceInput} from 'src/components/ExerciseAutocompleteInput'
 import {apiPratiquePro} from "@/services";
+import {Panel} from "@/components";
+import utils from "@/utils";
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 export default function DemonstracaoView({exercises}) {
   const dispatch = useDispatch()
   const {loading, loadingPeso} = useSelector(state => state.demonstracao)
   const {data} = useSelector(state => state.treino)
   const [filterExercises, setFilterExercises] = useState([]);
-
-  const onSavePeso = values => {
-    dispatch(updatePeso(values))
-  }
-
-  const getExercises = (value) => {
-    setFilterExercises(exercises.filter(exercise => exercise.exercicio_nome === value))
-  }
-
-  const hasFilterExercise = (value) => {
-    if (!value.length) setFilterExercises([]);
-  }
+  const [resetAutocomplete, setResetAutocomplete] = useState(false);
+  const [resetSelect, setResetSelect] = useState(false);
 
   useEffect(() => {
     if (exercises.length) {
@@ -35,8 +28,66 @@ export default function DemonstracaoView({exercises}) {
     dispatch(getTreino())
   }, [])
 
-  console.log(data);
-  console.log(exercises);
+  const onSavePeso = values => {
+    dispatch(updatePeso(values))
+  }
+
+  const hasFilterExercise = (value) => {
+    if (!value.length) setFilterExercises([]);
+  }
+
+  const getExercises = (value) => {
+    setFilterExercises(exercises.filter(exercise => exercise.exercicio_nome === value))
+  }
+
+  const eraseSelect = (id) => {
+    setFilterExercises([]);
+    if('pesquisa_exercicio' === id) {
+      setResetSelect(true);
+      setResetAutocomplete(false)
+    }
+    if('filtro_grupamento_muscular' === id) {
+      setResetSelect(false);
+      setResetAutocomplete(true)
+    }
+  }
+
+  const getGrupamentoMuscaular = (value) => {
+    setFilterExercises(
+      exercises
+        .filter(exercise => value.includes(exercise.exercicio_grupo))
+        .sort((a, b) => {
+          const exercicioA = a.exercicio_nome.toUpperCase();
+          const exercicioB = b.exercicio_nome.toUpperCase();
+          if (exercicioA < exercicioB) {
+            return -1;
+          }
+          if (exercicioA > exercicioB) {
+            return 1;
+          }
+          return 0;
+        })
+    )
+  }
+
+  const genExtra = (text) => (
+    <span style={{color: '#fff'}}> {text}</span>
+  );
+
+  const getPesoAtribuido = (video, peso) => {
+    let currentPeso
+    return data.treinos.filter((treino, key) => {
+      try {
+        currentPeso = JSON.parse(treino.peso)
+      } catch (error) {
+        currentPeso = {}
+      }
+      if(Object.keys(currentPeso).length) {
+        return (treino.exercicio_id === video.exercicio_id) && (peso === currentPeso)
+      }
+      return '';
+    })
+  }
 
   return (
     <Loading spinning={loading}>
@@ -52,12 +103,15 @@ export default function DemonstracaoView({exercises}) {
                 hasFilter={(value) => {
                   hasFilterExercise(value)
                 }}
+                focus={(hasFocus) => { eraseSelect(hasFocus.target.id) }}
+                resetInput={resetAutocomplete}
               />
             </div>
             <div className="text-center pb-4">
               <ExerciseChoiceInput
-                selectedChoice={(value) => {console.log(value)}}
-                hasFilterChoice={(value) => {console.log(value)}}
+                selectedChoice={(value) => {getGrupamentoMuscaular(value)}}
+                focus={(hasFocus) => { eraseSelect(hasFocus.target.id) }}
+                resetInput={resetSelect}
               />
             </div>
           </>
@@ -65,27 +119,18 @@ export default function DemonstracaoView({exercises}) {
 
       {
         filterExercises.length ?
-          <Collapse className="collapse-treino">
+          <Collapse
+            className="collapse-treino"
+            style={{backgroundColor: 'rgb(237, 20, 61)'}}
+            expandIcon={({ isActive }) => !isActive ?
+              <PlusOutlined style={{color: '#fff'}} /> :
+              <MinusOutlined style={{color: '#fff'}} />
+            }
+          >
             {filterExercises.map((video, key) => {
               return (
-                <Panel header={video.exercicio_nome} key={key}>
+                <Panel header={genExtra(video.exercicio_nome)} key={key}>
                   <p>
-                    <Form layout="vertical" onFinish={onSavePeso} className="mb-4">
-                      <Form.Item name="id" initialValue={treino.id_ficha} noStyle/>
-                      <Form.Item name="video" initialValue={video.exercicio_id} noStyle/>
-                      <Space.Compact size="small" className="w-100">
-                        <Form.Item
-                          name="peso"
-                          initialValue={currentPeso?.[video.exercicio_id] || ''}
-                          noStyle
-                        >
-                          <Input placeholder="Anote o peso do seu exercicio..."/>
-                        </Form.Item>
-                        <Button type="primary" loading={loadingPeso} htmlType="submit">
-                          Salvar
-                        </Button>
-                      </Space.Compact>
-                    </Form>
                     <iframe
                       width="100%"
                       height="200px"
