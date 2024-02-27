@@ -1,4 +1,4 @@
-import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Flex, Collapse} from 'antd'
+import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Flex, Collapse, Typography, Image} from 'antd'
 import Loading from '@/components/Loading'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
@@ -9,6 +9,8 @@ import {apiPratiquePro} from "@/services";
 import {Panel} from "@/components";
 import utils from "@/utils";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+const { Title, Text } = Typography;
+import IconPlay from '@/components/IconPlay/IconPlay'
 
 export default function ExerciciosView({exercises}) {
   const dispatch = useDispatch()
@@ -91,9 +93,41 @@ export default function ExerciciosView({exercises}) {
 
   return (
     <Loading spinning={loading}>
+      <div className="mt-4 text-center">
+        <Text>
+          Pesquise em nosso <Text strong>Acervo</Text>
+        </Text>
+      </div>
+      <div className="text-center">
+        <Text strong>
+          de +300 exercícios com VÍDEOS
+        </Text>
+      </div>
+      <div className="text-center">
+        <Text>
+          demonstrativos. Você pode pesquisar
+        </Text>
+      </div>
+      <div className="text-center">
+        <Text>
+          por <Text strong>grupo muscular</Text> ou <Text strong>pesquisa livre.</Text>
+        </Text>
+      </div>
+      <div className="text-center  mb-4">
+        <Text strong type={'danger'}>
+          Tenha uma boa pesquisa!
+        </Text>
+      </div>
       {
         exercises.length &&
           <>
+            <div className="text-center pb-4">
+              <ExerciseChoiceInput
+                selectedChoice={(value) => {getGrupamentoMuscaular(value)}}
+                focus={(hasFocus) => { eraseSelect(hasFocus.target.id) }}
+                resetInput={resetSelect}
+              />
+            </div>
             <div className="text-center pb-4">
               <ExerciseAutocompleteInput
                 options={exercises}
@@ -105,13 +139,6 @@ export default function ExerciciosView({exercises}) {
                 }}
                 focus={(hasFocus) => { eraseSelect(hasFocus.target.id) }}
                 resetInput={resetAutocomplete}
-              />
-            </div>
-            <div className="text-center pb-4">
-              <ExerciseChoiceInput
-                selectedChoice={(value) => {getGrupamentoMuscaular(value)}}
-                focus={(hasFocus) => { eraseSelect(hasFocus.target.id) }}
-                resetInput={resetSelect}
               />
             </div>
           </>
@@ -147,7 +174,7 @@ export default function ExerciciosView({exercises}) {
               )
             })}
           </Collapse> :
-          <Empty className="my-8"/>
+          <IconPlay width={400} height={300} />
       }
     </Loading>
   )

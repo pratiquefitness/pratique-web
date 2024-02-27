@@ -337,6 +337,11 @@ export default function Inicio() {
       <BemEstar />
 
       <div className="mt-126 flex flex-col mb-0">
+        <div className="mt-4 mb-2">
+          <Title level={3} className="m-0 ">
+            Evolua seu RESULTADO
+          </Title>
+        </div>
         <Text type="secondary">Exercícios e conteúdos para você</Text>
         <br />
         <br />
