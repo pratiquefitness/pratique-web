@@ -1,4 +1,4 @@
-import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Flex, Collapse, Typography, Image} from 'antd'
+import {Collapse, Typography} from 'antd'
 import Loading from '@/components/Loading'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
@@ -9,7 +9,7 @@ import {apiPratiquePro} from "@/services";
 import {Panel} from "@/components";
 import utils from "@/utils";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-const { Title, Text } = Typography;
+const { Text } = Typography;
 import IconPlay from '@/components/IconPlay/IconPlay'
 
 export default function ExerciciosView({exercises}) {
