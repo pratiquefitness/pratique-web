@@ -22,6 +22,7 @@ export default function Inicio() {
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
   //const isSaverAndClient = true
+  const isSaverSaudeAndPesonal = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const isSaverSaudeAndClient = true
   //  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
@@ -120,13 +121,7 @@ export default function Inicio() {
           }
         ]
       : []),
-    {
-      href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
-      image: '/images/sac.png',
-      isRounded: true,
-      alt: 'sua_pratique',
-      target: '_blank'
-    },
+
     ...(isSaverSaudeAndClient
       ? [
           {
@@ -138,6 +133,23 @@ export default function Inicio() {
           }
         ]
       : []),
+    ...(isSaverSaudeAndPesonal
+      ? [
+          {
+            action: dispatchSaverSaude,
+            image: '/images/saver_saude.png',
+            isRounded: true,
+            alt: 'saver_saude'
+          }
+        ]
+      : []),
+    {
+      href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
+      image: '/images/sac.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      target: '_blank'
+    },
     ...listaCarouselAreaCliente
   ]
 
