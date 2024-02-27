@@ -140,7 +140,7 @@ const routes = [
   {
     //title: 'Olá, #USUARIO#! Tenha um bom treino.',
     title: '',
-    href: '/demonstracao',
+    href: '/exercicios',
     showInNavigation: false
   },
 ]

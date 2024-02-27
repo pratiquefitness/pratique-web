@@ -1,5 +1,5 @@
 import { message } from 'antd'
-import { setData, setLoading, setLoadingPeso } from '../slices/demonstracao'
+import { setData, setLoading, setLoadingPeso } from '../slices/exercicios'
 import api from '@/services/api'
 
 export const getTreino = () => {

@@ -27,12 +27,16 @@ export const ExerciseAutocompleteInput = ({
 
   useEffect(() => {
     let opt = [];
+    let removeDuplicates = [];
     if(options.length) {
       opt = options.reduce((o, option) => {
         return [...o, {value: option.exercicio_nome}]
       }, []);
     }
-    setAutoCompleteOptions(opt)
+
+    const unique = [...new Map(opt.map(item => [item['value'], item])).values()];
+
+    setAutoCompleteOptions(unique)
   }, []);
 
   return (
@@ -123,5 +127,3 @@ export const ExerciseChoiceInput = ({
     </>
   );
 };
-
-

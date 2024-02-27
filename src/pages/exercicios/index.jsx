@@ -3,16 +3,16 @@ import Loading from '@/components/Loading'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
 import {updatePeso, getTreino} from '@/redux/actions/treino'
-import {setLoading} from '@/redux/slices/demonstracao'
+import {setLoading} from '@/redux/slices/exercicios'
 import {ExerciseAutocompleteInput, ExerciseChoiceInput} from 'src/components/ExerciseAutocompleteInput'
 import {apiPratiquePro} from "@/services";
 import {Panel} from "@/components";
 import utils from "@/utils";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
-export default function DemonstracaoView({exercises}) {
+export default function ExerciciosView({exercises}) {
   const dispatch = useDispatch()
-  const {loading, loadingPeso} = useSelector(state => state.demonstracao)
+  const {loading, loadingPeso} = useSelector(state => state.exercicios)
   const {data} = useSelector(state => state.treino)
   const [filterExercises, setFilterExercises] = useState([]);
   const [resetAutocomplete, setResetAutocomplete] = useState(false);
@@ -154,6 +154,20 @@ export default function DemonstracaoView({exercises}) {
 }
 
 export const getServerSideProps = async ({req}) => {
-  const exercises = await apiPratiquePro.exercicio.findMany();
+  const exercises = await apiPratiquePro.exercicio.findMany({
+    where: {
+      AND: [{
+        exercicio_nome: {not: ''}
+      }, {
+        exercicio_nome: {not: '# PROCURE O PROFESSOR'}
+      }],
+    },
+    orderBy: [
+      {
+        exercicio_nome: 'asc',
+      },
+    ],
+  })
+
   return {props: {exercises}}
 }

@@ -5,8 +5,8 @@ const initialState = {
   loadingPeso: false,
 }
 
-export const demonstracaoSlice = createSlice({
-  name: 'demonstracao',
+export const exerciciosSlice = createSlice({
+  name: 'exercicios',
   initialState,
   reducers: {
     setLoading(state, action) {
@@ -18,6 +18,6 @@ export const demonstracaoSlice = createSlice({
   }
 })
 
-export const { setLoading, setLoadingPeso } = demonstracaoSlice.actions
+export const { setLoading, setLoadingPeso } = exerciciosSlice.actions
 
-export default demonstracaoSlice
+export default exerciciosSlice
