@@ -20,8 +20,8 @@ export default function Inicio() {
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
-  // const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  const isSaverAndClient = true
+  const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  //const isSaverAndClient = true
 
   const isSaverSaudeAndClient = true
   //  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
