@@ -66,6 +66,15 @@ model fichas {
   data         DateTime @default(now()) @db.DateTime(0)
 }
 
+model ficha_avulsa {
+  id_ficha       Int      @id @default(autoincrement())
+  id_user        Int      @db.Int
+  videos         String   @db.VarChar(200)
+  nome_treino    String   @db.VarChar(200)
+  data_criacao   DateTime
+  data_update    DateTime @default(now())
+}
+
 model funcoes {
   funcao_id       Int    @id @default(autoincrement())
   funcao_nome     String @db.VarChar(100)
