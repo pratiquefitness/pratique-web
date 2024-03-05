@@ -5,13 +5,14 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
 import Link from 'next/link'
+import { format } from 'date-fns'
 
 const columns = [
   {
     title: 'Data',
     dataIndex: 'diagnose_data',
     key: 'diagnose_data',
-    render: text => (text ? text : '-')
+    render: text => (text ? format(new Date(text), 'dd-MM-yy') : '-')
   },
   {
     title: 'Método',
