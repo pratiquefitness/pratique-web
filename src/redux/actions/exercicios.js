@@ -1,15 +1,27 @@
 import { message } from 'antd'
-import { setData, setLoading, setLoadingPeso } from '../slices/exercicios'
+import {setLoading, setTreinoLivre, setListarTreino} from '../slices/exercicios'
 import api from '@/services/api'
 
-export const getTreino = () => {
-  return async (dispatch, getState) => {
-    const { login } = getState()
+export const getTreinoLivre = (id) => {
+  return async (dispatch) => {
     dispatch(setLoading(true))
     return api
-      .post('/treino', { email: login.usuario.user_email })
+      .post('/exercicios', {usuarioId: id})
       .then(res => {
-        dispatch(setData(res.data))
+        dispatch(setTreinoLivre(res.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+export const getMeusTreinos = (id) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true))
+    return api
+      .post('/meus_treinos', {id: id})
+      .then(res => {
+        dispatch(setListarTreino(res.data))
       })
       .finally(() => {
         dispatch(setLoading(false))
@@ -17,16 +29,32 @@ export const getTreino = () => {
   }
 }
 
-export const updatePeso = data => {
+export const saveTreinoLivre = data => {
   return async dispatch => {
-    dispatch(setLoadingPeso(true))
+    dispatch(setLoading(true))
     return api
-      .post('/treino/updatePeso', data)
+      .post('/exercicios/saveTreinoLivre', data)
       .then(() => {
-        message.success('Peso salvo com sucesso!')
+        message.success('Treino salvo com sucesso!')
+        dispatch(getTreinoLivre(data.id_user));
       })
       .finally(() => {
-        dispatch(setLoadingPeso(false))
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const deleteTreinoLivre = (id_ficha, id_user ) => {
+  return async dispatch => {
+    dispatch(setLoading(true))
+    return api
+      .post('/exercicios/deleteTreinoLivre', {id: id_ficha})
+      .then(() => {
+        message.success('Treino deletado com sucesso!')
+        dispatch(getTreinoLivre(id_user))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
       })
   }
 }

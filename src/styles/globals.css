@@ -290,3 +290,35 @@ body .ant-layout-footer {
 .ant-tabs .ant-tabs-tab + .ant-tabs-tab {
   margin: 0 0 0 15px;
 }
+
+.blink {
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; -webkit-box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; -moz-box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+}
+
+

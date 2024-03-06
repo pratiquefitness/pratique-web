@@ -24,6 +24,7 @@ model aulas {
   aula_minuto         String  @db.VarChar(20)
   aula_sprout         String? @db.VarChar(90)
   aula_capa_sprout    String? @db.VarChar(250)
+  aula_ordem          String? @db.VarChar(4)
 }
 
 model descontos {

@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd'
+import {Button, Col, Flex, Row, Space} from 'antd'
 import { usePathname, useRouter } from 'next/navigation'
 import { FaDiagnoses } from 'react-icons/fa'
 import { LuDumbbell, LuUserCheck } from 'react-icons/lu'
@@ -18,6 +18,11 @@ const navigation = [
     title: 'Diagnose',
     href: '/treino/diagnose',
     icon: <FaDiagnoses />
+  },
+  {
+    title: 'Treino Livre',
+    href: '/exercicios',
+    icon: <LuDumbbell />
   }
 ]
 
@@ -26,19 +31,20 @@ export default function Navigation() {
   const pathname = usePathname()
   return (
     <Row gutter={8}>
-      {navigation.map((item, key) => (
-        <Col flex="auto" key={key}>
+       <Space size={'small'}>
+        {navigation.map((item, key) => (
           <Button
             type={item.href === pathname ? 'primary' : 'default'}
             onClick={() => router.push(item.href)}
-            style={{ height: 'auto', display: 'block' }}
+            style={{height: 'auto', display: 'block', width: 'auto'}}
             block
+            key={key}
           >
             <div className='text-xlarge'>{item.icon}</div>
             <div>{item.title}</div>
           </Button>
-        </Col>
-      ))}
+        ))}
+      </Space>
     </Row>
   )
 }

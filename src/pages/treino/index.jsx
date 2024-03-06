@@ -129,6 +129,16 @@ export default function MeuTreinoView() {
                 : null}
             </Collapse>
             <div className="p-4 mt-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+              <Col span={24} className={"mb-8"}>
+                <Button
+                  className="text-white text-large blink"
+                  style={{background: 'green'}}
+                  block
+                  onClick={() => { router.push('/exercicios') }}
+                >
+                  MONTE SEU TREINO
+                </Button>
+              </Col>
               <Col span={24} className="mb-2">
                 <p className={`text-large text-center ${themeMode === 'light' ? 'text-black' : 'text-white'}`}>
                   Quer ajustar seu treino?

@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   loading: true,
-  loadingPeso: false,
+  treinoLivre: [],
+  listarTreino: []
 }
 
 export const exerciciosSlice = createSlice({
@@ -12,12 +13,15 @@ export const exerciciosSlice = createSlice({
     setLoading(state, action) {
       return { ...state, loading: action.payload }
     },
-    setLoadingPeso(state, action) {
-      return { ...state, loadingPeso: action.payload }
+    setTreinoLivre(state, action) {
+      return { ...state, treinoLivre: action.payload }
+    },
+    setListarTreino(state, action) {
+      return { ...state, listarTreino: action.payload }
     },
   }
 })
 
-export const { setLoading, setLoadingPeso } = exerciciosSlice.actions
+export const { setLoading, setTreinoLivre, setListarTreino } = exerciciosSlice.actions
 
 export default exerciciosSlice

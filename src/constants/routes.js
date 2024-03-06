@@ -143,6 +143,11 @@ const routes = [
     href: '/exercicios',
     showInNavigation: false
   },
+  {
+    title: 'Meus Treinos',
+    href: '/meus_treinos',
+    showInNavigation: false
+  },
 ]
 
 export default routes
