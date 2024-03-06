@@ -76,7 +76,7 @@ export default function ExerciciosView() {
               <br/><br/>
               <Modal
                 open={openModal.open}
-                title={'Crie o seu Treino Livre'}
+                title={'Crie o seu Treino'}
                 okButtonProps={{disabled: (nomeTreino.length < 1 || nomeTreino.length > 10)}}
                 onOk={handleForm}
                 onCancel={handleCancel}

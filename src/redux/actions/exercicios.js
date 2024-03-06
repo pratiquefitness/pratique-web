@@ -58,3 +58,18 @@ export const deleteTreinoLivre = (id_ficha, id_user ) => {
       })
   }
 }
+
+export const updateTreinoLivre = (data ) => {
+  return async dispatch => {
+    dispatch(setLoading(true))
+    return api
+      .post('/exercicios/updateTreinoLivre', {data: data})
+      .then(() => {
+        message.success('Treino deletado com sucesso!')
+        dispatch(getTreinoLivre(parseInt(data.id_user)))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}

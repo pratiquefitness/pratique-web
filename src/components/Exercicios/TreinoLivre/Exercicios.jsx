@@ -9,7 +9,8 @@ const {Text} = Typography;
 const Exercicios = ({
   treinoLivre,
   showModal = () => {},
-  selectedVideos = () => {}
+  selectedVideos = () => {},
+  showSaveButton = true
 }) => {
 
   const [filterExercises, setFilterExercises] = useState([]);
@@ -175,14 +176,19 @@ const Exercicios = ({
             })}
           </Collapse>
           <br/><br/>
-          <Flex justify={'center'} align={'flex-start'}>
-            <Button
-              style={{background: '#018000', color: 'white'}}
-              onClick={() => { showModal()}}
-            >
-              SALVAR TREINO
-            </Button>
-          </Flex>
+          {
+            showSaveButton &&
+            <Flex justify={'center'} align={'flex-start'}>
+              <Button
+                style={{background: '#018000', color: 'white'}}
+                onClick={() => {
+                  showModal()
+                }}
+              >
+                SALVAR TREINO
+              </Button>
+            </Flex>
+          }
         </>
       }
     </>

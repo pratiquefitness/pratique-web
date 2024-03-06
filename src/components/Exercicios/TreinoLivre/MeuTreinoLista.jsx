@@ -5,17 +5,15 @@ import ptBR from 'date-fns/locale/pt-BR';
 import {useDispatch} from "react-redux";
 import {deleteTreinoLivre} from "@/redux/actions/exercicios";
 import {ExclamationCircleFilled} from "@ant-design/icons";
-import {useState} from "react";
 const {confirm} = Modal;
-import EditarMeuTreino from "@/components/Exercicios/TreinoLivre/EditarMeuTreino";
+import {useRouter} from 'next/router';
 
 const MeuTreinoLista = ({
  treinoLivre,
  verMeusTreinos = () => {}
 }) => {
   const dispatch = useDispatch();
-  const [editarTreino, setEditarTreino] = useState(false);
-  const [treino, setTreino] = useState({});
+  const router= useRouter();
 
   const deleteTreino = (id_ficha, id_user) => {
     confirm({
@@ -36,14 +34,6 @@ const MeuTreinoLista = ({
 
   return (
     <>
-      {
-        editarTreino &&
-          <EditarMeuTreino
-            treino={treino}
-            exercises={treinoLivre.exercises}
-            editarTreino={() => setEditarTreino(false)}
-          />
-      }
       <Divider orientation="center"><Title level={3}>Meus Treinos</Title></Divider>
       <List
         header={
@@ -66,8 +56,9 @@ const MeuTreinoLista = ({
               label: (
                 <Text
                   onClick={() => {
-                    setEditarTreino(true);
-                    setTreino(item)
+                    router.push({
+                      pathname: `/editar_meus_treinos/${item.id_ficha}`,
+                    })
                   }}
                   type="warning">[Editar]
                 </Text>

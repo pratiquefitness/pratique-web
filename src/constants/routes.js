@@ -148,6 +148,11 @@ const routes = [
     href: '/meus_treinos',
     showInNavigation: false
   },
+  {
+    title: 'Editar Treino',
+    href: '/editar_meus_treinos',
+    showInNavigation: false
+  },
 ]
 
 export default routes
