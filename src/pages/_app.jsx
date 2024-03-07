@@ -1,22 +1,20 @@
-import Layout from '@/layout'
-import store from '@/redux/store'
-import { Provider } from 'react-redux'
-import { AuthProvider } from '@/contexts/AuthContext'
-import '@/styles/globals.css'
+import { useEffect } from 'react'
 import Head from 'next/head'
-import OneSignal from 'onesignal'
 
-export default function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    OneSignal.initialize('fef4bca8-b29c-43b2-8587-4447f7dbc98b', 'OTU2MTNjNWEtYjJmZi00M2JlLTk3YmItNjc0NjRjYWRiNzAy')
-
-    OneSignal.push(() => {
-      // O usuário deu permissão
+    // Configurar o OneSignal
+    const OneSignal = window.OneSignal || []
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: 'fef4bca8-b29c-43b2-8587-4447f7dbc98b'
+        // Outras configurações, se necessário
+      })
     })
 
-    OneSignal.onmessage(notification => {
-      // Tratar a notificação
-    })
+    return () => {
+      // Limpar ou desinscrever eventos, se necessário
+    }
   }, [])
 
   return (
@@ -26,13 +24,9 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, user-scalable=no" />
         <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
-      <Provider store={store}>
-        <AuthProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </AuthProvider>
-      </Provider>
+      <Component {...pageProps} />
     </>
   )
 }
+
+export default MyApp
