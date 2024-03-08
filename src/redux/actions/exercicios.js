@@ -35,7 +35,13 @@ export const saveTreinoLivre = data => {
     return api
       .post('/exercicios/saveTreinoLivre', data)
       .then(() => {
-        message.success('Treino salvo com sucesso!')
+        message.open({
+          type: 'success',
+          content: 'Treino salvo com sucesso!',
+          style: {
+            marginTop: '40vh',
+          },
+        });
         dispatch(getTreinoLivre(data.id_user));
       })
       .finally(() => {
@@ -50,7 +56,13 @@ export const deleteTreinoLivre = (id_ficha, id_user ) => {
     return api
       .post('/exercicios/deleteTreinoLivre', {id: id_ficha})
       .then(() => {
-        message.success('Treino deletado com sucesso!')
+        message.open({
+          type: 'success',
+          content: 'Treino deletado com sucesso!',
+          style: {
+            marginTop: '40vh',
+          },
+        });
         dispatch(getTreinoLivre(id_user))
       })
       .finally(() => {
@@ -65,7 +77,13 @@ export const updateTreinoLivre = (data ) => {
     return api
       .post('/exercicios/updateTreinoLivre', {data: data})
       .then(() => {
-        message.success('Treino deletado com sucesso!')
+        message.open({
+          type: 'success',
+          content: 'Treino atualizado com sucesso!',
+          style: {
+            marginTop: '40vh',
+          },
+        });
         dispatch(getTreinoLivre(parseInt(data.id_user)))
       })
       .finally(() => {
