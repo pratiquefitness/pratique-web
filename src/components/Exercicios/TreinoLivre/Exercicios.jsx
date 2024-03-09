@@ -1,12 +1,13 @@
 import {useState} from "react";
 import {Button, Checkbox, Flex, Typography, Collapse} from "antd";
 import {Panel} from "@/components";
-import {ExerciseAutocompleteInput, ExerciseChoiceInput} from 'src/components/Exercicios/ExerciseAutocompleteInput';
+import {ExerciseAutocompleteInput, ExerciseChoiceInput} from '@/components/Exercicios/ExerciseAutocompleteInput';
 import utils from "@/utils";
 import {MinusOutlined, PlusOutlined} from '@ant-design/icons';
 const {Text} = Typography;
+import CustomCheckbox from "@/components/Exercicios/TreinoLivre/styles";
 
-const Exercicios = ({
+const exercicios = ({
   treinoLivre,
   showModal = () => {},
   selectedVideos = () => {},
@@ -71,7 +72,8 @@ const Exercicios = ({
     <>
       <Flex justify={'space-between'} align={'center'}>
         <span style={{color: '#fff'}}> {video.exercicio_nome}</span>
-        <Checkbox
+        <CustomCheckbox
+          style={{backgroundColor: '#018000'}}
           onChange={(e) => onChangeCheckbox(e, video)}
           onClick={(event) => {
             event.stopPropagation();
@@ -83,34 +85,6 @@ const Exercicios = ({
 
   return (
     <>
-      <div className="mt-4 text-center">
-        <Text>
-          Pesquise em nosso <Text strong>Acervo</Text>
-        </Text>
-      </div>
-      <div className="text-center">
-        <Text strong>
-          de +300 exercícios com VÍDEOS
-        </Text>
-      </div>
-      <div className="text-center">
-        <Text>
-          demonstrativos e monte seu próprio
-        </Text>
-      </div>
-      <div className="text-center">
-        <Text>
-          treino. Voçê pode pesquisar por
-        </Text>
-      </div>
-      <div className="text-center">
-        <Text strong>grupo muscular</Text> ou <Text strong>pesquisa livre.</Text>
-      </div>
-      <div className="text-center  mb-4">
-        <Text strong type={'danger'}>
-          Tenha uma boa pesquisa!
-        </Text>
-      </div>
       {
         treinoLivre?.exercises?.length > 0 &&
         <>
@@ -195,4 +169,4 @@ const Exercicios = ({
   );
 }
 
-export default Exercicios
+export default exercicios

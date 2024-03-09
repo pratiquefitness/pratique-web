@@ -13,7 +13,7 @@ import {useRouter} from 'next/router';
 import {useDispatch} from "react-redux";
 import {getMeusTreinos, getTreinoLivre, updateTreinoLivre} from "@/redux/actions/exercicios";
 import FormTreino from "@/components/Exercicios/TreinoLivre/FormTreino";
-import Exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
+import exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
 import TreinoLayout from "@/pages/treino/_Layout";
 const {Title} = Typography;
 
@@ -107,16 +107,7 @@ export default function EditarMeusTreinos() {
           {
             typeof meuTreino !== 'undefined' && Object.keys(meuTreino).length > 0 ? (
                 <>
-                  <Exercicios
-                    treinoLivre={treinoLivre}
-                    showModal={showModal}
-                    selectedVideos={(value) => {
-                      setTreinoVideo([...new Set([...treinoVideo, ...value])])
-                    }}
-                    showSaveButton={false}
-                  />
-                  <br/><br/>
-                  <Divider orientation="center"><Title level={3}>Treino a ser Editado</Title></Divider>
+                  <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
                   <Collapse
                     className="collapse-treino"
                     style={{backgroundColor: 'rgb(237, 20, 61)'}}
@@ -165,6 +156,15 @@ export default function EditarMeusTreinos() {
                         null
                     }
                   </Collapse>
+                  <br/><br/>
+                  <exercicios
+                    treinoLivre={treinoLivre}
+                    showModal={showModal}
+                    selectedVideos={(value) => {
+                      setTreinoVideo([...new Set([...treinoVideo, ...value])])
+                    }}
+                    showSaveButton={false}
+                  />
                   <Modal
                     open={openModal}
                     title={'Edite o nome do seu Treino'}

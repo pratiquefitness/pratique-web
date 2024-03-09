@@ -8,7 +8,7 @@ import {ExclamationCircleFilled} from "@ant-design/icons";
 const {confirm} = Modal;
 import {useRouter} from 'next/router';
 
-const MeuTreinoLista = ({
+const TreinosLivresSalvos = ({
  treinoLivre,
  verMeusTreinos = () => {}
 }) => {
@@ -34,7 +34,7 @@ const MeuTreinoLista = ({
 
   return (
     <>
-      <Divider orientation="center"><Title level={3}>Meus Treinos</Title></Divider>
+      <Divider orientation="center"><Title level={3}>Treinos Livres Salvos</Title></Divider>
       <List
         header={
           <Flex
@@ -115,4 +115,4 @@ const MeuTreinoLista = ({
   )
 }
 
-export default MeuTreinoLista;
+export default TreinosLivresSalvos;

@@ -1,4 +1,4 @@
-import {Modal} from 'antd'
+import {Modal, Typography} from 'antd'
 import Loading from '@/components/Loading'
 import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
@@ -6,9 +6,10 @@ import FormTreino from '@/components/Exercicios/TreinoLivre/FormTreino'
 import {formatISO} from 'date-fns';
 import TreinoLayout from "@/pages/treino/_Layout";
 import {getTreinoLivre, saveTreinoLivre} from "@/redux/actions/exercicios";
-import MeuTreinoLista from "@/components/Exercicios/TreinoLivre/MeuTreinoLista";
+import TreinosLivresSalvos from "@/components/Exercicios/TreinoLivre/TreinosLivresSalvos";
 import Exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
 import VerTreinoEscolhido from "@/components/Exercicios/TreinoLivre/VerMeuTreino";
+const {Text} = Typography;
 
 export default function ExerciciosView() {
   const dispatch = useDispatch()
@@ -66,6 +67,34 @@ export default function ExerciciosView() {
         {
           !verMeusTreinos ?
             <>
+              <div className="mt-4 text-center">
+                <Text>
+                  Pesquise em nosso <Text strong>Acervo</Text>
+                </Text>
+              </div>
+              <div className="text-center">
+                <Text strong>
+                  de +300 exercícios com VÍDEOS
+                </Text>
+              </div>
+              <div className="text-center">
+                <Text>
+                  demonstrativos e monte seu próprio
+                </Text>
+              </div>
+              <div className="text-center">
+                <Text>
+                  treino. Voçê pode pesquisar por
+                </Text>
+              </div>
+              <div className="text-center">
+                <Text strong>grupo muscular</Text> ou <Text strong>pesquisa livre.</Text>
+              </div>
+              <div className="text-center  mb-4">
+                <Text strong type={'danger'}>
+                  Tenha uma boa pesquisa!
+                </Text>
+              </div>
               <Exercicios
                 treinoLivre={treinoLivre}
                 showModal={showModal}
@@ -88,7 +117,7 @@ export default function ExerciciosView() {
                   nome={nomeTreino}
                 />
               </Modal>
-              <MeuTreinoLista
+              <TreinosLivresSalvos
                 verMeusTreinos={(value, ver) => {
                   setTreino(value);
                   setVerMeusTreinos(ver)
