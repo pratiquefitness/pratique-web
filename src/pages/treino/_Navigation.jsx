@@ -29,6 +29,7 @@ const navigation = [
 export default function Navigation() {
   const router = useRouter()
   const pathname = usePathname()
+  const mediaScreen= window.matchMedia("(max-width: 375px)");
   return (
     <Row gutter={8}>
        <Space size={'small'}>
@@ -39,6 +40,7 @@ export default function Navigation() {
             style={{height: 'auto', display: 'block', width: 'auto'}}
             block
             key={key}
+            size={mediaScreen.matches ? 'small' : undefined}
           >
             <div className='text-xlarge'>{item.icon}</div>
             <div>{item.title}</div>

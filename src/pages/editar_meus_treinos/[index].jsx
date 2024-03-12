@@ -1,8 +1,4 @@
-import {
-  Button, Checkbox,
-  Collapse, Divider,
-  Empty, Flex, Form, Input, Modal, Typography
-} from 'antd'
+import { Button, Checkbox, Collapse, Divider, Empty, Flex, Form, Input, Modal, Typography } from 'antd'
 import Loading from '@/components/Loading'
 import {Panel} from "@/components";
 import utils from "@/utils";
@@ -33,13 +29,6 @@ export default function EditarMeusTreinos() {
   const dispatch = useDispatch();
   const [nomeTreino, setNomeTreino] = useState(meuTreino.nome_treino);
   const [openModal, setOpenModal] = useState(meuTreino.nome_treino);
-
-
-  const router = useRouter();
-  const [listarVideos, setListarVideos] = useState([]);
-  //const [treinoVideo, setTreinoVideo] = useState([]);
-  const [checked, setChecked] = useState(true);
-  const [fichaId, setFichaId] = useState(0);
 
   useEffect(() => {
     dispatch(getTreinoLivre(parseInt(usuario.ID)))
@@ -87,13 +76,9 @@ export default function EditarMeusTreinos() {
 
     console.log(selectedExercise);
     setSelectedExercises(JSON.parse(JSON.stringify(selectedExercise)));
-    //dispatch(setTreinoLivre([...treinoLivre.meus_treinos[0].exercicios, ...selectedExercise]));
-    //selected(selectedExercise);
   }
 
-  //console.log(treinoLivre);
   console.log(selectedExercises);
-  console.log(addExtraExercises);
 
   const showModal = () => {
     setOpenModal(true);
@@ -118,11 +103,6 @@ export default function EditarMeusTreinos() {
     setOpenModal(false);
   };
 
-  /*console.log(meuTreino)
-  console.log(listarVideos)*/
-  //console.log(treinoLivre)
-  console.log(nomeTreino)
-
   const setCargaExercicio = (allFields) => {
     allFields.map((field) => {
       if(selectedExercises.exercicios.length) {
@@ -133,7 +113,6 @@ export default function EditarMeusTreinos() {
         });
       }
     });
-     console.log(allFields, selectedExercises);
   }
 
   return (
@@ -142,16 +121,17 @@ export default function EditarMeusTreinos() {
         <Loading spinning={loading}>
           {
             typeof selectedExercises !== 'undefined' && Object.keys(selectedExercises).length > 0 ? (
-                <>
-                  <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
-                  <Collapse
-                    bordered={true}
-                    className="collapse-treino"
-                    style={{backgroundColor: 'rgb(237, 20, 61)'}}
-                    expandIcon={({isActive}) => !isActive ?
-                      <PlusOutlined style={{color: '#fff'}}/> :
-                      <MinusOutlined style={{color: '#fff'}}/>
-                    }
+              <>
+                <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
+                <Collapse
+                  defaultActiveKey={['0']}
+                  bordered={true}
+                  className="collapse-treino"
+                  style={{backgroundColor: 'rgb(237, 20, 61)'}}
+                  expandIcon={({isActive}) => !isActive ?
+                    <PlusOutlined style={{color: '#fff'}}/> :
+                    <MinusOutlined style={{color: '#fff'}}/>
+                  }
                   >
                     {
                       !loading
@@ -168,134 +148,135 @@ export default function EditarMeusTreinos() {
                               return (
                                 <Panel
                                   style={{backgroundColor: 'rgb(237, 20, 61)'}}
-                                  header={genExtra(video)}
-                                  key={key}
-                                >
-                                  <Form
-                                    layout="vertical"
-                                    className="mb-4"
-                                    form={form}
-                                    fields={fields}
-                                    onFieldsChange={(_, allFields) => {
-                                      setCargaExercicio(_, allFields);
-                                    }}
-                                  >
-                                    <Form.Item
-                                      name={video.exercicio_id}
-                                      initialValue={video?.exercicio_carga || ''}
-                                      label={'Carga'}
+                                    header={genExtra(video)}
+                                    key={key}
                                     >
-                                      <Input
-                                        placeholder="Anote o peso do seu exercicio..."
-                                      />
-                                    </Form.Item>
-                                  </Form>
-                                  <p>
-                                    <iframe
-                                      width="100%"
-                                      height="200px"
-                                      src={`${utils.convertToYouTubeEmbedUrl(
-                                        video.exercicio_url
-                                      )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
-                                      frameBorder="0"
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                      allowFullScreen=""
-                                    ></iframe>
-                                    {utils.utf8Decode(video.exercicio_descricao)}
-                                  </p>
+                                      <Form
+                                        layout="vertical"
+                                        className="mb-4"
+                                        form={form}
+                                        fields={fields}
+                                        onFieldsChange={(_, allFields) => {
+                                          setCargaExercicio(_, allFields);
+                                        }}
+                                      >
+                                        <Form.Item
+                                          name={video.exercicio_id}
+                                          initialValue={video?.exercicio_carga || ''}
+                                          label={'Carga'}
+                                        >
+                                          <Input
+                                            placeholder="Anote o peso do seu exercicio..."
+                                          />
+                                        </Form.Item>
+                                      </Form>
+                                        <p>
+                                          <iframe
+                                            width="100%"
+                                            height="200px"
+                                            src={`${utils.convertToYouTubeEmbedUrl(
+                                                video.exercicio_url
+                                            )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen=""
+                                          ></iframe>
+                                            {utils.utf8Decode(video.exercicio_descricao)}
+                                          </p>
+                                        </Panel>
+                                      )
+                                    })}
+                                  </Collapse>
                                 </Panel>
-                              )
-                            })}
-                          </Collapse>
-                        </Panel>
-                        :
-                        null
-                    }
-                  </Collapse>
-                  <Divider orientation="center"></Divider>
-                  <br/>
-                  <Flex justify={'center'} align={'flex-start'} vertical>
-                    <Button
-                        block
-                        style={{background: '#018000', color: 'white'}}
-                        onClick={() => {
-                          showModal()
-                        }}
-                    >
-                      SALVAR MEU TREINO
-                    </Button>
-                    <br />
-                    <Button
-                        block
-                        style={{background: 'blue', color: 'white'}}
-                        onClick={() => {
-                          setExibirExercicios(true);
-                        }}
-                    >
-                      EXIBIR EXERCÍCIOS
-                    </Button>
-                  </Flex>
-
-                  {
-                    exibirExercicios &&
-                    <>
-                      <br/><br/><br/><br/>
-                      <Divider orientation="center"><Title level={3}>Adicionar Exercícios</Title></Divider>
-                      <Exercicios
-                        checked={selectedExercises.exercicios}
-                        treinoLivre={treinoLivre}
-                        showModal={showModal}
-                        selected={(value) => {
-                          setAddExtraExercises(prevState => ({
-                            ...prevState,
-                            extra: value
-                          }));
-                        }}
-                        showSaveButton={false}
-                      />
-                      <br/><br/>
-                      <Flex justify={'center'} align={'flex-start'}>
-                        <Button
+                                :
+                                null
+                          }
+                        </Collapse>
+                        <Divider orientation="center"></Divider>
+                        <br/>
+                        <Flex justify={'center'} align={'flex-start'} vertical>
+                          <Button
+                            block
                             style={{background: '#018000', color: 'white'}}
                             onClick={() => {
-                              setExibirExercicios(false)
-                              setSelectedExercises(prevState => ({
-                                ...prevState,
-                                exercicios: JSON.parse(JSON.stringify([...prevState.exercicios, ...addExtraExercises.extra]))
-                              }))
+                              showModal()
                             }}
+                          >
+                            SALVAR MEU TREINO
+                          </Button>
+                          <br/>
+                          <Button
+                            block
+                            style={{background: 'blue', color: 'white'}}
+                            onClick={() => {
+                              setExibirExercicios(true);
+                              window.scrollTo(0, document.body.scrollHeight);
+                            }}
+                          >
+                            EXIBIR EXERCÍCIOS
+                          </Button>
+                        </Flex>
+
+                        {
+                          exibirExercicios &&
+                          <>
+                            <br/><br/><br/><br/>
+                            <Divider orientation="center"><Title level={3}>Adicionar Exercícios</Title></Divider>
+                            <Exercicios
+                              checked={selectedExercises.exercicios}
+                              treinoLivre={treinoLivre}
+                              showModal={showModal}
+                              selected={(value) => {
+                                setAddExtraExercises(prevState => ({
+                                  ...prevState,
+                                  extra: value
+                                }));
+                              }}
+                                showSaveButton={false}
+                            />
+                              <br/><br/>
+                              <Flex justify={'center'} align={'flex-start'}>
+                                <Button
+                                  style={{background: '#018000', color: 'white'}}
+                                  onClick={() => {
+                                    setExibirExercicios(false)
+                                    setSelectedExercises(prevState => ({
+                                      ...prevState,
+                                      exercicios: JSON.parse(JSON.stringify([...prevState.exercicios, ...addExtraExercises.extra]))
+                                    }))
+                                  }}
+                                >
+                                  ADICIONAR SELECIONADOS AO TREINO
+                                </Button>
+                              </Flex>
+                            </>
+                        }
+                        <Modal
+                          open={openModal}
+                          title={'Edite o nome do seu Treino'}
+                          okButtonProps={{
+                            disabled: (nomeTreino?.length < 1 || nomeTreino?.length > 10),
+                            style: {backgroundColor: 'green', color: '#fff'}
+                          }}
+                          okText={'Salvar'}
+                          onOk={handleForm}
+                          onCancel={handleCancel}
                         >
-                          ADICIONAR SELECIONADOS AO TREINO
-                        </Button>
-                      </Flex>
-                    </>
-                  }
-                  <Modal
-                    open={openModal}
-                    title={'Edite o nome do seu Treino'}
-                    okButtonProps={{
-                      disabled: (nomeTreino?.length < 1 || nomeTreino?.length > 10),
-                      style: { backgroundColor: 'green', color: '#fff' }
-                    }}
-                    okText={'Salvar'}
-                    onOk={handleForm}
-                    onCancel={handleCancel}
-                  >
-                    <FormTreino
-                      onSetNomeTreino={(value) => {
-                        setNomeTreino(value)
-                      }}
-                      nome={nomeTreino}
-                    />
-                  </Modal>
-                  <br/><br/>
-                </>
-              )
-              :
-              <Empty className="my-8"/>
-          }
-        </Loading>
-      </TreinoLayout>
-    </>
+                          <FormTreino
+                            onSetNomeTreino={(value) => {
+                              setNomeTreino(value)
+                            }}
+                            nome={nomeTreino}
+                          />
+                        </Modal>
+                        <br/><br/>
+                      </>
+                  )
+                  :
+                <Empty className="my-8"/>
+            }
+          </Loading>
+        </TreinoLayout>
+      </>
   )
 }
