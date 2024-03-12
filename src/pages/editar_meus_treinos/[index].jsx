@@ -100,7 +100,7 @@ export default function EditarMeusTreinos() {
   };
 
   const onSaveTreino = () => {
-    setExibirExercicios(exibirExercicios);
+    setExibirExercicios(false);
     dispatch(updateTreinoLivre({
       id_user: usuario.ID,
       id_ficha: selectedExercises.id_ficha,
