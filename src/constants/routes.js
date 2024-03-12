@@ -149,7 +149,7 @@ const routes = [
     showInNavigation: false
   },
   {
-    title: 'Editar Treino',
+    title: 'Editar Treino Livre',
     href: '/editar_meus_treinos',
     showInNavigation: false
   },

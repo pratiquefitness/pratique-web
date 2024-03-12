@@ -42,7 +42,7 @@ const FormTreino = ({
             message: 'Máximo 10 caracteres!',
           },
         ]}>
-          <Input onChange={onChange} autoFocus/>
+          <Input defaultValue={nome || ''} onChange={onChange} autoFocus/>
         </Form.Item>
       </Form>
     </>

@@ -25,7 +25,12 @@ export default async function handler(req, res) {
   data.meus_treinos = await apiPratiquePro.ficha_avulsa.findMany({
     where: {
       id_user: parseInt(req.body.usuarioId)
-    }
+    },
+    orderBy: [
+      {
+        data_criacao: 'desc',
+      },
+    ],
   });
 
   res.status(200).json(data)

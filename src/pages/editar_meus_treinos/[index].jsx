@@ -1,7 +1,7 @@
 import {
   Button, Checkbox,
   Collapse, Divider,
-  Empty, Flex, Modal, Typography
+  Empty, Flex, Form, Input, Modal, Typography
 } from 'antd'
 import Loading from '@/components/Loading'
 import {Panel} from "@/components";
@@ -11,9 +11,9 @@ import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import {useRouter} from 'next/router';
 import {useDispatch} from "react-redux";
-import {getMeusTreinos, getTreinoLivre, updateTreinoLivre} from "@/redux/actions/exercicios";
+import {getTreinoLivre, updateTreinoLivre} from "@/redux/actions/exercicios";
 import FormTreino from "@/components/Exercicios/TreinoLivre/FormTreino";
-import exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
+import Exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
 import TreinoLayout from "@/pages/treino/_Layout";
 const {Title} = Typography;
 
@@ -21,26 +21,43 @@ export default function EditarMeusTreinos() {
   const {loading} = useSelector(state => state.exercicios);
   const {usuario} = useSelector(state => state.login)
   const {treinoLivre} = useSelector(state => state.exercicios);
-  const [treinoVideo, setTreinoVideo] = useState([]);
-  const [listarVideos, setListarVideos] = useState([]);
+  const [form] = Form.useForm();
+  const [fields, setFields] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState({});
+  const [exibirExercicios, setExibirExercicios] = useState(false);
+  const [addExtraExercises, setAddExtraExercises] = useState({
+    extra: []
+  });
+
   const [meuTreino, setMeuTreino] = useState([]);
-  const router = useRouter();
   const dispatch = useDispatch();
-  const [checked, setChecked] = useState(true);
   const [nomeTreino, setNomeTreino] = useState(meuTreino.nome_treino);
   const [openModal, setOpenModal] = useState(meuTreino.nome_treino);
+
+
+  const router = useRouter();
+  const [listarVideos, setListarVideos] = useState([]);
+  //const [treinoVideo, setTreinoVideo] = useState([]);
+  const [checked, setChecked] = useState(true);
   const [fichaId, setFichaId] = useState(0);
 
   useEffect(() => {
     dispatch(getTreinoLivre(parseInt(usuario.ID)))
   }, []);
 
+  useEffect(() => {
+    if(treinoLivre.meus_treinos?.length > 0){
+      setSelectedExercises(JSON.parse(JSON.stringify(treinoLivre.meus_treinos[0])));
+      setNomeTreino(treinoLivre.meus_treinos[0].nome_treino);
+    }
+  }, [treinoLivre]);
+
   const genExtra = (video) => (
     <>
       <Flex justify={'space-between'} align={'center'}>
         <span style={{color: '#fff'}}> {video.exercicio_nome}</span>
         <Checkbox
-          defaultChecked={checked}
+          defaultChecked={true}
           value={video.exercicio_id}
           onChange={(e) => onChangeCheckbox(e, video)}
           onClick={(event) => {
@@ -52,38 +69,43 @@ export default function EditarMeusTreinos() {
   );
 
   const onChangeCheckbox = (e, video) => {
-    setChecked(false);
-    let selectedVideo = e.target.checked ? [...treinoVideo, String(video.exercicio_id)] : treinoVideo;
+    let cloneObj = {};
+    let selectedExercise = {};
 
-    selectedVideo = !e.target.checked ?
-      treinoVideo.filter(treino => treino !== String(video.exercicio_id)) :
-      [...new Set(selectedVideo)];
+    if(e.target.checked) {
+      cloneObj = JSON.parse(JSON.stringify(selectedExercises.exercicios.find(ex => ex.exercicio_id === video.exercicio_id)));
+      cloneObj = structuredClone(cloneObj);
+      cloneObj['exercicio_carga'] = '';
+    } else {
+      form.setFieldsValue( { [video.exercicio_id]: '' } );
+    }
 
-    setTreinoVideo(selectedVideo);
+    selectedExercise = e.target.checked ? [...selectedExercises.exercicios, cloneObj] : selectedExercises;
+    selectedExercise = !e.target.checked ?
+        selectedExercises.exercicios.filter(treino => treino.exercicio_id !== video.exercicio_id) :
+        [...new Set(selectedExercise)];
+
+    console.log(selectedExercise);
+    setSelectedExercises(JSON.parse(JSON.stringify(selectedExercise)));
+    //dispatch(setTreinoLivre([...treinoLivre.meus_treinos[0].exercicios, ...selectedExercise]));
+    //selected(selectedExercise);
   }
 
-  useEffect(() => {
-    if(Object.keys(treinoLivre).length) {
-      const meuTreino = treinoLivre.meus_treinos.find((treino) => treino.id_ficha === parseInt(router.query.index));
-      const meusVideos = meuTreino.videos.split(',');
-      const listarVideos = treinoLivre.exercises.filter(lista => meusVideos.includes(String(lista.exercicio_id)));
-      setListarVideos(listarVideos);
-      setMeuTreino(meuTreino);
-      setTreinoVideo(meusVideos);
-      setFichaId(meuTreino.id_ficha)
-    }
-  }, [treinoLivre]);
+  //console.log(treinoLivre);
+  console.log(selectedExercises);
+  console.log(addExtraExercises);
 
   const showModal = () => {
     setOpenModal(true);
   };
 
   const onSaveTreino = () => {
+    setExibirExercicios(exibirExercicios);
     dispatch(updateTreinoLivre({
       id_user: usuario.ID,
-      id_ficha: fichaId,
+      id_ficha: selectedExercises.id_ficha,
       nome_treino: nomeTreino,
-      videos: treinoVideo.toString()
+      exercicios: selectedExercises.exercicios
     }));
   }
 
@@ -96,19 +118,34 @@ export default function EditarMeusTreinos() {
     setOpenModal(false);
   };
 
-  console.log(meuTreino)
-  console.log(listarVideos)
-  console.log(treinoVideo)
+  /*console.log(meuTreino)
+  console.log(listarVideos)*/
+  //console.log(treinoLivre)
+  console.log(nomeTreino)
+
+  const setCargaExercicio = (allFields) => {
+    allFields.map((field) => {
+      if(selectedExercises.exercicios.length) {
+        selectedExercises.exercicios.find((exercicio) => {
+          if(field.name[0] === exercicio.exercicio_id) {
+            exercicio.exercicio_carga = field.value;
+          }
+        });
+      }
+    });
+     console.log(allFields, selectedExercises);
+  }
 
   return (
     <>
       <TreinoLayout>
         <Loading spinning={loading}>
           {
-            typeof meuTreino !== 'undefined' && Object.keys(meuTreino).length > 0 ? (
+            typeof selectedExercises !== 'undefined' && Object.keys(selectedExercises).length > 0 ? (
                 <>
                   <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
                   <Collapse
+                    bordered={true}
                     className="collapse-treino"
                     style={{backgroundColor: 'rgb(237, 20, 61)'}}
                     expandIcon={({isActive}) => !isActive ?
@@ -122,18 +159,37 @@ export default function EditarMeusTreinos() {
                         <Panel
                           header={
                             <Flex justify={'space-between'} align={'center'}>
-                              <span style={{color: '#fff'}}> {meuTreino.nome_treino}</span>
+                              <span style={{color: '#fff'}}> {selectedExercises.nome_treino}</span>
                             </Flex>}
                           key={0}
                         >
                           <Collapse className="collapse-treino">
-                            {listarVideos.map((video, key) => {
+                            {selectedExercises.exercicios.map((video, key) => {
                               return (
                                 <Panel
                                   style={{backgroundColor: 'rgb(237, 20, 61)'}}
                                   header={genExtra(video)}
                                   key={key}
                                 >
+                                  <Form
+                                    layout="vertical"
+                                    className="mb-4"
+                                    form={form}
+                                    fields={fields}
+                                    onFieldsChange={(_, allFields) => {
+                                      setCargaExercicio(_, allFields);
+                                    }}
+                                  >
+                                    <Form.Item
+                                      name={video.exercicio_id}
+                                      initialValue={video?.exercicio_carga || ''}
+                                      label={'Carga'}
+                                    >
+                                      <Input
+                                        placeholder="Anote o peso do seu exercicio..."
+                                      />
+                                    </Form.Item>
+                                  </Form>
                                   <p>
                                     <iframe
                                       width="100%"
@@ -156,19 +212,72 @@ export default function EditarMeusTreinos() {
                         null
                     }
                   </Collapse>
-                  <br/><br/>
-                  <exercicios
-                    treinoLivre={treinoLivre}
-                    showModal={showModal}
-                    selectedVideos={(value) => {
-                      setTreinoVideo([...new Set([...treinoVideo, ...value])])
-                    }}
-                    showSaveButton={false}
-                  />
+                  <Divider orientation="center"></Divider>
+                  <br/>
+                  <Flex justify={'center'} align={'flex-start'} vertical>
+                    <Button
+                        block
+                        style={{background: '#018000', color: 'white'}}
+                        onClick={() => {
+                          showModal()
+                        }}
+                    >
+                      SALVAR MEU TREINO
+                    </Button>
+                    <br />
+                    <Button
+                        block
+                        style={{background: 'blue', color: 'white'}}
+                        onClick={() => {
+                          setExibirExercicios(true);
+                        }}
+                    >
+                      EXIBIR EXERCÍCIOS
+                    </Button>
+                  </Flex>
+
+                  {
+                    exibirExercicios &&
+                    <>
+                      <br/><br/><br/><br/>
+                      <Divider orientation="center"><Title level={3}>Adicionar Exercícios</Title></Divider>
+                      <Exercicios
+                        checked={selectedExercises.exercicios}
+                        treinoLivre={treinoLivre}
+                        showModal={showModal}
+                        selected={(value) => {
+                          setAddExtraExercises(prevState => ({
+                            ...prevState,
+                            extra: value
+                          }));
+                        }}
+                        showSaveButton={false}
+                      />
+                      <br/><br/>
+                      <Flex justify={'center'} align={'flex-start'}>
+                        <Button
+                            style={{background: '#018000', color: 'white'}}
+                            onClick={() => {
+                              setExibirExercicios(false)
+                              setSelectedExercises(prevState => ({
+                                ...prevState,
+                                exercicios: JSON.parse(JSON.stringify([...prevState.exercicios, ...addExtraExercises.extra]))
+                              }))
+                            }}
+                        >
+                          ADICIONAR SELECIONADOS AO TREINO
+                        </Button>
+                      </Flex>
+                    </>
+                  }
                   <Modal
                     open={openModal}
                     title={'Edite o nome do seu Treino'}
-                    okButtonProps={{disabled: (nomeTreino?.length < 1 || nomeTreino?.length > 10)}}
+                    okButtonProps={{
+                      disabled: (nomeTreino?.length < 1 || nomeTreino?.length > 10),
+                      style: { backgroundColor: 'green', color: '#fff' }
+                    }}
+                    okText={'Salvar'}
                     onOk={handleForm}
                     onCancel={handleCancel}
                   >
@@ -179,17 +288,6 @@ export default function EditarMeusTreinos() {
                       nome={nomeTreino}
                     />
                   </Modal>
-                  <br/><br/>
-                  <Flex justify={'center'} align={'flex-start'}>
-                    <Button
-                      style={{background: '#018000', color: 'white'}}
-                      onClick={() => {
-                        showModal()
-                      }}
-                    >
-                      EDITAR TREINO
-                    </Button>
-                  </Flex>
                   <br/><br/>
                 </>
               )

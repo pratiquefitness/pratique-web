@@ -1,33 +1,57 @@
 import {useState} from "react";
-import {Button, Checkbox, Flex, Typography, Collapse} from "antd";
+import {Button, Flex, Collapse, Form, Input} from "antd";
 import {Panel} from "@/components";
 import {ExerciseAutocompleteInput, ExerciseChoiceInput} from '@/components/Exercicios/ExerciseAutocompleteInput';
 import utils from "@/utils";
 import {MinusOutlined, PlusOutlined} from '@ant-design/icons';
-const {Text} = Typography;
 import CustomCheckbox from "@/components/Exercicios/TreinoLivre/styles";
 
-const exercicios = ({
+const Exercicios = ({
   treinoLivre,
   showModal = () => {},
-  selectedVideos = () => {},
-  showSaveButton = true
+  selected = () => {},
+  checked = [],
+  showSaveButton = true,
 }) => {
 
   const [filterExercises, setFilterExercises] = useState([]);
   const [resetAutocomplete, setResetAutocomplete] = useState(false);
   const [resetSelect, setResetSelect] = useState(false);
-  const [treinoVideo, setTreinoVideo] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState([]);
+  const [form] = Form.useForm();
+  const [fields, setFields] = useState([]);
 
   const onChangeCheckbox = (e, video) => {
-    let selectedVideo = e.target.checked ? [...treinoVideo, video.exercicio_id] : treinoVideo;
+    let cloneObj = {}
 
-    selectedVideo = !e.target.checked ?
-      treinoVideo.filter(treino => treino !== video.exercicio_id) :
-      [...new Set(selectedVideo)];
+    if(e.target.checked) {
+      cloneObj = JSON.parse(JSON.stringify(treinoLivre.exercises.find(ex => ex.exercicio_id === video.exercicio_id)));
+      cloneObj = structuredClone(cloneObj);
+      cloneObj['exercicio_carga'] = '';
+    } else {
+      form.setFieldsValue( { [video.exercicio_id]: '' } )
+    }
 
-    setTreinoVideo(selectedVideo);
-    selectedVideos(selectedVideo);
+    let selectedExercise = e.target.checked ? [...selectedExercises, cloneObj] : selectedExercises;
+
+    selectedExercise = !e.target.checked ?
+      selectedExercises.filter(treino => treino.exercicio_id !== video.exercicio_id) :
+      [...new Set(selectedExercise)];
+
+    setSelectedExercises(selectedExercise);
+    selected(selectedExercise);
+  }
+
+  const setCargaExercicio = (allFields) => {
+    allFields.map((field) => {
+      if(selectedExercises.length) {
+        selectedExercises.find((exercicio) => {
+          if(field.name[0] === exercicio.exercicio_id) {
+            exercicio.exercicio_carga = field.value;
+          }
+        });
+      }
+    });
   }
 
   const hasFilterExercise = (value) => {
@@ -73,7 +97,12 @@ const exercicios = ({
       <Flex justify={'space-between'} align={'center'}>
         <span style={{color: '#fff'}}> {video.exercicio_nome}</span>
         <CustomCheckbox
+          defaultChecked={
+            selectedExercises.find(ex => ex.exercicio_id === video.exercicio_id) ||
+            checked?.find(ck => ck.exercicio_id === video.exercicio_id)
+          }
           style={{backgroundColor: '#018000'}}
+          name={`checkbox_${video.exercicio_id}`}
           onChange={(e) => onChangeCheckbox(e, video)}
           onClick={(event) => {
             event.stopPropagation();
@@ -82,6 +111,8 @@ const exercicios = ({
       </Flex>
     </>
   );
+
+  console.log(selectedExercises)
 
   return (
     <>
@@ -131,16 +162,36 @@ const exercicios = ({
             {filterExercises.map((video, key) => {
               return (
                 <Panel header={genExtra(video)} key={key}>
+                  <Form
+                    layout="vertical"
+                    className="mb-4"
+                    form={form}
+                    fields={fields}
+                    onFieldsChange={(_, allFields) => {
+                      setCargaExercicio(_, allFields);
+                    }}
+                  >
+                    <Form.Item
+                      name={video.exercicio_id}
+                      initialValue={video?.exercicio_carga || ''}
+                      label={'Carga'}
+                    >
+                      <Input
+                        disabled={!selectedExercises.find((ex) => ex.exercicio_id === video.exercicio_id)}
+                        placeholder="Anote o peso do seu exercicio..."
+                      />
+                    </Form.Item>
+                  </Form>
                   <p>
                     <iframe
-                      width="100%"
-                      height="200px"
-                      src={`${utils.convertToYouTubeEmbedUrl(
-                        video.exercicio_url
-                      )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen=""
+                        width="100%"
+                        height="200px"
+                        src={`${utils.convertToYouTubeEmbedUrl(
+                            video.exercicio_url
+                        )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen=""
                     ></iframe>
                     {utils.utf8Decode(video.exercicio_descricao)}
                   </p>
@@ -169,4 +220,4 @@ const exercicios = ({
   );
 }
 
-export default exercicios
+export default Exercicios

@@ -20,7 +20,10 @@ const TreinosLivresSalvos = ({
       title: 'Deseja excluir este treino?',
       icon: <ExclamationCircleFilled/>,
       content: 'Esta ação excluirá permanentemente o seu treino.',
-      okType: 'danger',
+      okButtonProps: {
+        style: { backgroundColor: 'red' }
+      },
+      okText: 'Deletar',
       onOk() {
         dispatch(deleteTreinoLivre(id_ficha, id_user));
       },
@@ -85,9 +88,9 @@ const TreinosLivresSalvos = ({
                 key={i}
               >
                 <Text>{`${format(new Date(item.data_criacao), 'dd-MM-yy-EEEEEE', {locale: ptBR})}`}</Text>
-                <Text>{`${item?.nome_treino}`}</Text>
+                <Text className={'mr-5'}>{`${item?.nome_treino}`}</Text>
                 <Button
-                  className={'mr-4'}
+                  className={'mr-5'}
                   size={'small'}
                   onClick={() => {onVerMeusTreinos(item)}}
                   style={{background: '#018000', color: 'white'}}

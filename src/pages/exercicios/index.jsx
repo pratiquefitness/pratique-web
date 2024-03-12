@@ -20,7 +20,7 @@ export default function ExerciciosView() {
   const [openModal, setOpenModal] = useState({
     open: false
   });
-  const [selectedVideos, setSelectedVideos] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState([]);
   const [verMeusTreinos, setVerMeusTreinos] = useState(false);
   const [treino, setTreino] = useState({});
 
@@ -54,7 +54,7 @@ export default function ExerciciosView() {
       id_user: usuario.ID,
       nome_treino: nomeTreino,
       data_criacao: formatISO(new Date()),
-      videos: selectedVideos.toString()
+      exercicios: selectedExercises
     }));
   }
 
@@ -98,15 +98,19 @@ export default function ExerciciosView() {
               <Exercicios
                 treinoLivre={treinoLivre}
                 showModal={showModal}
-                selectedVideos={(value) => {
-                  setSelectedVideos(value)
+                selected={(value) => {
+                  setSelectedExercises(value)
                 }}
               />
               <br/><br/>
               <Modal
                 open={openModal.open}
                 title={'Crie o seu Treino'}
-                okButtonProps={{disabled: (nomeTreino.length < 1 || nomeTreino.length > 10)}}
+                okButtonProps={{
+                  disabled: (nomeTreino.length < 1 || nomeTreino.length > 10),
+                  style: { backgroundColor: 'green', color: '#fff' }
+                }}
+                okText={'Salvar'}
                 onOk={handleForm}
                 onCancel={handleCancel}
               >
@@ -128,7 +132,6 @@ export default function ExerciciosView() {
           :
             <VerTreinoEscolhido
               treino={treino}
-              exercicios={treinoLivre}
               verMeusTreinos={(ver) => {
                 setVerMeusTreinos(ver)
               }}

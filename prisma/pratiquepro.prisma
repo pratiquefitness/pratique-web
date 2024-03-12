@@ -72,7 +72,7 @@ model fichas {
 model ficha_avulsa {
   id_ficha     Int      @id @default(autoincrement())
   id_user      Int
-  videos       String   @db.VarChar(200)
+  exercicios   Json?
   nome_treino  String   @db.VarChar(200)
   data_criacao DateTime @db.DateTime(0)
   data_update  DateTime @default(now()) @db.DateTime(0)
@@ -211,7 +211,7 @@ model afil2 {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model matriz2 {
-  matriz_id_pratique Int
+  matriz_id_pratique Int      @id @default(autoincrement())
   matriz_situacao    String?  @db.VarChar(20)
   matriz_tel         String?  @db.VarChar(20)
   matriz_nasc        String?  @db.VarChar(12)
@@ -226,9 +226,10 @@ model matriz2 {
   matriz_consultor   String?  @db.VarChar(200)
   matriz_email       String?  @db.VarChar(200)
   matriz_modalidade  String?  @db.VarChar(8)
-  matriz_chave       String?  @db.VarChar(30)
+  matriz_chave       String?  @db.VarChar(200)
   matriz_update      DateTime @default(now()) @db.DateTime(0)
   matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
 
   @@ignore
 }
