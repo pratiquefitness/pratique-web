@@ -46,7 +46,7 @@ export const ExerciseAutocompleteInput = ({
         value={value}
         options={autoCompleteOptions}
         style={{
-          width: 400,
+          width: "100%",
         }}
         onSelect={onSelect}
         onSearch={onSearch}
@@ -100,30 +100,23 @@ export const ExerciseChoiceInput = ({
 
   return (
     <>
-      <Space
+      <Select
+        id={'filtro_grupamento_muscular'}
+        mode="multiple"
+        allowClear
         style={{
-          width: 400,
+          width: '100%',
         }}
-        direction="vertical"
-      >
-        <Select
-          id={'filtro_grupamento_muscular'}
-          mode="multiple"
-          allowClear
-          style={{
-            width: '100%',
-          }}
-          defaultValue={[]}
-          placeholder="FILTRE PELO GRUPAMENTO MUSCULAR"
-          onChange={handleChange}
-          options={options}
-          value={selectedValues}
-          onFocus={focus}
-          filterOption={(inputValue, option) =>
-             option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-          }
-        />
-      </Space>
+        defaultValue={[]}
+        placeholder="FILTRE PELO GRUPAMENTO MUSCULAR"
+        onChange={handleChange}
+        options={options}
+        value={selectedValues}
+        onFocus={focus}
+        filterOption={(inputValue, option) =>
+            option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+        }
+      />
     </>
   );
 };
