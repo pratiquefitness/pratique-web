@@ -120,7 +120,7 @@ export const ExerciseChoiceInput = ({
           value={selectedValues}
           onFocus={focus}
           filterOption={(inputValue, option) =>
-            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+             option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           }
         />
       </Space>

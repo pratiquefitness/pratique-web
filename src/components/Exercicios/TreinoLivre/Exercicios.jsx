@@ -112,8 +112,6 @@ const Exercicios = ({
     </>
   );
 
-  console.log(selectedExercises)
-
   return (
     <>
       {
