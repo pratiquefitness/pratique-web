@@ -4,8 +4,7 @@ import {Panel} from "@/components";
 import utils from "@/utils";
 import {useSelector} from "react-redux";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
-import {useEffect, useState} from "react";
-import {useRouter} from 'next/router';
+import {useEffect, useState, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {getTreinoLivre, updateTreinoLivre} from "@/redux/actions/exercicios";
 import FormTreino from "@/components/Exercicios/TreinoLivre/FormTreino";
@@ -30,6 +29,7 @@ export default function EditarMeusTreinos() {
   const [nomeTreino, setNomeTreino] = useState(meuTreino.nome_treino);
   const [openModal, setOpenModal] = useState(meuTreino.nome_treino);
   const [disabledButton, setDisabledButton] = useState(true);
+  const scollToRef = useRef();
 
   useEffect(() => {
     dispatch(getTreinoLivre(parseInt(usuario.ID)))
@@ -107,6 +107,12 @@ export default function EditarMeusTreinos() {
   const handleCancel = () => {
     setOpenModal(false);
   };
+
+  const topFunction = () => {
+    setTimeout(() => {
+      scollToRef.current.scrollIntoView({behavior:"smooth"})
+    }, 500);
+  }
 
   const setCargaExercicio = (allFields) => {
     allFields.map((field) => {
@@ -215,7 +221,7 @@ export default function EditarMeusTreinos() {
                             style={{background: 'blue', color: 'white'}}
                             onClick={() => {
                               setExibirExercicios(true);
-                              window.scrollTo(0, document.body.scrollHeight);
+                              topFunction();
                             }}
                           >
                             EXIBIR EXERCÍCIOS
@@ -277,6 +283,7 @@ export default function EditarMeusTreinos() {
                           />
                         </Modal>
                         <br/><br/>
+                        <div ref={scollToRef} id={'scroll-bottom'}></div>
                       </>
                   )
                   :
