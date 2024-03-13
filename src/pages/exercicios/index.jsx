@@ -23,10 +23,15 @@ export default function ExerciciosView() {
   const [selectedExercises, setSelectedExercises] = useState([]);
   const [verMeusTreinos, setVerMeusTreinos] = useState(false);
   const [treino, setTreino] = useState({});
+  const [disabledButton, setDisabledButton] = useState(true);
 
   useEffect(() => {
     dispatch(getTreinoLivre(usuario.ID))
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10));
+  }, [nomeTreino]);
 
   const showModal = () => {
     setNomeTreino('');
@@ -57,9 +62,6 @@ export default function ExerciciosView() {
       exercicios: selectedExercises
     }));
   }
-
-  console.log(treinoLivre)
-  console.log(treino)
 
   return (
     <TreinoLayout>
@@ -107,8 +109,10 @@ export default function ExerciciosView() {
                 open={openModal.open}
                 title={'Crie o seu Treino'}
                 okButtonProps={{
-                  disabled: (nomeTreino.length < 1 || nomeTreino.length > 10),
-                  style: { backgroundColor: 'green', color: '#fff' }
+                  disabled: disabledButton,
+                  style: {
+                    backgroundColor: !disabledButton ? 'green' : 'rgba(0, 0, 0, 0.04)',
+                    color: !disabledButton ? '#fff' : '#000' }
                 }}
                 okText={'Salvar'}
                 onOk={handleForm}

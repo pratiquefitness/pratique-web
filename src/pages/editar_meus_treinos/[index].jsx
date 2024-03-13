@@ -29,10 +29,15 @@ export default function EditarMeusTreinos() {
   const dispatch = useDispatch();
   const [nomeTreino, setNomeTreino] = useState(meuTreino.nome_treino);
   const [openModal, setOpenModal] = useState(meuTreino.nome_treino);
+  const [disabledButton, setDisabledButton] = useState(true);
 
   useEffect(() => {
     dispatch(getTreinoLivre(parseInt(usuario.ID)))
   }, []);
+
+  useEffect(() => {
+    setDisabledButton((nomeTreino?.length < 1 || nomeTreino?.length > 10));
+  }, [nomeTreino]);
 
   useEffect(() => {
     if(treinoLivre.meus_treinos?.length > 0){
@@ -65,20 +70,20 @@ export default function EditarMeusTreinos() {
       cloneObj = JSON.parse(JSON.stringify(selectedExercises.exercicios.find(ex => ex.exercicio_id === video.exercicio_id)));
       cloneObj = structuredClone(cloneObj);
       cloneObj['exercicio_carga'] = '';
-    } else {
+      selectedExercise = [...selectedExercises.exercicios, cloneObj];
+      setSelectedExercises(prevState => ({
+        ...prevState,
+        exercicios: selectedExercise
+      }));
+    } else if(!e.target.checked) {
       form.setFieldsValue( { [video.exercicio_id]: '' } );
+      let rm = selectedExercises.exercicios.filter(treino => treino.exercicio_id !== video.exercicio_id);
+      setSelectedExercises(prevState => ({
+        ...prevState,
+        exercicios: rm
+      }));
     }
-
-    selectedExercise = e.target.checked ? [...selectedExercises.exercicios, cloneObj] : selectedExercises;
-    selectedExercise = !e.target.checked ?
-        selectedExercises.exercicios.filter(treino => treino.exercicio_id !== video.exercicio_id) :
-        [...new Set(selectedExercise)];
-
-    console.log(selectedExercise);
-    setSelectedExercises(JSON.parse(JSON.stringify(selectedExercise)));
   }
-
-  console.log(selectedExercises);
 
   const showModal = () => {
     setOpenModal(true);
@@ -255,8 +260,10 @@ export default function EditarMeusTreinos() {
                           open={openModal}
                           title={'Edite o nome do seu Treino'}
                           okButtonProps={{
-                            disabled: (nomeTreino?.length < 1 || nomeTreino?.length > 10),
-                            style: {backgroundColor: 'green', color: '#fff'}
+                            disabled: disabledButton,
+                            style: {
+                              backgroundColor: !disabledButton ? 'green' : 'rgba(0, 0, 0, 0.04)',
+                              color: !disabledButton ? '#fff' : '#000' }
                           }}
                           okText={'Salvar'}
                           onOk={handleForm}
