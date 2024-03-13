@@ -68,10 +68,10 @@ export default function JumperFit({ employee }) {
 
     if (credits === '12') {
       selectedPlan = '418'
-      saverParam = 'produto'
+      saverParam = 'plano'
     } else if (credits === '24') {
       selectedPlan = '419'
-      saverParam = 'produto'
+      saverParam = 'plano'
     } else if (credits === 'diaria') {
       selectedPlan = '110'
       saverParam = 'produto'
@@ -88,7 +88,7 @@ export default function JumperFit({ employee }) {
     }
 
     // Construa o link padrão
-    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=${saverParam}&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+    const link = `https://consultor.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=${saverParam}&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
       employee ? employee : usuario.isAffiliate
     }|AFILIADO`
 
