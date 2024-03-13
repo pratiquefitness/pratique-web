@@ -64,7 +64,7 @@ export default function JumperFit({ employee }) {
 
   const list = search ? dataSearch : unidades
   const handleButtonClick = credits => {
-    let selectedPlan, saverParam, baseURL
+    let selectedPlan, saverParam
 
     if (credits === '12') {
       selectedPlan = '418'
@@ -87,15 +87,8 @@ export default function JumperFit({ employee }) {
       saverParam = 'produto'
     }
 
-    // Determinar a baseURL com base no valor de saverParam
-    if (saverParam === 'produto') {
-      baseURL = 'https://consultor.pratiquefitness.com.br'
-    } else {
-      baseURL = 'https://novo.pratiquefitness.com.br'
-    }
-
-    // Construa o link com a baseURL e o valor de saverParam
-    const link = `${baseURL}/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=${saverParam}&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
+    // Construa o link padrão
+    const link = `https://novo.pratiquefitness.com.br/checkoutpageplano/pedra-branca-?pl=${selectedPlan}&saver=${saverParam}&jumper=sim&obs=AFILIADO|bdfd0b64da6255bdb1658ba11e770fac|1|NULL|${
       employee ? employee : usuario.isAffiliate
     }|AFILIADO`
 
