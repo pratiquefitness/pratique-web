@@ -8,20 +8,8 @@ export const getTreinoLivre = (id) => {
     return api
       .post('/exercicios', {usuarioId: id})
       .then(res => {
+        console.log('RES', res.data);
         dispatch(setTreinoLivre(res.data))
-      })
-      .finally(() => {
-        dispatch(setLoading(false))
-      })
-  }
-}
-export const getMeusTreinos = (id) => {
-  return async (dispatch) => {
-    dispatch(setLoading(true))
-    return api
-      .post('/meus_treinos', {id: id})
-      .then(res => {
-        dispatch(setListarTreino(res.data))
       })
       .finally(() => {
         dispatch(setLoading(false))
