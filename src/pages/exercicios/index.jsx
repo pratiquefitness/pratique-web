@@ -71,32 +71,20 @@ export default function ExerciciosView() {
             <>
               <div className="mt-4 text-center">
                 <Text>
-                  Pesquise em nosso <Text strong>Acervo</Text>
-                </Text>
-              </div>
-              <div className="text-center">
-                <Text strong>
-                  de +300 exercícios com VÍDEOS
+                  Biblioteca de exercícios com <Text strong>VÍDEOS</Text>
                 </Text>
               </div>
               <div className="text-center">
                 <Text>
-                  demonstrativos e monte seu próprio
+                  demonstrativos. Tenha uma boa pesquisa
                 </Text>
               </div>
               <div className="text-center">
                 <Text>
-                  treino. Voçê pode pesquisar por
+                   e monte seu treino! 💪
                 </Text>
               </div>
-              <div className="text-center">
-                <Text strong>grupo muscular</Text> ou <Text strong>pesquisa livre.</Text>
-              </div>
-              <div className="text-center  mb-4">
-                <Text strong type={'danger'}>
-                  Tenha uma boa pesquisa!
-                </Text>
-              </div>
+              <br />
               <Exercicios
                 treinoLivre={treinoLivre}
                 showModal={showModal}

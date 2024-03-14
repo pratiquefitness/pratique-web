@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { AutoComplete, Select, Space } from 'antd'
+import { AutoComplete, Select } from 'antd'
 
 export const ExerciseAutocompleteInput = ({
   selectedExercise = () => {},
@@ -98,6 +98,14 @@ export const ExerciseChoiceInput = ({
     setSelectedValues(value)
   };
 
+  const normalizeOption = (option, inputValue) => {
+    return option.
+      label.normalize('NFD').replace(/[\u0300-\u036f]/g, "").
+        toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+      ||
+      option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+  }
+
   return (
     <>
       <Select
@@ -113,9 +121,7 @@ export const ExerciseChoiceInput = ({
         options={options}
         value={selectedValues}
         onFocus={focus}
-        filterOption={(inputValue, option) =>
-            option.label.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-        }
+        filterOption={(inputValue, option) => normalizeOption(option, inputValue) }
       />
     </>
   );
