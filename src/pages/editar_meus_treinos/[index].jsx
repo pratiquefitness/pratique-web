@@ -11,6 +11,7 @@ import FormTreino from "@/components/Exercicios/TreinoLivre/FormTreino";
 import Exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
 import TreinoLayout from "@/pages/treino/_Layout";
 const {Title} = Typography;
+import { IoSaveSharp, IoAddCircle } from "react-icons/io5";
 
 export default function EditarMeusTreinos() {
   const {loading} = useSelector(state => state.exercicios);
@@ -196,10 +197,11 @@ export default function EditarMeusTreinos() {
                         </Collapse>
                         <Divider orientation="center"></Divider>
                         <br/>
-                        <Flex justify={'center'} align={'flex-start'} vertical>
+                        <Flex justify={'center'} align={'center'} vertical>
                           <Button
                             block
-                            style={{background: '#018000', color: 'white'}}
+                            icon={<IoSaveSharp />}
+                            style={{background: '#756483', color: 'white'}}
                             onClick={() => {
                               showModal()
                             }}
@@ -209,16 +211,16 @@ export default function EditarMeusTreinos() {
                           <br/>
                           <Button
                             block
-                            style={{background: 'blue', color: 'white'}}
+                            icon={<IoAddCircle />}
+                            style={{background: '#756483', color: 'white'}}
                             onClick={() => {
                               setExibirExercicios(true);
                               scrollToBottom();
                             }}
                           >
-                            EXIBIR EXERCÍCIOS
+                            EXIBIR MAIS
                           </Button>
                         </Flex>
-
                         {
                           exibirExercicios &&
                           <>
@@ -236,7 +238,8 @@ export default function EditarMeusTreinos() {
                               <br/><br/>
                               <Flex justify={'center'} align={'flex-start'}>
                                 <Button
-                                  style={{background: '#018000', color: 'white'}}
+                                  icon={<IoAddCircle />}
+                                  style={{background: '#756483', color: 'white'}}
                                   onClick={() => {
                                     setExibirExercicios(false);
                                     setSelectedExercises(prevState => ([...prevState, ...addExtraExercises]));

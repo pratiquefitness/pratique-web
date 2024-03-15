@@ -1,4 +1,4 @@
-import {Button, Divider, Dropdown, Flex, List, Typography, Modal, Space} from "antd";
+import {Button, Divider, Dropdown, Flex, List, Typography, Modal, Space, Table} from "antd";
 const {Text, Title} = Typography;
 import {format} from "date-fns";
 import ptBR from 'date-fns/locale/pt-BR';
@@ -30,90 +30,103 @@ const TreinosLivresSalvos = ({
       onCancel() {},
     });
   }
+  
+  const DropDownComponet = ({opcoes}) => {
+    const items = [
+      {
+        key: '1',
+        label: (
+          <Text
+            onClick={() => {
+              router.push({
+                pathname: `/editar_meus_treinos/${opcoes.id_ficha}`,
+              })
+            }}
+            type="warning">[Editar]
+          </Text>
+        ),
+      },
+      {
+        key: '2',
+        label: (
+          <Text
+            onClick={() => {
+              deleteTreino(opcoes.id_ficha, opcoes.id_user)
+            }}
+            type="danger">[Excluir]
+          </Text>
+        ),
+      },
+    ]
+    return (
+      <Dropdown
+        size={'small'}
+        menu={{
+          items
+        }}
+        placement="topRight"
+        arrow={{
+          pointAtCenter: true,
+        }}
+      >
+        <Button>...</Button>
+      </Dropdown>)
+  }
 
   const onVerMeusTreinos = (item) => {
     verMeusTreinos(item, true);
   }
-
+  
+  const columns = [
+    {
+      title: <Text>Data</Text>,
+      dataIndex: 'data',
+      key: 'data',
+    },{
+      title: <Text>Nome</Text>,
+      dataIndex: 'nome',
+      key: 'nome',
+    },{
+      title: <Text>Treino</Text>,
+      dataIndex: 'treino',
+      key: 'treino',
+      render: (_, {treino}) => (
+        <>
+          <Button
+            size={'small'}
+            onClick={() => {
+              onVerMeusTreinos(treino)
+            }}
+            style={{background: '#018000', color: 'white'}}
+          >
+            VER
+          </Button>
+        </>
+      ),
+    },{
+      title: <Text>Opções</Text>,
+      dataIndex: 'opcoes',
+      key: 'opcoes',
+      render: (_, {opcoes}) => (
+        <DropDownComponet opcoes={opcoes} />
+      )
+    }
+  ];
+  
+  const data = treinoLivre.meus_treinos.map((treino, i) => {
+    return {
+      key: i,
+      data: <Text>{`${format(new Date(treino.data_criacao), 'dd-MM-yy-EEEEEE', {locale: ptBR})}`}</Text>,
+      nome: <Text>{`${treino?.nome_treino}`}</Text>,
+      treino: treino,
+      opcoes: treino,
+    }
+  });
+  
   return (
     <>
       <Divider orientation="center"><Title level={3}>Treinos Livres Salvos</Title></Divider>
-      <List
-        header={
-          <Flex
-            justify={'space-between'}
-            align={'center'}
-            style={{width: '100%'}}
-          >
-            <Text strong>Data</Text>
-            <Text className={'ml-12'} strong>Nome</Text>
-            <Text strong>Treino</Text>
-            <Text strong>Opções</Text>
-          </Flex>
-        }
-        dataSource={treinoLivre.meus_treinos}
-        renderItem={(item, i) => {
-          const items = [
-            {
-              key: '1',
-              label: (
-                <Text
-                  onClick={() => {
-                    router.push({
-                      pathname: `/editar_meus_treinos/${item.id_ficha}`,
-                    })
-                  }}
-                  type="warning">[Editar]
-                </Text>
-              ),
-            },
-            {
-              key: '2',
-              label: (
-                <Text
-                  onClick={() => {
-                    deleteTreino(item.id_ficha, item.id_user)
-                  }}
-                  type="danger">[Excluir]
-                </Text>
-              ),
-            },
-          ]
-          return (
-            <List.Item>
-              <Flex
-                justify={'space-between'}
-                align={'center'}
-                style={{width: '100%'}}
-                key={i}
-              >
-                <Text>{`${format(new Date(item.data_criacao), 'dd-MM-yy-EEEEEE', {locale: ptBR})}`}</Text>
-                <Text className={'mr-5'}>{`${item?.nome_treino}`}</Text>
-                <Button
-                  className={'mr-5'}
-                  size={'small'}
-                  onClick={() => {onVerMeusTreinos(item)}}
-                  style={{background: '#018000', color: 'white'}}
-                >
-                  VER
-                </Button>
-                <Dropdown
-                  size={'small'}
-                  menu={{
-                    items
-                  }}
-                  placement="topRight"
-                  arrow={{
-                    pointAtCenter: true,
-                  }}
-                >
-                  <Button>...</Button>
-                </Dropdown>
-              </Flex>
-            </List.Item>
-          )
-        }}
-      />
+      <Table pagination={false} columns={columns} dataSource={data} />
     </>
   )
 }

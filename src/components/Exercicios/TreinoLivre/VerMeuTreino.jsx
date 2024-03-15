@@ -11,6 +11,7 @@ import {useSelector} from "react-redux";
 import {MinusOutlined, PlusOutlined} from "@ant-design/icons";
 import {useDispatch} from "react-redux";
 import {updateTreinoLivre} from "@/redux/actions/exercicios";
+import { IoArrowUndoSharp } from "react-icons/io5";
 
 const VerTreinoEscolhido = ({
   treino,
@@ -60,7 +61,6 @@ const VerTreinoEscolhido = ({
         });
       }
     });
-    console.log(meuTreino);
   }
 
   return (
@@ -69,6 +69,7 @@ const VerTreinoEscolhido = ({
         typeof meuTreino !== 'undefined' && Object.keys(meuTreino).length > 0 ? (
           <>
             <Collapse
+              defaultActiveKey={['0']}
               className="collapse-treino"
               style={{backgroundColor: 'rgb(237, 20, 61)'}}
               expandIcon={({isActive}) => !isActive ?
@@ -141,12 +142,13 @@ const VerTreinoEscolhido = ({
             <br/><br/>
             <Flex justify={'center'} align={'flex-start'}>
               <Button
-                style={{backgroundColor: '#018000', color: '#fff'}}
+                icon={<IoArrowUndoSharp />}
+                style={{backgroundColor: '#756483', color: '#fff'}}
                 onClick={() => {
                   onVerMeusTreinos()
                 }}
               >
-                IR PARA MEUS TREINOS LIVRES
+                TREINOS
               </Button>
             </Flex>
           </>

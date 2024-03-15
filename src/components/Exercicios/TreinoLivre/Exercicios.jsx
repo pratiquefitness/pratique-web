@@ -5,6 +5,7 @@ import {ExerciseAutocompleteInput, ExerciseChoiceInput} from '@/components/Exerc
 import utils from "@/utils";
 import {MinusOutlined, PlusOutlined} from '@ant-design/icons';
 import CustomCheckbox from "@/components/Exercicios/TreinoLivre/styles";
+import {IoSaveSharp} from "react-icons/io5";
 
 const Exercicios = ({
   treinoLivre,
@@ -203,12 +204,13 @@ const Exercicios = ({
             showSaveButton &&
             <Flex justify={'center'} align={'flex-start'}>
               <Button
-                style={{background: '#018000', color: 'white'}}
+                icon={<IoSaveSharp />}
+                style={{background: '#756483', color: 'white'}}
                 onClick={() => {
                   showModal()
                 }}
               >
-                SALVAR TREINO
+                SALVAR MEU TREINO
               </Button>
             </Flex>
           }
