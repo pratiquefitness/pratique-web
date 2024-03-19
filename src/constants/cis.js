@@ -16,6 +16,10 @@ const cis = [
     ci: ['CI MUSCULACAO']
   },
   {
+    cargo: 'MUSCULAÃ‡ÃƒO',
+    ci: ['CI MUSCULACAO']
+  },
+  {
     cargo: 'LIMPEZA',
     ci: ['CI LIMPEZA']
   },
