@@ -5,14 +5,14 @@
 :root {
   --color-primary: #ed143d;
   --color-white: #fff;
-  --color-gray:#1a1a1a;
+  --color-gray: #1a1a1a;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Inter',sans-serif!important;
+  font-family: 'Inter', sans-serif !important;
 }
 html,
 body {
@@ -77,7 +77,6 @@ body .ant-layout-footer {
   cursor: pointer;
 }
 
-
 .navigation ul {
   position: absolute;
   top: 0;
@@ -116,8 +115,8 @@ body .ant-layout-footer {
   font-size: 20px;
 }
 .navigation ul li.active a .icon {
-	font-size: 20px;
-  }
+  font-size: 20px;
+}
 .navigation ul li.active a .icon {
   color: var(--color-white);
 }
@@ -299,35 +298,71 @@ body .ant-layout-footer {
   animation: glowing 1500ms infinite;
 }
 @-webkit-keyframes glowing {
-  0% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
-  50% { background-color: #7CE04A; -webkit-box-shadow: 0 0 40px #7CE04A; }
-  100% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
+  0% {
+    background-color: #018000;
+    -webkit-box-shadow: 0 0 3px #018000;
+  }
+  50% {
+    background-color: #7ce04a;
+    -webkit-box-shadow: 0 0 40px #7ce04a;
+  }
+  100% {
+    background-color: #018000;
+    -webkit-box-shadow: 0 0 3px #018000;
+  }
 }
 
 @-moz-keyframes glowing {
-  0% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
-  50% { background-color: #7CE04A; -moz-box-shadow: 0 0 40px #7CE04A; }
-  100% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
+  0% {
+    background-color: #018000;
+    -moz-box-shadow: 0 0 3px #018000;
+  }
+  50% {
+    background-color: #7ce04a;
+    -moz-box-shadow: 0 0 40px #7ce04a;
+  }
+  100% {
+    background-color: #018000;
+    -moz-box-shadow: 0 0 3px #018000;
+  }
 }
 
 @-o-keyframes glowing {
-  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
-  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
-  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  0% {
+    background-color: #018000;
+    box-shadow: 0 0 3px #018000;
+  }
+  50% {
+    background-color: #7ce04a;
+    box-shadow: 0 0 40px #7ce04a;
+  }
+  100% {
+    background-color: #018000;
+    box-shadow: 0 0 3px #018000;
+  }
 }
 
 @keyframes glowing {
-  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
-  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
-  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  0% {
+    background-color: #018000;
+    box-shadow: 0 0 3px #018000;
+  }
+  50% {
+    background-color: #7ce04a;
+    box-shadow: 0 0 40px #7ce04a;
+  }
+  100% {
+    background-color: #018000;
+    box-shadow: 0 0 3px #018000;
+  }
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #018000 !important;
+  background-color: #018000 !important;
 }
 .ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #018000 !important
+  background-color: #018000 !important;
 }
 .ant-checkbox-checked:hover .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: #018000 !important;
+  background-color: #018000 !important;
 }
