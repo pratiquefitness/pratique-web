@@ -81,8 +81,6 @@ export default function MeuTreinoView() {
         {typeof data.treinos !== 'undefined' && data.treinos.length ? (
           <>
             <Row gutter={8}>
-              
-              
               <Col span={12}>
                 <InfoBox
                   icon={<LuUser className="text-xlarge" />}
@@ -107,7 +105,6 @@ export default function MeuTreinoView() {
                   title={!activeKey.actived.length ? '' : infoBox?.recuperacao}
                 />
               </Col>
-              
             </Row>
             <div className="text-center pb-4">
               <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
@@ -126,67 +123,67 @@ export default function MeuTreinoView() {
             >
               {!loading
                 ? data.treinos.map((treino, key) => {
-                    let currentPeso
-                    try {
-                      currentPeso = JSON.parse(treino.peso)
-                    } catch (error) {
-                      currentPeso = {}
-                    }
-                    return (
-                      <Panel header={genExtra(treino.nome, treino.treino)} key={key}>
-                        {treino.observacao && (
-                          <p className="pb-2">
-                            <b>Observações:</b> {treino.observacao}
-                          </p>
-                        )}
-                        <Collapse className="collapse-treino">
-                          {treino.videos.map((video, key) => {
-                            return (
-                              <Panel header={video.exercicio_nome} key={key}>
-                                <p>
-                                  <Form layout="vertical" onFinish={onSavePeso} className="mb-4">
-                                    <Form.Item name="id" initialValue={treino.id_ficha} noStyle />
-                                    <Form.Item name="video" initialValue={video.exercicio_id} noStyle />
-                                    <Space.Compact size="small" className="w-100">
-                                      <Form.Item
-                                        name="peso"
-                                        initialValue={currentPeso?.[video.exercicio_id] || ''}
-                                        noStyle
-                                      >
-                                        <Input placeholder="Anote o peso do seu exercicio..." />
-                                      </Form.Item>
-                                      <Button type="primary" loading={loadingPeso} htmlType="submit">
-                                        Salvar
-                                      </Button>
-                                    </Space.Compact>
-                                  </Form>
-                                  <iframe
-                                    width="100%"
-                                    height="200px"
-                                    src={`${utils.convertToYouTubeEmbedUrl(
-                                      video.exercicio_url
-                                    )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen=""
-                                  ></iframe>
-                                  {utils.utf8Decode(video.exercicio_descricao)}
-                                </p>
-                              </Panel>
-                            )
-                          })}
-                        </Collapse>
-                        <Form layout="vertical" onFinish={onSaveAnotacoes} className="mt-4">
-                          <Form.Item name="id" initialValue={treino.id_ficha} noStyle />
-                          <Form.Item label="Anotações" name="anotacoes" initialValue={treino.anotacoes}>
-                            <Input.TextArea rows={4} placeholder="Suas anotações" />
-                          </Form.Item>
-                          <Button type="primary" htmlType="submit" loading={loadingAnotacoes} block>
-                            Salvar
-                          </Button>
-                        </Form>
-                      </Panel>
-                    )
+                  let currentPeso
+                  try {
+                    currentPeso = JSON.parse(treino.peso)
+                  } catch (error) {
+                    currentPeso = {}
+                  }
+                  return (
+                    <Panel header={genExtra(treino.nome, treino.treino)} key={key}>
+                      {treino.observacao && (
+                        <p className="pb-2">
+                          <b>Observações:</b> {treino.observacao}
+                        </p>
+                      )}
+                      <Collapse className="collapse-treino">
+                        {treino.videos.map((video, key) => {
+                          return (
+                            <Panel header={video.exercicio_nome} key={key}>
+                              <p>
+                                <Form layout="vertical" onFinish={onSavePeso} className="mb-4">
+                                  <Form.Item name="id" initialValue={treino.id_ficha} noStyle />
+                                  <Form.Item name="video" initialValue={video.exercicio_id} noStyle />
+                                  <Space.Compact size="small" className="w-100">
+                                    <Form.Item
+                                      name="peso"
+                                      initialValue={currentPeso?.[video.exercicio_id] || ''}
+                                      noStyle
+                                    >
+                                      <Input placeholder="Anote o peso do seu exercicio..." />
+                                    </Form.Item>
+                                    <Button type="primary" loading={loadingPeso} htmlType="submit">
+                                      Salvar
+                                    </Button>
+                                  </Space.Compact>
+                                </Form>
+                                <iframe
+                                  width="100%"
+                                  height="200px"
+                                  src={`${utils.convertToYouTubeEmbedUrl(
+                                    video.exercicio_url
+                                  )}?enablejsapi=1?rel=0&amp;modestbranding=1&amp;autohide=1&amp;showinfo=0&amp;controls=0″`}
+                                  frameborder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowfullscreen=""
+                                ></iframe>
+                                {utils.utf8Decode(video.exercicio_descricao)}
+                              </p>
+                            </Panel>
+                          )
+                        })}
+                      </Collapse>
+                      <Form layout="vertical" onFinish={onSaveAnotacoes} className="mt-4">
+                        <Form.Item name="id" initialValue={treino.id_ficha} noStyle />
+                        <Form.Item label="Anotações" name="anotacoes" initialValue={treino.anotacoes}>
+                          <Input.TextArea rows={4} placeholder="Suas anotações" />
+                        </Form.Item>
+                        <Button type="primary" htmlType="submit" loading={loadingAnotacoes} block>
+                          Salvar
+                        </Button>
+                      </Form>
+                    </Panel>
+                  )
                   })
                 : null}
             </Collapse>
