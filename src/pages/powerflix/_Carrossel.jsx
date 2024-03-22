@@ -42,7 +42,7 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
       slidesToSlide={1}
       swipeable
     >
-      {listaCarousel.map(({ href, image, isRounded, alt, setImageModal, setExercicioModal }, index) => (
+      {listaCarousel.map(({ href, image, isRounded, alt, setImageModal, setExercicioModal, nomeFichaPre }, index) => (
         <CarouselItemPowerflix
           key={index}
           href={href}
@@ -51,6 +51,7 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
           setExercicioModal={setExercicioModal}
           alt={alt}
           isRounded={isRounded}
+          nomeFichaPre={nomeFichaPre}
         />
       ))}
     </Carousel>

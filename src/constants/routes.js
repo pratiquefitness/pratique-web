@@ -153,6 +153,11 @@ const routes = [
     href: '/editar_meus_treinos',
     showInNavigation: false
   },
+  {
+    title: 'Olá, #USUARIO#! Tenha um bom treino.',
+    href: '/powerflix_treino',
+    showInNavigation: false
+  },
 ]
 
 export default routes
