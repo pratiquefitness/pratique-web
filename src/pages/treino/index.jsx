@@ -1,10 +1,10 @@
-import {Button, Col, Empty, Flex, Form, Input, Row, Space, Tag, theme} from 'antd'
+import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Typography} from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import {useEffect, useState} from 'react'
 import { getTreino, updateAnotacoes, updatePeso } from '@/redux/actions/treino'
 import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
@@ -12,12 +12,22 @@ import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
 import { useRouter } from 'next/router'
+const {Text} = Typography;
 
 export default function MeuTreinoView() {
-  const dispatch = useDispatch()
-  const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
-  const { token } = theme.useToken()
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino);
+  const { token } = theme.useToken();
+  const router = useRouter();
+  const [infoBox, setInfoBox] = useState({
+    treino: '',
+    serie: '',
+    repeticoes: '',
+    recuperacao: ''
+  });
+  const [activeKey, setActiveKey] = useState({
+    actived: []
+  });
 
   const { themeMode } = useSelector(state => state.global)
 
@@ -31,7 +41,39 @@ export default function MeuTreinoView() {
 
   useEffect(() => {
     dispatch(getTreino())
-  }, [])
+  }, []);
+  
+  const onChange = (treino_id) => {
+    const treino = data.config.find(config => config.id_treino === treino_id);
+    setInfoBox(prevState => ({
+      ...prevState,
+      treino: treino !== undefined ? `${treino.objetivo.name } NIVEL ${treino.nivel}` : '',
+      serie: treino !== undefined ? `${treino.objetivo.series } SÉRIES` : '',
+      repeticao: treino !== undefined ? `${treino.objetivo.repeticoes } REPETIÇÕES` : '',
+      recuperacao: treino !== undefined ? `RECUPERAÇÃO ${treino.objetivo.repeticoes }` : '',
+    }));
+  }
+  
+  const handleClick = (key) => {
+    setActiveKey(prevState => ({
+      actived: key
+    }));
+  }
+  
+  const genExtra = (nome, treino) => (
+    <>
+      <Row
+        onClick={(event) => {
+        onChange(treino)
+      }}>
+        <Col span={30}>
+          <Text>
+            <span style={{color: '#fff'}}>{`${nome} ${treino}`} </span>
+          </Text>
+        </Col>
+      </Row>
+    </>
+  );
 
   return (
     <TreinoLayout>
@@ -39,18 +81,33 @@ export default function MeuTreinoView() {
         {typeof data.treinos !== 'undefined' && data.treinos.length ? (
           <>
             <Row gutter={8}>
+              
+              
               <Col span={12}>
-                <InfoBox icon={<LuUser className="text-xlarge" />} title={`${data.objetivo} NÍVEL ${data.nivel}`} />
+                <InfoBox
+                  icon={<LuUser className="text-xlarge" />}
+                  title={!activeKey.actived.length ? '' : infoBox?.treino}
+                />
               </Col>
               <Col span={12}>
-                <InfoBox icon={<LuClipboardCheck className="text-xlarge" />} title="3 SÉRIES" />
+                <InfoBox
+                  icon={<LuClipboardCheck className="text-xlarge" />}
+                  title={!activeKey.actived.length ? '' : infoBox?.serie}
+                />
               </Col>
               <Col span={12}>
-                <InfoBox icon={<BsFire className="text-xlarge" />} title="10 A 12 REPETIÇÕES" />
+                <InfoBox
+                  icon={<BsFire className="text-xlarge" />}
+                  title={!activeKey.actived.length ? '' : infoBox?.repeticao}
+                />
               </Col>
               <Col span={12}>
-                <InfoBox icon={<LuClock className="text-xlarge" />} title="RECUPERAÇÃO 1 MIN" />
+                <InfoBox
+                  icon={<LuClock className="text-xlarge" />}
+                  title={!activeKey.actived.length ? '' : infoBox?.recuperacao}
+                />
               </Col>
+              
             </Row>
             <div className="text-center pb-4">
               <Tag color={token.colorPrimary} style={{ fontSize: 12 }} className="m-0">
@@ -61,7 +118,12 @@ export default function MeuTreinoView() {
                 {`${data.dia_final} ${utils.getMonthNames(data.mes_final).nameMin.toUpperCase()} ${data.ano_final}`}
               </Tag>
             </div>
-            <Collapse className="collapse-treino">
+            <Collapse
+              className="collapse-treino"
+              accordion
+              onChange={handleClick}
+              activeKey={activeKey.actived}
+            >
               {!loading
                 ? data.treinos.map((treino, key) => {
                     let currentPeso
@@ -71,7 +133,7 @@ export default function MeuTreinoView() {
                       currentPeso = {}
                     }
                     return (
-                      <Panel header={treino.nome} key={key}>
+                      <Panel header={genExtra(treino.nome, treino.treino)} key={key}>
                         {treino.observacao && (
                           <p className="pb-2">
                             <b>Observações:</b> {treino.observacao}

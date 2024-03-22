@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     where: {
       user_email: email
     }
-  })
-
+  });
+  
   if (usuarioExist.length) {
     user = {
       fichas: [],
@@ -25,9 +25,7 @@ export default async function handler(req, res) {
       ano_final: null,
       mes_final: null,
       dia_final: null,
-      config: null,
-      objetivo: null,
-      nivel: null,
+      config: [],
       ...user,
       ...usuarioExist[0]
     }
@@ -75,15 +73,22 @@ export default async function handler(req, res) {
 
       const configExist = await apiPratiquePro.ficha_pre.findMany({
         where: {
-          id: parseInt(user.ficha.treino)
+          id: {
+            in: user.fichas.map(f => parseInt(f.treino))
+          }
         }
       })
-
+      
       if (configExist.length) {
-        user.config = configExist[0]
-        const configs = user.config.valores.replace('{', '').replace('}', '').split(',')
-        user.objetivo = objectives.find(item => item.key === parseInt(configs[0].replace('o=', ''))).name
-        user.nivel = configs[1].replace('n=', '')
+        configExist.map((c) => {
+          const configs = c.valores.replace('{', '').replace('}', '').split(',');
+          const obj = {
+            objetivo: objectives.find(item => item.key === parseInt(configs[0].replace('o=', ''))),
+            nivel: configs[1].replace('n=', ''),
+            id_treino: c.id
+          };
+          user.config = [...user.config, obj]
+        });
       }
     }
   }

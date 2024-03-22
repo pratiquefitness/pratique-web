@@ -27,7 +27,6 @@ export default function MeuTreinoView() {
   });
   
   const onChangeCarga = (exercicios) => {
-    console.log(exercicios)
     setInfoBox(prevState => ({
       ...prevState,
       treino: exercicios.nome,
@@ -38,7 +37,6 @@ export default function MeuTreinoView() {
   }
   
   const handleClick = (key) => {
-    console.log(key)
     setActiveKey(prevState => ({
       actived: key
     }));
