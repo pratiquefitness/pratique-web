@@ -1,11 +1,13 @@
 import Loading from '@/components/Loading'
-import { getDiagnose } from '@/redux/actions/diagnose'
+import { getDiagnose, getPerguntasDiagnose } from '@/redux/actions/diagnose'
 import { Button, Table, Tag } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
 import Link from 'next/link'
+import Diagnose from './Cards'
 import { format } from 'date-fns'
+import React, { useState } from 'react'
 
 const columns = [
   {
@@ -44,16 +46,36 @@ const columns = [
 export default function DiagnoseView() {
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
+  const [showDiagnose, setShowDiagnose] = useState(false)
 
   useEffect(() => {
     dispatch(getDiagnose())
   }, [])
 
+  const handleNewDiagnose = () => {
+    setShowDiagnose(true)
+  }
+
+  const closeDiagnose = () => {
+    setShowDiagnose(false)
+  }
+
   return (
     <TreinoLayout>
-      <Loading spinning={loading}>
-        <Table dataSource={data} columns={columns} pagination={false} />
-      </Loading>
+      {showDiagnose ? (
+        <Diagnose onClose={closeDiagnose} />
+      ) : (
+        <div style={{ textAlign: 'center', margin: '20px 0' }}>
+          <Button type="primary" size="large" onClick={handleNewDiagnose}>
+            Realizar Nova Diagnose
+          </Button>
+        </div>
+      )}
+      {!showDiagnose && (
+        <Loading spinning={loading}>
+          <Table dataSource={data} columns={columns} pagination={false} />
+        </Loading>
+      )}
     </TreinoLayout>
   )
 }

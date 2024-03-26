@@ -77,10 +77,12 @@ export default async function handler(req, res) {
           user.status = pactoExist[0].matriz_situacao
           user.plano = pactoExist[0].matriz_plano
           user.unidade = unidadeExist[0].unidade_nome
+          user.telefone = pactoExist[0].matriz_tel
         } else {
           user.status = null
           user.plano = null
           user.unidade = null
+          user.telefone = null
         }
       }
 

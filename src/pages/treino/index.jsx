@@ -1,4 +1,4 @@
-import {Button, Col, Empty, Flex, Form, Input, Row, Space, Tag, theme} from 'antd'
+import { Button, Col, Empty, Form, Input, Row, Space, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
@@ -11,13 +11,15 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
-import { useRouter } from 'next/router'
+import { Button as AntButton, Modal } from 'antd'
+import Link from 'next/link'
+import React, { useState } from 'react'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
-  const router = useRouter()
+  const [modalVisible, setModalVisible] = useState(true)
 
   const { themeMode } = useSelector(state => state.global)
 
@@ -32,6 +34,10 @@ export default function MeuTreinoView() {
   useEffect(() => {
     dispatch(getTreino())
   }, [])
+
+  const handleCancel = () => {
+    setModalVisible(false)
+  }
 
   return (
     <TreinoLayout>
@@ -77,6 +83,7 @@ export default function MeuTreinoView() {
                             <b>Observações:</b> {treino.observacao}
                           </p>
                         )}
+
                         <Collapse className="collapse-treino">
                           {treino.videos.map((video, key) => {
                             return (
@@ -129,16 +136,6 @@ export default function MeuTreinoView() {
                 : null}
             </Collapse>
             <div className="p-4 mt-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
-              <Col span={24} className={"mb-8"}>
-                <Button
-                  className="text-white text-large blink"
-                  style={{background: 'green'}}
-                  block
-                  onClick={() => { router.push('/exercicios') }}
-                >
-                  MONTE SEU TREINO
-                </Button>
-              </Col>
               <Col span={24} className="mb-2">
                 <p className={`text-large text-center ${themeMode === 'light' ? 'text-black' : 'text-white'}`}>
                   Quer ajustar seu treino?
@@ -146,7 +143,7 @@ export default function MeuTreinoView() {
               </Col>
               <Col span={24} className="mb-2">
                 <a
-                  href="https://bit.ly/FalarcomProfessorPratique"
+                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
                   target="_blank"
                 >
                   <Button
@@ -162,7 +159,23 @@ export default function MeuTreinoView() {
             </div>
           </>
         ) : (
-          <Empty className="my-8" />
+          <div className="text-center">
+            <br></br> <br></br> <p>Você está sem treino. Realize uma diagnose e tenha seu treino em até 24 horas.</p>
+            <Modal
+              title="Realizar Diagnóstico"
+              visible={modalVisible}
+              onCancel={handleCancel}
+              footer={[
+                <div key="diagnoseButtonContainer" className="text-center">
+                  <Link href="/treino/diagnose" className="custom-link">
+                    Quero Diagnose
+                  </Link>
+                </div>
+              ]}
+            >
+              <br></br> <p>Você está sem treino. Realize uma diagnose e tenha seu treino em até 24 horas.</p>
+            </Modal>
+          </div>
         )}
       </Loading>
     </TreinoLayout>

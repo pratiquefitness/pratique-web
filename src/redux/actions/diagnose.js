@@ -15,3 +15,22 @@ export const getDiagnose = () => {
       })
   }
 }
+
+export const getStatusDiagnose = () => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoading(true))
+    return apiPratiqueTecnologia
+      .get('/app/diagnose')
+      .then(res => {
+        dispatch(setData(res.data))
+      })
+      .catch(error => {
+        console.error('Erro na requisição da API:', error)
+        // Aqui você pode despachar uma ação para lidar com o erro, se necessário
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
