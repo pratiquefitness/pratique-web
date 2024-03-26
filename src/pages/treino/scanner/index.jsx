@@ -5,8 +5,7 @@ import TreinoLayout from '../_Layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTreino } from '@/redux/actions/treino'
 import axios from 'axios'
-import { fetchData } from '@/redux/actions/balanca'
-import { generatePDF } from '@/redux/actions/balanca'
+import { setBrowserURL } from '@/redux/slices/global'
 
 export default function ScannerView() {
   const { usuario } = useSelector(state => state.login)
@@ -19,38 +18,6 @@ export default function ScannerView() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedExamId, setSelectedExamId] = useState(null)
 
-  const handleDownloadPDF = async examId => {
-    if (!examId) return // Verifica se há um ID de exame selecionado
-
-    const url = `https://www.anovator.com/report/index.html?id=${examId}&child=false&lang=en_EN`
-
-    try {
-      // Abre a página do relatório do exame em uma nova janela
-      const response = await fetch(url)
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch PDF report')
-      }
-
-      const blob = await response.blob()
-
-      // Cria um URL temporário para o blob
-      const blobUrl = URL.createObjectURL(blob)
-
-      // Cria um link para o PDF e simula um clique para iniciar o download
-      const link = document.createElement('a')
-      link.href = blobUrl
-      link.download = 'report.pdf'
-      document.body.appendChild(link)
-      link.click()
-
-      // Limpa o URL temporário
-      URL.revokeObjectURL(blobUrl)
-    } catch (error) {
-      console.error('Erro ao baixar o relatório PDF:', error)
-    }
-  }
-
   useEffect(() => {
     dispatch(getTreino())
 
@@ -60,7 +27,12 @@ export default function ScannerView() {
           const response = await axios.get(
             `https://pratiquetecnologia.com.br/api/balanca/id.php?phone=${usuario.telefone}`
           )
-          setExamsData(response.data)
+          // Convertendo as datas para um formato legível
+          const examsWithFormattedDate = response.data.map(exam => ({
+            ...exam,
+            gmtCreate: new Date(exam.gmtCreate).toLocaleString()
+          }))
+          setExamsData(examsWithFormattedDate)
         } else {
           console.error('Telefone do usuário não disponível.')
         }
@@ -77,12 +49,13 @@ export default function ScannerView() {
     setModalVisible(true)
 
     try {
-      // Gera o PDF do relatório ao clicar na imagem, passando o telefone do usuário
-      await generatePDF(usuario.telefone)
+      // Abrir a página embutida na aplicação
+      dispatch(setBrowserURL(`https://www.anovator.com/report/index.html?id=${record.id}&child=false&lang=pt_PT`))
     } catch (error) {
-      console.error('Erro ao gerar o PDF do relatório:', error)
+      console.error('Erro ao abrir a página:', error)
     }
   }
+
   const columns = [
     {
       title: 'Data',
@@ -90,15 +63,15 @@ export default function ScannerView() {
       key: 'gmtCreate',
       render: gmtCreate => {
         const date = new Date(gmtCreate)
-        return date.toLocaleString()
+        return date.toLocaleDateString() // Exibir apenas a data sem a hora
       }
     },
     {
       title: 'Ações',
       key: 'actions',
       render: record => (
-        <Button type="primary" onClick={() => handleDownloadPDF(record.id)}>
-          Ver Imagem
+        <Button type="primary" onClick={() => handleImageClick(record)}>
+          VER EXAME
         </Button>
       )
     }
