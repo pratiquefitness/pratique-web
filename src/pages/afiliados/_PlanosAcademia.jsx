@@ -33,15 +33,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
         }|AFILIADO`
 
         const showError = [
-          'joao-monlevade-loanda',
-          'santamaria-contagem',
-          'trindade',
-          'bortotpatobranco',
-          'vistaalegre',
-          'muquicabaespiritosanto',
-          'limoeiro',
-          'igarape',
-          'morro-alto'
+          'adelmoooo'
         ].includes(record.unidade.slug)
 
         return employee ? (
