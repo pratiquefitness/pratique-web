@@ -73,8 +73,8 @@ export default function JumperFit({ employee }) {
       selectedPlan = '419'
       saverParam = 'plano'
     } else if (credits === 'diaria') {
-      selectedPlan = '110'
-      saverParam = 'produto'
+      selectedPlan = '441'
+      saverParam = 'plano'
     } else if (credits === 'mensal5dias') {
       selectedPlan = '421'
       saverParam = 'plano'
@@ -154,7 +154,7 @@ export default function JumperFit({ employee }) {
         </Button>
         <br /> <br />
         <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('diaria')}>
-          Diária
+          Avulso - 30 min
         </Button>
         <br /> <br />
         <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('mensal7dias')}>

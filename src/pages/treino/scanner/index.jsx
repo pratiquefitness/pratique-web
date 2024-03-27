@@ -86,7 +86,7 @@ export default function ScannerView() {
           </Button>
         </a>
       ) : (
-        <Empty className="my-8" />
+        <div style={{ textAlign: 'center' }}></div>
       )}
 
       {examsData ? (
@@ -103,7 +103,7 @@ export default function ScannerView() {
           </Modal>
         </div>
       ) : (
-        <div>Carregando dados dos exames...</div>
+        <div style={{ textAlign: 'center' }}></div>
       )}
     </TreinoLayout>
   )
