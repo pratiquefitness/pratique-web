@@ -8,7 +8,6 @@ import Link from 'next/link'
 import Diagnose from './Cards'
 import { format } from 'date-fns'
 import React, { useState } from 'react'
-import { format } from 'date-fns'
 
 const columns = [
   {
