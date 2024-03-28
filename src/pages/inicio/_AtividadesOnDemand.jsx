@@ -60,14 +60,14 @@ export default function AtividadesOnDemand() {
             items: 4
           },
           tablet: {
-			breakpoint: { max: 992, min: 465 },
+            breakpoint: { max: 992, min: 465 },
             items: 2,
-			partialVisibilityGutter: 60
+            partialVisibilityGutter: 60
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 2,
-			partialVisibilityGutter: 10
+            partialVisibilityGutter: 10
           }
         }}
         rewind={false}
@@ -79,13 +79,8 @@ export default function AtividadesOnDemand() {
         slidesToSlide={1}
         swipeable
       >
-        {listaCarousel.map(({href,image,isRounded}, index) => (
-          <CarouselItem
-            key={index} 
-            href={href}
-            image={image}
-            isRounded={isRounded}
-          />
+        {listaCarousel.map(({ href, image, isRounded }, index) => (
+          <CarouselItem key={index} href={href} image={image} isRounded={isRounded} />
         ))}
       </Carousel>
     </div>

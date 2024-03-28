@@ -143,6 +143,10 @@ export default function Diagnose({ id }) {
   return (
     <Loading spinning={loading}>
       <div className="text-center">
+        <br></br> <h5>Sua Diagnose foi preenchida com sucesso.</h5>
+        <p>Em até 24 horas, voce receberá seu treino de forma customizada aqui.</p>
+        <br></br>
+        <br></br>
         <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
         <img
           src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.png`}
@@ -151,7 +155,6 @@ export default function Diagnose({ id }) {
           height={20}
         />
         <Typography.Paragraph>{produtos[diagnose?.diagnose_produto]}</Typography.Paragraph>
-
         {diagnose?.diagnose_subproduto !== 'nenhum' ? (
           <>
             <Typography.Title level={3}>TRATAMENTO INDICADO</Typography.Title>

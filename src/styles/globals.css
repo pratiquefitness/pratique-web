@@ -5,14 +5,14 @@
 :root {
   --color-primary: #ed143d;
   --color-white: #fff;
-  --color-gray:#1a1a1a;
+  --color-gray: #1a1a1a;
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Inter',sans-serif!important;
+  font-family: 'Inter', sans-serif !important;
 }
 html,
 body {
@@ -115,8 +115,8 @@ body .ant-layout-footer {
   font-size: 20px;
 }
 .navigation ul li.active a .icon {
-	font-size: 20px;
-  }
+  font-size: 20px;
+}
 .navigation ul li.active a .icon {
   color: var(--color-white);
 }
@@ -289,6 +289,9 @@ body .ant-layout-footer {
 }
 .ant-tabs .ant-tabs-tab + .ant-tabs-tab {
   margin: 0 0 0 15px;
+}
+.w-50 {
+  width: 50% !important;
 }
 
 .blink {

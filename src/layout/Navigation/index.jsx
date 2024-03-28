@@ -9,6 +9,7 @@ export default function Navigation({ data }) {
   const dispatch = useDispatch()
   const { token } = theme.useToken()
   const { usuario } = useSelector(state => state.login)
+  const { svaClientParameters } = useSelector(state => state.clubeCertoSva)
   const router = useRouter()
   const pathname = usePathname()
   const [selected, setSelected] = useState(
@@ -35,21 +36,22 @@ export default function Navigation({ data }) {
     router.push(href)
   }
 
+  const newData = Object.keys(svaClientParameters).length > 0 && isAffiliate ?
+    data.filter((afiliado, index) => {
+      return afiliado.title !== 'Afiliados'
+    }) : data
+
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
-        {data.map(({ href, showInNavigation, activeIcon, icon,title }, key) => {
+        {newData.map(({ href, showInNavigation, activeIcon, icon, title }, key) => {
           const checkBike = href !== '/bike' || isHomeUser
           const checkAfiliate = href !== '/afiliados' || isAffiliate
           return (
             showInNavigation &&
             checkBike &&
             checkAfiliate && (
-              <li
-                className={href === selected ? 'list active' : 'list'}
-                onClick={onNavigate( href, title )}
-                key={key}
-              >
+              <li className={href === selected ? 'list active' : 'list'} onClick={onNavigate(href, title)} key={key}>
                 <a style={{ pointerEvents: 'none' }}>
                   <span className="icon text-white">{href === selected ? activeIcon : icon}</span>
                 </a>

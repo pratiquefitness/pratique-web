@@ -16,7 +16,7 @@ export default function Comissao() {
       dataSource={comissao}
       columns={[
         {
-          title: 'Premiação',
+          title: 'Comissão',
           dataIndex: 'comissao',
           key: 'comissao'
         },

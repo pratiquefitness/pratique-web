@@ -60,7 +60,6 @@ export default function BannersPowerCycle() {
                     <div
                       style={{
                         backgroundImage: `url('${live.live_link}')`,
-                        backgroundSize: 'cover',
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'right',

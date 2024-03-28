@@ -28,7 +28,7 @@ export default function Register() {
       >
         <Input placeholder="Digite seu e-mail" />
       </Form.Item>
-      <Form.Item label="Telefone" name="user_phone" rules={[{ required: false, message: 'Digite seu telefone.' }]}>
+      <Form.Item label="Telefone" name="user_phone" rules={[{ required: true, message: 'Digite seu telefone.' }]}>
         <ReactInputMask mask="(99) 99999-9999">{inputProps => <Input {...inputProps} />}</ReactInputMask>
       </Form.Item>
       <Form.Item label="Senha" name="user_pass" rules={[{ required: true, message: 'Digite uma senha.' }]} hasFeedback>

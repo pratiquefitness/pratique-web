@@ -19,6 +19,23 @@ export default async function handler(req, res) {
         diagnose_data: 'desc'
       }
     })
+	  
+	  
+	  // Adicione uma verificação para garantir que apiPratiqueDiagnose.sva seja definido
+    /*if (!apiPratiqueDiagnose || !apiPratiqueDiagnose.sva) {
+      return res.status(500).json({ error: 'Internal Server Error', details: 'apiPratiqueDiagnose.sva is undefined' })
+    }
+
+    const data = await apiPratiqueDiagnose.sva.findMany({
+      where: {
+        diagnose_email: email
+      },
+      orderBy: {
+        diagnose_data: 'desc'
+      }
+    })*/
+	  
+	  
 
     // Converta o campo diagnose_data para string
     const formattedData = data.map(entry => ({

@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from 'react'
 import {Button, Col, Empty, Form, Input, Row, Space, Tag, theme, Typography} from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
-import {useEffect, useState} from 'react'
 import { getTreino, updateAnotacoes, updatePeso } from '@/redux/actions/treino'
 import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
@@ -13,6 +13,8 @@ import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
 import { useRouter } from 'next/router'
 const {Text} = Typography;
+import { Button as AntButton, Modal } from 'antd'
+import Link from 'next/link'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch();
@@ -221,7 +223,23 @@ export default function MeuTreinoView() {
             </div>
           </>
         ) : (
-          <Empty className="my-8" />
+          <div className="text-center">
+            <br></br> <br></br> <p>Você está sem treino. Realize uma diagnose e tenha seu treino em até 24 horas.</p>
+            <Modal
+              title="Realizar Diagnóstico"
+              visible={modalVisible}
+              onCancel={handleCancel}
+              footer={[
+                <div key="diagnoseButtonContainer" className="text-center">
+                  <Button type="primary" onClick={() => (window.location.href = '/treino/diagnose')}>
+                    Quero Diagnose
+                  </Button>
+                </div>
+              ]}
+            >
+              <br></br> <p>Você está sem treino. Realize uma diagnose e tenha seu treino em até 24 horas.</p>
+            </Modal>
+          </div>
         )}
       </Loading>
     </TreinoLayout>

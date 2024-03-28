@@ -12,6 +12,7 @@ import pontoSlice from './slices/ponto'
 import unipowerSlice from './slices/unipower'
 import afiliadosSlice from './slices/afiliados'
 import contaSlice from './slices/conta'
+import clubeCertoSvaSlice from './slices/clubeCertoSva'
 import exerciciosSlice from './slices/exercicios'
 import powerflixTreinosSlice from './slices/powerflixTreinos'
 
@@ -29,6 +30,7 @@ const store = configureStore({
     ponto: pontoSlice.reducer,
     unipower: unipowerSlice.reducer,
     afiliados: afiliadosSlice.reducer,
+    clubeCertoSva: clubeCertoSvaSlice.reducer,
     exercicios: exerciciosSlice.reducer,
     powerflixTreinos: powerflixTreinosSlice.reducer,
   }

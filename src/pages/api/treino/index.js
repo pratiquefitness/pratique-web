@@ -2,6 +2,7 @@ import { objectives } from '@/constants'
 import { apiPratiquePro, apiPratiqueFunciona } from '@/services'
 import utils from '@/utils'
 import { format, parseISO } from 'date-fns'
+import { Modal } from 'antd'
 
 export default async function handler(req, res) {
   let user = {}
@@ -90,6 +91,11 @@ export default async function handler(req, res) {
           user.config = [...user.config, obj]
         });
       }
+    } else {
+      // If fichasExist is empty, show a popup with the text "pratique fitness"
+
+      res.status(200).json({ message: 'pratique fitness' })
+      return
     }
   }
 

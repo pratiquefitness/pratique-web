@@ -47,7 +47,6 @@ const listaLinks = [
 ]
 
 const Browser = ({ url, onClose }) => {
-
   const breadcrumblist = [
     {
       title: <HomeOutlined />,
@@ -76,9 +75,12 @@ const Browser = ({ url, onClose }) => {
           </div>
         </>
       )}
-      <iframe target="_self" className={url === 'https://pratiquefitness.com.br/blog/' ? "browser-iframe-blog" : "browser-iframe"} src={url} />
+      <iframe
+        className={url === 'https://pratiquefitness.com.br/blog/' ? 'browser-iframe-blog' : 'browser-iframe'}
+        src={url}
+      />
       <Affix offsetBottom={12}>
-        <Navigation data={routes} />
+        <Navigation data={routes} className="navigationWithFont13" />
       </Affix>
     </div>
   ) : null
