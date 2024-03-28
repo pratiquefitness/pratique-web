@@ -66,20 +66,14 @@ export default function JumperFit({ employee }) {
   const handleButtonClick = credits => {
     let selectedPlan, saverParam
 
-    if (credits === '12') {
-      selectedPlan = '418'
-      saverParam = 'plano'
-    } else if (credits === '24') {
-      selectedPlan = '419'
-      saverParam = 'plano'
-    } else if (credits === 'diaria') {
-      selectedPlan = '441'
-      saverParam = 'plano'
-    } else if (credits === 'mensal5dias') {
-      selectedPlan = '421'
-      saverParam = 'plano'
-    } else if (credits === 'mensal7dias') {
+    if (credits === 'avulsa') {
+      selectedPlan = '109'
+      saverParam = 'produto'
+    } else if (credits === '1filho') {
       selectedPlan = '422'
+      saverParam = 'plano'
+    } else if (credits === 'filhos') {
+      selectedPlan = '424'
       saverParam = 'plano'
     } else {
       // Se nenhum dos casos acima, use o link padrão
@@ -145,21 +139,18 @@ export default function JumperFit({ employee }) {
         )}
       </Modal>
       <div className="w-100 text-center mb-4 button-container">
-        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('12')}>
-          12 créditos
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('avulsa')}>
+          Aula Avulsa
         </Button>
         <br /> <br />
-        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('24')}>
-          24 créditos
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('1filho')}>
+          Mensal 1 Filho
         </Button>
         <br /> <br />
-        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('diaria')}>
-          Avulso - 30 min
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('filhos')}>
+          Mensal + de 1 Filho
         </Button>
         <br /> <br />
-        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('mensal7dias')}>
-          Mensal 7 dias
-        </Button>
       </div>
       <Collapse className="planos_academia" accordion>
         {/* ... (existing code) */}
