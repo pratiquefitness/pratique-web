@@ -1,4 +1,4 @@
-import { Button, Col, Empty, Form, Input, Row, Space, Tag, theme } from 'antd'
+import {Button, Col, Empty, Flex, Form, Input, Row, Space, Tag, theme} from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
@@ -11,6 +11,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
+import { useRouter } from 'next/router'
 import { Button as AntButton, Modal } from 'antd'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -20,6 +21,7 @@ export default function MeuTreinoView() {
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
   const [modalVisible, setModalVisible] = useState(true)
+  const router = useRouter()
 
   const { themeMode } = useSelector(state => state.global)
 
@@ -136,6 +138,16 @@ export default function MeuTreinoView() {
                 : null}
             </Collapse>
             <div className="p-4 mt-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+              <Col span={24} className={"mb-8"}>
+                <Button
+                  className="text-white text-large blink"
+                  style={{background: 'green'}}
+                  block
+                  onClick={() => { router.push('/exercicios') }}
+                >
+                  MONTE SEU TREINO
+                </Button>
+              </Col>
               <Col span={24} className="mb-2">
                 <p className={`text-large text-center ${themeMode === 'light' ? 'text-black' : 'text-white'}`}>
                   Quer ajustar seu treino?
@@ -143,7 +155,7 @@ export default function MeuTreinoView() {
               </Col>
               <Col span={24} className="mb-2">
                 <a
-                  href="https://api.whatsapp.com/send?phone=553198678494&text=Ol%C3%A1%20Professor,%20estou%20vindo%20da%20p%C3%A1gina%20de%20treino%20do%20Aplicativo"
+                  href="https://bit.ly/FalarcomProfessorPratique"
                   target="_blank"
                 >
                   <Button

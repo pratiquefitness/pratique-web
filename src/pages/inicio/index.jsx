@@ -24,10 +24,27 @@ export default function Inicio() {
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
+  //const isSaverAndClient = true
+  const isSaverSaudeAndPesonal = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
+
+  const isSaverSaudeAndClient = true
+  //  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
+  }
+
+  const dispatchPratiqueMed = () => {
+    dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
+  }
+
+  const dispatchSac = () => {
+    dispatch(
+      setBrowserURL(
+        'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
+        '_blank'
+      )
+    )
   }
 
   const dispatchTrabalhePratique = () => {
@@ -44,10 +61,18 @@ export default function Inicio() {
 
   const listaCarousel = [
     {
-      href: '/canal_equipe',
-      image: '/images/canal_equipe.png',
+      href: '',
+      action: abreSaverClubModal,
+      image: '/images/saver_club.png',
       isRounded: true,
-      alt: 'canal_equipe'
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: dispatchSaverSaude,
+      image: '/images/saver_saude.png',
+      isRounded: true,
+      alt: 'unipower_banner'
     },
     {
       href: '/unipower',
@@ -56,18 +81,17 @@ export default function Inicio() {
       alt: 'unipower_banner'
     },
     {
-      href: '',
-      action: dispatchSaverSaude,
-      image: '/images/pratique_med.png',
+      href: '/canal_equipe',
+      image: '/images/canal_equipe.png',
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: 'canal_equipe'
     },
     {
-      href: '',
-      action: abreSaverClubModal,
-      image: '/images/saver_club.png',
+      href: 'https://bit.ly/FalarRH',
+      image: '/images/rh.png',
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: 'RH',
+      target: '_blank'
     }
   ]
 
@@ -88,84 +112,49 @@ export default function Inicio() {
     }
   ]
 
-  if (isSaverAndClient) {
-    listaCarouselAreaCliente.unshift({
-      href: '',
-      image: '/images/saver_club.png',
-      isRounded: true,
-      alt: 'saver_saude',
-      action: abreSaverClubModal
-    })
-  }
-  if (isSaverSaudeAndClient) {
-    listaCarouselAreaCliente.unshift({
-      href: '',
-      image: '/images/pratique_med.png',
-      isRounded: true,
-      alt: 'saver_saude',
-      action: dispatchSaverSaude
-    })
-  }
-
-  const SvaCarousel = () => {
-    return Object.keys(svaClientParameters).length > 0 ? (
-      <Carousel
-        additionalTransfrom={0}
-        arrows={false}
-        autoPlay={true}
-        autoPlaySpeed={3000}
-        centerMode={false}
-        className=""
-        containerClass="container"
-        dotListClass=""
-        draggable
-        focusOnSelect={false}
-        infinite
-        itemClass=""
-        keyBoardControl
-        minimumTouchDrag={80}
-        pauseOnHover
-        renderArrowsWhenDisabled={false}
-        renderButtonGroupOutside={false}
-        renderDotsOutside={false}
-        responsive={{
-          desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-          },
-          tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-          },
-          mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
+  const novaListaCarouselAreaCliente = [
+    ...(isSaverAndClient
+      ? [
+          {
+            href: '',
+            image: '/images/saver_club.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            action: abreSaverClubModal
           }
-        }}
-        rewind={false}
-        rewindWithAnimation={false}
-        rtl={false}
-        shouldResetAutoplay
-        showDots={true}
-        sliderClass=""
-        slidesToSlide={1}
-        swipeable
-      >
-        {svaClientParameters.banners.map((banner, index) => (
-          <CarouselItem
-            key={index}
-            href={''}
-            action={() => dispatch(setBrowserURL(banner.url))}
-            alt={banner.image}
-            image={banner.image}
-            isRounded={true}
-          />
-        ))}
-      </Carousel>
-    ) : (
-      <></>
-    )
-  }
+        ]
+      : []),
+
+    ...(isSaverSaudeAndClient
+      ? [
+          {
+            href: 'https://www.pratiquemed.com.br/login.php',
+            image: '/images/pratique_med.png',
+            isRounded: true,
+            alt: 'saver_saude',
+            target: '_blank'
+          }
+        ]
+      : []),
+    ...(isSaverSaudeAndPesonal
+      ? [
+          {
+            action: dispatchSaverSaude,
+            image: '/images/saver_saude.png',
+            isRounded: true,
+            alt: 'saver_saude'
+          }
+        ]
+      : []),
+    {
+      href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
+      image: '/images/sac.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      target: '_blank'
+    },
+    ...listaCarouselAreaCliente
+  ]
 
   return (
     <Space direction="vertical" className="w-100">
@@ -275,7 +264,8 @@ export default function Inicio() {
               },
               mobile: {
                 breakpoint: { max: 464, min: 0 },
-                items: 1
+                items: 1,
+                partialVisibilityGutter: 100
               }
             }}
             rewind={false}
@@ -369,78 +359,35 @@ export default function Inicio() {
         </>
       }
 
-      <div className="mt-6 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
-          Você, Feliz e Saudável!
-        </Title>
+      <div className="mt-126 flex flex-col mb-0">
+        <div className="mt-4 mb-2">
+          <Title level={3} className="m-0 ">
+            Evolua seu RESULTADO
+          </Title>
+        </div>
         <Text type="secondary">Exercícios e conteúdos para você</Text>
+        <br />
+        <br />
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
+          <a className="sm:flex-1" href="/exercicios">
+            <img src="/images/demonstracao.png" width="100%" />
+          </a>
+          <a
+            className="sm:flex-1"
+            onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}
+          >
+            <img src="/images/fale_nutri.png" width="100%" />
+          </a>
+          <a
+            className="sm:flex-1"
+            href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
+            target="_blank"
+          >
+            <img src="/images/fale_professor.png" width="100%" />
+          </a>
+        </div>
       </div>
-      <Carousel
-        arrows={false}
-        autoPlay={false}
-        centerMode={false}
-        className="mt-2"
-        containerClass="container"
-        draggable
-        focusOnSelect={false}
-        infinite={false}
-        keyBoardControl={false}
-        minimumTouchDrag={80}
-        partialVisible
-        renderArrowsWhenDisabled={false}
-        renderButtonGroupOutside={false}
-        renderDotsOutside={false}
-        responsive={{
-          desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 3
-          },
-          tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-          },
-          mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
-          }
-        }}
-        rewind={false}
-        rewindWithAnimation={false}
-        rtl={false}
-        showDots={false}
-        slidesToSlide={1}
-        swipeable
-      >
-        <a onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/nutri.png" className="rounded-xl w-95" />
-          </RibbonWithEndDate>
-        </a>
-
-        {/* <a onClick={() => dispatch(setBrowserURL('https://linklist.bio/metodologiapowergym'))}>
-          <RibbonWithEndDate
-            text="Novo!"
-            color="yellow"
-            endDate={addDays(new Date('2023-09-21'), 30)}
-            style={{ fontSize: 16, padding: '2px 8px' }}
-          >
-            <img src="/images/powergym.png" className='rounded-xl w-95' />
-          </RibbonWithEndDate>
-        </a> */}
-        {/*
-        <Link href="/meditacao">
-          <img src="/images/meditacao.png" className='rounded-xl w-95' />
-        </Link> */}
-
-        <Link href="/bike">
-          <img src="/images/power.png" className="rounded-xl w-95" />
-        </Link>
-      </Carousel>
 
        {
          !Object.keys(svaClientParameters).length &&

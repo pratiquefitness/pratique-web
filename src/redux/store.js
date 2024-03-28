@@ -13,6 +13,7 @@ import unipowerSlice from './slices/unipower'
 import afiliadosSlice from './slices/afiliados'
 import contaSlice from './slices/conta'
 import clubeCertoSvaSlice from './slices/clubeCertoSva'
+import exerciciosSlice from './slices/exercicios'
 
 const store = configureStore({
   reducer: {
@@ -29,6 +30,7 @@ const store = configureStore({
     unipower: unipowerSlice.reducer,
     afiliados: afiliadosSlice.reducer,
     clubeCertoSva: clubeCertoSvaSlice.reducer,
+    exercicios: exerciciosSlice.reducer,
   }
 })
 

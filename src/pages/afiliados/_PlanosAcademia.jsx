@@ -31,6 +31,11 @@ const columns = (setLinkID, dados, usuario, employee) => {
         }&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
+
+        const showError = [
+          'adelmoooo'
+        ].includes(record.unidade.slug)
+
         return employee ? (
           <a href={linkFinal} target="_blank">
             <Button type="primary">Link</Button>
@@ -39,9 +44,13 @@ const columns = (setLinkID, dados, usuario, employee) => {
           <Button
             type="primary"
             onClick={() => {
-              utils.copyTextToClipboard(linkFinal)
-              messageLink()
-              setLinkID(linkFinal)
+              if (showError) {
+                message.error('O AFILIADOS PARA ESTA UNIDADE ESTA PAUSADO POR SER UMA UNIDADE NOVA')
+              } else {
+                utils.copyTextToClipboard(linkFinal)
+                messageLink()
+                setLinkID(linkFinal)
+              }
             }}
           >
             Link
@@ -75,6 +84,10 @@ export default function PlanosAcademia({ employee }) {
   }
 
   const list = search ? dataSearch : unidades
+
+  const handlePanelChange = key => {
+    setActivePanel(activePanel === key ? null : key) // Alternar entre abrir e fechar o painel
+  }
 
   return (
     <Loading spinning={loading}>

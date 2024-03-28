@@ -8,6 +8,7 @@ datasource db {
   url      = env("DATABASE_URL_pratiquediagnose")
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model totem {
   diagnose_id           Int
   diagnose_nome         String  @db.VarChar(255)
@@ -21,7 +22,7 @@ model totem {
   diagnose_nivel        String? @db.VarChar(50)
   diagnose_recomendacao String? @db.VarChar(255)
   diagnose_dores        String? @db.VarChar(255)
-   diagnose_data         DateTime? @default(now()) @db.DateTime(0)
+  diagnose_data         String? @db.VarChar(80)
   diagnose_semana       String? @db.VarChar(3)
   diagnose_modalidade   String? @db.VarChar(30)
 
@@ -57,7 +58,7 @@ model windows {
   diagnose_nivel        String? @db.VarChar(50)
   diagnose_recomendacao String? @db.VarChar(255)
   diagnose_dores        String? @db.VarChar(255)
-   diagnose_data         DateTime? @default(now()) @db.DateTime(0)
+  diagnose_data         DateTime? @default(now()) @db.DateTime(0)
   diagnose_semana       String? @db.VarChar(3)
   diagnose_modalidade   String? @db.VarChar(30)
 }
@@ -93,7 +94,7 @@ model container {
   diagnose_nivel        String? @db.VarChar(50)
   diagnose_recomendacao String? @db.VarChar(255)
   diagnose_dores        String? @db.VarChar(255)
-   diagnose_data         DateTime? @default(now()) @db.DateTime(0)
+  diagnose_data         String? @db.VarChar(80)
   diagnose_semana       String? @db.VarChar(3)
   diagnose_modalidade   String? @db.VarChar(30)
   diagnose_unidade      String  @db.VarChar(60)

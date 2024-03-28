@@ -11,6 +11,7 @@
     "postinstall": "prisma generate --schema prisma/pratiqueaulas.prisma && prisma generate --schema prisma/pratiquediagnose.prisma && prisma generate --schema prisma/pratiquefunciona.prisma && prisma generate --schema prisma/pratiquepro.prisma && prisma generate --schema prisma/novopower.prisma"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.0",
     "@prisma/client": "^5.0.0",
     "@react-email/container": "^0.0.8",
     "@react-email/html": "^0.0.4",
@@ -21,6 +22,7 @@
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "material-symbols": "^0.14.3",
     "next": "13.4.4",
     "nodemailer": "^6.9.4",
