@@ -110,6 +110,13 @@ export default function Inicio() {
   ]
 
   const novaListaCarouselAreaCliente = [
+    {
+      href: 'https://api.whatsapp.com/send?phone=5531984272283&text=Estou%20no%20App%20e%20quero%20alugar%20minha%20bike',
+      image: '/images/alugue_bike.png',
+      isRounded: true,
+      alt: 'sua_pratique',
+      target: '_blank'
+    },
     ...(isSaverAndClient
       ? [
           {
