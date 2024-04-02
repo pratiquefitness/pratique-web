@@ -52,7 +52,7 @@ model wp_users {
   avatar_image        String?  @db.Text
   cpf_sva             String   @default("") @db.VarChar(30)
   sva                 String   @default("") @db.VarChar(3)
-  user_activation_key String   @default("") @db.VarChar(255)
+  
 }
 
 model pix {
