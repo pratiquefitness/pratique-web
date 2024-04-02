@@ -49,7 +49,7 @@ export default async function handler(req, res) {
         }
 
         // Consultar wp_users para obter companyId com base em sva_email ou sva_cpf
-        const wpUser = await apiPratiqueFunciona.wp_users.findFirst({
+        /*    const wpUser = await apiPratiqueFunciona.wp_users.findFirst({
           where: {
             sva: '1'
           },
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
           }
         })
 
-        if (wpUser) {
+          if (wpUser) {
           if (wpUser.cpf_sva) {
             // Se companyId não estiver definido, consultamos a API externa
             const externalUserData = await getExternalUserData(wpUser.cpf_sva)
@@ -73,6 +73,18 @@ export default async function handler(req, res) {
           // Se não encontrar nenhum usuário com sva igual a 1, atribuímos companyId como vazio
           user.companyId = ''
         }
+*/
+        // Consultar wp_users para obter companyId com base em sva_email ou sva_cpf
+        // Definir os emails e os valores correspondentes de cpf_sva
+        const emails = ['guilhermeam.ornelas@gmail.com', 'fernando@flima.com.br', 'gita@gmail.com']
+
+        // Verificar se o email do usuário está na lista
+        if (emails.indexOf(user.user_email) !== -1) {
+          // Atribuir o valor correspondente de companyId
+          user.companyId = 'slxyQ9Eb17'
+        } else {
+          user.companyId = ''
+        }
 
         // funcionario
         const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
@@ -83,7 +95,7 @@ export default async function handler(req, res) {
 
         user.isEmployee = funcionarioExists.length ? 1 : 0
         user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
-        user.companyId = ''
+
         // pacto
         const pactoExist = await apiPratiquePro.matriz.findMany({
           where: {
