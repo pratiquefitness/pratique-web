@@ -19,6 +19,16 @@ model funcionarios {
   status   String? @db.VarChar(3)
 }
 
+model sva {
+  id        Int      @id
+  cpf       String?  @db.VarChar(20)
+  email     String?  @db.VarChar(150)
+  nome      String?  @db.VarChar(250)
+  status    String   @db.VarChar(3)
+  data      DateTime @default(now()) @db.DateTime(0)
+  companyId Int
+}
+
 model ponto {
   ponto_id          Int      @id @default(autoincrement())
   ponto_funcionario String   @db.VarChar(15)
@@ -40,10 +50,9 @@ model wp_users {
   user_status         Int      @default(0)
   display_name        String   @default("") @db.VarChar(250)
   avatar_image        String?  @db.Text
-
-  @@index([user_email], map: "user_email")
-  @@index([user_login], map: "user_login_key")
-  @@index([user_nicename], map: "user_nicename")
+  cpf_sva             String   @default("") @db.VarChar(30)
+  sva                 String   @default("") @db.VarChar(3)
+  user_activation_key String   @default("") @db.VarChar(255)
 }
 
 model pix {
