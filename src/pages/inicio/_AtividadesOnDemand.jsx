@@ -4,13 +4,8 @@ import CarouselItem from './_CarouselItem'
 
 const listaCarousel = [
   {
-    href: '/aulas_coletivas/jump',
-    image: '/images/banner_home/vertical_banner/energy_jump2.png',
-    isRounded: true
-  },
-  {
-    href: '/aulas_coletivas/intensivejump',
-    image: '/images/banner_home/vertical_banner/intensive_jump.png',
+    href: '/aulas_coletivas/powerbumbum',
+    image: '/images/banner_home/vertical_banner/power_bumbum.png',
     isRounded: true
   },
   {
@@ -31,6 +26,16 @@ const listaCarousel = [
   {
     href: '/aulas_coletivas/queime_em_casa',
     image: '/images/banner_home/vertical_banner/queime_casa.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/jump',
+    image: '/images/banner_home/vertical_banner/energy_jump2.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/intensivejump',
+    image: '/images/banner_home/vertical_banner/intensive_jump.png',
     isRounded: true
   }
 ]
@@ -60,14 +65,14 @@ export default function AtividadesOnDemand() {
             items: 4
           },
           tablet: {
-			breakpoint: { max: 992, min: 465 },
+            breakpoint: { max: 992, min: 465 },
             items: 2,
-			partialVisibilityGutter: 60
+            partialVisibilityGutter: 60
           },
           mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 2,
-			partialVisibilityGutter: 10
+            partialVisibilityGutter: 10
           }
         }}
         rewind={false}
@@ -79,13 +84,8 @@ export default function AtividadesOnDemand() {
         slidesToSlide={1}
         swipeable
       >
-        {listaCarousel.map(({href,image,isRounded}, index) => (
-          <CarouselItem
-            key={index} 
-            href={href}
-            image={image}
-            isRounded={isRounded}
-          />
+        {listaCarousel.map(({ href, image, isRounded }, index) => (
+          <CarouselItem key={index} href={href} image={image} isRounded={isRounded} />
         ))}
       </Carousel>
     </div>
