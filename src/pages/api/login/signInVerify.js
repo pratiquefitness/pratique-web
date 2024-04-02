@@ -48,6 +48,32 @@ export default async function handler(req, res) {
           user.isAffiliate = 0
         }
 
+        // Consultar wp_users para obter companyId com base em sva_email ou sva_cpf
+        const wpUser = await apiPratiqueFunciona.wp_users.findFirst({
+          where: {
+            sva: '1'
+          },
+          select: {
+            cpf_sva: true
+          }
+        })
+
+        if (wpUser) {
+          if (wpUser.cpf_sva) {
+            // Se companyId não estiver definido, consultamos a API externa
+            const externalUserData = await getExternalUserData(wpUser.cpf_sva)
+            if (externalUserData && externalUserData.companies && externalUserData.companies.length > 0) {
+              // Consideramos apenas a primeira empresa encontrada na resposta
+              user.companyId = externalUserData.companies[0].code
+            } else {
+              user.companyId = ''
+            }
+          }
+        } else {
+          // Se não encontrar nenhum usuário com sva igual a 1, atribuímos companyId como vazio
+          user.companyId = ''
+        }
+
         // funcionario
         const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
           where: {
@@ -89,4 +115,21 @@ export default async function handler(req, res) {
       res.status(200).json(utils.clearDatabaseResult([user]))
     }
   })
+}
+
+async function getExternalUserData(cpf) {
+  console.log(cpf)
+  try {
+    const response = await fetch(`https://node.clubecerto.com.br/superapp/pratique/users/${cpf}`, {
+      headers: {
+        Authorization:
+          'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6IlByYXRpcXVlIiwicHJvZHVjdElkIjoxMiwiYWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTI5VDE4OjE3OjI3LjAwMFoiLCJ1cGRhdGVkQXQiOm51bGwsImlhdCI6MTcwOTIzMTQzNn0.ItwcJPYXqopy969jioZvSdLIMZbaUG7VmUTwT9mwUwY'
+      }
+    })
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Erro ao obter dados externos:', error)
+    return null
+  }
 }
