@@ -4,13 +4,8 @@ import CarouselItem from './_CarouselItem'
 
 const listaCarousel = [
   {
-    href: '/aulas_coletivas/jump',
-    image: '/images/banner_home/vertical_banner/energy_jump2.png',
-    isRounded: true
-  },
-  {
-    href: '/aulas_coletivas/intensivejump',
-    image: '/images/banner_home/vertical_banner/intensive_jump.png',
+    href: '/aulas_coletivas/powerbumbum',
+    image: '/images/banner_home/vertical_banner/power_bumbum.png',
     isRounded: true
   },
   {
@@ -31,6 +26,16 @@ const listaCarousel = [
   {
     href: '/aulas_coletivas/queime_em_casa',
     image: '/images/banner_home/vertical_banner/queime_casa.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/jump',
+    image: '/images/banner_home/vertical_banner/energy_jump2.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/intensivejump',
+    image: '/images/banner_home/vertical_banner/intensive_jump.png',
     isRounded: true
   }
 ]
