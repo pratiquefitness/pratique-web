@@ -16,6 +16,11 @@ agora - acontecendo
 
 const listaCarousel = [
   {
+    href: '/aulas_coletivas/powerbumbum',
+    image: '/images/banner_home/power_bumbum_home.png',
+    isRounded: true
+  },
+  {
     href: '/bike',
     image: '/images/banner_home/power_cycle.png',
     isRounded: true
