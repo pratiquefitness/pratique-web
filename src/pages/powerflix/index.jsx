@@ -157,28 +157,28 @@ export default function Powerflix() {
       </div>
 
       <div className="mt-4 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
+        <Title level={4} className="mb-0">
           Membros Inferiores
         </Title>
       </div>
       <Carrossel listaCarousel={listaCarouselMembrosInferiores} />
 
       <div className="mt-6 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
+        <Title level={4} className="mb-0">
           Membros Superiores
         </Title>
       </div>
       <Carrossel listaCarousel={listaCarouselMembrosSuperiores} />
 
       <div className="mt-6 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
+        <Title level={4} className="mb-0">
           Treinos Diversos
         </Title>
       </div>
       <Carrossel listaCarousel={listaCarouselDiversos} />
 
       <div className="mt-6 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
+        <Title level={4} className="mb-0">
           Treino Desportivo
         </Title>
       </div>
