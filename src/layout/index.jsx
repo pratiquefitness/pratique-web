@@ -50,7 +50,13 @@ export default function Layout({ children }) {
                   <div className="container">
                     <div className="d-flex flex-column justify-space-between">
                       {pathname !== '/' && (
-                        <div className={Object.keys(svaClientParameters).length > 0 ? "flex-container d-flex justify-space-between" : "d-flex flex-column justify-space-between"}>
+                        <div
+                          className={
+                            Object.keys(svaClientParameters).length > 0
+                              ? 'flex-container d-flex justify-space-between'
+                              : 'd-flex flex-column justify-space-between'
+                          }
+                        >
                           <>
                             <Breadcrumb
                               separator={<DoubleRightOutlined className="text-black" />}
@@ -67,7 +73,7 @@ export default function Layout({ children }) {
                               ]}
                             />
                             <Image
-                              className={pathname !== '/' ? '' : "d-none"}
+                              className={pathname !== '/' ? '' : 'd-none'}
                               width={100}
                               src={Object.keys(svaClientParameters).length > 0 ? svaClientParameters.image : ''}
                               preview={false}
@@ -76,12 +82,18 @@ export default function Layout({ children }) {
                         </div>
                       )}
                       {fraseInicial[0] !== '' && (
-                        <div className={Object.keys(svaClientParameters).length > 0 ? "flex-container d-flex justify-space-between" : "d-flex flex-column justify-space-between"}>
-                          <Title level={3}>
+                        <div
+                          className={
+                            Object.keys(svaClientParameters).length > 0
+                              ? 'flex-container d-flex justify-space-between'
+                              : 'd-flex flex-column justify-space-between'
+                          }
+                        >
+                          <Title level={5}>
                             {fraseInicial[0]} <br /> {fraseInicial[1]}
                           </Title>
                           <Image
-                            className={pathname === '/' ? '' : "d-none"}
+                            className={pathname === '/' ? '' : 'd-none'}
                             width={100}
                             src={Object.keys(svaClientParameters).length > 0 ? svaClientParameters.image : ''}
                             preview={false}
