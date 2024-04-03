@@ -104,7 +104,7 @@ export default function Inicio() {
       href: '',
       image: '/images/sua_pratique.png',
       isRounded: true,
-      alt: 'sua_pratique',
+      alt: 'sua_pratique ',
       action: dispatchSobrePratique
     }
   ]
