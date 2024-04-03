@@ -38,12 +38,7 @@ export default async function handler(req, res) {
     }
 
     // Definir os emails e os valores correspondentes de cpf_sva
-    const emails = [
-      'guilhermeam.ornelas@gmail.com',
-      'fernando@flima.com.br',
-      'gita@gmail.com',
-      'design@pratiquefitness.com.br'
-    ]
+    const emails = ['guilhermeam.ornelas@gmail.com', 'fernando@flima.com.br', 'gita@gmail.com']
 
     // Verificar se o email do usuário está na lista
     if (emails.indexOf(user.user_email) !== -1) {
@@ -62,7 +57,7 @@ export default async function handler(req, res) {
 
     user.isEmployee = funcionarioExists.length ? 1 : 0
     user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
-    user.companyId = ''
+    //user.companyId = 'slxyQ9Eb17'
 
     // pacto
     const pactoExist = await apiPratiquePro.matriz.findMany({

@@ -143,7 +143,7 @@ export default function Geral() {
         ) : (
           <Row gutter={[16, 16]}>
             <Col xs={24}>Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}</Col>
-            <Col xs={24} lg={12} className='d-flex align-center justify-space-between'>
+            <Col xs={24} lg={12} className="d-flex align-center justify-space-between">
               Chave: {pix?.chave}
               <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
                 Copiar Chave
@@ -167,7 +167,6 @@ export default function Geral() {
                 <p className="my-2 text-center">(31) 98486-1766</p>
               </Col>
             </Col>
-            
           </Row>
         )}
       </Card>
