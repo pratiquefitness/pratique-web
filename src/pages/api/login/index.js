@@ -37,6 +37,22 @@ export default async function handler(req, res) {
       user.isAffiliate = 0
     }
 
+    // Definir os emails e os valores correspondentes de cpf_sva
+    const emails = [
+      'guilhermeam.ornelas@gmail.com',
+      'fernando@flima.com.br',
+      'gita@gmail.com',
+      'design@pratiquefitness.com.br'
+    ]
+
+    // Verificar se o email do usuário está na lista
+    if (emails.indexOf(user.user_email) !== -1) {
+      // Atribuir o valor correspondente de companyId
+      user.companyId = 'slxyQ9Eb17'
+    } else {
+      user.companyId = ''
+    }
+
     // funcionario
     const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
       where: {
