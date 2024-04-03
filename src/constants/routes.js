@@ -128,6 +128,11 @@ const routes = [
     showInNavigation: false
   },
   {
+    title: 'powerbumbum',
+    href: '/powerbumbum',
+    showInNavigation: false
+  },
+  {
     title: 'queimeacasa',
     href: '/queimeacasa',
     showInNavigation: false
@@ -152,7 +157,7 @@ const routes = [
     title: 'Editar Treino Livre',
     href: '/editar_meus_treinos',
     showInNavigation: false
-  },
+  }
 ]
 
 export default routes
