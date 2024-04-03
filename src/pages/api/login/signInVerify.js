@@ -76,7 +76,12 @@ export default async function handler(req, res) {
 */
         // Consultar wp_users para obter companyId com base em sva_email ou sva_cpf
         // Definir os emails e os valores correspondentes de cpf_sva
-        const emails = ['guilhermeam.ornelas@gmail.com', 'fernando@flima.com.br', 'gita@gmail.com']
+        const emails = [
+          'guilhermeam.ornelas@gmail.com',
+          'fernando@flima.com.br',
+          'gita@gmail.com',
+          'design@pratiquefitness.com.br'
+        ]
 
         // Verificar se o email do usuário está na lista
         if (emails.indexOf(user.user_email) !== -1) {
