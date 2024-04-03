@@ -32,9 +32,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
 
-        const showError = [
-          'adelmoooo'
-        ].includes(record.unidade.slug)
+        const showError = ['adelmoooo'].includes(record.unidade.slug)
 
         return employee ? (
           <a href={linkFinal} target="_blank">
