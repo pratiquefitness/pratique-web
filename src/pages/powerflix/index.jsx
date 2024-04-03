@@ -97,7 +97,7 @@ export default function Powerflix() {
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/pretemporada.jpeg',
+      image: '/images/powerflix/pretemporada.png',
       isRounded: true,
       alt: 'pretemporada',
       setImageModal: setImageModal,
