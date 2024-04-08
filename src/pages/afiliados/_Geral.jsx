@@ -44,7 +44,7 @@ export default function Geral() {
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa'
+      'https://api.whatsapp.com/send?phone=5531997752812&text=Ol%C3%A1%2C%20estou%20vindo%20do%20app%20Pratique%20em%20Casa%20e%20sou%20um%20dos%20afiliados.%20Pode%20me%20ajudar%3F'
 
     if (isMobile) {
       window.location.href = whatsappUrl
@@ -143,7 +143,7 @@ export default function Geral() {
         ) : (
           <Row gutter={[16, 16]}>
             <Col xs={24}>Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}</Col>
-            <Col xs={24} lg={12} className='d-flex align-center justify-space-between'>
+            <Col xs={24} lg={12} className="d-flex align-center justify-space-between">
               Chave: {pix?.chave}
               <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
                 Copiar Chave
@@ -167,7 +167,6 @@ export default function Geral() {
                 <p className="my-2 text-center">(31) 98486-1766</p>
               </Col>
             </Col>
-            
           </Row>
         )}
       </Card>
