@@ -164,7 +164,8 @@ export default function Geral() {
                 >
                   SUPORTE AFILIADO
                 </Button>
-                <p className="my-2 text-center">(31) 98486-1766</p>
+                5531997752812
+                <p className="my-2 text-center">(31) 99775-2812</p>
               </Col>
             </Col>
           </Row>
