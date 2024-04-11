@@ -151,7 +151,9 @@ export default function Diagnose({ id }) {
           className="mb-4"
           height={20}
         />{' '}
-        {usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com' ? (
+        {usuario.user_email === 'pratadeu@gmail.com' ||
+        usuario.user_email === 'edujobtours@hotmail.com' ||
+        usuario.user_email === 'glauberpratique@hotmail.com' ? (
           <img
             src={`/images/banner_home/${
               usuario.user_email === 'adelmo2@gmail.com' ? 'adelmo.jpg' : 'icone-anovator.png'

@@ -122,7 +122,9 @@ export default function ScannerView() {
       )}{' '}
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
         {' '}
-        {usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com' ? (
+        {usuario.user_email === 'pratadeu@gmail.com' ||
+        usuario.user_email === 'edujobtours@hotmail.com' ||
+        usuario.user_email === 'glauberpratique@hotmail.com' ? (
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <img src="/images/banner_home/anovator.png" height={40} style={{ display: 'block' }} />
           </div>
