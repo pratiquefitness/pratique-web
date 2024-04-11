@@ -22,12 +22,29 @@ export default function ScannerView() {
 
     const fetchExamsData = async () => {
       try {
-        if (usuario && usuario.telefone) {
-          const telefoneLimpo = usuario.telefone.replace(/\D/g, '') // \D corresponde a qualquer caractere que não seja um dígito
-          const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, '') // Remover parênteses
-          const response = await axios.get(
-            `https://pratiquetecnologia.com.br/api/balanca/id.php?phone=${telefoneSemParenteses}`
-          )
+        if (usuario) {
+          let parametrosConsulta = ''
+
+          if (usuario.cpf) {
+            const cpfLimpo = usuario.cpf.replace(/\D/g, '') // Remover caracteres não numéricos do CPF
+            parametrosConsulta += `cpf=${cpfLimpo}`
+          }
+
+          if (usuario.telefone) {
+            const telefoneLimpo = usuario.telefone.replace(/\D/g, '') // Remover caracteres não numéricos do telefone
+            const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, '') // Remover parênteses
+            if (parametrosConsulta !== '') {
+              parametrosConsulta += '&'
+            }
+            parametrosConsulta += `phone=${telefoneSemParenteses}`
+          }
+
+          if (parametrosConsulta === '') {
+            // Lida com o caso em que ambas as informações (CPF e telefone) estão faltando
+            return
+          }
+
+          const response = await axios.get(`https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}`)
 
           // Verificar se a resposta é bem-sucedida e os dados foram retornados
           if (response.status === 200 && response.data && response.data.length > 0) {
