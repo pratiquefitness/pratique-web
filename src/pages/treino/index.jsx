@@ -38,7 +38,11 @@ export default function MeuTreinoView() {
 
   useEffect(() => {
     dispatch(getTreino())
-    if (usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com') {
+    if (
+      usuario.user_email === 'pratadeu@gmail.com' ||
+      usuario.user_email === 'edujobtours@hotmail.com' ||
+      usuario.user_email === 'glauberpratique@hotmail.com'
+    ) {
       openModal('/images/banner_home/banner-anovator.jpg')
     } else {
       setModalVisible(false) // Esconde o modal se o email não corresponder
