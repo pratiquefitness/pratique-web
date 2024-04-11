@@ -11,14 +11,18 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
+import { Button as AntButton, Modal } from 'antd'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export default function MeuTreinoView() {
-  const dispatch = useDispatch()
+const dispatch = useDispatch()
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()
-  const router = useRouter()
-
+  const [modalVisible, setModalVisible] = useState(true)
+  const [imageUrl, setImageUrl] = useState('')
+  //const { email } = useSelector(state => state.login.usuario)
+  const { usuario } = useSelector(state => state.login)
   const { themeMode } = useSelector(state => state.global)
 
   const onSaveAnotacoes = values => {
@@ -31,7 +35,28 @@ export default function MeuTreinoView() {
 
   useEffect(() => {
     dispatch(getTreino())
+    if (usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com') {
+      openModal('/images/banner_home/banner-anovator.jpg')
+    } else {
+      setModalVisible(false) // Esconde o modal se o email não corresponder
+    }
   }, [])
+
+  const openModal = imageUrl => {
+    // Verifica se a URL da imagem está definida
+    if (imageUrl) {
+      setImageUrl(imageUrl)
+      setModalVisible(true)
+    }
+  }
+
+  const handleCancel = () => {
+    setModalVisible(false)
+  }
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
 
   return (
     <TreinoLayout>
@@ -163,8 +188,11 @@ export default function MeuTreinoView() {
           </>
         ) : (
           <Empty className="my-8" />
-        )}
-      </Loading>
+        )}{' '}
+        <Modal visible={modalVisible} onCancel={closeModal} footer={null} closable={false} maskClosable={false}>
+          <img src={imageUrl} alt="Imagem" style={{ maxWidth: '100%', maxHeight: '100%' }} onClick={closeModal} />
+        </Modal>
+       </Loading>
     </TreinoLayout>
   )
 }
