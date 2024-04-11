@@ -14,7 +14,6 @@ export default function ScannerView() {
   const { fichas } = data
   const temExame = fichas && fichas.find(objeto => objeto.urlexame && objeto.urlexame.includes('pdf'))
   const [examsData, setExamsData] = useState(null)
-  const [modalVisible, setModalVisible] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedExamId, setSelectedExamId] = useState(null)
 
@@ -24,15 +23,24 @@ export default function ScannerView() {
     const fetchExamsData = async () => {
       try {
         if (usuario && usuario.telefone) {
+          const telefoneLimpo = usuario.telefone.replace(/\D/g, '') // \D corresponde a qualquer caractere que não seja um dígito
+          const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, '') // Remover parênteses
           const response = await axios.get(
-            `https://pratiquetecnologia.com.br/api/balanca/id.php?phone=${usuario.telefone}`
+            `https://pratiquetecnologia.com.br/api/balanca/id.php?phone=${telefoneSemParenteses}`
           )
-          // Convertendo as datas para um formato legível
-          const examsWithFormattedDate = response.data.map(exam => ({
-            ...exam,
-            gmtCreate: new Date(exam.gmtCreate).toLocaleString()
-          }))
-          setExamsData(examsWithFormattedDate)
+
+          // Verificar se a resposta é bem-sucedida e os dados foram retornados
+          if (response.status === 200 && response.data && response.data.length > 0) {
+            // Convertendo as datas para um formato legível
+            const examsWithFormattedDate = response.data.map(exam => ({
+              ...exam,
+              gmtCreate: new Date(exam.gmtCreate).toLocaleString()
+            }))
+            setExamsData(examsWithFormattedDate)
+          } else {
+            // Se não há exames disponíveis para o usuário
+            console.error('Nenhum exame encontrado para este usuário.')
+          }
         } else {
           console.error('Telefone do usuário não disponível.')
         }
@@ -46,36 +54,11 @@ export default function ScannerView() {
 
   const handleImageClick = async record => {
     setSelectedImage(record.bodyImage)
-    setModalVisible(true)
+    setSelectedExamId(record.id)
 
-    try {
-      // Abrir a página embutida na aplicação
-      dispatch(setBrowserURL(`https://www.anovator.com/report/index.html?id=${record.id}&child=false&lang=pt_PT`))
-    } catch (error) {
-      console.error('Erro ao abrir a página:', error)
-    }
+    // Abrir a página embutida na aplicação
+    dispatch(setBrowserURL(`https://www.anovator.com/report/index.html?id=${record.id}&child=false&lang=pt_PT`))
   }
-
-  const columns = [
-    {
-      title: 'Data',
-      dataIndex: 'gmtCreate',
-      key: 'gmtCreate',
-      render: gmtCreate => {
-        const date = new Date(gmtCreate)
-        return date.toLocaleDateString() // Exibir apenas a data sem a hora
-      }
-    },
-    {
-      title: 'Ações',
-      key: 'actions',
-      render: record => (
-        <Button type="primary" onClick={() => handleImageClick(record)}>
-          VER EXAME
-        </Button>
-      )
-    }
-  ]
 
   return (
     <TreinoLayout>
@@ -88,23 +71,63 @@ export default function ScannerView() {
       ) : (
         <div style={{ textAlign: 'center' }}></div>
       )}
-
       {examsData ? (
         <div>
           <Table
             dataSource={examsData}
-            columns={columns}
-            onRow={(record, rowIndex) => ({
-              onClick: () => setSelectedExamId(record.id)
-            })}
+            columns={[
+              {
+                title: 'Data',
+                dataIndex: 'data_column',
+                key: 'gmtCreate',
+                render: data_column => {
+                  const date = new Date(data_column)
+                  return date.toLocaleDateString() // Exibir apenas a data sem a hora
+                }
+              },
+              {
+                title: 'Ações',
+                key: 'actions',
+                render: record => (
+                  <Button type="primary" style={{ height: '20px' }} onClick={() => handleImageClick(record)}>
+                    Ver
+                  </Button>
+                )
+              }
+            ]}
           />
-          <Modal open={modalVisible} onClose={() => setModalVisible(false)} footer={null} destroyOnClose>
+          <Modal visible={false} footer={null}>
             {selectedImage && <img src={selectedImage} alt="Imagem do exame" style={{ maxWidth: '100%' }} />}
+            {selectedExamId && (
+              <Button
+                type="primary"
+                shape="round"
+                icon={<DownloadOutlined />}
+                size="large"
+                onClick={() =>
+                  dispatch(
+                    setBrowserURL(
+                      `https://www.anovator.com/report/index.html?id=${selectedExamId}&child=false&lang=pt_PT`
+                    )
+                  )
+                }
+              >
+                Ver PDF
+              </Button>
+            )}
           </Modal>
         </div>
       ) : (
-        <div style={{ textAlign: 'center' }}></div>
-      )}
+        <div style={{ textAlign: 'center' }}> </div>
+      )}{' '}
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        {' '}
+        {usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com' ? (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src="/images/banner_home/anovator.png" height={40} style={{ display: 'block' }} />
+          </div>
+        ) : null}
+      </div>
     </TreinoLayout>
   )
 }
