@@ -131,6 +131,7 @@ export default function Diagnose({ id }) {
   const [diagnose, setDiagnose] = useState({})
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
+  const { usuario } = useSelector(state => state.login)
 
   useEffect(() => {
     dispatch(getDiagnose())
@@ -149,9 +150,18 @@ export default function Diagnose({ id }) {
           style={{ filter: 'invert(100%)' }}
           className="mb-4"
           height={20}
-        />
+        />{' '}
+        {usuario.user_email === 'pratadeu@gmail.com' || usuario.user_email === 'adelmo2@gmail.com' ? (
+          <img
+            src={`/images/banner_home/${
+              usuario.user_email === 'adelmo2@gmail.com' ? 'adelmo.jpg' : 'icone-anovator.png'
+            }`}
+            className="mb-4"
+            height={60}
+            margingLeft={40}
+          />
+        ) : null}
         <Typography.Paragraph>{produtos[diagnose?.diagnose_produto]}</Typography.Paragraph>
-
         {diagnose?.diagnose_subproduto !== 'nenhum' ? (
           <>
             <Typography.Title level={3}>TRATAMENTO INDICADO</Typography.Title>
