@@ -71,6 +71,6 @@ export const generatePDF = async phone => {
     window.open(`https://www.anovator.com/report/index.html?id=${imageKey}&child=false&lang=en_EN`, '_blank')
   } catch (error) {
     console.error('Erro ao gerar o PDF do relatório:', error)
-    throw new Error('Falha ao gerar o PDF do relatório.')
+    throw new Error('Falha ao gerar o PDF do  relatório.')
   }
 }
