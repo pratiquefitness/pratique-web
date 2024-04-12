@@ -63,13 +63,29 @@ export default async function handler(req, res) {
           unidade_nome: true
         }
       })
-      user.status = pactoExist[0]?.matriz_situacao
-      user.plano = pactoExist[0]?.matriz_plano
-      user.unidade = unidadeExist[0]?.unidade_nome
+      user.status = pactoExist[0].matriz_situacao
+      user.plano = pactoExist[0].matriz_plano
+      user.unidade = unidadeExist[0].unidade_nome
+
+      // Verificar se matriz_tel existe antes de atribuir a user.telefone
+      if (pactoExist[0].matriz_tel !== undefined) {
+        user.telefone = pactoExist[0].matriz_tel
+      } else {
+        user.telefone = null
+      }
+
+      // Verificar se matriz_cpf existe antes de atribuir a user.cpf
+      if (pactoExist[0].matriz_cpf !== undefined) {
+        user.cpf = pactoExist[0].matriz_cpf
+      } else {
+        user.cpf = null
+      }
     } else {
       user.status = null
       user.plano = null
       user.unidade = null
+      user.telefone = null
+      user.cpf = null
     }
   }
 
