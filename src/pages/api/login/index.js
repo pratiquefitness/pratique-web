@@ -66,12 +66,10 @@ export default async function handler(req, res) {
       user.status = pactoExist[0]?.matriz_situacao
       user.plano = pactoExist[0]?.matriz_plano
       user.unidade = unidadeExist[0]?.unidade_nome
-      user.cpf = pactoExist[0].matriz_cpf
     } else {
       user.status = null
       user.plano = null
       user.unidade = null
-      user.cpf = pactoExist[0].matriz_cpf
     }
   }
 
