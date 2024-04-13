@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Empty, Modal, Table } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import { Button, Empty, Table } from 'antd'
+import { DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import TreinoLayout from '../_Layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTreino } from '@/redux/actions/treino'
@@ -16,6 +16,9 @@ export default function ScannerView() {
   const [examsData, setExamsData] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedExamId, setSelectedExamId] = useState(null)
+  const [iframeVisible, setIframeVisible] = useState(false)
+  const [pdfLink, setPdfLink] = useState('')
+  const [loading, setLoading] = useState(true) // Adicionado estado para controle do carregamento do iframe
 
   useEffect(() => {
     dispatch(getTreino())
@@ -26,13 +29,13 @@ export default function ScannerView() {
           let parametrosConsulta = ''
 
           if (usuario.cpf) {
-            const cpfLimpo = usuario.cpf.replace(/\D/g, '') // Remover caracteres não numéricos do CPF
+            const cpfLimpo = usuario.cpf.replace(/\D/g, '')
             parametrosConsulta += `cpf=${cpfLimpo}`
           }
 
           if (usuario.telefone) {
-            const telefoneLimpo = usuario.telefone.replace(/\D/g, '') // Remover caracteres não numéricos do telefone
-            const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, '') // Remover parênteses
+            const telefoneLimpo = usuario.telefone.replace(/\D/g, '')
+            const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, '')
             if (parametrosConsulta !== '') {
               parametrosConsulta += '&'
             }
@@ -40,22 +43,18 @@ export default function ScannerView() {
           }
 
           if (parametrosConsulta === '') {
-            // Lida com o caso em que ambas as informações (CPF e telefone) estão faltando
             return
           }
 
           const response = await axios.get(`https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}`)
 
-          // Verificar se a resposta é bem-sucedida e os dados foram retornados
           if (response.status === 200 && response.data && response.data.length > 0) {
-            // Convertendo as datas para um formato legível
             const examsWithFormattedDate = response.data.map(exam => ({
               ...exam,
               gmtCreate: new Date(exam.gmtCreate).toLocaleString()
             }))
             setExamsData(examsWithFormattedDate)
           } else {
-            // Se não há exames disponíveis para o usuário
             console.error('Nenhum exame encontrado para este usuário.')
           }
         } else {
@@ -72,71 +71,74 @@ export default function ScannerView() {
   const handleImageClick = async record => {
     setSelectedImage(record.bodyImage)
     setSelectedExamId(record.id)
+    setLoading(true) // Reseta o estado para mostrar o loading enquanto o iframe carrega
+    setIframeVisible(true)
+    setPdfLink(record.pdf)
+  }
 
-    // Abrir a página embutida na aplicação
-    dispatch(setBrowserURL(`https://www.anovator.com/report/index.html?id=${record.id}&child=false&lang=pt_PT`))
+  // Função para lidar com o evento de carregamento do iframe
+  const handleIframeLoad = () => {
+    setLoading(false) // Define o estado como false quando o iframe termina de carregar
   }
 
   return (
     <TreinoLayout>
-      {temExame ? (
-        <a href={temExame?.urlexame} target="_blank" rel="noopener noreferrer">
-          <Button shape="round" icon={<DownloadOutlined />} size="large" block>
-            Baixar Exame
-          </Button>
-        </a>
-      ) : (
-        <div style={{ textAlign: 'center' }}></div>
-      )}
-      {examsData ? (
-        <div>
-          <Table
-            dataSource={examsData}
-            columns={[
-              {
-                title: 'Data',
-                dataIndex: 'data_column',
-                key: 'gmtCreate',
-                render: data_column => {
-                  const date = new Date(data_column)
-                  return date.toLocaleDateString() // Exibir apenas a data sem a hora
-                }
-              },
-              {
-                title: 'Ações',
-                key: 'actions',
-                render: record => (
-                  <Button type="primary" style={{ height: '20px' }} onClick={() => handleImageClick(record)}>
-                    Ver
-                  </Button>
-                )
-              }
-            ]}
-          />
-          <Modal visible={false} footer={null}>
-            {selectedImage && <img src={selectedImage} alt="Imagem do exame" style={{ maxWidth: '100%' }} />}
-            {selectedExamId && (
-              <Button
-                type="primary"
-                shape="round"
-                icon={<DownloadOutlined />}
-                size="large"
-                onClick={() =>
-                  dispatch(
-                    setBrowserURL(
-                      `https://www.anovator.com/report/index.html?id=${selectedExamId}&child=false&lang=pt_PT`
-                    )
-                  )
-                }
-              >
-                Ver PDF
-              </Button>
+      {iframeVisible && (
+        <div style={{ position: 'fixed', zIndex: 9999, top: 0, left: 0, right: 0, bottom: 0 }}>
+          {loading && (
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: '#f0f0f0' }} />
+          )}{' '}
+          {/* Adiciona um fundo de cor enquanto o iframe carrega */}
+          <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '9999' }}>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => setIframeVisible(false)}>
+              Voltar
+            </Button>
+          </div>
+          <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '9999' }}>
+            {pdfLink && (
+              <a href={pdfLink} target="_blank" rel="noopener noreferrer">
+                <Button type="primary" icon={<DownloadOutlined />}>
+                  Ver PDF
+                </Button>
+              </a>
             )}
-          </Modal>
+          </div>
+          <iframe
+            title="PDF Viewer"
+            src={`https://www.anovator.com/report/index.html?id=${selectedExamId}&child=false&lang=pt_PT`}
+            width="100%"
+            height="100%"
+            onLoad={handleIframeLoad} // Adiciona o evento onLoad ao iframe para controlar o carregamento
+          />
         </div>
+      )}
+      {!iframeVisible && examsData ? (
+        <Table
+          dataSource={examsData}
+          columns={[
+            {
+              title: 'Data',
+              dataIndex: 'data_column',
+              key: 'gmtCreate',
+              render: data_column => {
+                const date = new Date(data_column)
+                return date.toLocaleDateString()
+              }
+            },
+            {
+              title: 'Ações',
+              key: 'actions',
+              render: record => (
+                <Button type="primary" style={{ height: '20px' }} onClick={() => handleImageClick(record)}>
+                  Ver
+                </Button>
+              )
+            }
+          ]}
+        />
       ) : (
-        <div style={{ textAlign: 'center' }}> </div>
-      )}{' '}
+        <Empty />
+      )}
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
         {' '}
         {usuario.user_email === 'pratadeu@gmail.com' ||
