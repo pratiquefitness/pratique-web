@@ -120,7 +120,7 @@ export const getPlanos = (chave, separador, nome, slug) => {
   return async dispatch => {
     dispatch(setPlanosLoading(true))
     return apiPratiqueFitness
-      .get(`getplanos/index3.php?unidade=${chave}|${separador}&nome=${nome}&slug=${slug}`)
+      .get(`getplanos/index.php?unidade=${chave}|${separador}&nome=${nome}&slug=${slug}`)
       .then(res => {
         dispatch(setPlanos(res.data))
       })
