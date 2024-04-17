@@ -44,7 +44,7 @@ export default function Geral() {
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=5531993516343&text=Ol%C3%A1%2C%20estou%20vindo%20do%20app%20Pratique%20em%20Casa%20e%20sou%20um%20dos%20afiliados.%20Pode%20me%20ajudar%3F'
+      'https://api.whatsapp.com/send?phone=5531994679675&text=Ol%C3%A1%2C%20estou%20vindo%20do%20app%20Pratique%20em%20Casa%20e%20sou%20um%20dos%20afiliados.%20Pode%20me%20ajudar%3F'
 
     if (isMobile) {
       window.location.href = whatsappUrl
@@ -165,7 +165,7 @@ export default function Geral() {
                   SUPORTE AFILIADO
                 </Button>
 
-                <p className="my-2 text-center">(31) 99351-6343</p>
+                <p className="my-2 text-center">(31) 99467-9675</p>
               </Col>
             </Col>
           </Row>
