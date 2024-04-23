@@ -13,6 +13,8 @@ import unipowerSlice from './slices/unipower'
 import afiliadosSlice from './slices/afiliados'
 import contaSlice from './slices/conta'
 import exerciciosSlice from './slices/exercicios'
+import powerflixTreinosSlice from './slices/powerflixTreinos'
+import declaracaoVendaSlice from "./slices/declaracaoVenda";
 
 const store = configureStore({
   reducer: {
@@ -29,6 +31,8 @@ const store = configureStore({
     unipower: unipowerSlice.reducer,
     afiliados: afiliadosSlice.reducer,
     exercicios: exerciciosSlice.reducer,
+    powerflixTreinos: powerflixTreinosSlice.reducer,
+    declaracaoVenda: declaracaoVendaSlice.reducer,
   }
 })
 
