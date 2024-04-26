@@ -168,6 +168,11 @@ const routes = [
     href: '/declaracao_venda',
     showInNavigation: false
   },
+  {
+    title: '',
+    href: '/declaracao_venda',
+    showInNavigation: false
+  },
 ]
 
 export default routes

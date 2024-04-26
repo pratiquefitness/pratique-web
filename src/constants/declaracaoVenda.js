@@ -19,12 +19,34 @@ export const CONSULTORES = [
 	{value: '18', label: '18'},
 ];
 
-export const STATUS = {
-	validado: 1,
-	inseridaPorOutro: 2,
-	recusado: 3,
-	pendente: 4
-}
+export const STATUS = [
+	{
+		status: '',
+		value: 0,
+		colorCard: '',
+		colorLabelStatus: ''
+	},{
+		status: 'validado',
+		value: 1,
+		colorCard: '#F6FEED',
+		colorLabelStatus: '#000'
+	},{
+		status: 'inseridaPorOutro',
+		value: 2,
+		colorCard: '#FFF2F0',
+		colorLabelStatus: '#ED143D'
+	},{
+		status: 'recusado',
+		value: 3,
+		colorCard: '#FFFBE6',
+		colorLabelStatus: '#ED143D'
+	},{
+		status: 'pendente',
+		value: 4,
+		colorCard: '#F6FEED',
+		colorLabelStatus: '#ED143D'
+	},
+]
 
 export const TIPOVENDA = [
 	{value: 'Online', label: 'Online'},

@@ -1,7 +1,7 @@
-import { getUnidades, saveDeclaracaoVenda } from '@/redux/actions/declaracaoVenda'
-import {Button, Form, Input, DatePicker, ConfigProvider} from 'antd'
-import {useEffect, useState} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { getUnidades, saveDeclaracaoVenda } from '@/redux/actions/declaracaoVenda';
+import {Button, Form, Input, DatePicker, ConfigProvider} from 'antd';
+import {useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {DeclaracaoVendaSelect} from "@/components/DeclaracaoVenda";
 import locale from 'antd/locale/pt_BR';
 import dayjs from 'dayjs';
@@ -19,8 +19,11 @@ export default function DeclaracaoVenda() {
   const values = Form.useWatch([], form);
 
   const onSave = values => {
-    console.log(values);
-    dispatch(saveDeclaracaoVenda(values))
+    dispatch(saveDeclaracaoVenda(values));
+    form.setFieldsValue({
+      cliente: '',
+      link: ''
+    })
   }
   
   useEffect(() => {
@@ -54,8 +57,6 @@ export default function DeclaracaoVenda() {
       [tipo]: valor
     })
   }
-  
-  console.log(form, values)
 
   return (
     <>
