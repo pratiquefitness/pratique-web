@@ -88,7 +88,7 @@ export default function Geral() {
       <Row>
         <Col xs={24} className="mb-12">
           <Button
-            style={{background: '#1677ff', color: 'white'}}
+            style={{backgroundColor: '#756483', color: '#fff'}}
             block
             onClick={() => {
               router.push({
