@@ -8,7 +8,6 @@ export const getTreinoLivre = (id) => {
     return api
       .post('/exercicios', {usuarioId: id})
       .then(res => {
-        console.log('RES', res.data);
         dispatch(setTreinoLivre(res.data))
       })
       .finally(() => {

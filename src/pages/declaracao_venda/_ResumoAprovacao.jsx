@@ -24,9 +24,6 @@ export default function ResumoAprovacao() {
 		dispatch(getResumo(date, usuario.user_email));
 	}, [date]);
 	
-	console.log(resumo)
-	console.log(dateDefault)
-	
 	const onChangeDate = (date, dateString) => {
 		setDate(dayjs(date.$d).format('YYYY-MM'));
 		setDateDefault(dayjs(date.$d));

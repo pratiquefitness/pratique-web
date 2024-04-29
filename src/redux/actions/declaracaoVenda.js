@@ -37,7 +37,6 @@ export const saveDeclaracaoVenda = values => {
 }
 
 export const getResumo = (mes, email) => {
-  console.log(mes, email)
   return async (dispatch) => {
     dispatch(setLoading(true))
     return apiPratiqueTecnologia

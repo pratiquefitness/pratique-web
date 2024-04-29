@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { WhatsAppOutlined } from '@ant-design/icons'
 import { FaWhatsapp } from 'react-icons/fa'
+import {useRouter} from "next/navigation";
 
 const tiposPix = [
   { value: 'cpf', label: 'CPF' },
@@ -21,6 +22,7 @@ export default function Geral() {
   const { usuario } = useSelector(state => state.login)
   const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
   const { token } = theme.useToken()
+  const router = useRouter()
 
   useEffect(() => {
     dispatch(getDadosAfiliado())
@@ -80,6 +82,22 @@ export default function Geral() {
               value={`R$ ${geral.valorReceber},00`}
             />
           </div>
+        </Col>
+      </Row>
+      
+      <Row>
+        <Col xs={24} className="mb-12">
+          <Button
+            style={{background: '#1677ff', color: 'white'}}
+            block
+            onClick={() => {
+              router.push({
+                pathname: `/declaracao_venda`,
+              })
+            }}
+          >
+            DECLARAÇÃO DE VENDA
+          </Button>
         </Col>
       </Row>
       {/*

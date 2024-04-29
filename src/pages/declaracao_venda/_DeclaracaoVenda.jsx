@@ -17,13 +17,23 @@ export default function DeclaracaoVenda() {
   const { unidades, loading } = useSelector(state => state.declaracaoVenda);
   const [submittable, setSubmittable] = useState(false);
   const values = Form.useWatch([], form);
-
+  
   const onSave = values => {
     dispatch(saveDeclaracaoVenda(values));
     form.setFieldsValue({
       cliente: '',
-      link: ''
+      link: '',
+      tipo: 'Presencial'
     })
+  }
+  
+  const isEmpty = (value) => {
+    for (let prop in value) {
+      if(value[prop].length === 0) {
+        return false;
+      }
+    }
+    return true;
   }
   
   useEffect(() => {
@@ -41,8 +51,12 @@ export default function DeclaracaoVenda() {
       .validateFields({
         validateOnly: true,
       })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
+      .then((data) => {
+        setSubmittable(isEmpty(values))
+      })
+      .catch((data) => {
+        setSubmittable(isEmpty(values))
+      });
   }, [form, values]);
   
   const onChangeDate = (date, dateString) => {
@@ -56,6 +70,11 @@ export default function DeclaracaoVenda() {
     form.setFieldsValue({
       [tipo]: valor
     })
+    if(tipo === 'tipo') {
+      form.setFieldsValue({ link: '' });
+    }
+    
+    if(valor.length === 0) setSubmittable(false);
   }
 
   return (
@@ -73,9 +92,11 @@ export default function DeclaracaoVenda() {
           <Form.Item
             label="Data da Venda"
             name="data_declarada"
+            initialValue={''}
             rules={[
               {
                 required: true,
+                message: 'Por favor, insira uma Data válida',
               },
             ]}
           >
@@ -93,9 +114,11 @@ export default function DeclaracaoVenda() {
           <Form.Item
             label="Consultor"
             name="consultor"
+            initialValue={''}
             rules={[
               {
                 required: true,
+                message: 'Por favor, insira um Cosultor válido',
               },
             ]}
           >
@@ -111,8 +134,10 @@ export default function DeclaracaoVenda() {
           <Form.Item
             label="Unidade que foi feita a venda"
             name="unidade"
+            initialValue={''}
             rules={[
               {
+                message: 'Por favor, insira uma Unidade válida',
                 required: true,
               },
             ]}
@@ -127,11 +152,14 @@ export default function DeclaracaoVenda() {
             />
           </Form.Item>
           <Form.Item
+            onChange={(e) => onChange('cliente', e.target.value)}
             label="Cod do cliente"
             name="cliente"
+            initialValue={''}
             rules={[
               {
                 required: true,
+                message: 'Por favor, insira Código de cliente',
               },
             ]}
           >
@@ -140,9 +168,11 @@ export default function DeclaracaoVenda() {
           <Form.Item
              label="Tipo de venda"
              name="tipo"
+             initialValue={''}
              rules={[
                {
                  required: true,
+                 message: 'Por favor, insira um Tipo de venda válido',
                },
              ]}
            >
@@ -162,12 +192,14 @@ export default function DeclaracaoVenda() {
             {({getFieldValue}) =>
               getFieldValue('tipo') === 'Online' ? (
                 <Form.Item
+                  onChange={(e) => onChange('link', e.target.value)}
                   label="Link do Chat Guru"
                   name="link"
+                  initialValue={''}
                   rules={[
                     {
+                      message: 'Por favor, insira um link válido',
                       required: true,
-                      type: "regexp",
                       pattern: new RegExp(
                         '^(https?:\\/\\/)?' + // protocol
                         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
