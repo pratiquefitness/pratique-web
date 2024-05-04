@@ -39,9 +39,9 @@ export default function MeuTreinoView() {
   useEffect(() => {
     dispatch(getTreino())
     if (
-      usuario.user_email === 'pratadeu@gmail.com' ||
-      usuario.user_email === 'edujobtours@hotmail.com' ||
-      usuario.user_email === 'glauberpratique@hotmail.com'
+      usuario.user_email === '' ||
+      usuario.user_email === '' ||
+      usuario.user_email === ''
     ) {
       openModal('/images/banner_home/banner-anovator.jpg')
     } else {
