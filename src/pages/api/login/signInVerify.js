@@ -97,7 +97,7 @@ export default async function handler(req, res) {
           user.plano = null
           user.unidade = null
           user.telefone = null
-          user.cpf = null
+          //user.cpf = null
         }
       }
 
