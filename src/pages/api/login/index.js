@@ -66,7 +66,11 @@ export default async function handler(req, res) {
       })
       user.status = pactoExist[0].matriz_situacao
       user.plano = pactoExist[0].matriz_plano
-      user.unidade = unidadeExist[0].unidade_nome
+      if (unidadeExist.length > 0) {
+        user.unidade = unidadeExist[0].unidade_nome
+      } else {
+        user.unidade = 'Pratique Fitness'
+      }
 
       // Verificar se matriz_tel existe antes de atribuir a user.telefone
       if (pactoExist[0].matriz_tel !== undefined) {
