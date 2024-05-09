@@ -81,13 +81,6 @@ export default function ScannerView() {
     setLoading(false)
   }
 
-  useEffect(() => {
-    console.log('temExame:', temExame) // Adicionando console.log para verificar o valor de temExame
-    if (temExame) {
-      console.log('urlexame:', fichas.find(objeto => objeto.urlexame.includes('.pdf')).urlexame)
-    }
-  }, [temExame, fichas])
-
   return (
     <TreinoLayout>
       {iframeVisible && (
