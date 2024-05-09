@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Empty, Table } from 'antd'
+import { Button, Empty, Table, Typography } from 'antd' // Adicionando Typography do primeiro código
 import { DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import TreinoLayout from '../_Layout'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,17 +8,17 @@ import axios from 'axios'
 import { setBrowserURL } from '@/redux/slices/global'
 
 export default function ScannerView() {
-  const { usuario } = useSelector(state => state.login)
   const dispatch = useDispatch()
+  const { usuario } = useSelector(state => state.login)
   const { data } = useSelector(state => state.treino)
   const { fichas } = data
-  const temExame = fichas && fichas.find(objeto => objeto.urlexame && objeto.urlexame.includes('pdf'))
+  const temExame = fichas && fichas.some(objeto => objeto.urlexame && objeto.urlexame.includes('.pdf')) // Alterando para some() para verificar qualquer exame em formato PDF
   const [examsData, setExamsData] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedExamId, setSelectedExamId] = useState(null)
   const [iframeVisible, setIframeVisible] = useState(false)
   const [pdfLink, setPdfLink] = useState('')
-  const [loading, setLoading] = useState(true) // Adicionado estado para controle do carregamento do iframe
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     dispatch(getTreino())
@@ -71,15 +71,22 @@ export default function ScannerView() {
   const handleImageClick = async record => {
     setSelectedImage(record.bodyImage)
     setSelectedExamId(record.id)
-    setLoading(true) // Reseta o estado para mostrar o loading enquanto o iframe carrega
+    setLoading(true)
     setIframeVisible(true)
     setPdfLink(record.pdf)
+    console.log('Link do exame:', record.pdf) // Adicionando console.log para verificar o link do exame
   }
 
-  // Função para lidar com o evento de carregamento do iframe
   const handleIframeLoad = () => {
-    setLoading(false) // Define o estado como false quando o iframe termina de carregar
+    setLoading(false)
   }
+
+  useEffect(() => {
+    console.log('temExame:', temExame) // Adicionando console.log para verificar o valor de temExame
+    if (temExame) {
+      console.log('urlexame:', fichas.find(objeto => objeto.urlexame.includes('.pdf')).urlexame)
+    }
+  }, [temExame, fichas])
 
   return (
     <TreinoLayout>
@@ -87,8 +94,7 @@ export default function ScannerView() {
         <div style={{ position: 'fixed', zIndex: 9999, top: 0, left: 0, right: 0, bottom: 0 }}>
           {loading && (
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: '#f0f0f0' }} />
-          )}{' '}
-          {/* Adiciona um fundo de cor enquanto o iframe carrega */}
+          )}
           <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '9999' }}>
             <Button icon={<ArrowLeftOutlined />} onClick={() => setIframeVisible(false)}>
               Voltar
@@ -97,9 +103,7 @@ export default function ScannerView() {
           <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '9999' }}>
             {pdfLink && (
               <a href={pdfLink} target="_blank" rel="noopener noreferrer">
-                <Button type="primary" icon={<DownloadOutlined />}>
-                  Ver PDF
-                </Button>
+                <Button type="primary">Ver PDF</Button>
               </a>
             )}
           </div>
@@ -108,7 +112,7 @@ export default function ScannerView() {
             src={`https://www.anovator.com/report/index.html?id=${selectedExamId}&child=false&lang=pt_PT`}
             width="100%"
             height="100%"
-            onLoad={handleIframeLoad} // Adiciona o evento onLoad ao iframe para controlar o carregamento
+            onLoad={handleIframeLoad}
           />
         </div>
       )}
@@ -139,16 +143,20 @@ export default function ScannerView() {
       ) : (
         <Empty />
       )}
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        {' '}
-        {usuario.user_email === 'pratadeu@gmail.com' ||
-        usuario.user_email === 'edujobtours@hotmail.com' ||
-        usuario.user_email === 'glauberpratique@hotmail.com' ? (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src="/images/banner_home/anovator.png" height={40} style={{ display: 'block' }} />
-          </div>
-        ) : null}
-      </div>
+      {temExame ? (
+        <a
+          href={fichas.find(objeto => objeto.urlexame.includes('.pdf')).urlexame}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button shape="round" icon={<DownloadOutlined />} size="large" block>
+            Baixar Exame
+          </Button>
+        </a>
+      ) : (
+        <Empty className="my-8" />
+      )}
+      <div style={{ textAlign: 'center', marginTop: '50px' }}> </div>
     </TreinoLayout>
   )
 }
