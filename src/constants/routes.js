@@ -154,6 +154,11 @@ const routes = [
     showInNavigation: false
   },
   {
+    title: 'Power Core',
+    href: '/powercore',
+    showInNavigation: false
+  },
+  {
     title: 'Editar Treino Livre',
     href: '/editar_meus_treinos',
     showInNavigation: false
