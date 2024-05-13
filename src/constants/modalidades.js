@@ -16,6 +16,7 @@ const modalidades = {
   netFit_spinning: '26',
   powerdance: '29',
   powerbumbum: '30',
+  powercore: '31',
   intensivejump: '28'
 }
 
