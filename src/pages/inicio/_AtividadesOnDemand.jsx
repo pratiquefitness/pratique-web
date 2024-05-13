@@ -4,6 +4,16 @@ import CarouselItem from './_CarouselItem'
 
 const listaCarousel = [
   {
+    href: '/aulas_coletivas/powerdance',
+    image: '/images/banner_home/vertical_banner/power-dance-vertical.png',
+    isRounded: true
+  },
+  {
+    href: '/aulas_coletivas/powercore',
+    image: '/images/banner_home/vertical_banner/power-core-vertical.png',
+    isRounded: true
+  },
+  {
     href: '/aulas_coletivas/powerbumbum',
     image: '/images/banner_home/vertical_banner/power_bumbum.png',
     isRounded: true
