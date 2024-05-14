@@ -67,7 +67,7 @@ export default function Inicio() {
     {
       href: '',
       action: dispatchSaverSaude,
-      image: '/images/saver_saude.png',
+      image: '/images/pratique_med.png',
       isRounded: true,
       alt: 'unipower_banner'
     },
@@ -144,7 +144,7 @@ export default function Inicio() {
       ? [
           {
             action: dispatchSaverSaude,
-            image: '/images/saver_saude.png',
+            image: '/images/pratique_med.png',
             isRounded: true,
             alt: 'saver_saude'
           }
