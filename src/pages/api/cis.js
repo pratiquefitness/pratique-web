@@ -46,6 +46,7 @@ export default async function handler(req, res) {
 
   const data = await Promise.all(
     cisList.map(async ci => {
+      return ci
       const usuarioExist = await apiNovoPower.wp_users.findMany({
         where: {
           user_email: email

@@ -325,7 +325,11 @@ const cis = [
   {
     cargo: 'MENTOR NIVEL 3',
     ci: ['CI MUSCULACAO', 'CI SECRETARIA', 'CI CONFIANCA']
-  }
+  },
+  {
+    cargo: 'teste',
+    ci: ['CI TESTE']
+  },
 ]
 
 export default cis
