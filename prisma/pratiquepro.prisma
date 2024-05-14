@@ -104,7 +104,7 @@ model matriz {
   matriz_plano       String?  @db.VarChar(250)
   matriz_consultor   String   @db.VarChar(200)
   matriz_email       String   @db.VarChar(200)
-  matriz_modalidade  String   @db.VarChar(8)
+  matriz_modalidade  String?   @db.VarChar(8)
   matriz_chave       String?  @db.VarChar(30)
   matriz_update      DateTime @default(now()) @db.DateTime(0)
   matriz_app         String?  @db.VarChar(10)
