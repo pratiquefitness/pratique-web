@@ -15,7 +15,7 @@ const listaCarousel = [
   },
   {
     href: '/aulas_coletivas/powerbumbum',
-    image: '/images/banner_home/vertical_banner/power_bumbum.png',
+    image: '/images/banner_home/vertical_banner/power_bumbum2.png',
     isRounded: true
   },
   {
