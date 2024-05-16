@@ -36,7 +36,7 @@ export default function CanalEquipe() {
   useEffect(() => {
     disptach(getPonto());
     disptach(getCis());
-  }, [])
+  }, []);
 
   const checkIfInside = (spotCoordinates) => {
 
@@ -62,7 +62,7 @@ export default function CanalEquipe() {
     }
 
     let center = { lat: coordenadaUnidade.latitude, lng: coordenadaUnidade.longitude};
-    let radius = 1;
+    let radius = 0.5;
     let newRadius = distanceInKmBetweenEarthCoordinates(spotCoordinates[0], spotCoordinates[1], center.lat, center.lng);
 
     if (newRadius < radius) {
@@ -165,7 +165,7 @@ export default function CanalEquipe() {
         <Button
           type="primary"
           style={ponto.length ? { background: '#b7eb8f' } : {}}
-          //disabled={!!dataCis.disponiveis.length || ponto.length}
+          disabled={!!dataCis.disponiveis.length || ponto.length}
           onClick={insertPonto}
           loading={loadingPonto}
           block

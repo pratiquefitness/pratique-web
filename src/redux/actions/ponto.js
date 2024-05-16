@@ -24,7 +24,7 @@ export const setPonto = (location, outsideRadius) => {
 					}
 				})
 				.then(res => {
-					message.error('Erro ao registrar ponto. Fora do raio de 1KM.')
+					message.error('Erro ao registrar ponto. Fora do raio de 500M.')
 					dispatch(getPonto())
 				})
 				.finally(() => {
