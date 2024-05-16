@@ -58,7 +58,8 @@ export const getDadosAfiliado = () => {
     dispatch(setLoading(true))
     return apiLojaAfiliados
       .post('getDadosAfiliado.php', {
-        isAffiliate: login.usuario.isAffiliate
+        isAffiliate: login.usuario.isAffiliate,
+        isEmail: login.usuario.user_login
       })
       .then(res => {
         dispatch(setGeral(res.data))

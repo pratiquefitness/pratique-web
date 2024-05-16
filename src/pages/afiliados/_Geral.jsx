@@ -62,9 +62,14 @@ export default function Geral() {
             <Statistic title="Total de Vendas" an value={geral.totalVendas} />
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={6}>
           <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
-            <Statistic title="Vendas Pagas" value={geral.totalVendaspagas} />
+            <Statistic title="Balcão" value={geral.totalBalcao} />
+          </div>
+        </Col>
+        <Col span={6}>
+          <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+            <Statistic title="Afiliado" value={geral.totalAfiliados} />
           </div>
         </Col>
         <Col span={12}>
