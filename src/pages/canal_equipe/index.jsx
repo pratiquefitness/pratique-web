@@ -130,7 +130,7 @@ export default function CanalEquipe() {
     checkIfInside(spotCoordinates1);
   }, [location, coordenadaUnidade]);
 
-  setInterval(() => { geolocation() }, 5000)
+  setInterval(() => { geolocation() }, 5000);
 
   return (
     <Loading spinning={loadingCis}>

@@ -29,7 +29,7 @@ export const setPonto = (location, outsideRadius) => {
 				})
 				.finally(() => {
 					dispatch(setLoading(false))
-				})
+				});
 		} else {
 			return api
 				.post('/ponto', {id: login.usuario.ID})
@@ -39,7 +39,7 @@ export const setPonto = (location, outsideRadius) => {
 				})
 				.finally(() => {
 					dispatch(setLoading(false))
-				})
+				});
 		}
 	}
 }
