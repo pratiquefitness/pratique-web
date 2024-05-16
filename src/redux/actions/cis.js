@@ -17,11 +17,11 @@ export const getCis = () => {
       dispatch(setData(res.data))
 
       const coordenada = await apiPratiqueTecnologia
-        .post('/app/coordenada/consulta.php', { unidade: login.usuario.unidade })
-
+        .post('/app/coordenada/consulta.php',
+          {unidade: login.usuario.unidade},
+          {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+        )
       dispatch(setCoordenada(coordenada.data));
-
-
       // console.log('Resposta da API:', res.data)
     } catch (error) {
       // console.error('Erro ao obter cis:', error)
@@ -37,7 +37,10 @@ export const getGeolocalizacaoUnidade = () => {
     const { login } = getState()
     dispatch(setLoading(true))
     return apiPratiqueTecnologia
-      .post('/app/coordenada/consulta.php', { unidade: login.usuario.unidade })
+      .post('/app/coordenada/consulta.php',
+        {unidade: login.usuario.unidade},
+        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+      )
       .then(res => {
         dispatch(setData(prevState => ({
           ...prevState,
