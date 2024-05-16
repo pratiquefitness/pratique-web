@@ -58,6 +58,7 @@ export default async function handler(req, res) {
         user.isEmployee = funcionarioExists.length ? 1 : 0
         user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
         user.cpf = funcionarioExists.length ? funcionarioExists[0].cpf : 0
+        user.idUnid = funcionarioExists.length ? funcionarioExists[0].unidade : 0
 
         // pacto
         const pactoExist = await apiPratiquePro.matriz.findMany({
@@ -77,7 +78,7 @@ export default async function handler(req, res) {
           })
           user.status = pactoExist[0].matriz_situacao
           user.plano = pactoExist[0].matriz_plano
-          user.idUnid = '2'
+
           //user.unidade = unidadeExist[0].unidade_nome
           if (unidadeExist.length > 0) {
             user.unidade = unidadeExist[0].unidade_nome
