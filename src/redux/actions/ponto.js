@@ -4,11 +4,11 @@ import api from '@/services/api';
 import apiPratiqueTecnologia from "@/services/apiPratiqueTecnologia";
 import {format} from "date-fns";
 
-export const setPonto = (location, outsideRadius) => {
+export const setPonto = () => {
   return async (dispatch, getState) => {
     const {login} = getState()
     dispatch(setLoading(true))
-    if (outsideRadius) {
+    /*if (outsideRadius) {
       return apiPratiqueTecnologia
         .post('/app/foraRota/index.php', {
           funcionario: login.usuario.ID,
@@ -38,7 +38,7 @@ export const setPonto = (location, outsideRadius) => {
         .finally(() => {
           dispatch(setLoading(false))
         });
-    } else {
+    } else {*/
       return api
         .post('/ponto', {id: login.usuario.ID})
         .then(res => {
@@ -49,7 +49,7 @@ export const setPonto = (location, outsideRadius) => {
           dispatch(setLoading(false))
         });
     }
-  }
+  //}
 }
 
 export const getPonto = () => {

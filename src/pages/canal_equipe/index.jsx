@@ -1,5 +1,5 @@
 import Loading from '@/components/Loading'
-import { getCis, getGeolocalizacaoUnidade } from '@/redux/actions/cis'
+import { getCis } from '@/redux/actions/cis'
 import { getPonto, setPonto } from '@/redux/actions/ponto'
 import { Button, Card, Space, Table, Typography } from 'antd'
 import { useEffect, useState } from 'react'
@@ -14,19 +14,12 @@ const ButtonCI = (
 
 export default function CanalEquipe() {
   const disptach = useDispatch();
-  const { data: dataCis, loading: loadingCis, coordenadaUnidade: coordenadaUnidade  } = useSelector(state => state.cis);
+  const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis);
   const { data: ponto, loading: loadingPonto } = useSelector(state => state.ponto);
   const { usuario } = useSelector(state => state.login);
-  const [location, setLocation] = useState({
-    lat: '',
-    lng: ''
-  });
-  const [outsideRadius, setOutsideRadius] = useState({
-    isOutside: true,
-  });
 
   const insertPonto = () => {
-    disptach(setPonto(location, outsideRadius))
+    disptach(setPonto())
   }
 
   const refreshCI = () => {
@@ -38,7 +31,7 @@ export default function CanalEquipe() {
     disptach(getCis());
   }, []);
 
-  const checkIfInside = (spotCoordinates) => {
+  /*const checkIfInside = (spotCoordinates) => {
 
     const distanceInKmBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
       let earthRadiusKm = 6371;
@@ -81,9 +74,9 @@ export default function CanalEquipe() {
         isOutside: false
       }));
     }
-  }
+  }*/
 
-  const _onGetCurrentLocation = () => {
+  /*const _onGetCurrentLocation = () => {
     const options = {
       enableHighAccuracy: true,
       timeout: 5000,
@@ -103,9 +96,9 @@ export default function CanalEquipe() {
     }, function (error) {
       //error handler here
     }, options)
-  }
+  }*/
 
-  const geolocation = () => {
+  /*const geolocation = () => {
     if (navigator.permissions && navigator.permissions.query) {
       //try permissions APIs first
       navigator.permissions.query({name: 'geolocation'}).then(function (result) {
@@ -123,14 +116,14 @@ export default function CanalEquipe() {
 
   useEffect(() => {
     geolocation();
-  }, []);
+  }, []);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     let spotCoordinates1 = [location.lat, location.lng];
     checkIfInside(spotCoordinates1);
   }, [location, coordenadaUnidade]);
 
-  setInterval(() => { geolocation() }, 5000);
+  setInterval(() => { geolocation() }, 5000);*/
 
   return (
     <Loading spinning={loadingCis}>
