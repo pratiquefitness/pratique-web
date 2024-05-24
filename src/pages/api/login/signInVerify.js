@@ -83,7 +83,7 @@ export default async function handler(req, res) {
           if (unidadeExist.length > 0) {
             user.unidade = unidadeExist[0].unidade_nome
           } else {
-            user.unidade = '2'
+            user.unidade = 'Pratique Fitness'
           }
 
           // Verificar se matriz_tel existe antes de atribuir a user.telefone
@@ -102,7 +102,7 @@ export default async function handler(req, res) {
         } else {
           user.status = null
           user.plano = null
-          user.unidade = '2'
+          user.unidade = null
           user.telefone = null
           //user.cpf = null
         }
