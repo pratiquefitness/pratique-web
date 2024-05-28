@@ -4,14 +4,14 @@ import Plano from './_Plano';
 import AlunosPersonal from './_AlunosPersonal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { userIsPersonal } from '@/redux/actions/conta';
+import { getAlunosPersonal } from '@/redux/actions/conta';
 
 export default function Conta() {
   const dispatch = useDispatch();
   const { isPersonal } = useSelector(state => state.conta);
 
   useEffect(() => {
-    dispatch(userIsPersonal());
+    dispatch(getAlunosPersonal());
   }, []);
 
   const items = [

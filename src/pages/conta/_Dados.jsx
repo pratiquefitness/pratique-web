@@ -54,7 +54,7 @@ export default function Dados() {
         {
           isPersonal &&
             <Form.Item label="Mini Currículo" name="curriculo">
-              <TextArea />
+              <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
             </Form.Item>
         }
         <Form.Item label="Email" name="user_email">

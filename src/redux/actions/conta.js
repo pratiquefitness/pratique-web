@@ -1,6 +1,14 @@
 //import { setToken } from '@/contexts/AuthContext';
 import { setLogin } from '../slices/login';
-import { setIsPersonal, setLoading, setLoadingAvatar, setLoadingIsPersonal } from '../slices/conta'
+import {
+  setAlunosPersonal,
+  setIsPersonal,
+  setLoading,
+  setLoadingAlunosPersonal,
+  setLoadingAvatar,
+  setLoadingIsPersonal,
+  setVincularAluno
+} from '../slices/conta'
 import api from '@/services/api';
 import apiPratiqueTecnologia from '@/services/apiPratiqueTecnologia';
 import { message } from 'antd';
@@ -39,7 +47,7 @@ export const uploadAvatar = avatar_image => {
   }
 }
 
-export const userIsPersonal = avatar_image => {
+export const getAlunosPersonal = avatar_image => {
   return async (dispatch, getState) => {
     const { login } = getState();
     dispatch(setLoadingIsPersonal(true));
@@ -47,9 +55,40 @@ export const userIsPersonal = avatar_image => {
       .post('/app/personal/index.php', { email: login.usuario.user_email })
       .then(res => {
         dispatch(setIsPersonal(res.data.personal));
+        dispatch(setAlunosPersonal(res.data.users));
       })
       .finally(() => {
         dispatch(setLoadingIsPersonal(false))
+      })
+  }
+}
+
+export const buscarAlunosPersonal = (email) => {
+  return async (dispatch, getState) => {
+    const { login } = getState();
+    dispatch(setLoadingAlunosPersonal(true));
+    return apiPratiqueTecnologia
+      .post('/app/personal/alunos/index.php', { id: login.usuario.ID, email: email })
+      .then(res => {
+        if(res.data?.message !== undefined) {
+           message.error(res.data?.message);
+        } else {
+          if(
+            res.data.data[0]?.id_personal === '' ||
+            res.data.data[0]?.id_personal === null ||
+            res.data.data[0]?.id_personal === login.usuario.ID
+          ) {
+            dispatch(setVincularAluno(res.data.data[0]));
+          }
+          if(login.usuario.ID !== res.data.data[0].id_personal) {
+            //PALEATIVO
+            //message.error('Aluno vinculado a outro personal!');
+            dispatch(setVincularAluno(res.data.data[0]));
+          }
+        }
+      })
+      .finally(() => {
+        dispatch(setLoadingAlunosPersonal(false))
       })
   }
 }
