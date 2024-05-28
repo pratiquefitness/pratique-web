@@ -2,7 +2,7 @@ import { apiPratiqueFunciona } from '@/services'
 import utils from '@/utils'
 
 export default async function handler(req, res) {
-  const { user_nicename, user_email, user_pass, id, curriculo } = req.body
+  const { user_nicename, user_email, user_pass, id } = req.body
 
   const data = await apiPratiqueFunciona.wp_users.update({
     where: {
@@ -13,13 +13,11 @@ export default async function handler(req, res) {
         ? {
             user_nicename,
             user_email,
-            user_pass: utils.encrypt_md5(user_pass),
-            curriculo
+            user_pass: utils.encrypt_md5(user_pass)
           }
         : {
             user_nicename,
-            user_email,
-            curriculo
+            user_email
           }
   })
   res.status(200).json(utils.clearDatabaseResult(data))

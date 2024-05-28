@@ -162,6 +162,11 @@ const routes = [
     title: 'Editar Treino Livre',
     href: '/editar_meus_treinos',
     showInNavigation: false
+  },
+  {
+    title: "Área do Personal. Olá, #USUARIO#!",
+    href: '/alunos_personal',
+    showInNavigation: false
   }
 ]
 

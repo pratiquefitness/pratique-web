@@ -67,6 +67,8 @@ model fichas {
   peso         String?  @db.VarChar(200)
   anotacoes    String?  @db.Text
   data         DateTime @default(now()) @db.DateTime(0)
+
+  @@index([id_user], map: "id_user")
 }
 
 model ficha_avulsa {
@@ -76,6 +78,7 @@ model ficha_avulsa {
   nome_treino  String   @db.VarChar(200)
   data_criacao DateTime @db.DateTime(0)
   data_update  DateTime @default(now()) @db.DateTime(0)
+  id_professor Int?
 }
 
 model funcoes {
@@ -91,23 +94,27 @@ model grupo {
 
 model matriz {
   matriz_id_pratique Int      @id @default(autoincrement())
-  matriz_situacao    String?   @db.VarChar(3)
+  matriz_situacao    String?  @db.VarChar(3)
   matriz_tel         String?  @db.VarChar(20)
-  matriz_nasc        String?   @db.VarChar(12)
-  matriz_inicio      String?   @db.VarChar(12)
-  matriz_nome        String?   @db.VarChar(200)
-  matriz_fim         String?   @db.VarChar(12)
-  matriz_datamat     String?   @db.VarChar(12)
-  matriz_unidade     String?   @db.VarChar(8)
+  matriz_nasc        String?  @default("15/12/2000") @db.VarChar(12)
+  matriz_inicio      String?  @db.VarChar(12)
+  matriz_nome        String?  @db.VarChar(200)
+  matriz_fim         String?  @db.VarChar(12)
+  matriz_datamat     String?  @db.VarChar(12)
+  matriz_unidade     String?  @db.VarChar(8)
   matriz_cpf         String?  @db.VarChar(18)
-  matriz_matricula   String?   @db.VarChar(15)
+  matriz_matricula   String?  @db.VarChar(15)
   matriz_plano       String?  @db.VarChar(250)
-  matriz_consultor   String?   @db.VarChar(200)
-  matriz_email       String?   @db.VarChar(200)
-  matriz_modalidade  String?   @db.VarChar(8)
+  matriz_consultor   String?  @db.VarChar(200)
+  matriz_email       String?  @db.VarChar(200)
+  matriz_modalidade  String?  @db.VarChar(8)
   matriz_chave       String?  @db.VarChar(30)
   matriz_update      DateTime @default(now()) @db.DateTime(0)
   matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+
+  @@index([matriz_chave], map: "matriz_chave")
+  @@index([matriz_email], map: "matriz_email")
 }
 
 model modalidade {
@@ -182,14 +189,19 @@ model unidade {
   unidade_endereco  String  @db.VarChar(150)
   unidade_separador String  @default("1") @db.VarChar(5)
   unidade_slug      String? @db.VarChar(80)
+  unidade_pagolivre String? @db.VarChar(80)
+  unidade_latitude  String? @db.VarChar(20)
+  unidade_longitude String? @db.VarChar(20)
 }
 
 model usuarios {
-  usuarios_id    Int     @id @default(autoincrement())
-  usuarios_nome  String  @db.VarChar(200)
-  usuarios_email String  @db.VarChar(200)
-  usuarios_senha String  @db.VarChar(200)
-  status         String? @db.VarChar(3)
+  usuarios_id        Int     @id @default(autoincrement())
+  usuarios_nome      String  @db.VarChar(200)
+  usuarios_email     String  @db.VarChar(200)
+  usuarios_senha     String  @db.VarChar(200)
+  status             String? @db.VarChar(3)
+  usuarios_afiliado  String? @db.VarChar(120)
+  usuarios_consultor String? @db.VarChar(120)
 }
 
 model usuarios_meta {
@@ -240,4 +252,89 @@ model planos_afiliados {
   plano     String @db.VarChar(140)
   categoria String @db.VarChar(60)
   unidade   String @db.VarChar(100)
+}
+
+model consultor {
+  id          Int    @id @default(autoincrement())
+  nomeclatura String @db.VarChar(100)
+  numero      String @db.VarChar(20)
+  unidade     Int
+}
+
+model matriz3 {
+  matriz_id_pratique Int      @id @default(autoincrement())
+  matriz_situacao    String?  @db.VarChar(3)
+  matriz_tel         String?  @db.VarChar(20)
+  matriz_nasc        String?  @default("15/12/2000") @db.VarChar(12)
+  matriz_inicio      String?  @db.VarChar(12)
+  matriz_nome        String?  @db.VarChar(200)
+  matriz_fim         String?  @db.VarChar(12)
+  matriz_datamat     String?  @db.VarChar(12)
+  matriz_unidade     String?  @db.VarChar(8)
+  matriz_cpf         String?  @db.VarChar(18)
+  matriz_matricula   String?  @db.VarChar(15)
+  matriz_plano       String?  @db.VarChar(250)
+  matriz_consultor   String?  @db.VarChar(200)
+  matriz_email       String?  @db.VarChar(200)
+  matriz_modalidade  String?  @db.VarChar(8)
+  matriz_chave       String?  @db.VarChar(30)
+  matriz_update      DateTime @default(now()) @db.DateTime(0)
+  matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+
+  @@index([matriz_chave], map: "idx_matriz_chave")
+  @@index([matriz_email], map: "idx_matriz_email")
+}
+
+model matrizCOPIA {
+  matriz_id_pratique Int      @id @default(autoincrement())
+  matriz_situacao    String   @db.VarChar(3)
+  matriz_tel         String?  @db.VarChar(20)
+  matriz_nasc        String   @db.VarChar(12)
+  matriz_inicio      String   @db.VarChar(12)
+  matriz_nome        String   @db.VarChar(200)
+  matriz_fim         String   @db.VarChar(12)
+  matriz_datamat     String   @db.VarChar(12)
+  matriz_unidade     String   @db.VarChar(8)
+  matriz_cpf         String?  @db.VarChar(18)
+  matriz_matricula   String   @db.VarChar(15)
+  matriz_plano       String?  @db.VarChar(250)
+  matriz_consultor   String   @db.VarChar(200)
+  matriz_email       String   @db.VarChar(200)
+  matriz_modalidade  String   @db.VarChar(8)
+  matriz_chave       String?  @db.VarChar(30)
+  matriz_update      DateTime @default(now()) @db.DateTime(0)
+  matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+}
+
+model unidade_crm {
+  unidade_id            Int      @id
+  unidade_nome          String   @db.VarChar(100)
+  unidade_pacto         String   @db.VarChar(50)
+  unidade_numero        String   @db.VarChar(5)
+  unidade_endereco      String   @db.VarChar(150)
+  unidade_separador     String   @default("1") @db.VarChar(5)
+  unidade_slug          String?  @db.VarChar(80)
+  pre_venda             String   @db.VarChar(10)
+  pre_venda_url         String   @db.VarChar(200)
+  pre_venda_data_final  DateTime @db.Date
+  video                 String   @db.VarChar(200)
+  natacao_link          String   @db.VarChar(200)
+  a_partir_de           String   @db.VarChar(10)
+  foto_destaque         String   @db.VarChar(200)
+  latitude              String   @db.VarChar(30)
+  longitude             String   @db.VarChar(30)
+  descricao             String   @db.LongText
+  prime                 String   @db.VarChar(10)
+  horario_segunda_sexta String   @db.VarChar(10)
+  horario_sabado        String   @db.VarChar(10)
+  horario_domingo       String   @db.VarChar(10)
+  plano_fit             String   @db.VarChar(10)
+  plano_plus            String   @db.VarChar(10)
+  plano_combo_plus      String   @db.VarChar(10)
+  plano_prime           String   @db.VarChar(10)
+  plano_combo_prime     String   @db.VarChar(10)
+  natacao               String   @db.VarChar(10)
+  horarios              String   @db.VarChar(40)
 }

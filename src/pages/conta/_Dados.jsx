@@ -1,16 +1,16 @@
-import { updateConta } from '@/redux/actions/conta'
-import { Button, Form, Input, Upload, message } from 'antd'
-import axios from 'axios'
-import { useEffect } from 'react'
-import { FaUpload } from 'react-icons/fa'
-import { useDispatch, useSelector } from 'react-redux'
-import AvatarUploader from './_AvatarUploader'
+import { updateConta } from '@/redux/actions/conta';
+import { Button, Form, Input, Space } from 'antd'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import AvatarUploader from './_AvatarUploader';
+import MiniCurriculum from '@/pages/conta/_MiniCurriculum';
+const { TextArea } = Input;
 
 export default function Dados() {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const { usuario } = useSelector(state => state.login)
-  const { loading } = useSelector(state => state.conta)
+  const { loading, isPersonal } = useSelector(state => state.conta)
 
   const onUpdate = values => {
     if (typeof values.user_pass !== 'undefined') {
@@ -19,7 +19,8 @@ export default function Dados() {
       dispatch(
         updateConta({
           user_nicename: values.user_nicename,
-          user_email: values.user_email
+          user_email: values.user_email,
+          curriculo: values.curriculo,
         })
       )
     }
@@ -34,11 +35,28 @@ export default function Dados() {
 
   return (
     <>
-      <AvatarUploader />
+      {
+        isPersonal ?
+          <div className={'d-flex justify-space-between mb-4'}>
+            <Space size={'large'}>
+              <AvatarUploader />
+              <MiniCurriculum />
+            </Space>
+          </div>
+          :
+          <AvatarUploader />
+      }
+
       <Form layout="vertical" form={form} onFinish={onUpdate}>
         <Form.Item label="Meu nome" name="user_nicename">
           <Input />
         </Form.Item>
+        {
+          isPersonal &&
+            <Form.Item label="Mini Currículo" name="curriculo">
+              <TextArea />
+            </Form.Item>
+        }
         <Form.Item label="Email" name="user_email">
           <Input disabled />
         </Form.Item>
