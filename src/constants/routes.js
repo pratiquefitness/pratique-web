@@ -165,7 +165,12 @@ const routes = [
   },
   {
     title: "Área do Personal. Olá, #USUARIO#!",
-    href: '/alunos_personal',
+    href: '/personal',
+    showInNavigation: false
+  },
+  {
+    title: "Contrate um Personal",
+    href: '/contato_personal',
     showInNavigation: false
   }
 ]

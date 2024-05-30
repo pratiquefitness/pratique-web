@@ -67,8 +67,9 @@ export const ExerciseChoiceInput = ({
   focus = () => {},
   resetInput = false
 }) => {
-  const [selectedValues, setSelectedValues] = useState([]);
+  const [selectedValues, setSelectedValues] = useState('');
   const [ options, setOptions ] = useState([
+    {label: '' , value: ''},
     {label: 'Abdomen' , value: 1},
     {label: 'Abdutor de Quadril' , value: 2},
     {label: 'Antebraço' , value: 3},
@@ -90,7 +91,7 @@ export const ExerciseChoiceInput = ({
   useEffect(() => {
     let hasReset = false
     if(resetInput) hasReset = true
-    setSelectedValues(hasReset ? [] : selectedValues)
+    setSelectedValues(hasReset ? '' : selectedValues)
   }, [resetInput]);
 
   const handleChange = (value) => {
@@ -109,19 +110,25 @@ export const ExerciseChoiceInput = ({
   return (
     <>
       <Select
+        labelInValue
         id={'filtro_grupamento_muscular'}
-        mode="multiple"
-        allowClear
+        showSearch
+        optionFilterProp="children"
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+        }
+        placeholder="FILTRE PELO GRUPAMENTO MUSCULAR"
+        filterOption={(inputValue, option) => normalizeOption(option, inputValue) }
         style={{
           width: '100%',
         }}
-        defaultValue={[]}
-        placeholder="FILTRE PELO GRUPAMENTO MUSCULAR"
+        onFocus={focus}
         onChange={handleChange}
         options={options}
-        value={selectedValues}
-        onFocus={focus}
-        filterOption={(inputValue, option) => normalizeOption(option, inputValue) }
+        defaultValue={{
+          value: '',
+          label: ''
+        }}
       />
     </>
   );

@@ -1,45 +1,22 @@
 import { setToken } from '@/contexts/AuthContext'
 import { setLogin } from '../slices/login'
-import { setLoading, setLoadingAvatar } from '../slices/areaDoPersonal'
-import api from '@/services/api'
+import { setBanner, setLoading, setLoadingAvatar } from '../slices/areaDoPersonal'
+import apiPratiqueTecnologia from '@/services/apiPratiqueTecnologia'
 import { message } from 'antd'
+import api from '@/services/api'
 
-export const updateConta = values => {
+export const bannerPersonal = () => {
   return async (dispatch, getState) => {
     const { login } = getState()
     dispatch(setLoading(true))
-    return api
-      .post('/conta', { id: login.usuario.ID, ...values })
+    return apiPratiqueTecnologia
+      .post('/app/personal/banner/index.php', {})
       .then(res => {
-        dispatch(setLogin({ ...login.usuario, ...res.data }))
-        setToken(res.data)
-        message.success('Dados alterados com sucesso!')
+        console.log(res);
+        dispatch(setBanner(res.data.data))
       })
       .finally(() => {
         dispatch(setLoading(false))
       })
   }
 }
-
-export const uploadAvatar = avatar_image => {
-  return async (dispatch, getState) => {
-    const { login } = getState()
-    dispatch(setLoadingAvatar(true))
-    return api
-      .post('/conta/uploadAvatar', { id: login.usuario.ID, avatar_image })
-      .then(res => {
-        dispatch(setLogin({ ...login.usuario, ...res.data }))
-        setToken(res.data)
-        message.success('Avatar alterado com sucesso!')
-      })
-      .finally(() => {
-        dispatch(setLoadingAvatar(false))
-      })
-  }
-}
-
-
-
-// Buscar o aluno -> pratiquetecnologia.com.br/api/app/personal/buscar
-
-// Verificar se é o personal -> pratiquetecnologia.com.br/api/app/personal

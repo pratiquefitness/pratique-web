@@ -9,7 +9,8 @@ import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import CarouselItem from './_CarouselItem'
-import Powerflix from '../powerflix'
+import Powerflix from '../powerflix';
+import AreaPersonal from '../area_personal';
 
 const { Title, Text } = Typography
 
@@ -384,7 +385,7 @@ export default function Inicio() {
           </a>
         </div>
       </div>
-
+      <AreaPersonal />
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique

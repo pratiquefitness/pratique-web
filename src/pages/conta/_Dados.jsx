@@ -33,16 +33,20 @@ export default function Dados() {
     })
   }, [])
 
+  console.log(usuario)
+
   return (
     <>
       {
-        isPersonal ?
-          <div className={'d-flex justify-space-between mb-4'}>
-            <Space size={'large'}>
+        usuario.professor === 1 ?
+            usuario.curriculo !== null ?
+              <div className={'d-flex justify-space-between mb-4'}>
+                <Space size={'large'}>
+                  <AvatarUploader />
+                  <MiniCurriculum />
+                </Space>
+              </div> :
               <AvatarUploader />
-              <MiniCurriculum />
-            </Space>
-          </div>
           :
           <AvatarUploader />
       }

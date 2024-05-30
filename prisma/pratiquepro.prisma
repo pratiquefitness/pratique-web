@@ -13,6 +13,16 @@ model adelmo {
   adelmo String @db.VarChar(100)
 }
 
+model afil2 {
+  id        Int      @id @default(autoincrement())
+  idloja    String   @db.VarChar(15)
+  idapp     String   @db.VarChar(15)
+  email     String   @db.VarChar(150)
+  data      DateTime @default(now()) @db.DateTime(0)
+  pix       Int
+  categoria String   @db.VarChar(11)
+}
+
 model afiliado {
   id        Int      @id @default(autoincrement())
   idloja    String   @db.VarChar(15)
@@ -32,6 +42,13 @@ model callcenter {
   callcenter_tipo       String   @db.VarChar(10)
 }
 
+model consultor {
+  id          Int    @id @default(autoincrement())
+  nomeclatura String @db.VarChar(100)
+  numero      String @db.VarChar(20)
+  unidade     Int
+}
+
 model exercicio {
   exercicio_id           Int     @id @default(autoincrement())
   exercicio_nome         String  @db.VarChar(100)
@@ -43,6 +60,16 @@ model exercicio {
   exercicio_relacionados String? @db.VarChar(50)
   exercicio_dores        String? @db.VarChar(30)
   exercicio_exclusao     String? @db.VarChar(60)
+}
+
+model ficha_avulsa {
+  id_ficha     Int      @id @default(autoincrement())
+  id_user      Int
+  exercicios   Json?
+  nome_treino  String   @db.VarChar(200)
+  data_criacao DateTime @db.DateTime(0)
+  data_update  DateTime @default(now()) @db.DateTime(0)
+  id_professor Int?
 }
 
 model ficha_pre {
@@ -69,16 +96,6 @@ model fichas {
   data         DateTime @default(now()) @db.DateTime(0)
 
   @@index([id_user], map: "id_user")
-}
-
-model ficha_avulsa {
-  id_ficha     Int      @id @default(autoincrement())
-  id_user      Int
-  exercicios   Json?
-  nome_treino  String   @db.VarChar(200)
-  data_criacao DateTime @db.DateTime(0)
-  data_update  DateTime @default(now()) @db.DateTime(0)
-  id_professor Int?
 }
 
 model funcoes {
@@ -117,6 +134,75 @@ model matriz {
   @@index([matriz_email], map: "matriz_email")
 }
 
+model matriz2 {
+  matriz_id_pratique Int      @id @default(autoincrement())
+  matriz_situacao    String?  @db.VarChar(20)
+  matriz_tel         String?  @db.VarChar(20)
+  matriz_nasc        String?  @db.VarChar(12)
+  matriz_inicio      String?  @db.VarChar(12)
+  matriz_nome        String?  @db.VarChar(200)
+  matriz_fim         String?  @db.VarChar(12)
+  matriz_datamat     String?  @db.VarChar(12)
+  matriz_unidade     String?  @db.VarChar(8)
+  matriz_cpf         String?  @db.VarChar(18)
+  matriz_matricula   String?  @db.VarChar(15)
+  matriz_plano       String?  @db.VarChar(250)
+  matriz_consultor   String?  @db.VarChar(200)
+  matriz_email       String?  @db.VarChar(200)
+  matriz_modalidade  String?  @db.VarChar(8)
+  matriz_chave       String?  @db.VarChar(200)
+  matriz_update      DateTime @default(now()) @db.DateTime(0)
+  matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+}
+
+model matriz3 {
+  matriz_id_pratique Int      @id @default(autoincrement())
+  matriz_situacao    String?  @db.VarChar(3)
+  matriz_tel         String?  @db.VarChar(20)
+  matriz_nasc        String?  @default("15/12/2000") @db.VarChar(12)
+  matriz_inicio      String?  @db.VarChar(12)
+  matriz_nome        String?  @db.VarChar(200)
+  matriz_fim         String?  @db.VarChar(12)
+  matriz_datamat     String?  @db.VarChar(12)
+  matriz_unidade     String?  @db.VarChar(8)
+  matriz_cpf         String?  @db.VarChar(18)
+  matriz_matricula   String?  @db.VarChar(15)
+  matriz_plano       String?  @db.VarChar(250)
+  matriz_consultor   String?  @db.VarChar(200)
+  matriz_email       String?  @db.VarChar(200)
+  matriz_modalidade  String?  @db.VarChar(8)
+  matriz_chave       String?  @db.VarChar(30)
+  matriz_update      DateTime @default(now()) @db.DateTime(0)
+  matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+
+  @@index([matriz_chave], map: "idx_matriz_chave")
+  @@index([matriz_email], map: "idx_matriz_email")
+}
+
+model matrizCOPIA {
+  matriz_id_pratique Int      @id @default(autoincrement())
+  matriz_situacao    String   @db.VarChar(3)
+  matriz_tel         String?  @db.VarChar(20)
+  matriz_nasc        String   @db.VarChar(12)
+  matriz_inicio      String   @db.VarChar(12)
+  matriz_nome        String   @db.VarChar(200)
+  matriz_fim         String   @db.VarChar(12)
+  matriz_datamat     String   @db.VarChar(12)
+  matriz_unidade     String   @db.VarChar(8)
+  matriz_cpf         String?  @db.VarChar(18)
+  matriz_matricula   String   @db.VarChar(15)
+  matriz_plano       String?  @db.VarChar(250)
+  matriz_consultor   String   @db.VarChar(200)
+  matriz_email       String   @db.VarChar(200)
+  matriz_modalidade  String   @db.VarChar(8)
+  matriz_chave       String?  @db.VarChar(30)
+  matriz_update      DateTime @default(now()) @db.DateTime(0)
+  matriz_app         String?  @db.VarChar(10)
+  matriz_planos      String?  @db.Text
+}
+
 model modalidade {
   modalidade_id   Int    @id @default(autoincrement())
   modalidade_nome String @db.VarChar(100)
@@ -139,6 +225,14 @@ model plano {
   plano_nome         String  @db.VarChar(100)
   plano_codtipoplano String? @db.VarChar(50)
   plano_premium      String  @db.VarChar(50)
+}
+
+model planos_afiliados {
+  id        Int    @id @default(autoincrement())
+  nivel     String @db.VarChar(30)
+  plano     String @db.VarChar(140)
+  categoria String @db.VarChar(60)
+  unidade   String @db.VarChar(100)
 }
 
 model recuperasenha {
@@ -194,120 +288,6 @@ model unidade {
   unidade_longitude String? @db.VarChar(20)
 }
 
-model usuarios {
-  usuarios_id        Int     @id @default(autoincrement())
-  usuarios_nome      String  @db.VarChar(200)
-  usuarios_email     String  @db.VarChar(200)
-  usuarios_senha     String  @db.VarChar(200)
-  status             String? @db.VarChar(3)
-  usuarios_afiliado  String? @db.VarChar(120)
-  usuarios_consultor String? @db.VarChar(120)
-}
-
-model usuarios_meta {
-  user_mid        Int    @id @default(autoincrement())
-  user_midusuario Int
-  user_mchave     String @db.VarChar(100)
-  user_mvalor     String @db.VarChar(300)
-}
-
-model afil2 {
-  id        Int      @id @default(autoincrement())
-  idloja    String   @db.VarChar(15)
-  idapp     String   @db.VarChar(15)
-  email     String   @db.VarChar(150)
-  data      DateTime @default(now()) @db.DateTime(0)
-  pix       Int
-  categoria String   @db.VarChar(11)
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model matriz2 {
-  matriz_id_pratique Int      @id @default(autoincrement())
-  matriz_situacao    String?  @db.VarChar(20)
-  matriz_tel         String?  @db.VarChar(20)
-  matriz_nasc        String?  @db.VarChar(12)
-  matriz_inicio      String?  @db.VarChar(12)
-  matriz_nome        String?  @db.VarChar(200)
-  matriz_fim         String?  @db.VarChar(12)
-  matriz_datamat     String?  @db.VarChar(12)
-  matriz_unidade     String?  @db.VarChar(8)
-  matriz_cpf         String?  @db.VarChar(18)
-  matriz_matricula   String?  @db.VarChar(15)
-  matriz_plano       String?  @db.VarChar(250)
-  matriz_consultor   String?  @db.VarChar(200)
-  matriz_email       String?  @db.VarChar(200)
-  matriz_modalidade  String?  @db.VarChar(8)
-  matriz_chave       String?  @db.VarChar(200)
-  matriz_update      DateTime @default(now()) @db.DateTime(0)
-  matriz_app         String?  @db.VarChar(10)
-  matriz_planos      String?  @db.Text
-
-  @@ignore
-}
-
-model planos_afiliados {
-  id        Int    @id @default(autoincrement())
-  nivel     String @db.VarChar(30)
-  plano     String @db.VarChar(140)
-  categoria String @db.VarChar(60)
-  unidade   String @db.VarChar(100)
-}
-
-model consultor {
-  id          Int    @id @default(autoincrement())
-  nomeclatura String @db.VarChar(100)
-  numero      String @db.VarChar(20)
-  unidade     Int
-}
-
-model matriz3 {
-  matriz_id_pratique Int      @id @default(autoincrement())
-  matriz_situacao    String?  @db.VarChar(3)
-  matriz_tel         String?  @db.VarChar(20)
-  matriz_nasc        String?  @default("15/12/2000") @db.VarChar(12)
-  matriz_inicio      String?  @db.VarChar(12)
-  matriz_nome        String?  @db.VarChar(200)
-  matriz_fim         String?  @db.VarChar(12)
-  matriz_datamat     String?  @db.VarChar(12)
-  matriz_unidade     String?  @db.VarChar(8)
-  matriz_cpf         String?  @db.VarChar(18)
-  matriz_matricula   String?  @db.VarChar(15)
-  matriz_plano       String?  @db.VarChar(250)
-  matriz_consultor   String?  @db.VarChar(200)
-  matriz_email       String?  @db.VarChar(200)
-  matriz_modalidade  String?  @db.VarChar(8)
-  matriz_chave       String?  @db.VarChar(30)
-  matriz_update      DateTime @default(now()) @db.DateTime(0)
-  matriz_app         String?  @db.VarChar(10)
-  matriz_planos      String?  @db.Text
-
-  @@index([matriz_chave], map: "idx_matriz_chave")
-  @@index([matriz_email], map: "idx_matriz_email")
-}
-
-model matrizCOPIA {
-  matriz_id_pratique Int      @id @default(autoincrement())
-  matriz_situacao    String   @db.VarChar(3)
-  matriz_tel         String?  @db.VarChar(20)
-  matriz_nasc        String   @db.VarChar(12)
-  matriz_inicio      String   @db.VarChar(12)
-  matriz_nome        String   @db.VarChar(200)
-  matriz_fim         String   @db.VarChar(12)
-  matriz_datamat     String   @db.VarChar(12)
-  matriz_unidade     String   @db.VarChar(8)
-  matriz_cpf         String?  @db.VarChar(18)
-  matriz_matricula   String   @db.VarChar(15)
-  matriz_plano       String?  @db.VarChar(250)
-  matriz_consultor   String   @db.VarChar(200)
-  matriz_email       String   @db.VarChar(200)
-  matriz_modalidade  String   @db.VarChar(8)
-  matriz_chave       String?  @db.VarChar(30)
-  matriz_update      DateTime @default(now()) @db.DateTime(0)
-  matriz_app         String?  @db.VarChar(10)
-  matriz_planos      String?  @db.Text
-}
-
 model unidade_crm {
   unidade_id            Int      @id
   unidade_nome          String   @db.VarChar(100)
@@ -337,4 +317,21 @@ model unidade_crm {
   plano_combo_prime     String   @db.VarChar(10)
   natacao               String   @db.VarChar(10)
   horarios              String   @db.VarChar(40)
+}
+
+model usuarios {
+  usuarios_id        Int     @id @default(autoincrement())
+  usuarios_nome      String  @db.VarChar(200)
+  usuarios_email     String  @db.VarChar(200)
+  usuarios_senha     String  @db.VarChar(200)
+  status             String? @db.VarChar(3)
+  usuarios_afiliado  String? @db.VarChar(120)
+  usuarios_consultor String? @db.VarChar(120)
+}
+
+model usuarios_meta {
+  user_mid        Int    @id @default(autoincrement())
+  user_midusuario Int
+  user_mchave     String @db.VarChar(100)
+  user_mvalor     String @db.VarChar(300)
 }

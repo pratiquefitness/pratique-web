@@ -79,3 +79,18 @@ export const updateTreinoLivre = (data ) => {
       })
   }
 }
+
+export const getTreinoLivreAluno = (id) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true))
+    return api
+      .post('/exercicios/personal', {usuarioId: id})
+      .then(res => {
+        console.log('RES', res.data);
+        dispatch(setTreinoLivre(res.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}

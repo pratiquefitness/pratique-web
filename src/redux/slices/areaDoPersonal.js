@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   loading: false,
-  loadingAvatar: false
+  banner: []
 }
 
 export const areaDoPersonalSlice = createSlice({
@@ -12,12 +12,12 @@ export const areaDoPersonalSlice = createSlice({
     setLoading(state, action) {
       return { ...state, loading: action.payload }
     },
-    setLoadingAvatar(state, action) {
-      return { ...state, loadingAvatar: action.payload }
+    setBanner(state, action) {
+      return { ...state, banner: action.payload }
     }
   }
 })
 
-export const { setLoading, setLoadingAvatar } = areaDoPersonalSlice.actions
+export const { setLoading, setBanner } = areaDoPersonalSlice.actions
 
 export default areaDoPersonalSlice

@@ -7,7 +7,7 @@ const initialState = {
   loadingAlunosPersonal: false,
   isPersonal: false,
   alunosPersonal: [],
-  vincularAluno: [],
+  vincularAluno: {},
 }
 
 export const contaSlice = createSlice({
