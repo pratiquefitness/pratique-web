@@ -11,12 +11,11 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
-import { Button as AntButton, Modal } from 'antd'
-import Link from 'next/link'
+import { Modal } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 
-export default function MeuTreinoView() {
+export default function AlunosTreino() {
   const dispatch = useDispatch()
   const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
   const { token } = theme.useToken()

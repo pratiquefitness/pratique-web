@@ -12,12 +12,13 @@ import VerTreinoEscolhido from '@/components/Exercicios/TreinoLivre/VerMeuTreino
 
 const { Text } = Typography
 
-export default function TreinosAluno() {
+export default function CriarTreinosAluno() {
   const dispatch = useDispatch()
   const { loading } = useSelector(state => state.exercicios)
   const { usuario } = useSelector(state => state.login)
   const { treinoLivre } = useSelector(state => state.exercicios)
   const [nomeTreino, setNomeTreino] = useState('')
+  const [idAluno, setIdAluno] = useState('')
   const [openModal, setOpenModal] = useState({
     open: false
   })
@@ -57,7 +58,8 @@ export default function TreinosAluno() {
 
   const onSaveTreino = () => {
     dispatch(saveTreinoLivre({
-      id_user: usuario.ID,
+      id_user: idAluno !== '' ? idAluno : usuario.ID,
+      id_professor: idAluno !== '' ? parseInt(usuario.ID) : null,
       nome_treino: nomeTreino,
       data_criacao: formatISO(new Date()),
       exercicios: selectedExercises
@@ -110,6 +112,9 @@ export default function TreinosAluno() {
               <FormTreino
                 onSetNomeTreino={(value) => {
                   setNomeTreino(value)
+                }}
+                onSetIdAluno={(value) => {
+                  setIdAluno(value)
                 }}
                 nome={nomeTreino}
               />

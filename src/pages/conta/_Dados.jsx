@@ -33,8 +33,6 @@ export default function Dados() {
     })
   }, [])
 
-  console.log(usuario)
-
   return (
     <>
       {
@@ -56,7 +54,7 @@ export default function Dados() {
           <Input />
         </Form.Item>
         {
-          isPersonal &&
+          usuario.professor === 1 &&
             <Form.Item label="Mini Currículo" name="curriculo">
               <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
             </Form.Item>

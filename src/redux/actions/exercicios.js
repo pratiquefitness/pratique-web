@@ -8,7 +8,6 @@ export const getTreinoLivre = (id) => {
     return api
       .post('/exercicios', {usuarioId: id})
       .then(res => {
-        console.log('RES', res.data);
         dispatch(setTreinoLivre(res.data))
       })
       .finally(() => {
@@ -18,7 +17,8 @@ export const getTreinoLivre = (id) => {
 }
 
 export const saveTreinoLivre = data => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
     dispatch(setLoading(true))
     return api
       .post('/exercicios/saveTreinoLivre', data)
@@ -31,6 +31,7 @@ export const saveTreinoLivre = data => {
           },
         });
         dispatch(getTreinoLivre(data.id_user));
+        dispatch(getTreinoLivreAluno(login.usuario.ID));
       })
       .finally(() => {
         dispatch(setLoading(false))
@@ -86,7 +87,6 @@ export const getTreinoLivreAluno = (id) => {
     return api
       .post('/exercicios/personal', {usuarioId: id})
       .then(res => {
-        console.log('RES', res.data);
         dispatch(setTreinoLivre(res.data))
       })
       .finally(() => {

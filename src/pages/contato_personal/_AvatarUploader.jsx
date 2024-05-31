@@ -10,8 +10,6 @@ const AvatarUploader = ({props}) => {
   const { usuario } = useSelector(state => state.login)
   const { loadingAvatar } = useSelector(state => state.conta)
 
-  console.log(props);
-
   const checkUpload = file => {
     const isImage = file.type.startsWith('image/')
     if (!isImage) {

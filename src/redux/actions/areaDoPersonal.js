@@ -12,7 +12,6 @@ export const bannerPersonal = () => {
     return apiPratiqueTecnologia
       .post('/app/personal/banner/index.php', {})
       .then(res => {
-        console.log(res);
         dispatch(setBanner(res.data.data))
       })
       .finally(() => {

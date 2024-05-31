@@ -8,6 +8,7 @@ const initialState = {
   isPersonal: false,
   alunosPersonal: [],
   vincularAluno: {},
+  dadosAluno: {},
 }
 
 export const contaSlice = createSlice({
@@ -35,6 +36,9 @@ export const contaSlice = createSlice({
     setVincularAluno(state, action) {
       return { ...state, vincularAluno: action.payload }
     },
+    setDadosAluno(state, action) {
+      return { ...state, dadosAluno: action.payload }
+    },
   }
 })
 
@@ -45,7 +49,8 @@ export const {
   setLoadingIsPersonal,
   setLoadingAlunosPersonal,
   setAlunosPersonal,
-  setVincularAluno,
+  setDadosAluno,
+  setVincularAluno
 } = contaSlice.actions
 
 export default contaSlice

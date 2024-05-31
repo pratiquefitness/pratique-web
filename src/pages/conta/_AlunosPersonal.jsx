@@ -1,10 +1,11 @@
-import { buscarAlunosPersonal, personalAlunoServico, updateConta } from '@/redux/actions/conta'
+import { buscarAlunosPersonal, personalAlunoServico, updateConta, setEmailAluno } from '@/redux/actions/conta'
 import { Button, Flex, Form, Input, Dropdown, MenuProps, Modal } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ExclamationCircleFilled, SearchOutlined } from '@ant-design/icons'
 import { List, Typography } from 'antd'
 import { Loading } from '@/components'
+import { useRouter } from 'next/router'
 const {confirm} = Modal;
 const { Text } = Typography
 
@@ -13,6 +14,7 @@ export default function Dados() {
   const [form] = Form.useForm()
   const { usuario } = useSelector(state => state.login)
   const { alunosPersonal, vincularAluno, loadingAlunosPersonal } = useSelector(state => state.conta)
+  const router = useRouter();
 
   const onSearch = values => {
     if (!checkEmail(values)) {
@@ -95,8 +97,6 @@ export default function Dados() {
       </Dropdown>)
   }
 
-  console.log(vincularAluno);
-
   return (
     <Loading spinning={loadingAlunosPersonal}>
       <>
@@ -116,7 +116,22 @@ export default function Dados() {
               <List.Item>
                 <Flex style={{ width: '100%' }} align="flex-center" justify={'space-start'}>
                   <Flex style={{ width: '100%' }} align="flex-center" justify={'space-start'}>
-                    <Button type={'primary'} style={{ backgroundColor: '#1ABF63' }} size={'small'}>Acessar</Button>
+                    {
+                      checkAlunoVinculado() &&
+                      <Button
+                        type={'primary'}
+                        style={{ backgroundColor: '#1ABF63' }}
+                        size={'small'}
+                        onClick={() => {
+                          router.push({
+                            pathname: '/treino_alunos_personal',
+                            query: { email: item.email, userId: item.id || item.ID }
+                          }, '/treino_alunos_personal')
+                        }}
+                      >
+                        Acessar
+                      </Button>
+                    }
                     <Text className={'ml-5'}>{item.email}</Text>
                   </Flex>
                   <DropDownComponet aluno={item} />

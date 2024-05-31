@@ -172,6 +172,11 @@ const routes = [
     title: "Contrate um Personal",
     href: '/contato_personal',
     showInNavigation: false
+  },
+  {
+    title: "",
+    href: '/treino_alunos_personal',
+    showInNavigation: false
   }
 ]
 

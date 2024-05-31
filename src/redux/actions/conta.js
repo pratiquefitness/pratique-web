@@ -7,7 +7,8 @@ import {
   setLoadingAlunosPersonal,
   setLoadingAvatar,
   setLoadingIsPersonal,
-  setVincularAluno
+  setVincularAluno,
+  setDadosAluno
 } from '../slices/conta';
 import api from '@/services/api';
 import apiPratiqueTecnologia from '@/services/apiPratiqueTecnologia';
@@ -47,7 +48,7 @@ export const uploadAvatar = avatar_image => {
   }
 }
 
-export const getAlunosPersonal = avatar_image => {
+export const getAlunosPersonal = () => {
   return async (dispatch, getState) => {
     const { login } = getState();
     dispatch(setLoadingIsPersonal(true));
@@ -71,9 +72,6 @@ export const buscarAlunosPersonal = (email) => {
       .post('/app/personal/alunos/index.php', { id: login.usuario.ID, email: email })
       .then(res => {
         const aluno = res.data;
-        console.log('L:::::', aluno)
-        console.log(parseInt(login.usuario.ID))
-        console.log(parseInt(aluno.data?.personal))
         if (aluno?.message !== undefined) {
           message.error(res.data?.message)
         } else {
@@ -114,6 +112,21 @@ export const personalAlunoServico = (aluno, vinculo) => {
       })
       .finally(() => {
         dispatch(setLoadingAlunosPersonal(false))
+      })
+  }
+}
+
+export const signInVerifyPersonalUser = (id) => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoading(true))
+    return api
+      .post('/conta/verifyPersonalUser', { alunoId: id })
+      .then(res => {
+        dispatch(setDadosAluno(res.data[0]));
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
       })
   }
 }

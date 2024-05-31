@@ -15,10 +15,12 @@ import { Button as AntButton, Modal } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { signInVerifyPersonalUser } from '@/redux/actions/conta'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
-  const { data, loading, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
+  const { data, loadingPeso, loadingAnotacoes } = useSelector(state => state.treino)
+  const { dadosAluno, loading } = useSelector(state => state.conta)
   const { token } = theme.useToken()
   const [modalVisible, setModalVisible] = useState(true)
   const [imageUrl, setImageUrl] = useState('')
@@ -36,7 +38,12 @@ export default function MeuTreinoView() {
   }
 
   useEffect(() => {
-    dispatch(getTreino())
+    dispatch(getTreino(dadosAluno.user_email))
+  } , [dadosAluno])
+
+  useEffect(() => {
+
+    if(Object.keys(dadosAluno).length === 0) dispatch(signInVerifyPersonalUser(router.query.userId))
     if (
       usuario.user_email === '' ||
       usuario.user_email === '' ||
@@ -169,7 +176,7 @@ export default function MeuTreinoView() {
                     router.push('/exercicios')
                   }}
                 >
-                  MONTE SEU TREINO
+                  MONTE O TREINO DO ALUNO
                 </Button>
               </Col>
               <Col span={24} className="mb-2">

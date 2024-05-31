@@ -23,7 +23,7 @@ export default function AreaPersonal() {
   }, [])
 
   useEffect(() => {
-    if(listaCarouselPersonnal.length > 0)return;
+    if(banner?.message !== undefined) return;
     if (banner.length !== 0) {
       banner.map((ban) => {
         const data = {
@@ -37,19 +37,25 @@ export default function AreaPersonal() {
           telefone: ban.telefone,
           id: ban.ID
         }
-        setListaCarouselPersonnal([...listaCarouselPersonnal, data]);
+        let listas = [...listaCarouselPersonnal, data];
+        setListaCarouselPersonnal(listas.filter((value, index) => listas.indexOf(value) === index));
       });
     }
   }, [banner])
 
   return (
-    <Space direction="vertical" className="w-100 mb-6">
-      <div className="mt-4 flex flex-column mb-0">
-        <Title level={3} className="mb-0">
-          Contrate um Personal
-        </Title>
-      </div>
-      <Carrossel listaCarousel={listaCarouselPersonnal} />
-    </Space>
+    <>
+      {
+        listaCarouselPersonnal.length > 0 &&
+          <Space direction="vertical" className="w-100 mb-6">
+            <div className="mt-4 flex flex-column mb-0">
+              <Title level={3} className="mb-0">
+                Contrate um Personal
+              </Title>
+            </div>
+            <Carrossel listaCarousel={listaCarouselPersonnal} />
+          </Space>
+      }
+    </>
   )
 }

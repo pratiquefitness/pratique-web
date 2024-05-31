@@ -40,7 +40,8 @@ const TreinosLivresSalvos = ({
             onClick={() => {
               router.push({
                 pathname: `/editar_meus_treinos/${opcoes.id_ficha}`,
-              })
+                query: { id_user: opcoes.id_user }
+              }, `/editar_meus_treinos/${opcoes.id_ficha}`)
             }}
             type="warning">[Editar]
           </Text>

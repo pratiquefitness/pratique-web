@@ -1,15 +1,13 @@
 import React from 'react';
 import { Space, Typography } from 'antd'
-import { useSelector } from 'react-redux'
 const {Text} = Typography;
 
-const MiniCurriculum = () => {
-  const { usuario } = useSelector(state => state.login)
+const MiniCurriculum = ({props}) => {
   return (
     <div className="text-left">
       <Space direction={'vertical'}>
         <Text>
-          {usuario.curriculo}
+          {props}
         </Text>
       </Space>
     </div>
