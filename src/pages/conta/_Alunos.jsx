@@ -162,6 +162,7 @@ export default function Alunos() {
               defaultOpen
               autoFocus
               onClear={() => {
+                setEmailEscolhido([])
                 dispatch(setVincularAluno([]))
                 setOptions(prevState => ({
                   ...prevState,
