@@ -1,16 +1,30 @@
-import { updateConta } from '@/redux/actions/conta';
-import { Button, Form, Input, Space } from 'antd'
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import AvatarUploader from './_AvatarUploader';
-import MiniCurriculum from '@/pages/conta/_MiniCurriculum';
-const { TextArea } = Input;
+import { updateConta } from '@/redux/actions/conta'
+import { AutoComplete, Button, Form, Input, Space } from 'antd'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import AvatarUploader from './_AvatarUploader'
+import MiniCurriculum from '@/pages/conta/_MiniCurriculum'
+
+const { TextArea } = Input
+import estadosCIdades from '@/constants/estadosCidades'
 
 export default function Dados() {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const { usuario } = useSelector(state => state.login)
   const { loading, isPersonal } = useSelector(state => state.conta)
+  const [estados, setEstados] = useState({
+    data: []
+  })
+  const [cidades, setCidades] = useState({
+    data: []
+  })
+  const [value, setValue] = useState({
+    estado: '',
+    cidade: '',
+  })
+  const [estadoEscolhido, setEstadoEscolhido] = useState('')
+  const [cidadeEscolhida, setCidadeEscolhida] = useState('')
 
   const onUpdate = values => {
     if (typeof values.user_pass !== 'undefined') {
@@ -21,6 +35,11 @@ export default function Dados() {
           user_nicename: values.user_nicename,
           user_email: values.user_email,
           curriculo: values.curriculo,
+          estado: values.estado,
+          cidade: values.telefone,
+          cpf: values.cpf,
+          email: values.email,
+          telefone: values.telefone
         })
       )
     }
@@ -33,18 +52,44 @@ export default function Dados() {
     })
   }, [])
 
+  useEffect(() => {
+    if (estadosCIdades.estados.length) {
+      setEstados(prevState => ({
+        ...prevState,
+        data: estadosCIdades.estados.reduce((o, option) => {
+          return [...o, { value: option.nome }]
+        }, [])
+      }))
+    }
+  }, [])
+
+  const onSelectEstado = value => {
+    setEstadoEscolhido(value)
+    const cidadesJson = estadosCIdades.estados.filter((estado) => estado.nome === value);
+    setCidades(prevState => ({
+      ...prevState,
+      data: cidadesJson[0].cidades.reduce((o, option) => {
+        return [...o, { value: option }]
+      }, [])
+    }));
+  }
+
+  const onSelectCidade = value => {
+    setCidadeEscolhida(value);
+  }
+
   return (
     <>
       {
         usuario.professor === 1 ?
-            usuario.curriculo !== null ?
-              <div className={'d-flex justify-space-between mb-4'}>
-                <Space size={'large'}>
-                  <AvatarUploader />
-                  <MiniCurriculum />
-                </Space>
-              </div> :
-              <AvatarUploader />
+          usuario.curriculo !== null ?
+            <div className={'d-flex justify-space-between mb-4'}>
+              <Space size={'large'}>
+                <AvatarUploader />
+                <MiniCurriculum />
+              </Space>
+            </div> :
+            <AvatarUploader />
           :
           <AvatarUploader />
       }
@@ -53,11 +98,101 @@ export default function Dados() {
         <Form.Item label="Meu nome" name="user_nicename">
           <Input />
         </Form.Item>
+        <Form.Item
+          validateTrigger="onBlur"
+          label="CPF"
+          name="cpf"
+          rules={[{ required: true, message: 'Digite seu CPF', pattern: new RegExp(/^[0-9]+$/) }]}
+        >
+          <Input
+            maxLength={11}
+            validateTrigger="onBlur"
+          />
+        </Form.Item>
+        <Form.Item
+          label="E-mail"
+          name="email"
+          rules={[{ required: true, message: 'Digite seu E-mail' }]}
+        >
+          <Input/>
+        </Form.Item>
+        <Form.Item
+          label="Telefone"
+          name="telefone"
+          rules={[{ required: true, message: 'Digite seu telefone', type:'number' }]}
+        >
+          <Input
+            maxLength={11}
+            validateTrigger="onBlur"/>
+        </Form.Item>
+        <Form.Item
+          label="Estado"
+          name="estado"
+          rules={[{ required: true, message: 'Selecione um estado' }]}
+        >
+          <AutoComplete
+            id={'estado'}
+            value={value.estado}
+            options={estados.data}
+            style={{
+              width: '100%'
+            }}
+            onSelect={(e) => onSelectEstado(e)}
+            onChange={(value) => {
+              setCidadeEscolhida('')
+              setEstadoEscolhido('')
+              setValue(prevState => ({
+                ...prevState,
+                estado: value
+              }))
+            }}
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+            }
+            placeholder="Selecione um estado"
+            allowClear
+            onClear={() => {
+              setCidadeEscolhida('')
+              setEstadoEscolhido('')
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Cidade"
+          name="cidade"
+          rules={[{ required: true, message: 'Selecione uma cidade' }]}
+        >
+          <AutoComplete
+            id={'cidade'}
+            value={value.cidade}
+            options={cidades.data}
+            style={{
+              width: '100%'
+            }}
+            onSelect={(e) => onSelectCidade(e)}
+            onChange={(value) => {
+              setCidadeEscolhida('')
+              setValue(prevState => ({
+                ...prevState,
+                cidade: value
+              }))
+            }}
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+            }
+            placeholder="Selecione uma cidade"
+            allowClear
+            onClear={() => {
+              setCidadeEscolhida('')
+            }}
+          />
+        </Form.Item>
+
         {
           usuario.professor === 1 &&
-            <Form.Item label="Mini Currículo" name="curriculo">
-              <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
-            </Form.Item>
+          <Form.Item label="Mini Currículo" name="curriculo">
+            <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
+          </Form.Item>
         }
         <Form.Item label="Email" name="user_email">
           <Input disabled />

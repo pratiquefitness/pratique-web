@@ -13,12 +13,17 @@ const FormTreino = ({
 }) => {
   const [form] = Form.useForm()
   const [nomeTreino, setNomeTreino] = useState('')
+  const [idUser, setIdUser] = useState('')
   const { usuario } = useSelector(state => state.login)
   const { alunosPersonal } = useSelector(state => state.conta)
 
   useEffect(() => {
     form.validateFields(['nome_treino'])
   }, [nomeTreino])
+
+  useEffect(() => {
+    form.validateFields(['id_user'])
+  }, [idUser])
 
   useEffect(() => {
     if (nome === '') {
@@ -36,7 +41,7 @@ const FormTreino = ({
   const filterOption = (input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 
   const onSearch = (value) => {
-    onSetIdAluno(value);
+    onSetIdAluno(value)
   }
 
   return (
@@ -59,22 +64,29 @@ const FormTreino = ({
         </Form.Item>
         {
           usuario.professor === 1 &&
-            <Form.Item label="Selecione um aluno" name="id_user">
-              <Select
-                showSearch
-                placeholder="Selecione um aluno"
-                optionFilterProp="children"
-                onChange={onSearch}
-                defaultValue={alunosPersonal.filter((aluno) => { return aluno.id === id_user})}
-                filterOption={filterOption}
-                options={alunosPersonal.map((alunos) => {
-                  return {
-                    value: alunos.id,
-                    label: alunos.nome
-                  }
-                })}
-              />
-            </Form.Item>
+          <Form.Item label="Selecione um aluno" name="id_user" rules={[
+            {
+              required: true,
+              message: 'Selecione um aluno'
+            }
+          ]}>
+            <Select
+              showSearch
+              placeholder="Selecione um aluno"
+              optionFilterProp="children"
+              onChange={onSearch}
+              defaultValue={alunosPersonal.filter((aluno) => {
+                return aluno.id === id_user
+              })}
+              filterOption={filterOption}
+              options={alunosPersonal.map((alunos) => {
+                return {
+                  value: alunos.id,
+                  label: alunos.nome
+                }
+              })}
+            />
+          </Form.Item>
         }
       </Form>
     </>

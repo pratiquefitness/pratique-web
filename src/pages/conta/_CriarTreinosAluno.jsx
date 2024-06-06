@@ -32,8 +32,8 @@ export default function CriarTreinosAluno() {
   }, [])
 
   useEffect(() => {
-    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10))
-  }, [nomeTreino])
+    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10 || idAluno === ''))
+  }, [nomeTreino, idAluno])
 
   const showModal = () => {
     setNomeTreino('')
