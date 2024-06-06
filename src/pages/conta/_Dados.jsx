@@ -59,13 +59,13 @@ export default function Dados() {
   }, [])
 
   useEffect(() => {
-    if(usuario.estado.length) {
+    if(usuario.estado?.length) {
       onSelectEstado(usuario.estado);
     }
   }, [usuario.estado]);
 
   useEffect(() => {
-    if (estadosCIdades.estados.length) {
+    if (estadosCIdades.estados?.length) {
       setEstados(prevState => ({
         ...prevState,
         data: estadosCIdades.estados.reduce((o, option) => {

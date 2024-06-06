@@ -23,7 +23,7 @@ export default function AreaPersonal() {
   }, [])
 
   useEffect(() => {
-    if(banner?.message !== undefined) return;
+    //if(banner?.message !== undefined) return;
     if (banner.length !== 0) {
       banner.map((ban) => {
         const data = {
