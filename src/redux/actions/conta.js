@@ -64,37 +64,6 @@ export const getAlunosPersonal = () => {
   }
 }
 
-export const buscarAlunosPersonal = (email) => {
-  return async (dispatch, getState) => {
-    const { login } = getState()
-    dispatch(setLoadingAlunosPersonal(true))
-    return apiPratiqueTecnologia
-      .post('/app/personal/alunos/index.php', { id: login.usuario.ID, email: email })
-      .then(res => {
-        const aluno = res.data;
-        if (aluno?.message !== undefined) {
-          message.error(res.data?.message)
-        } else {
-          if (
-            aluno.data?.personal === '' ||
-            aluno.data?.personal === null ||
-            aluno.data?.personal === undefined ||
-            parseInt(aluno.data?.personal) === parseInt(login.usuario.ID)
-          ) {
-            dispatch(setVincularAluno(aluno.data));
-            return;
-          }
-          if (parseInt(login.usuario.ID) !== parseInt(aluno.data?.personal)) {
-            message.error('Aluno vinculado a outro personal!');
-          }
-        }
-      })
-      .finally(() => {
-        dispatch(setLoadingAlunosPersonal(false));
-      })
-  }
-}
-
 export const personalAlunoServico = (aluno, vinculo) => {
   return async (dispatch, getState) => {
     const { login } = getState()
@@ -130,3 +99,54 @@ export const signInVerifyPersonalUser = (id) => {
       })
   }
 }
+
+export const buscarAlunosSemPersonal = (email) => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoadingAlunosPersonal(true))
+    return api
+      .post('/conta/buscarAlunosSemPersonal', { email: email })
+      .then(res => {
+        const aluno = res.data;
+        if (aluno?.message !== undefined) {
+          message.error(aluno?.message)
+        } else {
+          dispatch(setVincularAluno(aluno === undefined ? [] : aluno));
+        }
+      })
+      .finally(() => {
+        dispatch(setLoadingAlunosPersonal(false));
+      })
+  }
+}
+
+/*export const buscarAlunosPersonal = (email) => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoadingAlunosPersonal(true))
+    return apiPratiqueTecnologia
+      .post('/app/personal/alunos/index.php', { id: login.usuario.ID, email: email })
+      .then(res => {
+        const aluno = res.data;
+        if (aluno?.message !== undefined) {
+          message.error(res.data?.message)
+        } else {
+          if (
+            aluno.data?.personal === '' ||
+            aluno.data?.personal === null ||
+            aluno.data?.personal === undefined ||
+            parseInt(aluno.data?.personal) === parseInt(login.usuario.ID)
+          ) {
+            dispatch(setVincularAluno(aluno.data));
+            return;
+          }
+          if (parseInt(login.usuario.ID) !== parseInt(aluno.data?.personal)) {
+            message.error('Aluno vinculado a outro personal!');
+          }
+        }
+      })
+      .finally(() => {
+        dispatch(setLoadingAlunosPersonal(false));
+      })
+  }
+}*/
