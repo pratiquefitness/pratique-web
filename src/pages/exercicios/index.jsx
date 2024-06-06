@@ -30,7 +30,7 @@ export default function ExerciciosView() {
   }, []);
 
   useEffect(() => {
-    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10));
+    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 20));
   }, [nomeTreino]);
 
   const showModal = () => {
@@ -111,6 +111,7 @@ export default function ExerciciosView() {
                     setNomeTreino(value)
                   }}
                   nome={nomeTreino}
+                  treinoPersonal={false}
                 />
               </Modal>
               <TreinosLivresSalvos

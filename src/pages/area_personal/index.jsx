@@ -19,10 +19,6 @@ export default function AreaPersonal() {
   }
 
   useEffect(() => {
-    dispatch(bannerPersonal());
-  }, [])
-
-  useEffect(() => {
     //if(banner?.message !== undefined) return;
     if (banner.length !== 0) {
       banner.map((ban) => {

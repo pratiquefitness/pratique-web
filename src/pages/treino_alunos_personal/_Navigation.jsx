@@ -7,7 +7,7 @@ const userCheckIcon = '/images/banner_home/icone-anovator.png'
 
 const navigation = [
   {
-    title: 'Meu Treino',
+    title: 'Treino',
     href: '/treino_alunos_personal',
     icon: <LuDumbbell />
   },

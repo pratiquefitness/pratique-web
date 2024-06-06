@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useEffect, useState} from 'react'
 import FormTreino from '@/components/Exercicios/TreinoLivre/FormTreino'
 import {formatISO} from 'date-fns';
-import TreinoLayout from "@/pages/treino/_Layout";
+import TreinoLayout from "@/pages/treino_alunos_personal/_Layout";
 import {getTreinoLivre, saveTreinoLivre} from "@/redux/actions/exercicios";
 import TreinosLivresSalvos from "@/components/Exercicios/TreinoLivre/TreinosLivresSalvos";
 import Exercicios from "@/components/Exercicios/TreinoLivre/Exercicios";
@@ -30,7 +30,7 @@ export default function ExerciciosView() {
   }, []);
 
   useEffect(() => {
-    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10));
+    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 20));
   }, [nomeTreino]);
 
   const showModal = () => {
@@ -111,6 +111,7 @@ export default function ExerciciosView() {
                     setNomeTreino(value)
                   }}
                   nome={nomeTreino}
+                  treinoPersonal={true}
                 />
               </Modal>
               <TreinosLivresSalvos

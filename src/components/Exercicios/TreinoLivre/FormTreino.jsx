@@ -9,6 +9,7 @@ const FormTreino = ({
   onSetNomeTreino = () => {},
   onSetIdAluno = () => {},
   nome,
+  treinoPersonal,
   id_user = ''
 }) => {
   const [form] = Form.useForm()
@@ -56,14 +57,14 @@ const FormTreino = ({
         <br />
         <Form.Item label="" name="nome_treino" rules={[
           {
-            max: 10,
-            message: 'Máximo 10 caracteres!'
+            max: 20,
+            message: 'Máximo 20 caracteres!'
           }
         ]}>
           <Input defaultValue={nome || ''} onChange={onChange} autoFocus />
         </Form.Item>
         {
-          usuario.professor === 1 &&
+          usuario.professor === 1 && treinoPersonal &&
           <Form.Item label="Selecione um aluno" name="id_user" rules={[
             {
               required: true,

@@ -31,8 +31,9 @@ export default function CriarTreinosAluno() {
     dispatch(getTreinoLivreAluno(usuario.ID))
   }, [])
 
+
   useEffect(() => {
-    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 10 || idAluno === ''))
+    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 20 || idAluno === ''))
   }, [nomeTreino, idAluno])
 
   const showModal = () => {
@@ -117,6 +118,7 @@ export default function CriarTreinosAluno() {
                   setIdAluno(value)
                 }}
                 nome={nomeTreino}
+                treinoPersonal={true}
               />
             </Modal>
             <TreinosLivresSalvos
