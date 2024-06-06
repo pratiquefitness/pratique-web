@@ -39,7 +39,7 @@ export default function Dados() {
           cidade: values.telefone,
           cpf: values.cpf,
           email: values.email,
-          telefone: values.telefone
+          telefone: String(values.telefone)
         })
       )
     }
@@ -48,9 +48,21 @@ export default function Dados() {
   useEffect(() => {
     form.setFieldsValue({
       user_nicename: usuario.user_nicename,
-      user_email: usuario.user_email
+      user_email: usuario.user_email,
+      curriculo: usuario.curriculo,
+      cpf: usuario.cpf,
+      estado: usuario.estado,
+      cidade: usuario.cidade,
+      email: usuario.email,
+      telefone: usuario.telefone,
     })
   }, [])
+
+  useEffect(() => {
+    if(usuario.estado.length) {
+      onSelectEstado(usuario.estado);
+    }
+  }, [usuario.estado]);
 
   useEffect(() => {
     if (estadosCIdades.estados.length) {
@@ -99,36 +111,26 @@ export default function Dados() {
           <Input />
         </Form.Item>
         <Form.Item
-          validateTrigger="onBlur"
           label="CPF"
           name="cpf"
-          rules={[{ required: true, message: 'Digite seu CPF', pattern: new RegExp(/^[0-9]+$/) }]}
+          rules={[{ min: 11, message:'Digite um CPF válido', pattern: new RegExp(/^[0-9]+$/) }]}
         >
           <Input
             maxLength={11}
-            validateTrigger="onBlur"
           />
         </Form.Item>
         <Form.Item
-          label="E-mail"
-          name="email"
-          rules={[{ required: true, message: 'Digite seu E-mail' }]}
-        >
-          <Input/>
-        </Form.Item>
-        <Form.Item
-          label="Telefone"
+          label="Telefone Celular com DDD"
           name="telefone"
-          rules={[{ required: true, message: 'Digite seu telefone', type:'number' }]}
+           rules={[{ min: 11, message:'Digite um telefone válido: 31999999999', pattern: new RegExp(/^[0-9]+$/) }]}
         >
           <Input
             maxLength={11}
-            validateTrigger="onBlur"/>
+          />
         </Form.Item>
         <Form.Item
           label="Estado"
           name="estado"
-          rules={[{ required: true, message: 'Selecione um estado' }]}
         >
           <AutoComplete
             id={'estado'}
@@ -143,8 +145,12 @@ export default function Dados() {
               setEstadoEscolhido('')
               setValue(prevState => ({
                 ...prevState,
-                estado: value
+                estado: value,
+                cidade: ''
               }))
+              form.setFieldsValue({
+                cidade: ''
+              })
             }}
             filterOption={(inputValue, option) =>
               option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -154,13 +160,20 @@ export default function Dados() {
             onClear={() => {
               setCidadeEscolhida('')
               setEstadoEscolhido('')
+              setValue(prevState => ({
+                ...prevState,
+                estado: '',
+                cidade: ''
+              }))
+              form.setFieldsValue({
+                cidade: ''
+              })
             }}
           />
         </Form.Item>
         <Form.Item
           label="Cidade"
           name="cidade"
-          rules={[{ required: true, message: 'Selecione uma cidade' }]}
         >
           <AutoComplete
             id={'cidade'}
@@ -183,7 +196,11 @@ export default function Dados() {
             placeholder="Selecione uma cidade"
             allowClear
             onClear={() => {
-              setCidadeEscolhida('')
+              setCidadeEscolhida('');
+              setValue(prevState => ({
+                ...prevState,
+                cidade: ''
+              }))
             }}
           />
         </Form.Item>

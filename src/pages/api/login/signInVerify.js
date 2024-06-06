@@ -30,6 +30,7 @@ export default async function handler(req, res) {
 
       if (usuarioExist.length) {
         user = usuarioExist[0]
+
         const email = user.user_email
 
         // afiliados
@@ -56,6 +57,10 @@ export default async function handler(req, res) {
 
         const professor = user.professor;
         const curriculo = user.curriculo;
+        const cpf = user.cpf;
+        const estado = user.estado;
+        const cidade = user.cidade;
+        const telefone = user.telefone;
 
         user.isEmployee = funcionarioExists.length ? 1 : 0
         user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
@@ -63,6 +68,10 @@ export default async function handler(req, res) {
         user.idUnid = funcionarioExists.length ? funcionarioExists[0].unidade : 0
         user.curriculo = curriculo
         user.professor = professor
+        user.cpf = cpf
+        user.cidade = cidade
+        user.estado = estado
+        user.telefone = telefone
 
         // pacto
         const pactoExist = await apiPratiquePro.matriz.findMany({
@@ -107,7 +116,7 @@ export default async function handler(req, res) {
           user.status = null
           user.plano = null
           user.unidade = null
-          user.telefone = null
+          user.telefone =  user.telefone ?? null
           //user.cpf = null
         }
       }

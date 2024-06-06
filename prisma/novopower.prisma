@@ -888,7 +888,7 @@ model wp_trp_gettext_pt_br {
   domain     String? @db.LongText
   status     Int?
 
-  @@index([original(length: 100)], map: "original_fulltext")
+  @@index([original(length: 100)], map: "index_name")
 }
 
 model wp_tutor_earnings {

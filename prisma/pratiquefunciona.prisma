@@ -97,6 +97,10 @@ model wp_users {
   sva                 String?  @db.VarChar(3)
   curriculo           String?  @db.LongText
   professor           Int?
+  cidade              String?  @db.VarChar(80)
+  estado              String?  @db.VarChar(80)
+  telefone            String?  @db.VarChar(40)
+  cpf                 String?  @db.VarChar(40)
 
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")
