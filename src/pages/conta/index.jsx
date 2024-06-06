@@ -29,9 +29,9 @@ export default function Conta() {
       children: <Plano />
     },
     {
-      key: 'faq',
-      label: `FAQ`,
-      children: <FAQ />
+      key: usuario.professor === 1 ? 'faq' : '',
+      label: usuario.professor === 1 ? `FAQ` : '',
+      children: usuario.professor === 1 ? <FAQ /> : ''
     },
     {
       key: usuario.professor === 1 ? 'alunos' : '',
