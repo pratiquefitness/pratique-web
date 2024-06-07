@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { AutoComplete, Select } from 'antd'
+import { AutoComplete, Select, Typography } from 'antd'
+
+const { Text } = Typography
 
 export const ExerciseAutocompleteInput = ({
   selectedExercise = () => {},
@@ -37,10 +39,13 @@ export const ExerciseAutocompleteInput = ({
     const unique = [...new Map(opt.map(item => [item['value'], item])).values()]
 
     setAutoCompleteOptions(unique)
-  }, [])
+  }, [options])
 
   return (
     <>
+      <div className="text-center">
+        <Text>PESQUISE EXERCÍCIO DESEJADO</Text>
+      </div>
       <AutoComplete
         id={'pesquisa_exercicio'}
         value={value}
