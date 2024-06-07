@@ -211,7 +211,7 @@ export default function Alunos() {
                         }, '/treino_alunos_personal')
                       }}
                     >
-                      Acessar
+                      Criar Treino
                     </Button>
                     <Text className={'ml-5'}>{item.email}</Text>
                   </Flex>
