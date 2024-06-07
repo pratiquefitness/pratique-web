@@ -22,7 +22,7 @@ const navigation = [
     icon: <FaDiagnoses />
   },
   {
-    title: 'Treino Livre',
+    title: 'Criar Treino',
     href: '/treino_alunos_personal/exercicios',
     icon: <LuDumbbell />
   }
