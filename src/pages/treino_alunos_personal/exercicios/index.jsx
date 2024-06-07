@@ -86,6 +86,10 @@ export default function ExerciciosView() {
                 </Text>
               </div>*/}
             <br />
+            <div className="text-center">
+              <Text>PESQUISE O GRUPO MUSCULAR</Text>
+            </div>
+
             <Exercicios
               treinoLivre={treinoLivre}
               showModal={showModal}
