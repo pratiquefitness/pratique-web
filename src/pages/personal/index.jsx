@@ -28,6 +28,16 @@ export default function Conta() {
       key: 'faq',
       label: usuario.professor === 1 ? `FAQ` : '',
       children: usuario.professor === 1 ? <FAQ /> : ''
+    },
+    {
+      key: 'dados',
+      label: `Dados`,
+      children: <Dados />
+    },
+    {
+      key: 'plano',
+      label: `Plano`,
+      children: <Plano />
     }
 
     /* {
