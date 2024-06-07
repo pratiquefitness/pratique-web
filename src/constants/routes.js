@@ -164,17 +164,17 @@ const routes = [
     showInNavigation: false
   },
   {
-    title: "Área do Personal. Olá, #USUARIO#!",
+    title: 'Área do Personal. Olá, #USUARIO#!',
     href: '/personal',
     showInNavigation: false
   },
   {
-    title: "Contrate um Personal",
+    title: 'Contrate um Personal',
     href: '/contato_personal',
     showInNavigation: false
   },
   {
-    title: "",
+    title: '',
     href: '/treino_alunos_personal',
     showInNavigation: false
   }

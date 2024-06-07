@@ -1,6 +1,6 @@
 import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
 import { setBrowserURL } from '@/redux/slices/global'
@@ -9,8 +9,8 @@ import BemEstar from './_BemEstar'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import CarouselItem from './_CarouselItem'
-import Powerflix from '../powerflix';
-import AreaPersonal from '../area_personal';
+import Powerflix from '../powerflix'
+import AreaPersonal from '../area_personal'
 
 const { Title, Text } = Typography
 
@@ -18,15 +18,44 @@ export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
+  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
   const { usuario } = useSelector(state => state.login)
 
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  //const isSaverAndClient = true
-  const isSaverSaudeAndPesonal = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`/api/getUserData?userId=${usuario.ID}`)
+        const user = await response.json()
+        console.log('User fetched:', user) // Adicionando log para verificar os dados do usuário
+        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1)
+      } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error)
+      }
+    }
+
+    fetchUserData()
+  }, [usuario.ID])
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = await apiPratiqueFunciona.wp_users.findUnique({
+          where: { ID: usuario.ID }
+        })
+        console.log('User fetched:', user)
+        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1)
+      } catch (error) {
+        console.error('Erro ao buscar dados do usuário:', error)
+      }
+    }
+
+    fetchUserData()
+  }, [usuario.ID])
 
   const isSaverSaudeAndClient = true
-  //  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://www.clubecertosaude.com.br/saude/saversaude/'))
@@ -87,6 +116,36 @@ export default function Inicio() {
     {
       href: 'https://bit.ly/FalarRH',
       image: '/images/rh.png',
+      isRounded: true,
+      alt: 'RH',
+      target: '_blank'
+    }
+  ]
+
+  const listaCarouselPersonal = [
+    {
+      href: '/personal',
+      image: '/images/banner_home/personal.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: abreSaverClubModal,
+      image: '/images/saver_club.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: dispatchSaverSaude,
+      image: '/images/pratique_med.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: 'https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.',
+      image: '/images/banner_home/suporte-personal.png',
       isRounded: true,
       alt: 'RH',
       target: '_blank'
@@ -234,13 +293,65 @@ export default function Inicio() {
       </div>
       <Banners />
 
-      {usuario.isEmployee ? (
+      {isSaverSaudeAndPesonal ? (
+        <div className="mt-4">
+          <div>
+            <Title level={3} className="m-0">
+              Área Personal!
+            </Title>
+            <Text type="">Benefícios e conteúdos para você</Text>
+          </div>
+          <Carousel
+            arrows={false}
+            autoPlay={false}
+            centerMode={false}
+            className="mt-2"
+            containerClass="container"
+            draggable
+            focusOnSelect={false}
+            infinite={false}
+            keyBoardControl={false}
+            minimumTouchDrag={80}
+            partialVisible
+            renderArrowsWhenDisabled={false}
+            renderButtonGroupOutside={false}
+            renderDotsOutside={false}
+            responsive={{
+              desktop: {
+                breakpoint: { max: 3000, min: 1024 },
+                items: 3
+              },
+              tablet: {
+                breakpoint: { max: 1024, min: 464 },
+                items: 2
+              },
+              mobile: {
+                breakpoint: { max: 464, min: 0 },
+                items: 1,
+                partialVisibilityGutter: 100
+              }
+            }}
+            rewind={false}
+            rewindWithAnimation={false}
+            rtl={false}
+            showDots={false}
+            slidesToSlide={1}
+            swipeable
+          >
+            {listaCarouselPersonal.map(({ href, image, isRounded, action, alt }, index) => (
+              <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+            ))}
+          </Carousel>
+        </div>
+      ) : null}
+
+      {usuario.isEmployee && !isSaverSaudeAndPesonal ? (
         <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
               Área do Colaborador!
             </Title>
-            <Text type="">Beneficios e conteúdos para você</Text>
+            <Text type="">Benefícios e conteúdos para você</Text>
           </div>
           <Carousel
             arrows={false}
@@ -292,7 +403,7 @@ export default function Inicio() {
             <Title level={3} className="mt-4 mb-0">
               Área do Cliente!
             </Title>
-            <Text type="secondary">Beneficios e conteúdos para você</Text>
+            <Text type="secondary">Benefícios e conteúdos para você</Text>
           </div>
 
           <Carousel

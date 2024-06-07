@@ -31,9 +31,8 @@ export default function CriarTreinosAluno() {
     dispatch(getTreinoLivreAluno(usuario.ID))
   }, [])
 
-
   useEffect(() => {
-    setDisabledButton((nomeTreino.length < 1 || nomeTreino.length > 20 || idAluno === ''))
+    setDisabledButton(nomeTreino.length < 1 || nomeTreino.length > 20 || idAluno === '')
   }, [nomeTreino, idAluno])
 
   const showModal = () => {
@@ -58,85 +57,76 @@ export default function CriarTreinosAluno() {
   }
 
   const onSaveTreino = () => {
-    dispatch(saveTreinoLivre({
-      id_user: idAluno !== '' ? idAluno : usuario.ID,
-      id_professor: idAluno !== '' ? parseInt(usuario.ID) : null,
-      nome_treino: nomeTreino,
-      data_criacao: formatISO(new Date()),
-      exercicios: selectedExercises
-    }))
+    dispatch(
+      saveTreinoLivre({
+        id_user: idAluno !== '' ? idAluno : usuario.ID,
+        id_professor: idAluno !== '' ? parseInt(usuario.ID) : null,
+        nome_treino: nomeTreino,
+        data_criacao: formatISO(new Date()),
+        exercicios: selectedExercises
+      })
+    )
   }
 
   return (
     <Loading spinning={loading}>
-      {
-        !verMeusTreinos ?
-          <>
-            <div className="mt-4 text-center">
-              <Text>
-                Biblioteca de exercícios com <Text strong>VÍDEOS</Text>
-              </Text>
-            </div>
-            <div className="text-center">
-              <Text>
-                demonstrativos. Tenha uma boa pesquisa
-              </Text>
-            </div>
-            <div className="text-center">
-              <Text>
-                e monte o treino do seu aluno! 💪
-              </Text>
-            </div>
-            <br />
-            <Exercicios
-              treinoLivre={treinoLivre}
-              showModal={showModal}
-              selected={(value) => {
-                setSelectedExercises(value)
-              }}
-            />
-            <br /><br />
-            <Modal
-              open={openModal.open}
-              title={'Crie o seu Treino'}
-              okButtonProps={{
-                disabled: disabledButton,
-                style: {
-                  backgroundColor: !disabledButton ? 'green' : 'rgba(0, 0, 0, 0.04)',
-                  color: !disabledButton ? '#fff' : '#000'
-                }
-              }}
-              okText={'Salvar'}
-              onOk={handleForm}
-              onCancel={handleCancel}
-            >
-              <FormTreino
-                onSetNomeTreino={(value) => {
-                  setNomeTreino(value)
-                }}
-                onSetIdAluno={(value) => {
-                  setIdAluno(value)
-                }}
-                nome={nomeTreino}
-                treinoPersonal={true}
-              />
-            </Modal>
-            <TreinosLivresSalvos
-              verMeusTreinos={(value, ver) => {
-                setTreino(value)
-                setVerMeusTreinos(ver)
-              }}
-              treinoLivre={treinoLivre}
-            />
-          </>
-          :
-          <VerTreinoEscolhido
-            treino={treino}
-            verMeusTreinos={(ver) => {
-              setVerMeusTreinos(ver)
+      {!verMeusTreinos ? (
+        <>
+          <div className="mt-4 text-center">
+            <Text>PESQUISE O GRUPO MUSCULAR</Text>
+          </div>
+
+          <br />
+          <Exercicios
+            treinoLivre={treinoLivre}
+            showModal={showModal}
+            selected={value => {
+              setSelectedExercises(value)
             }}
           />
-      }
+          <br />
+          <br />
+          <Modal
+            open={openModal.open}
+            title={'Crie o seu Treino'}
+            okButtonProps={{
+              disabled: disabledButton,
+              style: {
+                backgroundColor: !disabledButton ? 'green' : 'rgba(0, 0, 0, 0.04)',
+                color: !disabledButton ? '#fff' : '#000'
+              }
+            }}
+            okText={'Salvar'}
+            onOk={handleForm}
+            onCancel={handleCancel}
+          >
+            <FormTreino
+              onSetNomeTreino={value => {
+                setNomeTreino(value)
+              }}
+              onSetIdAluno={value => {
+                setIdAluno(value)
+              }}
+              nome={nomeTreino}
+              treinoPersonal={true}
+            />
+          </Modal>
+          <TreinosLivresSalvos
+            verMeusTreinos={(value, ver) => {
+              setTreino(value)
+              setVerMeusTreinos(ver)
+            }}
+            treinoLivre={treinoLivre}
+          />
+        </>
+      ) : (
+        <VerTreinoEscolhido
+          treino={treino}
+          verMeusTreinos={ver => {
+            setVerMeusTreinos(ver)
+          }}
+        />
+      )}
     </Loading>
   )
 }

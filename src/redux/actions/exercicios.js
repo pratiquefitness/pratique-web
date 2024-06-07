@@ -30,8 +30,8 @@ export const saveTreinoLivre = data => {
             marginTop: '40vh',
           },
         });
-        dispatch(getTreinoLivre(data.id_user));
-        dispatch(getTreinoLivreAluno(login.usuario.ID));
+        dispatch(getTreinoLivreAluno(data.id_user));
+        dispatch(getTreinoLivre(login.usuario.ID));
       })
       .finally(() => {
         dispatch(setLoading(false))
