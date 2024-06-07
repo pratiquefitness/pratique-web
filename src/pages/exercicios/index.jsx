@@ -69,7 +69,7 @@ export default function ExerciciosView() {
         {
           !verMeusTreinos ?
             <>
-              <div className="mt-4 text-center">
+              {/*<div className="mt-4 text-center">
                 <Text>
                   Biblioteca de exercícios com <Text strong>VÍDEOS</Text>
                 </Text>
@@ -83,7 +83,7 @@ export default function ExerciciosView() {
                 <Text>
                    e monte seu treino! 💪
                 </Text>
-              </div>
+              </div>*/}
               <br />
               <Exercicios
                 treinoLivre={treinoLivre}
