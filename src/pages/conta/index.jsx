@@ -28,8 +28,8 @@ export default function Conta() {
       key: 'plano',
       label: `Plano`,
       children: <Plano />
-    }
-    /* {
+    },
+    {
       key: 'personal',
       label: usuario.professor !== 1 ? `Personal` : '',
       children: usuario.professor !== 1 ? <Personal /> : ''
@@ -43,8 +43,8 @@ export default function Conta() {
       key: 'alunos',
       label: usuario.professor === 1 ? `Meus Alunos` : '',
       children: usuario.professor === 1 ? <Alunos /> : ''
-    },
-    {
+    }
+    /* {
       key: 'treinoAlunos',
       label: usuario.professor === 1 ? `Criar treinos` : '',
       children: usuario.professor === 1 ? <CriarTreinosAluno /> : ''
