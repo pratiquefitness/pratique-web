@@ -297,7 +297,7 @@ export default function Inicio() {
         <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
-              Área Personal!
+              Clube Personal!
             </Title>
             <Text type="">Benefícios e conteúdos para você</Text>
           </div>
