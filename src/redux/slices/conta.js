@@ -5,10 +5,12 @@ const initialState = {
   loadingAvatar: false,
   loadingIsPersonal: false,
   loadingAlunosPersonal: false,
+  loadingPersonal: false,
   isPersonal: false,
   alunosPersonal: [],
   vincularAluno: [],
   dadosAluno: {},
+  meuPersonal: []
 }
 
 export const contaSlice = createSlice({
@@ -39,6 +41,12 @@ export const contaSlice = createSlice({
     setDadosAluno(state, action) {
       return { ...state, dadosAluno: action.payload }
     },
+    setLoadingPersonal(state, action) {
+      return { ...state, loadingPersonal: action.payload }
+    },
+    setMeuPersonal(state, action) {
+      return { ...state, meuPersonal: action.payload }
+    },
   }
 })
 
@@ -50,7 +58,9 @@ export const {
   setLoadingAlunosPersonal,
   setAlunosPersonal,
   setDadosAluno,
-  setVincularAluno
+  setVincularAluno,
+  setLoadingPersonal,
+  setMeuPersonal
 } = contaSlice.actions
 
 export default contaSlice

@@ -11,7 +11,9 @@ export default function AreaPersonal() {
   const [exercicioModal, setExercicioModal] = useState(false)
   const [imageModal, setImageModal] = useState('');
   const {banner} = useSelector(state => state.areaDoPersonal);
-  const [listaCarouselPersonnal, setListaCarouselPersonnal] = useState([]);
+  const [listaCarouselPersonnal, setListaCarouselPersonnal] = useState({
+    data: []
+  });
 
   const closeExercicioModal = () => {
     setImageModal('')
@@ -19,37 +21,39 @@ export default function AreaPersonal() {
   }
 
   useEffect(() => {
-    //if(banner?.message !== undefined) return;
+    if(banner?.message !== undefined) return;
     if (banner.length !== 0) {
-      banner.map((ban) => {
-        const data = {
+      setListaCarouselPersonnal(prevState => ({
+        ...prevState,
+        data: banner.map((ban) => {
+        return {
           image: ban.avatar_image,
           isRounded: true,
           alt: ban.user_email,
           setImageModal: setImageModal,
           setExercicioModal: setExercicioModal,
-          href: "contato_personal",
+          href: 'contato_personal',
           curriculo: ban.curriculo,
           telefone: ban.telefone,
-          id: ban.ID
+          id: ban.ID,
+          display_name: ban.display_name
         }
-        let listas = [...listaCarouselPersonnal, data];
-        setListaCarouselPersonnal(listas.filter((value, index) => listas.indexOf(value) === index));
-      });
+        })
+      }))
     }
-  }, [banner])
+  }, [banner]);
 
   return (
     <>
       {
-        listaCarouselPersonnal.length > 0 &&
+        listaCarouselPersonnal.data.length > 0 &&
           <Space direction="vertical" className="w-100 mb-6">
             <div className="mt-4 flex flex-column mb-0">
               <Title level={3} className="mb-0">
                 Contrate um Personal
               </Title>
             </div>
-            <Carrossel listaCarousel={listaCarouselPersonnal} />
+            <Carrossel listaCarousel={listaCarouselPersonnal.data} />
           </Space>
       }
     </>

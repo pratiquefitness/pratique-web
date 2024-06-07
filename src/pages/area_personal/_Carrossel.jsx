@@ -42,7 +42,17 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
       slidesToSlide={1}
       swipeable
     >
-      {listaCarousel.map(({ href, image, isRounded, alt, setImageModal, setExercicioModal, curriculo, telefone, }, index) => (
+      {listaCarousel.map(({
+        href,
+        image,
+        isRounded,
+        alt,
+        setImageModal,
+        setExercicioModal,
+        curriculo,
+        telefone,
+        display_name
+      }, index) => (
         <CarouselItemPersonal
           key={index}
           href={href}
@@ -53,6 +63,7 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
           isRounded={isRounded}
           curriculo={curriculo}
           telefone={telefone}
+          displayName={display_name}
         />
       ))}
     </Carousel>

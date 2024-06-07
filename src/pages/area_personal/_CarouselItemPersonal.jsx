@@ -7,6 +7,7 @@ export default function CarouselItemPersonal({
  curriculo,
  telefone,
  href,
+ displayName,
   id,
  setImageModal,
  setExercicioModal
@@ -16,7 +17,7 @@ export default function CarouselItemPersonal({
   const handleClick = () => {
     router.push({
       pathname: href,
-      query: { curriculo: curriculo, telefone: telefone, image: image}
+      query: { curriculo: curriculo, telefone: telefone, image: image, displayName: displayName}
     }, href)
   }
 

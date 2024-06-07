@@ -5,7 +5,7 @@ import { setTheme, signInRequest, signInVerify } from '@/redux/actions/login'
 import { tokenName } from '@/configs/global'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { bannerPersonal } from '@/redux/actions/areaDoPersonal'
+import { bannerPersonal, bannerPersonalGeral } from '@/redux/actions/areaDoPersonal'
 
 export const AuthContext = createContext({})
 
@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
     if (token) {
       dispatch(setLoading(true))
       const login = await signInVerify(token)
-      dispatch(bannerPersonal());
+      dispatch(bannerPersonalGeral());
       if (login) {
         dispatch(setLogin(login))
         dispatch(setTheme(login.plano))

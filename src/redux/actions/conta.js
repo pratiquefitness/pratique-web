@@ -8,8 +8,8 @@ import {
   setLoadingAvatar,
   setLoadingIsPersonal,
   setVincularAluno,
-  setDadosAluno
-} from '../slices/conta';
+  setDadosAluno, setLoadingPersonal, setPersonal, setMeuPersonal
+} from '../slices/conta'
 import api from '@/services/api';
 import apiPratiqueTecnologia from '@/services/apiPratiqueTecnologia';
 import { message } from 'antd';
@@ -120,33 +120,33 @@ export const buscarAlunosSemPersonal = (email) => {
   }
 }
 
-/*export const buscarAlunosPersonal = (email) => {
+export const getPersonal = (personalId) => {
   return async (dispatch, getState) => {
     const { login } = getState()
-    dispatch(setLoadingAlunosPersonal(true))
-    return apiPratiqueTecnologia
-      .post('/app/personal/alunos/index.php', { id: login.usuario.ID, email: email })
+    dispatch(setLoadingPersonal(true))
+    return api
+      .post('/conta/personal', { personalId: personalId })
       .then(res => {
-        const aluno = res.data;
-        if (aluno?.message !== undefined) {
-          message.error(res.data?.message)
-        } else {
-          if (
-            aluno.data?.personal === '' ||
-            aluno.data?.personal === null ||
-            aluno.data?.personal === undefined ||
-            parseInt(aluno.data?.personal) === parseInt(login.usuario.ID)
-          ) {
-            dispatch(setVincularAluno(aluno.data));
-            return;
-          }
-          if (parseInt(login.usuario.ID) !== parseInt(aluno.data?.personal)) {
-            message.error('Aluno vinculado a outro personal!');
-          }
-        }
+        dispatch(setMeuPersonal(res.data));
       })
       .finally(() => {
-        dispatch(setLoadingAlunosPersonal(false));
+        dispatch(setLoadingPersonal(false));
       })
   }
-}*/
+}
+
+export const personalDesvincularServico = () => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoadingPersonal(true))
+    return api
+      .post('/conta/personalDesvincular', { id: login.usuario.ID })
+      .then(res => {
+        dispatch(setMeuPersonal([]));
+        message.success('Personal desvinculado com sucesso!');
+      })
+      .finally(() => {
+        dispatch(setLoadingPersonal(false))
+      })
+  }
+}

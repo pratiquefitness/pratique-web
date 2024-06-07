@@ -2,7 +2,8 @@ import { Tabs } from 'antd'
 import Dados from './_Dados'
 import Plano from './_Plano'
 import FAQ from './_Faq'
-import Alunos from './_Alunos'
+import Alunos from './_Alunos';
+import Personal from './_Personal';
 import AlunosTreino from './_AlunosTreino'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
@@ -29,17 +30,22 @@ export default function Conta() {
       children: <Plano />
     },
     {
-      key: usuario.professor === 1 ? 'faq' : '',
+      key: 'personal',
+      label: usuario.professor !== 1 ? `Personal` : '',
+      children: usuario.professor !== 1 ? <Personal /> : ''
+    },
+    {
+      key:'faq',
       label: usuario.professor === 1 ? `FAQ` : '',
       children: usuario.professor === 1 ? <FAQ /> : ''
     },
     {
-      key: usuario.professor === 1 ? 'alunos' : '',
+      key: 'alunos',
       label: usuario.professor === 1 ? `Alunos` : '',
       children: usuario.professor === 1 ? <Alunos /> : ''
     },
     {
-      key: usuario.professor === 1 ? 'treinoAlunos' : '',
+      key: 'treinoAlunos',
       label: usuario.professor === 1 ? `Criar treinos` : '',
       children: usuario.professor === 1 ? <CriarTreinosAluno /> : ''
     }

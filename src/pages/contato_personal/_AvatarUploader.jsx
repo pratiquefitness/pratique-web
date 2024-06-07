@@ -47,7 +47,7 @@ const AvatarUploader = ({props}) => {
         ) : props ? (
           <Avatar size={100} src={props} />
         ) : (
-          <Avatar size={100} icon={<UserOutlined spi />} />
+          <Avatar size={100} icon={<UserOutlined />} />
         )}
     </div>
   )

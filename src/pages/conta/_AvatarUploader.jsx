@@ -55,7 +55,7 @@ const AvatarUploader = () => {
         ) : usuario.avatar_image ? (
           <Avatar size={100} src={usuario.avatar_image} />
         ) : (
-          <Avatar size={100} icon={<UserOutlined spi />} />
+          <Avatar size={100} icon={<UserOutlined />} />
         )}
         <div>
           <Typography.Text>

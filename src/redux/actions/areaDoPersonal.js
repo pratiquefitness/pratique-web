@@ -19,3 +19,18 @@ export const bannerPersonal = () => {
       })
   }
 }
+
+export const bannerPersonalGeral = () => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoading(true))
+    return apiPratiqueTecnologia
+      .post('/app/personal/banner/geral.php', {})
+      .then(res => {
+        dispatch(setBanner(res.data.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
