@@ -200,16 +200,7 @@ export default function Inicio() {
           }
         ]
       : []),
-    ...(isSaverSaudeAndPesonal
-      ? [
-          {
-            action: dispatchSaverSaude,
-            image: '/images/pratique_med.png',
-            isRounded: true,
-            alt: 'saver_saude'
-          }
-        ]
-      : []),
+
     {
       href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
       image: '/images/sac.png',
