@@ -44,7 +44,7 @@ export default function Dados() {
           user_email: values.user_email,
           curriculo: values.curriculo,
           estado: values.estado,
-          cidade: values.telefone,
+          cidade: values.cidade,
           cpf: values.cpf,
           email: values.email,
           telefone: String(values.telefone)
