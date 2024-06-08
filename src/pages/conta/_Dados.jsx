@@ -21,10 +21,18 @@ export default function Dados() {
   })
   const [value, setValue] = useState({
     estado: '',
-    cidade: '',
+    cidade: ''
   })
   const [estadoEscolhido, setEstadoEscolhido] = useState('')
   const [cidadeEscolhida, setCidadeEscolhida] = useState('')
+
+  const validatePhoneNumber = (_, value) => {
+    const cleanedValue = value.replace(/\D/g, '')
+    if (cleanedValue.length === 11) {
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error('Digite um telefone válido: 31999999999'))
+  }
 
   const onUpdate = values => {
     if (typeof values.user_pass !== 'undefined') {
@@ -54,15 +62,15 @@ export default function Dados() {
       estado: usuario.estado,
       cidade: usuario.cidade,
       email: usuario.email,
-      telefone: usuario.telefone,
+      telefone: usuario.telefone
     })
   }, [])
 
   useEffect(() => {
-    if(usuario.estado?.length) {
-      onSelectEstado(usuario.estado);
+    if (usuario.estado?.length) {
+      onSelectEstado(usuario.estado)
     }
-  }, [usuario.estado]);
+  }, [usuario.estado])
 
   useEffect(() => {
     if (estadosCIdades.estados?.length) {
@@ -77,34 +85,35 @@ export default function Dados() {
 
   const onSelectEstado = value => {
     setEstadoEscolhido(value)
-    const cidadesJson = estadosCIdades.estados.filter((estado) => estado.nome === value);
+    const cidadesJson = estadosCIdades.estados.filter(estado => estado.nome === value)
     setCidades(prevState => ({
       ...prevState,
       data: cidadesJson[0].cidades.reduce((o, option) => {
         return [...o, { value: option }]
       }, [])
-    }));
+    }))
   }
 
   const onSelectCidade = value => {
-    setCidadeEscolhida(value);
+    setCidadeEscolhida(value)
   }
 
   return (
     <>
-      {
-        usuario.professor === 1 ?
-          usuario.curriculo !== null ?
-            <div className={'d-flex justify-space-between mb-4'}>
-              <Space size={'large'}>
-                <AvatarUploader />
-                <MiniCurriculum />
-              </Space>
-            </div> :
-            <AvatarUploader />
-          :
+      {usuario.professor === 1 ? (
+        usuario.curriculo !== null ? (
+          <div className={'d-flex justify-space-between mb-4'}>
+            <Space size={'large'}>
+              <AvatarUploader />
+              <MiniCurriculum />
+            </Space>
+          </div>
+        ) : (
           <AvatarUploader />
-      }
+        )
+      ) : (
+        <AvatarUploader />
+      )}
 
       <Form layout="vertical" form={form} onFinish={onUpdate}>
         <Form.Item label="Meu nome" name="user_nicename">
@@ -113,25 +122,15 @@ export default function Dados() {
         <Form.Item
           label="CPF"
           name="cpf"
-          rules={[{ min: 11, message:'Digite um CPF válido', pattern: new RegExp(/^[0-9]+$/) }]}
+          rules={[{ min: 11, message: 'Digite um CPF válido', pattern: new RegExp(/^[0-9]+$/) }]}
         >
-          <Input
-            maxLength={11}
-          />
+          <Input maxLength={11} />
         </Form.Item>
-        <Form.Item
-          label="Telefone Celular com DDD"
-          name="telefone"
-           rules={[{ min: 11, message:'Digite um telefone válido: 31999999999', pattern: new RegExp(/^[0-9]+$/) }]}
-        >
-          <Input
-            maxLength={11}
-          />
+        <Form.Item label="Telefone Celular com DDD" name="telefone" rules={[{ validator: validatePhoneNumber }]}>
+          <Input />
         </Form.Item>
-        <Form.Item
-          label="Estado"
-          name="estado"
-        >
+
+        <Form.Item label="Estado" name="estado">
           <AutoComplete
             id={'estado'}
             value={value.estado}
@@ -139,8 +138,8 @@ export default function Dados() {
             style={{
               width: '100%'
             }}
-            onSelect={(e) => onSelectEstado(e)}
-            onChange={(value) => {
+            onSelect={e => onSelectEstado(e)}
+            onChange={value => {
               setCidadeEscolhida('')
               setEstadoEscolhido('')
               setValue(prevState => ({
@@ -152,9 +151,7 @@ export default function Dados() {
                 cidade: ''
               })
             }}
-            filterOption={(inputValue, option) =>
-              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-            }
+            filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
             placeholder="Selecione um estado"
             allowClear
             onClear={() => {
@@ -171,10 +168,7 @@ export default function Dados() {
             }}
           />
         </Form.Item>
-        <Form.Item
-          label="Cidade"
-          name="cidade"
-        >
+        <Form.Item label="Cidade" name="cidade">
           <AutoComplete
             id={'cidade'}
             value={value.cidade}
@@ -182,21 +176,19 @@ export default function Dados() {
             style={{
               width: '100%'
             }}
-            onSelect={(e) => onSelectCidade(e)}
-            onChange={(value) => {
+            onSelect={e => onSelectCidade(e)}
+            onChange={value => {
               setCidadeEscolhida('')
               setValue(prevState => ({
                 ...prevState,
                 cidade: value
               }))
             }}
-            filterOption={(inputValue, option) =>
-              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-            }
+            filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
             placeholder="Selecione uma cidade"
             allowClear
             onClear={() => {
-              setCidadeEscolhida('');
+              setCidadeEscolhida('')
               setValue(prevState => ({
                 ...prevState,
                 cidade: ''
@@ -205,12 +197,11 @@ export default function Dados() {
           />
         </Form.Item>
 
-        {
-          usuario.professor === 1 &&
+        {usuario.professor === 1 && (
           <Form.Item label="Mini Currículo" name="curriculo">
             <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
           </Form.Item>
-        }
+        )}
         <Form.Item label="Email" name="user_email">
           <Input disabled />
         </Form.Item>
