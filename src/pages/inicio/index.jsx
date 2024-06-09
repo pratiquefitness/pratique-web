@@ -143,6 +143,23 @@ export default function Inicio() {
       isRounded: true,
       alt: 'unipower_banner'
     },
+    ...(usuario.isEmployee
+      ? [
+          {
+            href: '/unipower',
+            image: '/images/unipower.png',
+            isRounded: true,
+            alt: 'unipower_banner'
+          },
+          {
+            href: '/canal_equipe',
+            image: '/images/canal_equipe.png',
+            isRounded: true,
+            alt: 'canal_equipe'
+          }
+        ]
+      : []),
+
     {
       href: 'https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.',
       image: '/images/banner_home/suporte-personal.png',
