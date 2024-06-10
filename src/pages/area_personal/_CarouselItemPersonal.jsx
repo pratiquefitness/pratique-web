@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 export default function CarouselItemPersonal({
  image,
@@ -23,7 +24,10 @@ export default function CarouselItemPersonal({
 
   return (
     <a onClick={handleClick} className="d-flex justify-center">
-      <img src={image} alt={alt} className={`w-95 ${isRounded && 'rounded-extra'}`} />
+      <Image
+        width={300}
+        height={300}
+        src={image} alt={alt} className={`w-95 ${isRounded && 'rounded-extra'}`} />
     </a>
   )
 }
