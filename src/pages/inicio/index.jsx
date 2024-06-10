@@ -58,11 +58,11 @@ export default function Inicio() {
   const isSaverSaudeAndClient = true
 
   const dispatchSaverSaude = () => {
-    dispatch(setBrowserURL('https://pratiquemed.com.br/login'))
+    dispatch(setBrowserURL('http://clubecertosaude.com.br/saude/pratiquemed/'))
   }
 
   const dispatchPratiqueMed = () => {
-    dispatch(setBrowserURL('https://www.pratiquemed.com.br/login.php'))
+    dispatch(setBrowserURL('http://clubecertosaude.com.br/saude/pratiquemed/'))
   }
 
   const dispatchSac = () => {
@@ -505,7 +505,7 @@ export default function Inicio() {
         </div>
       </div>
 
-      <AreaPersonal />
+      {/* <AreaPersonal />*/}
 
       <div>
         <Title level={3} className="m-0 mt-6">
