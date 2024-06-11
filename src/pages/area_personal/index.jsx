@@ -22,6 +22,7 @@ export default function AreaPersonal() {
 
   useEffect(() => {
     if(banner?.message !== undefined) return;
+    if(banner === undefined) return;
     if (banner.length !== 0) {
       setListaCarouselPersonnal(prevState => ({
         ...prevState,

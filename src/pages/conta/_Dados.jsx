@@ -3,7 +3,8 @@ import { AutoComplete, Button, Form, Input, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AvatarUploader from './_AvatarUploader'
-import MiniCurriculum from '@/pages/conta/_MiniCurriculum'
+import MiniCurriculum from '@/pages/conta/_MiniCurriculum';
+import { Checkbox } from 'antd';
 
 const { TextArea } = Input
 import estadosCIdades from '@/constants/estadosCidades'
@@ -47,7 +48,8 @@ export default function Dados() {
           cidade: values.cidade,
           cpf: values.cpf,
           email: values.email,
-          telefone: String(values.telefone)
+          telefone: String(values.telefone),
+          visivel: values.visivel
         })
       )
     }
@@ -62,7 +64,8 @@ export default function Dados() {
       estado: usuario.estado,
       cidade: usuario.cidade,
       email: usuario.email,
-      telefone: usuario.telefone
+      telefone: usuario.telefone,
+      visivel: usuario.visivel
     })
   }, [])
 
@@ -94,8 +97,14 @@ export default function Dados() {
     }))
   }
 
+  console.log(usuario)
+
   const onSelectCidade = value => {
     setCidadeEscolhida(value)
+  }
+
+  const onChange = (e) => {
+    form.setFieldsValue( {visivel: e.target.checked === true ? '1' : null})
   }
 
   return (
@@ -196,7 +205,6 @@ export default function Dados() {
             }}
           />
         </Form.Item>
-
         {usuario.professor === 1 && (
           <Form.Item label="Mini Currículo" name="curriculo">
             <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
@@ -208,6 +216,12 @@ export default function Dados() {
         <Form.Item label="Senha" name="user_pass">
           <Input type="password" />
         </Form.Item>
+        {
+          usuario.professor === 1 &&
+            <Form.Item label="" name="visivel">
+              <Checkbox defaultChecked={usuario.visivel === 1} onChange={onChange}>Exibir mini-currículo na home</Checkbox>
+            </Form.Item>
+        }
         <Button type="primary" htmlType="submit" loading={loading} block>
           Atualizar
         </Button>

@@ -101,6 +101,8 @@ model wp_users {
   estado              String?  @db.VarChar(80)
   telefone            String?  @db.VarChar(40)
   cpf                 String?  @db.VarChar(40)
+  recent_problem      Boolean? @default(false)
+  visivel             Int?
 
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")

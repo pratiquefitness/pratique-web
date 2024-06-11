@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     cpf,
     email,
     telefone,
+    visivel,
   } = req.body
 
   const data = await apiPratiqueFunciona.wp_users.update({
@@ -31,6 +32,7 @@ export default async function handler(req, res) {
             cpf,
             email,
             telefone,
+            visivel: parseInt(visivel)
           }
         : {
             user_nicename,
@@ -41,6 +43,7 @@ export default async function handler(req, res) {
             cpf,
             email,
             telefone,
+            visivel: parseInt(visivel)
           }
   })
   res.status(200).json(utils.clearDatabaseResult(data))

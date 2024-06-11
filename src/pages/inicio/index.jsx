@@ -504,9 +504,7 @@ export default function Inicio() {
           </a>
         </div>
       </div>
-
-      {/* <AreaPersonal />*/}
-
+      <AreaPersonal />
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique
