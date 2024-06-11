@@ -1,12 +1,14 @@
 import { Modal, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import Carrossel from './_Carrossel'
-import { useDispatch, useSelector } from 'react-redux'
-import { bannerPersonal } from '@/redux/actions/areaDoPersonal'
+import { useDispatch, useSelector } from 'react-redux';
+import {usePathname} from 'next/navigation';
+import { bannerPersonal, bannerPersonalGeral } from '@/redux/actions/areaDoPersonal'
 
 const { Title, Text } = Typography
 
 export default function AreaPersonal() {
+  const path = usePathname();
   const dispatch = useDispatch();
   const [exercicioModal, setExercicioModal] = useState(false)
   const [imageModal, setImageModal] = useState('');
@@ -15,14 +17,24 @@ export default function AreaPersonal() {
     data: []
   });
 
+
   const closeExercicioModal = () => {
     setImageModal('')
     setExercicioModal(false)
   }
 
   useEffect(() => {
+    dispatch(bannerPersonalGeral());
+  }, [])
+
+  useEffect(() => {
     if(banner?.message !== undefined) return;
-    if(banner === undefined) return;
+    if (banner === undefined) {
+      setListaCarouselPersonnal(prevState => ({
+        data: []
+      }))
+      return
+    }
     if (banner.length !== 0) {
       setListaCarouselPersonnal(prevState => ({
         ...prevState,
@@ -42,7 +54,9 @@ export default function AreaPersonal() {
         })
       }))
     }
-  }, [banner]);
+  }, [banner, path]);
+
+  console.log(path, banner)
 
   return (
     <>
