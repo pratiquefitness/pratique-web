@@ -75,6 +75,9 @@ export default function JumperFit({ employee }) {
     } else if (credits === 'filhos') {
       selectedPlan = '424'
       saverParam = 'plano'
+    } else if (credits === 'especial') {
+      selectedPlan = '458'
+      saverParam = 'plano'
     } else {
       // Se nenhum dos casos acima, use o link padrão
       selectedPlan = 'default' // ajuste conforme necessário
@@ -99,6 +102,17 @@ export default function JumperFit({ employee }) {
     setModalLink('')
     setModalVisible(false)
   }
+
+  const authorizedEmails = [
+    'glauberpratique@hotmail.com',
+    'design@pratiquefitness.com.br',
+    'marcelaaliprandi@hotmail.com',
+    'juliacpratique@gmail.com',
+    'bernardoaliprandi27@gmail.com',
+    'lauracpratique@gmail.com'
+  ]
+  const isAuthorizedUser = authorizedEmails.includes(usuario.user_email)
+
   return (
     <Loading spinning={loading}>
       {/* ... (existing code) */}
@@ -147,6 +161,11 @@ export default function JumperFit({ employee }) {
           Mensal 1 Filho
         </Button>
         <br /> <br />
+        {isAuthorizedUser && (
+          <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('especial')}>
+            Plano Especial
+          </Button>
+        )}
       </div>
       <Collapse className="planos_academia" accordion>
         {/* ... (existing code) */}
