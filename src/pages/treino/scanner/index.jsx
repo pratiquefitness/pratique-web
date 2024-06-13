@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Empty, Table, Typography } from 'antd' // Adicionando Typography do primeiro código
-import { DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { Button, Empty, Table, Typography, Modal, Input, Form } from 'antd'
+import { DownloadOutlined, ArrowLeftOutlined, IdcardOutlined } from '@ant-design/icons'
 import TreinoLayout from '../_Layout'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTreino } from '@/redux/actions/treino'
 import axios from 'axios'
 import { setBrowserURL } from '@/redux/slices/global'
+import { updateCpf } from '@/redux/actions/conta'
 
 export default function ScannerView() {
   const dispatch = useDispatch()
   const { usuario } = useSelector(state => state.login)
   const { data } = useSelector(state => state.treino)
   const { fichas } = data
-  const temExame = fichas && fichas.some(objeto => objeto.urlexame && objeto.urlexame.includes('.pdf')) // Alterando para some() para verificar qualquer exame em formato PDF
+  const temExame = fichas && fichas.some(objeto => objeto.urlexame && objeto.urlexame.includes('.pdf'))
   const [examsData, setExamsData] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedExamId, setSelectedExamId] = useState(null)
   const [iframeVisible, setIframeVisible] = useState(false)
   const [pdfLink, setPdfLink] = useState('')
   const [loading, setLoading] = useState(true)
+  const [cpfModalVisible, setCpfModalVisible] = useState(false)
+  const [cpfForm] = Form.useForm()
 
   useEffect(() => {
     dispatch(getTreino())
@@ -68,17 +71,32 @@ export default function ScannerView() {
     fetchExamsData()
   }, [dispatch, usuario])
 
+  useEffect(() => {
+    if (!usuario.cpf) {
+      setCpfModalVisible(true)
+    }
+  }, [usuario])
+
   const handleImageClick = async record => {
     setSelectedImage(record.bodyImage)
     setSelectedExamId(record.id)
     setLoading(true)
     setIframeVisible(true)
     setPdfLink(record.pdf)
-    console.log('Link do exame:', record.pdf) // Adicionando console.log para verificar o link do exame
+    console.log('Link do exame:', record.pdf)
   }
 
   const handleIframeLoad = () => {
     setLoading(false)
+  }
+
+  const handleCpfSubmit = async values => {
+    try {
+      await dispatch(updateCpf(values.cpf))
+      setCpfModalVisible(false)
+    } catch (error) {
+      console.error('Erro ao atualizar o CPF:', error)
+    }
   }
 
   return (
@@ -147,9 +165,45 @@ export default function ScannerView() {
           </Button>
         </a>
       ) : (
-        <Empty className="my-8" />
+        <Empty />
       )}
-      <div style={{ textAlign: 'center', marginTop: '50px' }}> </div>
+      <Modal
+        title={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Title level={3} style={{ marginBottom: 0 }}>
+              Atenção
+            </Typography.Title>
+          </div>
+        }
+        visible={cpfModalVisible}
+        onCancel={() => setCpfModalVisible(false)}
+        footer={null}
+        centered
+      >
+        <div style={{ textAlign: 'center' }}>
+          <IdcardOutlined style={{ fontSize: '48px', color: '#08c' }} />
+          <Typography.Paragraph style={{ color: '#595959', marginTop: '16px' }}>
+            Preencha seu CPF para ter acesso ao SUPERBIO! Preencha corretamente pois ele será a chave para você poder
+            ver seus exames!
+          </Typography.Paragraph>
+        </div>
+        <Form form={cpfForm} onFinish={handleCpfSubmit}>
+          <Form.Item
+            name="cpf"
+            rules={[
+              { required: true, message: 'Por favor, insira seu CPF' },
+              { len: 11, message: 'O CPF deve ter 11 dígitos' }
+            ]}
+          >
+            <Input maxLength={11} placeholder="Digite aqui o seu CPF" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Salvar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </TreinoLayout>
   )
 }
