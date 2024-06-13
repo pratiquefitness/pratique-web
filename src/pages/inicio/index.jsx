@@ -61,6 +61,10 @@ export default function Inicio() {
     dispatch(setBrowserURL('https://clubecertosaude.com.br/saude/pratiquemed/'))
   }
 
+  const dispatchQueroBem = () => {
+    dispatch(setBrowserURL('https://grupopratique.typeform.com/to/LUc4cfCd'))
+  }
+
   const dispatchPratiqueMed = () => {
     dispatch(setBrowserURL('https://clubecertosaude.com.br/saude/pratiquemed/'))
   }
@@ -98,6 +102,13 @@ export default function Inicio() {
       href: '',
       action: dispatchSaverSaude,
       image: '/images/pratique_med.png',
+      isRounded: true,
+      alt: 'unipower_banner'
+    },
+    {
+      href: '',
+      action: dispatchQueroBem,
+      image: '/images/banner_home/eutequerobem.png',
       isRounded: true,
       alt: 'unipower_banner'
     },
@@ -145,6 +156,13 @@ export default function Inicio() {
     },
     ...(usuario.isEmployee
       ? [
+          {
+            href: '',
+            action: dispatchQueroBem,
+            image: '/images/eutequerobem.png',
+            isRounded: true,
+            alt: 'unipower_banner'
+          },
           {
             href: '/unipower',
             image: '/images/unipower.png',
