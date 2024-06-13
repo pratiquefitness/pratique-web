@@ -157,13 +157,6 @@ export default function Inicio() {
     ...(usuario.isEmployee
       ? [
           {
-            href: '',
-            action: dispatchQueroBem,
-            image: '/images/eutequerobem.png',
-            isRounded: true,
-            alt: 'unipower_banner'
-          },
-          {
             href: '/unipower',
             image: '/images/unipower.png',
             isRounded: true,
