@@ -55,12 +55,12 @@ export default async function handler(req, res) {
           }
         })
 
-        const professor = user.professor;
-        const curriculo = user.curriculo;
-        const cpf = user.cpf;
-        const estado = user.estado;
-        const cidade = user.cidade;
-        const telefone = user.telefone;
+        const professor = user.professor
+        const curriculo = user.curriculo
+        const cpf = user.cpf
+        const estado = user.estado
+        const cidade = user.cidade
+        const telefone = user.telefone
 
         user.isEmployee = funcionarioExists.length ? 1 : 0
         user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
@@ -116,7 +116,8 @@ export default async function handler(req, res) {
           user.status = null
           user.plano = null
           user.unidade = null
-          user.telefone =  user.telefone ?? null
+          user.telefone = user.telefone ?? null
+          user.isAffiliate
           //user.cpf = null
         }
       }
