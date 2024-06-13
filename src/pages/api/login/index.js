@@ -104,6 +104,7 @@ export default async function handler(req, res) {
       user.plano = null
       user.unidade = null
       user.telefone = user.telefone ?? null
+      user.isAffiliate
       //user.cpf = null
     }
   }
