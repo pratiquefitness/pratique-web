@@ -3,8 +3,8 @@ import { AutoComplete, Button, Form, Input, Space } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import AvatarUploader from './_AvatarUploader'
-import MiniCurriculum from '@/pages/conta/_MiniCurriculum';
-import { Checkbox } from 'antd';
+import MiniCurriculum from '@/pages/conta/_MiniCurriculum'
+import { Checkbox } from 'antd'
 
 const { TextArea } = Input
 import estadosCIdades from '@/constants/estadosCidades'
@@ -103,8 +103,8 @@ export default function Dados() {
     setCidadeEscolhida(value)
   }
 
-  const onChange = (e) => {
-    form.setFieldsValue( {visivel: e.target.checked === true ? '1' : null})
+  const onChange = e => {
+    form.setFieldsValue({ visivel: e.target.checked === true ? '1' : null })
   }
 
   return (
@@ -125,6 +125,13 @@ export default function Dados() {
       )}
 
       <Form layout="vertical" form={form} onFinish={onUpdate}>
+        {usuario.professor === 1 && (
+          <Form.Item label="" name="visivel">
+            <Checkbox defaultChecked={usuario.visivel === 1} onChange={onChange}>
+              Exibir mini-currículo na home
+            </Checkbox>
+          </Form.Item>
+        )}
         <Form.Item label="Meu nome" name="user_nicename">
           <Input />
         </Form.Item>
@@ -216,12 +223,7 @@ export default function Dados() {
         <Form.Item label="Senha" name="user_pass">
           <Input type="password" />
         </Form.Item>
-        {
-          usuario.professor === 1 &&
-            <Form.Item label="" name="visivel">
-              <Checkbox defaultChecked={usuario.visivel === 1} onChange={onChange}>Exibir mini-currículo na home</Checkbox>
-            </Form.Item>
-        }
+
         <Button type="primary" htmlType="submit" loading={loading} block>
           Atualizar
         </Button>
