@@ -107,6 +107,12 @@ export default async function handler(req, res) {
       user.isAffiliate
       //user.cpf = null
     }
+    console.log('Valor de user.plano:', user.plano)
+
+    // Verificação do termo "PERSONAL" no plano
+    if (user.plano?.includes('PERSONAL')) {
+      user.isAffiliate = 1
+    }
   }
 
   res.status(200).json(utils.clearDatabaseResult([user]))
