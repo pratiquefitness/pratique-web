@@ -49,7 +49,17 @@ export default function ScannerView() {
             return
           }
 
-          const response = await axios.get(`https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}`)
+          const timestamp = new Date().getTime()
+          const response = await axios.get(
+            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&t=${timestamp}`,
+            {
+              headers: {
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache',
+                Expires: '0'
+              }
+            }
+          )
 
           if (response.status === 200 && response.data && response.data.length > 0) {
             const examsWithFormattedDate = response.data.map(exam => ({
