@@ -14,6 +14,7 @@ export default function CarouselItemPersonal({
   setImageModal,
   setExercicioModal
 }) {
+
   const router = useRouter()
   const [isMobile, setIsMobile] = useState(false)
 
@@ -51,12 +52,15 @@ export default function CarouselItemPersonal({
           objectFit="cover"
           quality={100}
         />
+        <div className="overlay text-white d-flex justify-center align-center">
+          {displayName}
+        </div>
       </div>
       <style jsx>{`
         .image-wrapper {
           position: relative;
           width: 100%;
-          height: ${isMobile ? '150px' : '300px'}; // 300px ou qualquer altura desejada para desktop
+          height: ${isMobile ? '200px' : '300px'}; // 300px ou qualquer altura desejada para desktop
         }
         .rounded-extra {
           border-radius: 50%;

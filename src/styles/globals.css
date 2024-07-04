@@ -330,3 +330,15 @@ body .ant-layout-footer {
 .ant-checkbox-checked:hover .ant-checkbox-checked .ant-checkbox-inner {
     background-color: #018000 !important;
 }
+
+.overlay {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  width: 95%;
+  height: 20%;
+  border-bottom-left-radius: 20px!important;
+  border-bottom-right-radius: 20px!important;
+  background-color: rgba(0, 0, 0, 0.5); /* Cor da tarja e opacidade (aqui, 0.5 para 50%) */
+  z-index: 1; /* Garante que a tarja fique sobre a imagem */
+}
