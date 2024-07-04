@@ -89,12 +89,17 @@ export default function Dados() {
   const onSelectEstado = value => {
     setEstadoEscolhido(value)
     const cidadesJson = estadosCIdades.estados.filter(estado => estado.nome === value)
-    setCidades(prevState => ({
-      ...prevState,
-      data: cidadesJson[0].cidades.reduce((o, option) => {
-        return [...o, { value: option }]
-      }, [])
-    }))
+
+    if (cidadesJson.length > 0) {
+      setCidades(prevState => ({
+        ...prevState,
+        data: cidadesJson[0].cidades.reduce((o, option) => {
+          return [...o, { value: option }]
+        }, [])
+      }))
+    } else {
+      setCidades({ data: [] }) 
+    }
   }
 
   console.log(usuario)
