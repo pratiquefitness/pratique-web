@@ -57,7 +57,6 @@ export const ExerciseAutocompleteInput = ({
         onSearch={onSearch}
         onChange={setValue}
         filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-        placeholder="PESQUISE O EXERCÍCIO DESEJADO"
         allowClear
         onFocus={focus}
       />
@@ -118,7 +117,6 @@ export const ExerciseChoiceInput = ({ selectedChoice = () => {}, focus = () => {
         filterSort={(optionA, optionB) =>
           (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
         }
-        placeholder="PESQUISE O GRUPO MUSCULAR"
         filterOption={(inputValue, option) => normalizeOption(option, inputValue)}
         style={{
           width: '100%'
