@@ -103,6 +103,8 @@ model wp_users {
   cpf                 String?  @db.VarChar(40)
   recent_problem      Boolean? @default(false)
   visivel             Int?
+  cref                String?  @db.VarChar(40)
+  instagram           String?  @db.VarChar(50)
 
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")

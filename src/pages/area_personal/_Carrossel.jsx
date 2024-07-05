@@ -52,7 +52,11 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
         setExercicioModal,
         curriculo,
         telefone,
-        display_name
+        display_name,
+        instagram,
+        cidade,
+        estado,
+        user_email,
       }, index) =>  (
           index % 2 === 0 &&
           <CarouselItemPersonal
@@ -66,6 +70,10 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
             curriculo={curriculo}
             telefone={telefone}
             displayName={display_name}
+            instagram={instagram}
+            cidade={cidade}
+            estado={estado}
+            email={user_email}
           />
         )
       )}
@@ -118,7 +126,11 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
         setExercicioModal,
         curriculo,
         telefone,
-        display_name
+        display_name,
+        instagram,
+        cidade,
+        estado,
+        user_email,
       }, index) => (
         index % 2 !== 0 &&
         <CarouselItemPersonal
@@ -132,6 +144,10 @@ export default function Carrossel({ listaCarousel, setImageModal, setExercicioMo
           curriculo={curriculo}
           telefone={telefone}
           displayName={display_name}
+          instagram={instagram}
+          cidade={cidade}
+          estado={estado}
+          email={user_email}
         />
       ))}
     </Carousel>

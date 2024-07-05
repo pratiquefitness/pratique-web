@@ -49,6 +49,7 @@ export default function Dados() {
           cpf: values.cpf,
           email: values.email,
           telefone: String(values.telefone),
+          instagram: values.instagram,
           visivel: values.visivel
         })
       )
@@ -65,6 +66,7 @@ export default function Dados() {
       cidade: usuario.cidade,
       email: usuario.email,
       telefone: usuario.telefone,
+      instagram: usuario.instagram,
       visivel: usuario.visivel
     })
   }, [])
@@ -101,8 +103,6 @@ export default function Dados() {
       setCidades({ data: [] }) 
     }
   }
-
-  console.log(usuario)
 
   const onSelectCidade = value => {
     setCidadeEscolhida(value)
@@ -218,9 +218,14 @@ export default function Dados() {
           />
         </Form.Item>
         {usuario.professor === 1 && (
-          <Form.Item label="Mini Currículo" name="curriculo">
-            <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
-          </Form.Item>
+          <>
+            <Form.Item label="Mini Currículo" name="curriculo">
+              <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
+            </Form.Item>
+            <Form.Item label="Instagram" name="instagram">
+              <Input />
+            </Form.Item>
+          </>
         )}
         <Form.Item label="Email" name="user_email">
           <Input disabled />

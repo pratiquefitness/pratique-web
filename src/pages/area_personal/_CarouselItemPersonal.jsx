@@ -10,6 +10,10 @@ export default function CarouselItemPersonal({
   telefone,
   href,
   displayName,
+  instagram,
+  cidade,
+  estado,
+  email,
   id,
   setImageModal,
   setExercicioModal
@@ -35,7 +39,7 @@ export default function CarouselItemPersonal({
     router.push(
       {
         pathname: href,
-        query: { curriculo, telefone, image, displayName }
+        query: { curriculo, telefone, image, displayName, instagram, cidade, estado, email }
       },
       href
     )

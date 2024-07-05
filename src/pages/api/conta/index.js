@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     cpf,
     email,
     telefone,
+    instagram,
     visivel,
   } = req.body
 
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
             cpf,
             email,
             telefone,
+            instagram,
             visivel: parseInt(visivel)
           }
         : {
@@ -43,6 +45,7 @@ export default async function handler(req, res) {
             cpf,
             email,
             telefone,
+            instagram,
             visivel: parseInt(visivel)
           }
   })

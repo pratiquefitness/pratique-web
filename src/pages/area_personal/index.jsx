@@ -17,7 +17,6 @@ export default function AreaPersonal() {
     data: []
   });
 
-
   const closeExercicioModal = () => {
     setImageModal('')
     setExercicioModal(false)
@@ -35,6 +34,7 @@ export default function AreaPersonal() {
       }))
       return
     }
+
     if (banner.length !== 0) {
       setListaCarouselPersonnal(prevState => ({
         ...prevState,
@@ -49,14 +49,16 @@ export default function AreaPersonal() {
           curriculo: ban.curriculo,
           telefone: ban.telefone,
           id: ban.ID,
-          display_name: ban.display_name
+          display_name: ban.display_name,
+          instagram: ban.instagram,
+          cidade: ban.cidade,
+          estado: ban.estado,
+          user_email: ban.user_email,
         }
         })
       }))
     }
   }, [banner, path]);
-
-  console.log(path, banner)
 
   return (
     <>
@@ -68,7 +70,7 @@ export default function AreaPersonal() {
                 Contrate um Personal
               </Title>
             </div>
-            <Carrossel listaCarousel={listaCarouselPersonnal.data} />
+            <Carrossel listaCarousel={listaCarouselPersonnal.data.sort( () => Math.random() - 0.5)} />
           </Space>
       }
     </>

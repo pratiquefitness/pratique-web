@@ -1884,11 +1884,6 @@ enum wp_wfls_settings_autoload {
   yes
 }
 
-enum wp_wftrafficrates_hitType {
-  hit
-  // 404 @map("404")
-}
-
 enum wp_wfsecurityevents_state {
   new
   sending
@@ -1897,4 +1892,9 @@ enum wp_wfsecurityevents_state {
 
 enum wp_wfls_2fa_secrets_mode {
   authenticator
+}
+
+enum wp_wftrafficrates_hitType {
+  hit
+  // 404 @map("404")
 }
