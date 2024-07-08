@@ -161,11 +161,9 @@ export default function JumperFit({ employee }) {
           Mensal 1 Filho
         </Button>
         <br /> <br />
-        {isAuthorizedUser && (
-          <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('especial')}>
-            Plano Especial
-          </Button>
-        )}
+        <Button type="primary" style={{ width: '150px' }} onClick={() => handleButtonClick('especial')}>
+          Condição Especial
+        </Button>
       </div>
       <Collapse className="planos_academia" accordion>
         {/* ... (existing code) */}
