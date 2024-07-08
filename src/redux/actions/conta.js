@@ -174,3 +174,20 @@ export const updateCpf = cpf => {
       })
   }
 }
+
+export const updateNiceName= values => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
+    dispatch(setLoading(true))
+    return api
+      .post('/updateNiceName', { id: login.usuario.ID, ...values })
+      .then(res => {
+        dispatch(setLogin({ ...login.usuario, ...res.data }))
+        //setToken(res.data);
+        message.success('Dados alterados com sucesso!')
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}

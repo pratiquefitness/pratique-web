@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import utils from '@/utils';
 
 export default function CarouselItemPersonal({
   image,
@@ -33,7 +34,7 @@ export default function CarouselItemPersonal({
     return () => {
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, []);
 
   const handleClick = () => {
     router.push(
@@ -56,9 +57,12 @@ export default function CarouselItemPersonal({
           objectFit="cover"
           quality={100}
         />
-        <div className="overlay text-white d-flex justify-center align-center">
-          {displayName}
-        </div>
+        {
+          !displayName.includes('@') &&
+          <div className="overlay text-white d-flex justify-center align-center">
+            {utils.getFistLastName(displayName)}
+          </div>
+        }
       </div>
       <style jsx>{`
         .image-wrapper {

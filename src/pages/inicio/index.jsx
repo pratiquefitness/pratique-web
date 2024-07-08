@@ -1,5 +1,4 @@
-import { Badge, Col, Modal, Row, Space, Typography } from 'antd'
-import Link from 'next/link'
+import { Button, Col, Form, Input, Modal, Row, Space, Typography } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Banners from './_Banners'
@@ -11,6 +10,8 @@ import 'react-multi-carousel/lib/styles.css'
 import CarouselItem from './_CarouselItem'
 import Powerflix from '../powerflix'
 import AreaPersonal from '../area_personal'
+import { IdcardOutlined } from '@ant-design/icons'
+import { updateNiceName } from '@/redux/actions/conta'
 
 const { Title, Text } = Typography
 
@@ -20,9 +21,10 @@ export default function Inicio() {
   const [saverClubModal, setSaverClubModal] = useState(false)
   const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
   const { usuario } = useSelector(state => state.login)
-
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  const [niceNameForm] = Form.useForm();
+  const { loading, isPersonal } = useSelector(state => state.conta)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -46,7 +48,7 @@ export default function Inicio() {
           where: { ID: usuario.ID }
         })
         console.log('User fetched:', user)
-        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1)
+        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1);
       } catch (error) {
         console.error('Erro ao buscar dados do usuário:', error)
       }
@@ -54,6 +56,7 @@ export default function Inicio() {
 
     fetchUserData()
   }, [usuario.ID])
+
 
   const isSaverSaudeAndClient = true
 
@@ -239,8 +242,55 @@ export default function Inicio() {
     ...listaCarouselAreaCliente
   ]
 
+  const handleNomeSubmit = async niceName => {
+    try {
+      await dispatch(updateNiceName(niceName))
+    }
+    catch (error) {
+      console.error('Erro ao atualizar o Nome:', error)
+    }
+  }
+
   return (
     <Space direction="vertical" className="w-100">
+
+      <Modal
+        title={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Title level={3} style={{ marginBottom: 0 }}>
+              Atenção!!!
+            </Typography.Title>
+          </div>
+        }
+        open={usuario.user_nicename.includes('@') || !usuario.user_nicename.length}
+        onCancel={() => {}}
+        footer={null}
+        centered
+      >
+        <div style={{ textAlign: 'center' }}>
+          <IdcardOutlined style={{ fontSize: '48px', color: '#08c' }} />
+          <Typography.Paragraph style={{ color: '#595959', marginTop: '16px' }}>
+            Preencha o campo nome para exibir junto a sua foto de contratação de personal.
+          </Typography.Paragraph>
+        </div>
+        <Form form={niceNameForm} onFinish={handleNomeSubmit}>
+          <Form.Item
+            name="user_nicename"
+            rules={[
+              { required: true, message: 'Por favor, insira seu nome completo' }
+            ]}
+          >
+            <Input placeholder="Digite aqui o seu nome" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading} block>
+              Salvar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"

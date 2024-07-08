@@ -150,6 +150,10 @@ const utils = {
         return String.fromCharCode(((c.charCodeAt(0) & 0x1f) << 6) | (c.charCodeAt(1) & 0x3f))
       })
     return unicodeString
+  },
+  getFistLastName: (name) => {
+    const firstLastName = name.split(' ');
+    return `${firstLastName.shift()} ${firstLastName.pop()}`;
   }
 }
 
