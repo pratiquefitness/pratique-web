@@ -51,7 +51,7 @@ export default function ScannerView() {
 
           const timestamp = new Date().getTime()
           const response = await axios.get(
-            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&t=${timestamp}`,
+            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&phone=${timestamp}`,
             {
               headers: {
                 'Cache-Control': 'no-cache',
