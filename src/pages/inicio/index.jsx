@@ -37,7 +37,6 @@ export default function Inicio() {
   const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
   const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
   const [niceNameForm] = Form.useForm();
-  const { loading, isPersonal } = useSelector(state => state.conta)
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
@@ -612,9 +611,7 @@ export default function Inicio() {
             </div>
           </LazyLoadingCardBig>
       </div>
-       <LazyLoadingCardBig loading={loading}>
-          <AreaPersonal />
-       </LazyLoadingCardBig>
+        <AreaPersonal />
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique
