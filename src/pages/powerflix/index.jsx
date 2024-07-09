@@ -1,12 +1,17 @@
 import { Modal, Space, Typography } from 'antd'
 import { useState } from 'react'
 import Carrossel from './_Carrossel'
+import { useSelector } from 'react-redux'
+
+import { LazyLoadingThreeColumns } from '../../components/LazyLoadingThreeColumns'
 
 const { Title, Text } = Typography
 
 export default function Powerflix() {
   const [exercicioModal, setExercicioModal] = useState(false)
   const [imageModal, setImageModal] = useState('')
+  const { loading } = useSelector(state => state.lives)
+
 
   const closeExercicioModal = () => {
     setImageModal('')
@@ -15,21 +20,21 @@ export default function Powerflix() {
 
   const listaCarouselMembrosInferiores = [
     {
-      image: '/images/powerflix/bumbum_na_lua.png',
+      image: '/images/webp/powerflix/bumbum_na_lua.webp',
       isRounded: true,
       alt: 'bumbum_na_lua',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/coxa_sonhos.png',
+      image: '/images/webp/powerflix/coxa_sonhos.webp',
       isRounded: true,
       alt: 'coxa_sonhos',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/posterior_invejavel.png',
+      image: '/images/webp/powerflix/posterior_invejavel.webp',
       isRounded: true,
       alt: 'posterior_invejavel',
       setImageModal: setImageModal,
@@ -39,21 +44,21 @@ export default function Powerflix() {
 
   const listaCarouselMembrosSuperiores = [
     {
-      image: '/images/powerflix/biceps_pedra.png',
+      image: '/images/webp/powerflix/biceps_pedra.webp',
       isRounded: true,
       alt: 'biceps_pedra',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/costas_morcego.png',
+      image: '/images/webp/powerflix/costas_morcego.webp',
       isRounded: true,
       alt: 'costas_morcego',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/peitoral_arnold.png',
+      image: '/images/webp/powerflix/peitoral_arnold.webp',
       isRounded: true,
       alt: 'peitoral_arnold',
       setImageModal: setImageModal,
@@ -62,42 +67,42 @@ export default function Powerflix() {
   ]
   const listaCarouselDesportivo = [
     {
-      image: '/images/powerflix/footvolley.png',
+      image: '/images/webp/powerflix/footvolley.webp',
       isRounded: true,
       alt: 'footvolley',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/beach_tennis.png',
+      image: '/images/webp/powerflix/beach_tennis.webp',
       isRounded: true,
       alt: 'beach_tennis',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/bike_lovers.png',
+      image: '/images/webp/powerflix/bike_lovers.webp',
       isRounded: true,
       alt: 'bike_lovers',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/bolt.png',
+      image: '/images/webp/powerflix/bolt.webp',
       isRounded: true,
       alt: 'bolt',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/wilson.png',
+      image: '/images/webp/powerflix/wilson.webp',
       isRounded: true,
       alt: 'wilson',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/pretemporada.jpeg',
+      image: '/images/webp/powerflix/pretemporada.webp',
       isRounded: true,
       alt: 'pretemporada',
       setImageModal: setImageModal,
@@ -107,28 +112,28 @@ export default function Powerflix() {
 
   const listaCarouselDiversos = [
     {
-      image: '/images/powerflix/abdomem_chapado.png',
+      image: '/images/webp/powerflix/abdomem_chapado.webp',
       isRounded: true,
       alt: 'abdomem_chapado',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/adaptativo.png',
+      image: '/images/webp/powerflix/adaptativo.webp',
       isRounded: true,
       alt: 'adaptativo',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/pochetinha.png',
+      image: '/images/webp/powerflix/pochetinha.webp',
       isRounded: true,
       alt: 'pochetinha',
       setImageModal: setImageModal,
       setExercicioModal: setExercicioModal
     },
     {
-      image: '/images/powerflix/imunidade_total.png',
+      image: '/images/webp/powerflix/imunidade_total.webp',
       isRounded: true,
       alt: 'imunidade_total',
       setImageModal: setImageModal,
@@ -147,7 +152,7 @@ export default function Powerflix() {
         className="text-center px-2"
         centered
       >
-        <img src={`/images/powerflix/${imageModal}_treino.png`} className="rounded w-100" />
+        <img src={`/images/webp/powerflix/${imageModal}_treino.webp`} className="rounded w-100" />
       </Modal>
 
       <div className="text-left mt-8">
@@ -160,28 +165,40 @@ export default function Powerflix() {
           Membros Inferiores
         </Title>
       </div>
-      <Carrossel listaCarousel={listaCarouselMembrosInferiores} />
+
+      <LazyLoadingThreeColumns loading={loading}>
+        <Carrossel listaCarousel={listaCarouselMembrosInferiores} />
+      </LazyLoadingThreeColumns>
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
           Membros Superiores
         </Title>
       </div>
-      <Carrossel listaCarousel={listaCarouselMembrosSuperiores} />
+
+      <LazyLoadingThreeColumns loading={loading}>
+        <Carrossel listaCarousel={listaCarouselMembrosSuperiores} />
+      </LazyLoadingThreeColumns>
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
           Treinos Diversos
         </Title>
       </div>
-      <Carrossel listaCarousel={listaCarouselDiversos} />
+
+      <LazyLoadingThreeColumns loading={loading}>
+        <Carrossel listaCarousel={listaCarouselDiversos} />
+      </LazyLoadingThreeColumns>
 
       <div className="mt-6 flex flex-column mb-0">
         <Title level={3} className="mb-0">
           Treino Desportivo
         </Title>
       </div>
-      <Carrossel listaCarousel={listaCarouselDesportivo} />
+
+      <LazyLoadingThreeColumns loading={loading}>
+        <Carrossel listaCarousel={listaCarouselDesportivo} />
+      </LazyLoadingThreeColumns>
     </Space>
   )
 }

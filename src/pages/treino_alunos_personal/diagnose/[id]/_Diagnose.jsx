@@ -183,7 +183,7 @@ export default function Diagnose({ id }) {
         <Typography.Paragraph>
           <div dangerouslySetInnerHTML={{ __html: getSuplementos(diagnose?.respostas || {}) }}></div>
         </Typography.Paragraph>
-        <img src="/images/suplementos.png" width={'100%'} className="mt-4" />
+        <img src="/images/webp/suplementos.webp" width={'100%'} className="mt-4" />
       </div>
     </Loading>
   )
