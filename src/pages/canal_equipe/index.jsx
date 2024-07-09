@@ -14,11 +14,14 @@ const ButtonCI = (
 
 export default function CanalEquipe() {
   const disptach = useDispatch();
-  const { data: dataCis, loading: loadingCis } = useSelector(state => state.cis);
+  const { data: dataCis, loading: loadingCis, coordenadaUnidade: coordenadaUnidade } = useSelector(state => state.cis);
   const { data: ponto, loading: loadingPonto } = useSelector(state => state.ponto);
   const { usuario } = useSelector(state => state.login);
 
-  const insertPonto = () => {
+  const [location, setLocation] = useState({ lat: null, lng: null });
+
+  const insertPonto = async () => {
+    await geolocation()
     disptach(setPonto())
   }
 
@@ -27,11 +30,43 @@ export default function CanalEquipe() {
   }
 
   useEffect(() => {
+    geolocationMobile();
+    geolocation();
     disptach(getPonto());
     disptach(getCis());
   }, []);
 
-  /*const checkIfInside = (spotCoordinates) => {
+  const geolocationMobile = () => {
+    if (typeof window !== "undefined") {
+      if (window.ReactNativeWebView && window.ReactNativeWebView.injectedObjectJson) {
+        const data = window.ReactNativeWebView.injectedObjectJson();
+        if (data && data) {
+          const userPosition = JSON.parse(data)
+          setLocation({
+            lat: userPosition.lat,
+            lng: userPosition.lng
+          })
+        }
+      }
+    }
+  }
+
+  const geolocation = async () => {
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({name: 'geolocation'}).then(function (result) {
+        const permission = result.state;
+        if (permission === 'granted' || permission === 'prompt') {
+          _onGetCurrentLocation();
+        }
+      })
+    } else if (navigator.geolocation) {
+      _onGetCurrentLocation();
+    }
+
+    
+  }
+
+  const checkIfInside = (spotCoordinates) => {
 
     const distanceInKmBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
       let earthRadiusKm = 6371;
@@ -54,76 +89,56 @@ export default function CanalEquipe() {
       return degrees * Math.PI / 180;
     }
 
-    let center = { lat: coordenadaUnidade.latitude, lng: coordenadaUnidade.longitude};
+    let center = { lat: coordenadaUnidade?.latitude, lng: coordenadaUnidade?.longitude};
     let radius = 0.5;
     let newRadius = distanceInKmBetweenEarthCoordinates(spotCoordinates[0], spotCoordinates[1], center.lat, center.lng);
 
-    if (newRadius < radius) {
-      //point is inside the circle
-      setOutsideRadius(prevState => ({
-        isOutside: false
-      }));
-    } else if (newRadius > radius) {
-      //point is outside the circle
-      setOutsideRadius(prevState => ({
-        isOutside: true
-      }));
-    } else {
-      //point is on the circle
-      setOutsideRadius(prevState => ({
-        isOutside: false
-      }));
-    }
-  }*/
+    // if (newRadius < radius) {
+    //   //point is inside the circle
+    //   setOutsideRadius(prevState => ({
+    //     isOutside: false
+    //   }));
+    // } else if (newRadius > radius) {
+    //   //point is outside the circle
+    //   setOutsideRadius(prevState => ({
+    //     isOutside: true
+    //   }));
+    // } else {
+    //   //point is on the circle
+    //   setOutsideRadius(prevState => ({
+    //     isOutside: false
+    //   }));
+    // }
+  }
 
-  /*const _onGetCurrentLocation = () => {
+  const _onGetCurrentLocation = () => {
     const options = {
       enableHighAccuracy: true,
-      timeout: 5000,
+      timeout: 9000,
       maximumAge: 0
     }
-    navigator.geolocation.getCurrentPosition(function (position) {
-      //use coordinates
-      const marker = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }
 
+    navigator.geolocation.getCurrentPosition(function (position) {
       setLocation(prevState => ({
         ...prevState,
-        ...marker
+        ...{
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
       }))
     }, function (error) {
       //error handler here
     }, options)
-  }*/
-
-  /*const geolocation = () => {
-    if (navigator.permissions && navigator.permissions.query) {
-      //try permissions APIs first
-      navigator.permissions.query({name: 'geolocation'}).then(function (result) {
-        // Will return ['granted', 'prompt', 'denied']
-        const permission = result.state;
-        if (permission === 'granted' || permission === 'prompt') {
-          _onGetCurrentLocation();
-        }
-      })
-    } else if (navigator.geolocation) {
-      //then Navigation APIs
-      _onGetCurrentLocation();
-    }
   }
 
-  useEffect(() => {
-    geolocation();
-  }, []);*/
 
-  /*useEffect(() => {
-    let spotCoordinates1 = [location.lat, location.lng];
+
+  useEffect(() => {
+    let spotCoordinates1 = [location?.lat, location?.lng];
     checkIfInside(spotCoordinates1);
   }, [location, coordenadaUnidade]);
 
-  setInterval(() => { geolocation() }, 5000);*/
+  setInterval(() => { geolocation() }, 5000);
 
   return (
     <Loading spinning={loadingCis}>

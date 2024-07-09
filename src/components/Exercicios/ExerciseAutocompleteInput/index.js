@@ -4,10 +4,10 @@ import { AutoComplete, Select, Typography } from 'antd'
 const { Text } = Typography
 
 export const ExerciseAutocompleteInput = ({
-  selectedExercise = () => {},
+  selectedExercise = () => { },
   options = [],
-  hasFilter = () => {},
-  focus = () => {},
+  hasFilter = () => { },
+  focus = () => { },
   resetInput = false
 }) => {
   const [value, setValue] = useState('')
@@ -57,6 +57,7 @@ export const ExerciseAutocompleteInput = ({
         onSearch={onSearch}
         onChange={setValue}
         filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+        placeholder="PESQUISE O EXERCÍCIO DESEJADO"
         allowClear
         onFocus={focus}
       />
@@ -64,7 +65,7 @@ export const ExerciseAutocompleteInput = ({
   )
 }
 
-export const ExerciseChoiceInput = ({ selectedChoice = () => {}, focus = () => {}, resetInput = false }) => {
+export const ExerciseChoiceInput = ({ selectedChoice = () => { }, focus = () => { }, resetInput = false }) => {
   const [selectedValues, setSelectedValues] = useState('')
   const [options, setOptions] = useState([
     { label: '', value: '' },
@@ -117,6 +118,7 @@ export const ExerciseChoiceInput = ({ selectedChoice = () => {}, focus = () => {
         filterSort={(optionA, optionB) =>
           (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
         }
+        placeholder="PESQUISE O GRUPO MUSCULAR"
         filterOption={(inputValue, option) => normalizeOption(option, inputValue)}
         style={{
           width: '100%'

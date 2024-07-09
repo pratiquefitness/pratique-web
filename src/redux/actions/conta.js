@@ -175,7 +175,7 @@ export const updateCpf = cpf => {
   }
 }
 
-export const updateNiceName= values => {
+export const updateNiceName = values => {
   return async (dispatch, getState) => {
     const { login } = getState()
     dispatch(setLoading(true))

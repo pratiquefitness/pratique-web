@@ -8,7 +8,7 @@ const IconPlay = ({
 }) => {
   return (
     <>
-      <Image src="/no-data-removebg-preview.png" alt="Descrição da imagem" width={width} height={height} style={{
+      <Image src="/no-data-removebg-preview.webp" alt="Descrição da imagem" width={width} height={height} style={{
         verticalAlign: 'middle',
       }} />
     </>

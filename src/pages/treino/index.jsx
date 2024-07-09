@@ -24,7 +24,8 @@ export default function MeuTreinoView() {
   const [imageUrl, setImageUrl] = useState('')
   //const { email } = useSelector(state => state.login.usuario)
   const { usuario } = useSelector(state => state.login)
-  const router = useRouter();
+  const router = useRouter()
+
   const { themeMode } = useSelector(state => state.global)
 
   const onSaveAnotacoes = values => {
@@ -42,7 +43,7 @@ export default function MeuTreinoView() {
       usuario.user_email === '' ||
       usuario.user_email === ''
     ) {
-      openModal('/images/banner_home/banner-anovator.jpg')
+      openModal('/images/webp/banner_home/banner-anovator.webp')
     } else {
       setModalVisible(false) // Esconde o modal se o email não corresponder
     }

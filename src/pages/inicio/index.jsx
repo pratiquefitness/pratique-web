@@ -12,6 +12,15 @@ import Powerflix from '../powerflix'
 import AreaPersonal from '../area_personal'
 import { IdcardOutlined } from '@ant-design/icons'
 import { updateNiceName } from '@/redux/actions/conta'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from 'next/dist/shared/lib/constants'
+import { InView } from "react-intersection-observer";
+import { LazyLoadingCardBig } from '../../components/LazyLoadingCardBig'
+import { LazyLoadingCardExtraBig } from '../../components/LazyLoadingCardExtraBig'
+import { LazyLoadingTwoColumns } from '../../components/LazyLoadingTwoColumns'
+import { LazyLoadingThreeColumns } from '../../components/LazyLoadingThreeColumns'
+
 
 const { Title, Text } = Typography
 
@@ -19,10 +28,14 @@ export default function Inicio() {
   const dispatch = useDispatch()
   const [horariosModal, setHorariosModal] = useState(false)
   const [saverClubModal, setSaverClubModal] = useState(false)
-  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
+
   const { usuario } = useSelector(state => state.login)
+  const { loading } = useSelector(state => state.lives)
+
   const isClient = !usuario.isEmployee
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
+  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
+  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
   const [niceNameForm] = Form.useForm();
   const { loading, isPersonal } = useSelector(state => state.conta)
   const [openModal, setOpenModal] = useState(false)
@@ -68,8 +81,6 @@ export default function Inicio() {
   }, [usuario]);
 
 
-  const isSaverSaudeAndClient = true
-
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL('https://clubecertosaude.com.br/saude/pratiquemed/'))
   }
@@ -107,39 +118,32 @@ export default function Inicio() {
     {
       href: '',
       action: abreSaverClubModal,
-      image: '/images/saver_club.png',
+      image: '/images/webp/saver_club.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
     {
       href: '',
       action: dispatchSaverSaude,
-      image: '/images/pratique_med.png',
-      isRounded: true,
-      alt: 'unipower_banner'
-    },
-    {
-      href: '',
-      action: dispatchQueroBem,
-      image: '/images/banner_home/eutequerobem.png',
+      image: '/images/webp/pratique_med.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
     {
       href: '/unipower',
-      image: '/images/unipower.png',
+      image: '/images/webp/unipower.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
     {
       href: '/canal_equipe',
-      image: '/images/canal_equipe.png',
+      image: '/images/webp/canal_equipe.webp',
       isRounded: true,
       alt: 'canal_equipe'
     },
     {
       href: 'https://bit.ly/FalarRH',
-      image: '/images/rh.png',
+      image: '/images/webp/rh.webp',
       isRounded: true,
       alt: 'RH',
       target: '_blank'
@@ -149,21 +153,21 @@ export default function Inicio() {
   const listaCarouselPersonal = [
     {
       href: '/personal',
-      image: '/images/banner_home/personal.png',
+      image: '/images/webp/banner_home/personal.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
     {
       href: '',
       action: abreSaverClubModal,
-      image: '/images/saver_club.png',
+      image: '/images/webp/saver_club.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
     {
       href: '',
       action: dispatchSaverSaude,
-      image: '/images/pratique_med.png',
+      image: '/images/webp/pratique_med.webp',
       isRounded: true,
       alt: 'unipower_banner'
     },
@@ -171,13 +175,13 @@ export default function Inicio() {
       ? [
           {
             href: '/unipower',
-            image: '/images/unipower.png',
+            image: '/images/webp/unipower.webp',
             isRounded: true,
             alt: 'unipower_banner'
           },
           {
             href: '/canal_equipe',
-            image: '/images/canal_equipe.png',
+            image: '/images/webp/canal_equipe.webp',
             isRounded: true,
             alt: 'canal_equipe'
           }
@@ -186,7 +190,7 @@ export default function Inicio() {
 
     {
       href: 'https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.',
-      image: '/images/banner_home/suporte-personal.png',
+      image: '/images/webp/banner_home/suporte-personal.webp',
       isRounded: true,
       alt: 'RH',
       target: '_blank'
@@ -196,14 +200,14 @@ export default function Inicio() {
   const listaCarouselAreaCliente = [
     {
       href: '',
-      image: '/images/trabalhe_conosco.png',
+      image: '/images/webp/trabalhe_conosco.webp',
       isRounded: true,
       alt: 'trabalhe_conosco',
       action: dispatchTrabalhePratique
     },
     {
       href: '',
-      image: '/images/sua_pratique.png',
+      image: '/images/webp/sua_pratique.webp',
       isRounded: true,
       alt: 'sua_pratique',
       action: dispatchSobrePratique
@@ -213,7 +217,7 @@ export default function Inicio() {
   const novaListaCarouselAreaCliente = [
     {
       href: 'https://api.whatsapp.com/send?phone=5531984272283&text=Estou%20no%20App%20e%20quero%20alugar%20minha%20bike',
-      image: '/images/alugue_bike.png',
+      image: '/images/webp/alugue_bike.webp',
       isRounded: true,
       alt: 'sua_pratique',
       target: '_blank'
@@ -222,7 +226,7 @@ export default function Inicio() {
       ? [
           {
             href: '',
-            image: '/images/saver_club.png',
+            image: '/images/webp/saver_club.webp',
             isRounded: true,
             alt: 'saver_saude',
             action: abreSaverClubModal
@@ -234,17 +238,26 @@ export default function Inicio() {
       ? [
           {
             href: 'https://www.pratiquemed.com.br/login.php',
-            image: '/images/pratique_med.png',
+            image: '/images/webp/pratique_med.webp',
             isRounded: true,
             alt: 'saver_saude',
             target: '_blank'
           }
         ]
       : []),
-
+    ...(isSaverSaudeAndPesonal
+      ? [
+          {
+            action: dispatchSaverSaude,
+            image: '/images/webp/pratique_med.webp',
+            isRounded: true,
+            alt: 'saver_saude'
+          }
+        ]
+      : []),
     {
       href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
-      image: '/images/sac.png',
+      image: '/images/webp/sac.webp',
       isRounded: true,
       alt: 'sua_pratique',
       target: '_blank'
@@ -271,7 +284,6 @@ export default function Inicio() {
 
   return (
     <Space direction="vertical" className="w-100">
-
       <Modal
         title={
           <div style={{ textAlign: 'center' }}>
@@ -307,6 +319,7 @@ export default function Inicio() {
           </Form.Item>
         </Form>
       </Modal>
+
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
@@ -332,7 +345,7 @@ export default function Inicio() {
             }}
             target="_blank"
           >
-            <img src="/images/clube_certo.png" width={'100%'} className="rounded" />
+            <img src="/images/webp/clube_certo.webp" width={'100%'} className="rounded" />
           </a>
           <a
             onClick={() => {
@@ -341,7 +354,7 @@ export default function Inicio() {
             }}
             target="_blank"
           >
-            <img src="/images/igreen.png" width={'100%'} className="rounded" />
+            <img src="/images/webp/igreen.webp" width={'100%'} className="rounded" />
           </a>
           <a
             onClick={() => {
@@ -350,13 +363,13 @@ export default function Inicio() {
             }}
             target="_blank"
           >
-            <img src="/images/bolsa_brasil.png" width={'100%'} className="rounded" />
+            <img src="/images/webp/bolsa_brasil.webp" width={'100%'} className="rounded" />
           </a>
           <a
             href="https://api.whatsapp.com/send?phone=5531984400941&text=Ol%C3%A1%2C+Igor+da+RDC+Viagens.+Sou+assinante+do+Saver+Club+e+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+descontos+da+assinatura+de+viagens"
             target="_blank"
           >
-            <img src="/images/rdc.png" width={'100%'} className="rounded" />
+            <img src="/images/webp/rdc.webp" width={'100%'} className="rounded" />
           </a>
           <a
             onClick={() => {
@@ -365,7 +378,7 @@ export default function Inicio() {
             }}
             target="_blank"
           >
-            <img src="/images/pratique.png" width={'100%'} className="rounded" />
+            <img src="/images/webp/pratique.webp" width={'100%'} className="rounded" />
           </a>
         </Space>
       </Modal>
@@ -376,7 +389,10 @@ export default function Inicio() {
         </Title>
         <Text type="secondary">Veja as novidades para 2024</Text>
       </div>
-      <Banners />
+
+      <LazyLoadingCardExtraBig loading={loading}>
+        <Banners />
+      </LazyLoadingCardExtraBig>
 
       {isSaverSaudeAndPesonal ? (
         <div className="mt-4">
@@ -430,55 +446,58 @@ export default function Inicio() {
         </div>
       ) : null}
 
+
       {usuario.isEmployee && !isSaverSaudeAndPesonal ? (
         <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
               Área do Colaborador!
             </Title>
-            <Text type="">Benefícios e conteúdos para você</Text>
+            <Text type="">Beneficios e conteúdos para você</Text>
           </div>
-          <Carousel
-            arrows={false}
-            autoPlay={false}
-            centerMode={false}
-            className="mt-2"
-            containerClass="container"
-            draggable
-            focusOnSelect={false}
-            infinite={false}
-            keyBoardControl={false}
-            minimumTouchDrag={80}
-            partialVisible
-            renderArrowsWhenDisabled={false}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={{
-              desktop: {
-                breakpoint: { max: 3000, min: 1024 },
-                items: 3
-              },
-              tablet: {
-                breakpoint: { max: 1024, min: 464 },
-                items: 2
-              },
-              mobile: {
-                breakpoint: { max: 464, min: 0 },
-                items: 1,
-                partialVisibilityGutter: 100
-              }
-            }}
-            rewind={false}
-            rewindWithAnimation={false}
-            rtl={false}
-            showDots={false}
-            slidesToSlide={1}
-            swipeable
-          >
-            {listaCarousel.map(({ href, image, isRounded, action, alt }, index) => (
-              <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
-            ))}
-          </Carousel>
+          <LazyLoadingTwoColumns loading={loading}>
+            <Carousel
+              arrows={false}
+              autoPlay={false}
+              centerMode={false}
+              className="mt-2"
+              containerClass="container"
+              draggable
+              focusOnSelect={false}
+              infinite={false}
+              keyBoardControl={false}
+              minimumTouchDrag={80}
+              partialVisible
+              renderArrowsWhenDisabled={false}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={{
+                desktop: {
+                  breakpoint: { max: 3000, min: 1024 },
+                  items: 3
+                },
+                tablet: {
+                  breakpoint: { max: 1024, min: 464 },
+                  items: 2
+                },
+                mobile: {
+                  breakpoint: { max: 464, min: 0 },
+                  items: 1,
+                  partialVisibilityGutter: 100
+                }
+              }}
+              rewind={false}
+              rewindWithAnimation={false}
+              rtl={false}
+              showDots={false}
+              slidesToSlide={1}
+              swipeable
+            >
+              {listaCarousel.map(({ href, image, isRounded, action, alt }, index) => (
+                <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+              ))}
+            </Carousel>
+          </LazyLoadingTwoColumns>
         </div>
       ) : null}
 
@@ -488,50 +507,52 @@ export default function Inicio() {
             <Title level={3} className="mt-4 mb-0">
               Área do Cliente!
             </Title>
-            <Text type="secondary">Benefícios e conteúdos para você</Text>
+            <Text type="secondary">Beneficios e conteúdos para você</Text>
           </div>
 
-          <Carousel
-            arrows={false}
-            autoPlay={false}
-            centerMode={false}
-            className="mt-2"
-            containerClass="container"
-            draggable
-            focusOnSelect={false}
-            infinite={false}
-            keyBoardControl={false}
-            minimumTouchDrag={80}
-            partialVisible
-            renderArrowsWhenDisabled={false}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={{
-              desktop: {
-                breakpoint: { max: 3000, min: 1024 },
-                items: 3
-              },
-              tablet: {
-                breakpoint: { max: 1024, min: 464 },
-                items: 2
-              },
-              mobile: {
-                breakpoint: { max: 464, min: 0 },
-                items: 1,
-                partialVisibilityGutter: 100
-              }
-            }}
-            rewind={false}
-            rewindWithAnimation={false}
-            rtl={false}
-            showDots={false}
-            slidesToSlide={1}
-            swipeable
-          >
-            {novaListaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
-              <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
-            ))}
-          </Carousel>
+          <LazyLoadingTwoColumns loading={loading}>
+            <Carousel
+              arrows={false}
+              autoPlay={false}
+              centerMode={false}
+              className="mt-2"
+              containerClass="container"
+              draggable
+              focusOnSelect={false}
+              infinite={false}
+              keyBoardControl={false}
+              minimumTouchDrag={80}
+              partialVisible
+              renderArrowsWhenDisabled={false}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={{
+                desktop: {
+                  breakpoint: { max: 3000, min: 1024 },
+                  items: 3
+                },
+                tablet: {
+                  breakpoint: { max: 1024, min: 464 },
+                  items: 2
+                },
+                mobile: {
+                  breakpoint: { max: 464, min: 0 },
+                  items: 1,
+                  partialVisibilityGutter: 100
+                }
+              }}
+              rewind={false}
+              rewindWithAnimation={false}
+              rtl={false}
+              showDots={false}
+              slidesToSlide={1}
+              swipeable
+            >
+              {novaListaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
+                <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
+              ))}
+            </Carousel>
+          </LazyLoadingTwoColumns>
         </>
       ) : null}
 
@@ -541,7 +562,11 @@ export default function Inicio() {
         </Title>
         <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
-      <AtividadesOnDemand />
+
+
+      <LazyLoadingThreeColumns loading={loading}>
+        <AtividadesOnDemand />
+      </LazyLoadingThreeColumns>
 
       <Powerflix />
 
@@ -550,7 +575,11 @@ export default function Inicio() {
           Bem-estar físico e emocional
         </Title>
       </div>
-      <BemEstar />
+
+      <LazyLoadingCardBig loading={loading}>
+        <BemEstar />
+      </LazyLoadingCardBig>
+
 
       <div className="mt-126 flex flex-col mb-0">
         <div className="mt-4 mb-2">
@@ -562,26 +591,30 @@ export default function Inicio() {
         <br />
         <br />
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
-          <a className="sm:flex-1" href="/exercicios">
-            <img src="/images/demonstracao.png" width="100%" />
-          </a>
-          <a
-            className="sm:flex-1"
-            onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}
-          >
-            <img src="/images/fale_nutri.png" width="100%" />
-          </a>
-          <a
-            className="sm:flex-1"
-            href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
-            target="_blank"
-          >
-            <img src="/images/fale_professor.png" width="100%" />
-          </a>
-        </div>
+        <LazyLoadingCardBig loading={loading}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
+              <a className="sm:flex-1" href="/exercicios">
+                <img src="/images/webp/demonstracao.webp" width="100%" />
+              </a>
+              <a
+                className="sm:flex-1"
+                onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}
+              >
+                <img src="/images/webp/fale_nutri.webp" width="100%" />
+              </a>
+              <a
+                className="sm:flex-1"
+                href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
+                target="_blank"
+              >
+                <img src="/images/webp/fale_professor.webp" width="100%" />
+              </a>
+            </div>
+          </LazyLoadingCardBig>
       </div>
-      <AreaPersonal />
+       <LazyLoadingCardBig loading={loading}>
+          <AreaPersonal />
+       </LazyLoadingCardBig>
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique
@@ -594,12 +627,12 @@ export default function Inicio() {
             href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
             target="_blank"
           >
-            <img src="/images/sac.png" width="100%" />
+            <img src="/images/webp/sac.webp" width="100%" />
           </a>
         </Col>
         <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
-            <img src="/images/horarios.png" width="100%" style={{ filter: 'sepia(1)' }} />
+            <img src="/images/webp/horarios.webp" width="100%" style={{ filter: 'sepia(1)' }} />
           </a>
         </Col>
       </Row>

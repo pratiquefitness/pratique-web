@@ -24,30 +24,30 @@ export default async function handler(req, res) {
     data:
       typeof user_pass !== 'undefined'
         ? {
-            user_nicename,
-            user_email,
-            user_pass: utils.encrypt_md5(user_pass),
-            curriculo,
-            estado,
-            cidade,
-            cpf,
-            email,
-            telefone,
-            instagram,
-            visivel: parseInt(visivel)
-          }
+          user_nicename,
+          user_email,
+          user_pass: utils.encrypt_md5(user_pass),
+          curriculo,
+          estado,
+          cidade,
+          cpf,
+          email,
+          telefone,
+          instagram,
+          visivel: parseInt(visivel)
+        }
         : {
-            user_nicename,
-            user_email,
-            curriculo,
-            estado,
-            cidade,
-            cpf,
-            email,
-            telefone,
-            instagram,
-            visivel: parseInt(visivel)
-          }
+          user_nicename,
+          user_email,
+          curriculo,
+          estado,
+          cidade,
+          cpf,
+          email,
+          telefone,
+          instagram,
+          visivel: parseInt(visivel)
+        }
   })
   res.status(200).json(utils.clearDatabaseResult(data))
 }

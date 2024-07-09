@@ -146,7 +146,7 @@ export default function Diagnose({ id }) {
       <div className="text-center">
         <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
         <img
-          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.png`}
+          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.webp`}
           style={{ filter: 'invert(100%)' }}
           className="mb-4"
           height={20}
@@ -155,8 +155,8 @@ export default function Diagnose({ id }) {
         usuario.user_email === 'edujobtours@hotmail.com' ||
         usuario.user_email === 'glauberpratique@hotmail.com' ? (
           <img
-            src={`/images/banner_home/${
-              usuario.user_email === 'adelmo2@gmail.com' ? 'adelmo.jpg' : 'icone-anovator.png'
+            src={`/images/webp/banner_home/${
+              usuario.user_email === 'adelmo2@gmail.com' ? 'adelmo.jpg' : 'icone-anovator.webp'
             }`}
             className="mb-4"
             height={60}
@@ -183,7 +183,7 @@ export default function Diagnose({ id }) {
         <Typography.Paragraph>
           <div dangerouslySetInnerHTML={{ __html: getSuplementos(diagnose?.respostas || {}) }}></div>
         </Typography.Paragraph>
-        <img src="/images/suplementos.png" width={'100%'} className="mt-4" />
+        <img src="/images/webp/suplementos.webp" width={'100%'} className="mt-4" />
       </div>
     </Loading>
   )
