@@ -25,6 +25,7 @@ export default function Inicio() {
   const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
   const [niceNameForm] = Form.useForm();
   const { loading, isPersonal } = useSelector(state => state.conta)
+  const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,7 +56,16 @@ export default function Inicio() {
     }
 
     fetchUserData()
-  }, [usuario.ID])
+  }, [usuario.ID]);
+
+  useEffect(() => {
+    if (
+      (usuario.professor === 1 && usuario.user_nicename.includes('@')) ||
+      !usuario.user_nicename.length
+    ) {
+      setOpenModal(true);
+    }
+  }, [usuario]);
 
 
   const isSaverSaudeAndClient = true
@@ -251,6 +261,14 @@ export default function Inicio() {
     }
   }
 
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Space direction="vertical" className="w-100">
 
@@ -262,8 +280,8 @@ export default function Inicio() {
             </Typography.Title>
           </div>
         }
-        open={usuario.user_nicename.includes('@') || !usuario.user_nicename.length}
-        onCancel={() => {}}
+        open={openModal}
+        onCancel={() => { setOpenModal(false) }}
         footer={null}
         centered
       >
@@ -289,8 +307,6 @@ export default function Inicio() {
           </Form.Item>
         </Form>
       </Modal>
-
-
       <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
