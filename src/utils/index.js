@@ -152,7 +152,8 @@ const utils = {
     return unicodeString
   },
   getFistLastName: (name) => {
-    const firstLastName = name.split(' ');
+    const firstLastName = name.trim().split(' ');
+    if(firstLastName.length === 1) return `${firstLastName.shift()}`;
     return `${firstLastName.shift()} ${firstLastName.pop()}`;
   }
 }
