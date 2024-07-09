@@ -151,6 +151,41 @@ const utils = {
       })
     return unicodeString
   },
+  createImage: (url) =>
+    new Promise((resolve, reject) => {
+      const image = new Image();
+      image.addEventListener('load', () => resolve(image));
+      image.addEventListener('error', (error) => reject(error));
+      image.setAttribute('crossOrigin', 'anonymous'); // needed to avoid cross-origin issues on CodeSandbox
+      image.src = url;
+    }
+  ),
+  getCroppedImg: async (imageSrc, crop) => {
+    const image = await utils.createImage(imageSrc)
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
+    canvas.width = crop.width
+    canvas.height = crop.height
+
+    ctx.drawImage(
+      image,
+      crop.x,
+      crop.y,
+      crop.width,
+      crop.height,
+      0,
+      0,
+      crop.width,
+      crop.height
+    )
+
+    return new Promise((resolve) => {
+      canvas.toBlob((file) => {
+        resolve(URL.createObjectURL(file))
+      }, 'image/jpeg')
+    })
+  },
   getFistLastName: (name) => {
     const firstLastName = name.trim().split(' ');
     if(firstLastName.length === 1) return `${firstLastName.shift()}`;

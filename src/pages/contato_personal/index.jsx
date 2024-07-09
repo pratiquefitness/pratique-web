@@ -1,14 +1,20 @@
-import { Button, Typography, Space } from 'antd';
+import { Button, Typography, Space, message } from 'antd'
 import AvatarUploader from './_AvatarUploader';
 import MiniCurriculum from './_MiniCurriculum';
 import { useRouter } from 'next/router';
 import { FaWhatsapp } from 'react-icons/fa';
 import Link from 'next/link'
+import utils from '@/utils'
 const {Text} = Typography;
 
 export default function Contato() {
   const router = useRouter();
-  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
+  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
+
+  const messageLink = async (text) => {
+    await utils.copyTextToClipboard(text)
+    message.success('Telefone copiado!')
+  }
 
   return (
     <>
@@ -20,9 +26,13 @@ export default function Contato() {
                 <Text>
                   {router.query.displayName}
                 </Text>
-                <Text>
-                  {router.query.cidade}, {router.query.estado}
-                </Text>
+                {
+                  (router.query.cidade.length !== 0 &&
+                  router.query.estado.length !== 0) &&
+                    <Text>
+                      {router.query.cidade}, {router.query.estado}
+                    </Text>
+                }
                 <Text>
                   Instagram:
                   {
@@ -32,7 +42,19 @@ export default function Contato() {
                   }
                 </Text>
                 <Text>
-                  Whatsapp: <Link href={`tel:+55${router.query.email}`}>{router.query.telefone}</Link>
+                  Telefone:
+                  <Text
+                    style={{
+                      color: '#1677ff',
+                      textDecoration: 'underline',
+                      outline: 'none',
+                      cursor: 'pointer',
+                      transition: 'color 0.3s'
+                    }}
+                    onClick={() => messageLink(router.query.telefone)}
+                  >
+                    {router.query.telefone}
+                  </Text>
                 </Text>
                 <Text>
                   e-mail: <Link href={`mailto:${router.query.email}`}>{router.query.email}</Link>
