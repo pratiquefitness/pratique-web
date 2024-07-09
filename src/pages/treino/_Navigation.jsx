@@ -3,7 +3,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { FaDiagnoses } from 'react-icons/fa'
 import { LuDumbbell, LuUserCheck } from 'react-icons/lu'
 import Image from 'next/image'
-const userCheckIcon = '/images/banner_home/icone-anovator.png'
+const userCheckIcon = '/images/webp/banner_home/icone-anovator.webp'
 
 const navigation = [
   {

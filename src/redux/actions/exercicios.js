@@ -1,12 +1,12 @@
 import { message } from 'antd'
-import {setLoading, setTreinoLivre, setListarTreino} from '../slices/exercicios'
+import { setLoading, setTreinoLivre, setListarTreino } from '../slices/exercicios'
 import api from '@/services/api'
 
 export const getTreinoLivre = (id) => {
   return async (dispatch) => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios', {usuarioId: id})
+      .post('/exercicios', { usuarioId: id })
       .then(res => {
         dispatch(setTreinoLivre(res.data))
       })
@@ -39,11 +39,11 @@ export const saveTreinoLivre = data => {
   }
 }
 
-export const deleteTreinoLivre = (id_ficha, id_user ) => {
+export const deleteTreinoLivre = (id_ficha, id_user) => {
   return async dispatch => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios/deleteTreinoLivre', {id: id_ficha})
+      .post('/exercicios/deleteTreinoLivre', { id: id_ficha })
       .then(() => {
         message.open({
           type: 'success',
@@ -60,11 +60,11 @@ export const deleteTreinoLivre = (id_ficha, id_user ) => {
   }
 }
 
-export const updateTreinoLivre = (data ) => {
+export const updateTreinoLivre = (data) => {
   return async dispatch => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios/updateTreinoLivre', {data: data})
+      .post('/exercicios/updateTreinoLivre', { data: data })
       .then(() => {
         message.open({
           type: 'success',
@@ -85,7 +85,7 @@ export const getTreinoLivreAluno = (id) => {
   return async (dispatch) => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios/personal', {usuarioId: id})
+      .post('/exercicios/personal', { usuarioId: id })
       .then(res => {
         dispatch(setTreinoLivre(res.data))
       })

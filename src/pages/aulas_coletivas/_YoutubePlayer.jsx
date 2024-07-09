@@ -1,5 +1,7 @@
 import { FloatButton } from 'antd'
 import { GiCancel } from 'react-icons/gi'
+import React, {useEffect, useState} from 'react'
+
 
 export default function YoutubePlayer({ id, onClose }) {
   return (
@@ -11,9 +13,9 @@ export default function YoutubePlayer({ id, onClose }) {
         title="YoutubePlayer"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
+        allowfullscreen={false}
       ></iframe>
-      <FloatButton icon={<GiCancel />} className="youtube-close" onClick={onClose} />
+      <FloatButton icon={<GiCancel />} className="youtube-close" onClick={onClose} style={{zIndex: 99}} />
     </div>
   )
 }
