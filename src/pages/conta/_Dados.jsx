@@ -35,6 +35,14 @@ export default function Dados() {
     return Promise.reject(new Error('Digite um telefone válido: 31999999999'))
   }
 
+  const validateInstagramProfile = (_, value) => {
+    const regex = /^@?(?!http|www)[a-zA-Z0-9].*/;
+    if (regex.test(value)) {
+      return Promise.resolve();
+    }
+    return Promise.reject(new Error('Digite um perfil válido. Exemplo: @pratiquefitness ou pratiquefitness'))
+  }
+
   const onUpdate = values => {
     if (typeof values.user_pass !== 'undefined') {
       dispatch(updateConta(values))
@@ -222,7 +230,7 @@ export default function Dados() {
             <Form.Item label="Mini Currículo" name="curriculo">
               <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
             </Form.Item>
-            <Form.Item label="Instagram - Ex: @pratiquefitness ou pratiquefitness" name="instagram">
+            <Form.Item label="Instagram - Ex: @pratiquefitness ou pratiquefitness" name="instagram" rules={[{ validator: validateInstagramProfile }]}>
               <Input placeholder="Ex: @pratiquefitness ou pratiquefitness" />
             </Form.Item>
           </>
