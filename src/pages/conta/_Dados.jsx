@@ -222,8 +222,8 @@ export default function Dados() {
             <Form.Item label="Mini Currículo" name="curriculo">
               <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
             </Form.Item>
-            <Form.Item label="Instagram" name="instagram">
-              <Input />
+            <Form.Item label="Instagram - Ex: @pratiquefitness ou pratiquefitness" name="instagram">
+              <Input placeholder="Ex: @pratiquefitness ou pratiquefitness" />
             </Form.Item>
           </>
         )}
