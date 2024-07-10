@@ -37,8 +37,8 @@ export default function Contato() {
                   Instagram:
                   {
                     isMobile ?
-                      <Link target={'_blank'} href={`instagram://user?username=${router.query.instagram.replace('@', '')}`}> {router.query.instagram}</Link> :
-                      <Link target={'_blank'} href={`https://www.instagram.com/${router.query.instagram.replace('@', '')}/`}> {router.query.instagram}</Link>
+                      <a href={`instagram://user?username=${router.query.instagram.replace('@', '')}`} target="_blank">{router.query.instagram}</a> :
+                      <a href={`https://www.instagram.com/${router.query.instagram.replace('@', '')}`} target="_blank">{router.query.instagram}</a>
                   }
                 </Text>
                 <Text>
