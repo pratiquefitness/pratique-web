@@ -1,233 +1,237 @@
-import { Button, Col, Form, Input, Modal, Row, Space, Typography } from 'antd'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Banners from './_Banners'
-import { setBrowserURL } from '@/redux/slices/global'
-import AtividadesOnDemand from './_AtividadesOnDemand'
-import BemEstar from './_BemEstar'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
-import CarouselItem from './_CarouselItem'
-import Powerflix from '../powerflix'
-import AreaPersonal from '../area_personal'
-import { IdcardOutlined } from '@ant-design/icons'
-import { updateNiceName } from '@/redux/actions/conta'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from 'next/dist/shared/lib/constants'
+import { Button, Col, Form, Input, Modal, Row, Space, Typography } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Banners from "./_Banners";
+import { setBrowserURL } from "@/redux/slices/global";
+import AtividadesOnDemand from "./_AtividadesOnDemand";
+import BemEstar from "./_BemEstar";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import CarouselItem from "./_CarouselItem";
+import Powerflix from "../powerflix";
+import AreaPersonal from "../area_personal";
+import { IdcardOutlined } from "@ant-design/icons";
+import { updateNiceName } from "@/redux/actions/conta";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 import { InView } from "react-intersection-observer";
-import { LazyLoadingCardBig } from '../../components/LazyLoadingCardBig'
-import { LazyLoadingCardExtraBig } from '../../components/LazyLoadingCardExtraBig'
-import { LazyLoadingTwoColumns } from '../../components/LazyLoadingTwoColumns'
-import { LazyLoadingThreeColumns } from '../../components/LazyLoadingThreeColumns'
+import { LazyLoadingCardBig } from "../../components/LazyLoadingCardBig";
+import { LazyLoadingCardExtraBig } from "../../components/LazyLoadingCardExtraBig";
+import { LazyLoadingTwoColumns } from "../../components/LazyLoadingTwoColumns";
+import { LazyLoadingThreeColumns } from "../../components/LazyLoadingThreeColumns";
 
-
-const { Title, Text } = Typography
+const { Title, Text } = Typography;
 
 export default function Inicio() {
-  const dispatch = useDispatch()
-  const [horariosModal, setHorariosModal] = useState(false)
-  const [saverClubModal, setSaverClubModal] = useState(false)
+  const dispatch = useDispatch();
+  const [horariosModal, setHorariosModal] = useState(false);
+  const [saverClubModal, setSaverClubModal] = useState(false);
 
-  const { usuario } = useSelector(state => state.login)
-  const { loading } = useSelector(state => state.lives)
+  const { usuario } = useSelector((state) => state.login);
+  const { loading } = useSelector((state) => state.lives);
 
-  const isClient = !usuario.isEmployee
-  const isSaverAndClient = (usuario.plano?.includes('SAVER') && !usuario.isEmployee) || false
-  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false)
-  const isSaverSaudeAndClient = (usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || false
+  const isClient = !usuario.isEmployee;
+  const isSaverAndClient = (usuario.plano?.includes("SAVER") && !usuario.isEmployee) || false;
+  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false);
+  const isSaverSaudeAndClient =
+    (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || false;
   const [niceNameForm] = Form.useForm();
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/getUserData?userId=${usuario.ID}`)
-        const user = await response.json()
-        console.log('User fetched:', user) // Adicionando log para verificar os dados do usuário
-        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1)
+        const response = await fetch(`/api/getUserData?userId=${usuario.ID}`);
+        const user = await response.json();
+        console.log("User fetched:", user); // Adicionando log para verificar os dados do usuário
+        setIsSaverSaudeAndPesonal(
+          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
+        );
       } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error)
+        console.error("Erro ao buscar dados do usuário:", error);
       }
-    }
+    };
 
-    fetchUserData()
-  }, [usuario.ID])
+    fetchUserData();
+  }, [usuario.ID]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const user = await apiPratiqueFunciona.wp_users.findUnique({
           where: { ID: usuario.ID }
-        })
-        console.log('User fetched:', user)
-        setIsSaverSaudeAndPesonal((usuario.plano?.includes('PERSONAL') && !usuario.isEmployee) || user?.professor === 1);
+        });
+        console.log("User fetched:", user);
+        setIsSaverSaudeAndPesonal(
+          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
+        );
       } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error)
+        console.error("Erro ao buscar dados do usuário:", error);
       }
-    }
+    };
 
-    fetchUserData()
+    fetchUserData();
   }, [usuario.ID]);
 
   useEffect(() => {
     if (
-      ((usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER')) && usuario.user_nicename.includes('@')) ||
+      ((usuario.professor === 1 || usuario.plano?.includes("PERSONAL TRAINER")) &&
+        usuario.user_nicename.includes("@")) ||
       !usuario.user_nicename.length
     ) {
       setOpenModal(true);
     }
   }, [usuario]);
 
-
   const dispatchSaverSaude = () => {
-    dispatch(setBrowserURL('https://clubecertosaude.com.br/saude/pratiquemed/'))
-  }
+    dispatch(setBrowserURL("https://clubecertosaude.com.br/saude/pratiquemed/"));
+  };
 
   const dispatchQueroBem = () => {
-    dispatch(setBrowserURL('https://grupopratique.typeform.com/to/LUc4cfCd'))
-  }
+    dispatch(setBrowserURL("https://grupopratique.typeform.com/to/LUc4cfCd"));
+  };
 
   const dispatchPratiqueMed = () => {
-    dispatch(setBrowserURL('https://clubecertosaude.com.br/saude/pratiquemed/'))
-  }
+    dispatch(setBrowserURL("https://clubecertosaude.com.br/saude/pratiquemed/"));
+  };
 
   const dispatchSac = () => {
     dispatch(
       setBrowserURL(
-        'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
-        '_blank'
+        "https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.",
+        "_blank"
       )
-    )
-  }
+    );
+  };
 
   const dispatchTrabalhePratique = () => {
-    dispatch(setBrowserURL('https://pratiquefitness.com.br/trabalhe-na-academia-pratique/'))
-  }
+    dispatch(setBrowserURL("https://pratiquefitness.com.br/trabalhe-na-academia-pratique/"));
+  };
 
   const dispatchSobrePratique = () => {
-    dispatch(setBrowserURL('https://pratiquefitness.com.br/sobre-a-pratique/'))
-  }
+    dispatch(setBrowserURL("https://pratiquefitness.com.br/sobre-a-pratique/"));
+  };
 
   const abreSaverClubModal = () => {
-    setSaverClubModal(true)
-  }
+    setSaverClubModal(true);
+  };
 
   const listaCarousel = [
     {
-      href: '',
+      href: "",
       action: abreSaverClubModal,
-      image: '/images/webp/saver_club.webp',
+      image: "/images/webp/saver_club.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     {
-      href: '',
+      href: "",
       action: dispatchSaverSaude,
-      image: '/images/webp/pratique_med.webp',
+      image: "/images/webp/pratique_med.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     {
-      href: '/unipower',
-      image: '/images/webp/unipower.webp',
+      href: "/unipower",
+      image: "/images/webp/unipower.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     {
-      href: '/canal_equipe',
-      image: '/images/webp/canal_equipe.webp',
+      href: "/canal_equipe",
+      image: "/images/webp/canal_equipe.webp",
       isRounded: true,
-      alt: 'canal_equipe'
+      alt: "canal_equipe"
     },
     {
-      href: 'https://bit.ly/FalarRH',
-      image: '/images/webp/rh.webp',
+      href: "https://bit.ly/FalarRH",
+      image: "/images/webp/rh.webp",
       isRounded: true,
-      alt: 'RH',
-      target: '_blank'
+      alt: "RH",
+      target: "_blank"
     }
-  ]
+  ];
 
   const listaCarouselPersonal = [
     {
-      href: '/personal',
-      image: '/images/webp/banner_home/personal.webp',
+      href: "/personal",
+      image: "/images/webp/banner_home/personal.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     {
-      href: '',
+      href: "",
       action: abreSaverClubModal,
-      image: '/images/webp/saver_club.webp',
+      image: "/images/webp/saver_club.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     {
-      href: '',
+      href: "",
       action: dispatchSaverSaude,
-      image: '/images/webp/pratique_med.webp',
+      image: "/images/webp/pratique_med.webp",
       isRounded: true,
-      alt: 'unipower_banner'
+      alt: "unipower_banner"
     },
     ...(usuario.isEmployee
       ? [
           {
-            href: '/unipower',
-            image: '/images/webp/unipower.webp',
+            href: "/unipower",
+            image: "/images/webp/unipower.webp",
             isRounded: true,
-            alt: 'unipower_banner'
+            alt: "unipower_banner"
           },
           {
-            href: '/canal_equipe',
-            image: '/images/webp/canal_equipe.webp',
+            href: "/canal_equipe",
+            image: "/images/webp/canal_equipe.webp",
             isRounded: true,
-            alt: 'canal_equipe'
+            alt: "canal_equipe"
           }
         ]
       : []),
 
     {
-      href: 'https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.',
-      image: '/images/webp/banner_home/suporte-personal.webp',
+      href: "https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.",
+      image: "/images/webp/banner_home/suporte-personal.webp",
       isRounded: true,
-      alt: 'RH',
-      target: '_blank'
+      alt: "RH",
+      target: "_blank"
     }
-  ]
+  ];
 
   const listaCarouselAreaCliente = [
     {
-      href: '',
-      image: '/images/webp/trabalhe_conosco.webp',
+      href: "",
+      image: "/images/webp/trabalhe_conosco.webp",
       isRounded: true,
-      alt: 'trabalhe_conosco',
+      alt: "trabalhe_conosco",
       action: dispatchTrabalhePratique
     },
     {
-      href: '',
-      image: '/images/webp/sua_pratique.webp',
+      href: "",
+      image: "/images/webp/sua_pratique.webp",
       isRounded: true,
-      alt: 'sua_pratique',
+      alt: "sua_pratique",
       action: dispatchSobrePratique
     }
-  ]
+  ];
 
   const novaListaCarouselAreaCliente = [
     {
-      href: 'https://api.whatsapp.com/send?phone=5531984272283&text=Estou%20no%20App%20e%20quero%20alugar%20minha%20bike',
-      image: '/images/webp/alugue_bike.webp',
+      href: "https://api.whatsapp.com/send?phone=5531984272283&text=Estou%20no%20App%20e%20quero%20alugar%20minha%20bike",
+      image: "/images/webp/alugue_bike.webp",
       isRounded: true,
-      alt: 'sua_pratique',
-      target: '_blank'
+      alt: "sua_pratique",
+      target: "_blank"
     },
     ...(isSaverAndClient
       ? [
           {
-            href: '',
-            image: '/images/webp/saver_club.webp',
+            href: "",
+            image: "/images/webp/saver_club.webp",
             isRounded: true,
-            alt: 'saver_saude',
+            alt: "saver_saude",
             action: abreSaverClubModal
           }
         ]
@@ -236,11 +240,11 @@ export default function Inicio() {
     ...(isSaverSaudeAndClient
       ? [
           {
-            href: 'https://www.pratiquemed.com.br/login.php',
-            image: '/images/webp/pratique_med.webp',
+            href: "https://www.pratiquemed.com.br/login.php",
+            image: "/images/webp/pratique_med.webp",
             isRounded: true,
-            alt: 'saver_saude',
-            target: '_blank'
+            alt: "saver_saude",
+            target: "_blank"
           }
         ]
       : []),
@@ -248,30 +252,29 @@ export default function Inicio() {
       ? [
           {
             action: dispatchSaverSaude,
-            image: '/images/webp/pratique_med.webp',
+            image: "/images/webp/pratique_med.webp",
             isRounded: true,
-            alt: 'saver_saude'
+            alt: "saver_saude"
           }
         ]
       : []),
     {
-      href: 'https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.',
-      image: '/images/webp/sac.webp',
+      href: "https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.",
+      image: "/images/webp/sac.webp",
       isRounded: true,
-      alt: 'sua_pratique',
-      target: '_blank'
+      alt: "sua_pratique",
+      target: "_blank"
     },
     ...listaCarouselAreaCliente
-  ]
+  ];
 
-  const handleNomeSubmit = async niceName => {
+  const handleNomeSubmit = async (niceName) => {
     try {
-      await dispatch(updateNiceName(niceName))
+      await dispatch(updateNiceName(niceName));
+    } catch (error) {
+      console.error("Erro ao atualizar o Nome:", error);
     }
-    catch (error) {
-      console.error('Erro ao atualizar o Nome:', error)
-    }
-  }
+  };
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -285,29 +288,29 @@ export default function Inicio() {
     <Space direction="vertical" className="w-100">
       <Modal
         title={
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: "center" }}>
             <Typography.Title level={3} style={{ marginBottom: 0 }}>
               Atenção!!!
             </Typography.Title>
           </div>
         }
         open={openModal}
-        onCancel={() => { setOpenModal(false) }}
+        onCancel={() => {
+          setOpenModal(false);
+        }}
         footer={null}
         centered
       >
-        <div style={{ textAlign: 'center' }}>
-          <IdcardOutlined style={{ fontSize: '48px', color: '#08c' }} />
-          <Typography.Paragraph style={{ color: '#595959', marginTop: '16px' }}>
+        <div style={{ textAlign: "center" }}>
+          <IdcardOutlined style={{ fontSize: "48px", color: "#08c" }} />
+          <Typography.Paragraph style={{ color: "#595959", marginTop: "16px" }}>
             Preencha o campo nome para exibir junto a sua foto de contratação de personal.
           </Typography.Paragraph>
         </div>
         <Form form={niceNameForm} onFinish={handleNomeSubmit}>
           <Form.Item
             name="user_nicename"
-            rules={[
-              { required: true, message: 'Por favor, insira seu nome completo' }
-            ]}
+            rules={[{ required: true, message: "Por favor, insira seu nome completo" }]}
           >
             <Input placeholder="Digite aqui o seu nome" />
           </Form.Item>
@@ -319,11 +322,16 @@ export default function Inicio() {
         </Form>
       </Modal>
 
-      <Modal title="Horários" open={horariosModal} footer={null} onCancel={() => setHorariosModal(false)}>
+      <Modal
+        title="Horários"
+        open={horariosModal}
+        footer={null}
+        onCancel={() => setHorariosModal(false)}
+      >
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
           frameborder="0"
-          width={'100%'}
+          width={"100%"}
           height={500}
         ></iframe>
       </Modal>
@@ -339,45 +347,49 @@ export default function Inicio() {
         <Space direction="vertical">
           <a
             onClick={() => {
-              setSaverClubModal(false)
-              dispatch(setBrowserURL('https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique'))
+              setSaverClubModal(false);
+              dispatch(
+                setBrowserURL(
+                  "https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique"
+                )
+              );
             }}
             target="_blank"
           >
-            <img src="/images/webp/clube_certo.webp" width={'100%'} className="rounded" />
+            <img src="/images/webp/clube_certo.webp" width={"100%"} className="rounded" />
           </a>
           <a
             onClick={() => {
-              setSaverClubModal(false)
-              dispatch(setBrowserURL('https://grupopratique.typeform.com/cadas-desconto'))
+              setSaverClubModal(false);
+              dispatch(setBrowserURL("https://grupopratique.typeform.com/cadas-desconto"));
             }}
             target="_blank"
           >
-            <img src="/images/webp/igreen.webp" width={'100%'} className="rounded" />
+            <img src="/images/webp/igreen.webp" width={"100%"} className="rounded" />
           </a>
           <a
             onClick={() => {
-              setSaverClubModal(false)
-              dispatch(setBrowserURL('https://www.bolsamaisbrasil.com.br/unipower/bolsas'))
+              setSaverClubModal(false);
+              dispatch(setBrowserURL("https://www.bolsamaisbrasil.com.br/unipower/bolsas"));
             }}
             target="_blank"
           >
-            <img src="/images/webp/bolsa_brasil.webp" width={'100%'} className="rounded" />
+            <img src="/images/webp/bolsa_brasil.webp" width={"100%"} className="rounded" />
           </a>
           <a
             href="https://api.whatsapp.com/send?phone=5531984400941&text=Ol%C3%A1%2C+Igor+da+RDC+Viagens.+Sou+assinante+do+Saver+Club+e+gostaria+de+mais+informa%C3%A7%C3%B5es+sobre+os+descontos+da+assinatura+de+viagens"
             target="_blank"
           >
-            <img src="/images/webp/rdc.webp" width={'100%'} className="rounded" />
+            <img src="/images/webp/rdc.webp" width={"100%"} className="rounded" />
           </a>
           <a
             onClick={() => {
-              setSaverClubModal(false)
-              dispatch(setBrowserURL('https://pratiquefitness.com.br/'))
+              setSaverClubModal(false);
+              dispatch(setBrowserURL("https://pratiquefitness.com.br/"));
             }}
             target="_blank"
           >
-            <img src="/images/webp/pratique.webp" width={'100%'} className="rounded" />
+            <img src="/images/webp/pratique.webp" width={"100%"} className="rounded" />
           </a>
         </Space>
       </Modal>
@@ -439,12 +451,18 @@ export default function Inicio() {
             swipeable
           >
             {listaCarouselPersonal.map(({ href, image, isRounded, action, alt }, index) => (
-              <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+              <CarouselItem
+                key={index}
+                href={href}
+                action={action}
+                alt={alt}
+                image={image}
+                isRounded={isRounded}
+              />
             ))}
           </Carousel>
         </div>
       ) : null}
-
 
       {usuario.isEmployee && !isSaverSaudeAndPesonal ? (
         <div className="mt-4">
@@ -493,7 +511,14 @@ export default function Inicio() {
               swipeable
             >
               {listaCarousel.map(({ href, image, isRounded, action, alt }, index) => (
-                <CarouselItem key={index} href={href} action={action} alt={alt} image={image} isRounded={isRounded} />
+                <CarouselItem
+                  key={index}
+                  href={href}
+                  action={action}
+                  alt={alt}
+                  image={image}
+                  isRounded={isRounded}
+                />
               ))}
             </Carousel>
           </LazyLoadingTwoColumns>
@@ -547,9 +572,18 @@ export default function Inicio() {
               slidesToSlide={1}
               swipeable
             >
-              {novaListaCarouselAreaCliente.map(({ href, image, alt, isRounded, action }, index) => (
-                <CarouselItem key={index} href={href} alt={alt} image={image} isRounded={isRounded} action={action} />
-              ))}
+              {novaListaCarouselAreaCliente.map(
+                ({ href, image, alt, isRounded, action }, index) => (
+                  <CarouselItem
+                    key={index}
+                    href={href}
+                    alt={alt}
+                    image={image}
+                    isRounded={isRounded}
+                    action={action}
+                  />
+                )
+              )}
             </Carousel>
           </LazyLoadingTwoColumns>
         </>
@@ -561,7 +595,6 @@ export default function Inicio() {
         </Title>
         <Text>Aulas sempre disponíveis, para você fazer no seu tempo!</Text>
       </div>
-
 
       <LazyLoadingThreeColumns loading={loading}>
         <AtividadesOnDemand />
@@ -579,7 +612,6 @@ export default function Inicio() {
         <BemEstar />
       </LazyLoadingCardBig>
 
-
       <div className="mt-126 flex flex-col mb-0">
         <div className="mt-4 mb-2">
           <Title level={3} className="m-0 ">
@@ -591,27 +623,29 @@ export default function Inicio() {
         <br />
 
         <LazyLoadingCardBig loading={loading}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
-              <a className="sm:flex-1" href="/exercicios">
-                <img src="/images/webp/demonstracao.webp" width="100%" />
-              </a>
-              <a
-                className="sm:flex-1"
-                onClick={() => dispatch(setBrowserURL('https://pratiquefitness.com.br/pratiquenutri/'))}
-              >
-                <img src="/images/webp/fale_nutri.webp" width="100%" />
-              </a>
-              <a
-                className="sm:flex-1"
-                href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
-                target="_blank"
-              >
-                <img src="/images/webp/fale_professor.webp" width="100%" />
-              </a>
-            </div>
-          </LazyLoadingCardBig>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex">
+            <a className="sm:flex-1" href="/exercicios">
+              <img src="/images/webp/demonstracao.webp" width="100%" />
+            </a>
+            <a
+              className="sm:flex-1"
+              onClick={() =>
+                dispatch(setBrowserURL("https://pratiquefitness.com.br/pratiquenutri/"))
+              }
+            >
+              <img src="/images/webp/fale_nutri.webp" width="100%" />
+            </a>
+            <a
+              className="sm:flex-1"
+              href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
+              target="_blank"
+            >
+              <img src="/images/webp/fale_professor.webp" width="100%" />
+            </a>
+          </div>
+        </LazyLoadingCardBig>
       </div>
-        <AreaPersonal />
+      <AreaPersonal />
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique
@@ -629,10 +663,10 @@ export default function Inicio() {
         </Col>
         <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
-            <img src="/images/webp/horarios.webp" width="100%" style={{ filter: 'sepia(1)' }} />
+            <img src="/images/webp/horarios.webp" width="100%" style={{ filter: "sepia(1)" }} />
           </a>
         </Col>
       </Row>
     </Space>
-  )
+  );
 }
