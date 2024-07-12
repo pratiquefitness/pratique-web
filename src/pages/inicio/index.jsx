@@ -72,7 +72,7 @@ export default function Inicio() {
 
   useEffect(() => {
     if (
-      (usuario.professor === 1 && usuario.user_nicename.includes('@')) ||
+      ((usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER')) && usuario.user_nicename.includes('@')) ||
       !usuario.user_nicename.length
     ) {
       setOpenModal(true);

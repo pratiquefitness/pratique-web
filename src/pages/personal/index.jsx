@@ -21,13 +21,13 @@ export default function Conta() {
   const items = [
     {
       key: 'alunos',
-      label: usuario.professor === 1 ? `Meus Alunos` : '',
-      children: usuario.professor === 1 ? <Alunos /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `Meus Alunos` : '',
+      children: usuario.professor === 1  || usuario.plano.includes('PERSONAL TRAINER') ? <Alunos /> : ''
     },
     {
       key: 'faq',
-      label: usuario.professor === 1 ? `FAQ` : '',
-      children: usuario.professor === 1 ? <FAQ /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `FAQ` : '',
+      children: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? <FAQ /> : ''
     },
     {
       key: 'dados',
@@ -42,8 +42,8 @@ export default function Conta() {
 
     /* {
       key: 'treinoAlunos',
-      label: usuario.professor === 1 ? `Criar treinos` : '',
-      children: usuario.professor === 1 ? <CriarTreinosAluno /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `Criar treinos` : '',
+      children: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? <CriarTreinosAluno /> : ''
     }*/
   ]
 

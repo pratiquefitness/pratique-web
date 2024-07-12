@@ -129,7 +129,7 @@ export default function EditarMeusTreinos() {
             typeof meuTreino !== 'undefined' && Object.keys(meuTreino).length > 0 ? (
                 <>
                   {
-                    usuario.professor === 1 ?
+                    usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ?
                       <Divider orientation="center"><Title level={3}>Treino Livre do ALuno</Title></Divider>
                       :
                       <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
@@ -229,7 +229,7 @@ export default function EditarMeusTreinos() {
                       EXIBIR MAIS
                     </Button>
                     {
-                      usuario.professor === 1 &&
+                      usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') &&
                       <>
                         <br />
                         <Button

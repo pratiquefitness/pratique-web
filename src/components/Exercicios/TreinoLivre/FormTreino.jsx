@@ -64,7 +64,7 @@ const FormTreino = ({
           <Input defaultValue={nome || ''} onChange={onChange} autoFocus />
         </Form.Item>
         {
-          usuario.professor === 1 && treinoPersonal &&
+          (usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER')) && treinoPersonal &&
           <Form.Item label="Selecione um aluno" name="id_user" rules={[
             {
               required: true,

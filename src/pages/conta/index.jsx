@@ -31,23 +31,23 @@ export default function Conta() {
     },
     {
       key: 'personal',
-      label: usuario.professor !== 1 ? `Personal` : '',
-      children: usuario.professor !== 1 ? <Personal /> : ''
+      label: usuario.professor !== 1 || !usuario.plano.includes('PERSONAL TRAINER') ? `Personal` : '',
+      children: usuario.professor !== 1 || !usuario.plano.includes('PERSONAL TRAINER') ? <Personal /> : ''
     },
     {
       key: 'faq',
-      label: usuario.professor === 1 ? `FAQ` : '',
-      children: usuario.professor === 1 ? <FAQ /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `FAQ` : '',
+      children: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? <FAQ /> : ''
     },
     {
       key: 'alunos',
-      label: usuario.professor === 1 ? `Meus Alunos` : '',
-      children: usuario.professor === 1 ? <Alunos /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `Meus Alunos` : '',
+      children: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? <Alunos /> : ''
     }
     /* {
       key: 'treinoAlunos',
-      label: usuario.professor === 1 ? `Criar treinos` : '',
-      children: usuario.professor === 1 ? <CriarTreinosAluno /> : ''
+      label: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? `Criar treinos` : '',
+      children: usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? <CriarTreinosAluno /> : ''
     }*/
   ]
 
