@@ -1,13 +1,13 @@
-import Loading from '@/components/Loading'
-import { getLives } from '@/redux/actions/lives'
-import { theme } from 'antd'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
-import CarouselItem from './_CarouselItem'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Loading from "@/components/Loading";
+import { getLives } from "@/redux/actions/lives";
+import { theme } from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import CarouselItem from "./_CarouselItem";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { InView } from "react-intersection-observer";
 
 /*
@@ -17,38 +17,43 @@ agora - acontecendo
 
 const listaCarousel = [
   {
-    href: '/aulas_coletivas/powerdance',
-    image: '/images/webp/banner_home/power-dance-horizontal.webp',
+    href: "/aulas_coletivas/coreografias",
+    image: "/images/webp/banner_home/coreografias-horizontal.webp",
     isRounded: true
   },
   {
-    href: '/aulas_coletivas/powercore',
-    image: '/images/webp/banner_home/power-core-horizontal.webp',
+    href: "/aulas_coletivas/powerdance",
+    image: "/images/webp/banner_home/power-dance-horizontal.webp",
     isRounded: true
   },
   {
-    href: '/bike',
-    image: '/images/webp/banner_home/power_cycle.webp',
+    href: "/aulas_coletivas/powercore",
+    image: "/images/webp/banner_home/power-core-horizontal.webp",
     isRounded: true
   },
   {
-    href: '/aulas_coletivas/abdominais',
-    image: '/images/webp/banner_home/abdominais.webp',
+    href: "/bike",
+    image: "/images/webp/banner_home/power_cycle.webp",
     isRounded: true
   },
   {
-    href: '/aulas_coletivas/queime_em_casa',
-    image: '/images/webp/banner_home/queime_casa.webp',
+    href: "/aulas_coletivas/abdominais",
+    image: "/images/webp/banner_home/abdominais.webp",
+    isRounded: true
+  },
+  {
+    href: "/aulas_coletivas/queime_em_casa",
+    image: "/images/webp/banner_home/queime_casa.webp",
     isRounded: true
   }
-]
+];
 
 export default function Banners() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getLives())
-  }, [])
+    dispatch(getLives());
+  }, []);
 
   return (
     <Carousel
@@ -97,5 +102,5 @@ export default function Banners() {
         <CarouselItem key={index} href={href} image={image} isRounded={isRounded} />
       ))}
     </Carousel>
-  )
+  );
 }
