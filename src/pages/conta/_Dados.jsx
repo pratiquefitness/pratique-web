@@ -122,7 +122,7 @@ export default function Dados() {
 
   return (
     <>
-      {usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER') ? (
+      {usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER') ? (
         usuario.curriculo !== null ? (
           <div className={'d-flex justify-space-between mb-4'}>
             <Space size={'large'}>
@@ -138,7 +138,7 @@ export default function Dados() {
       )}
 
       <Form layout="vertical" form={form} onFinish={onUpdate}>
-        {(usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER')) && (
+        {(usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER')) && (
           <Form.Item label="" name="visivel">
             <Checkbox defaultChecked={usuario.visivel === 1} onChange={onChange}>
               Exibir mini-currículo na home
@@ -225,7 +225,7 @@ export default function Dados() {
             }}
           />
         </Form.Item>
-        {(usuario.professor === 1 || usuario.plano.includes('PERSONAL TRAINER')) && (
+        {(usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER')) && (
           <>
             <Form.Item label="Mini Currículo" name="curriculo">
               <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
