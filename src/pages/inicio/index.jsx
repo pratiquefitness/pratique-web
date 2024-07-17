@@ -87,7 +87,7 @@ export default function Inicio() {
         const user = await apiPratiqueFunciona.wp_users.findUnique({
           where: { ID: usuario.ID }
         });
-        console.log("User fetched:", user);
+
         setIsSaverSaudeAndPesonal(
           (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
         );
