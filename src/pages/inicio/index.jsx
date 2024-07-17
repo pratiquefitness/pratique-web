@@ -27,7 +27,7 @@ export default function Inicio() {
   const dispatch = useDispatch();
   const [horariosModal, setHorariosModal] = useState(false);
   const [saverClubModal, setSaverClubModal] = useState(false);
-
+  const [isCpfValid, setIsCpfValid] = useState(false);
   const { usuario } = useSelector((state) => state.login);
   const { loading } = useSelector((state) => state.lives);
 
@@ -39,15 +39,36 @@ export default function Inicio() {
   const [niceNameForm] = Form.useForm();
   const [openModal, setOpenModal] = useState(false);
 
+  const checkUserCPF = async (cpf) => {
+    try {
+      const response = await fetch("https://pratiquetecnologia.com.br/api/app/user/saver.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ cpf })
+      });
+      const data = await response.json();
+      return data.isValid;
+    } catch (error) {
+      console.error("Erro ao verificar o CPF:", error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(`/api/getUserData?userId=${usuario.ID}`);
         const user = await response.json();
-        console.log("User fetched:", user); // Adicionando log para verificar os dados do usuário
         setIsSaverSaudeAndPesonal(
           (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
         );
+
+        // Verifica o CPF do usuário
+        const isValid = await checkUserCPF(user.cpf);
+
+        setIsCpfValid(isValid);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
@@ -55,6 +76,10 @@ export default function Inicio() {
 
     fetchUserData();
   }, [usuario.ID]);
+
+  const isSaver = usuario.plano?.includes("SAVER") || usuario.isEmployee || isCpfValid;
+
+  console.log(isSaver);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -350,7 +375,9 @@ export default function Inicio() {
               setSaverClubModal(false);
               dispatch(
                 setBrowserURL(
-                  "https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique"
+                  isSaver
+                    ? "https://clubecerto.com.br/hotsite/?utm_cc=acessodireto&ent=saverpratique"
+                    : "https://grupopratique.typeform.com/to/VBhVMuLF"
                 )
               );
             }}
