@@ -79,8 +79,6 @@ export default function Inicio() {
 
   const isSaver = usuario.plano?.includes("SAVER") || usuario.isEmployee || isCpfValid;
 
-  console.log(isSaver);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
