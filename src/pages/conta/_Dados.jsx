@@ -1,51 +1,56 @@
-import { updateConta } from '@/redux/actions/conta'
-import { AutoComplete, Button, Form, Input, Space } from 'antd'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import AvatarUploader from './_AvatarUploader'
-import MiniCurriculum from '@/pages/conta/_MiniCurriculum'
-import { Checkbox } from 'antd'
+import { updateConta, excluirConta } from "@/redux/actions/conta";
+import { AutoComplete, Button, Form, Input, Space, Checkbox, Modal, Typography } from "antd";
+import { useEffect, useState, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AvatarUploader from "./_AvatarUploader";
+import MiniCurriculum from "@/pages/conta/_MiniCurriculum";
+import { AuthContext } from "@/contexts/AuthContext";
 
-const { TextArea } = Input
-import estadosCIdades from '@/constants/estadosCidades'
+const { TextArea } = Input;
+const { Text } = Typography;
+import estadosCIdades from "@/constants/estadosCidades";
 
 export default function Dados() {
-  const dispatch = useDispatch()
-  const [form] = Form.useForm()
-  const { usuario } = useSelector(state => state.login)
-  const { loading, isPersonal } = useSelector(state => state.conta)
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const [excluirContaModal, setExcluirContaModal] = useState(false);
+  const { usuario } = useSelector((state) => state.login);
+  const { loading, isPersonal } = useSelector((state) => state.conta);
+  const { signOut } = useContext(AuthContext);
   const [estados, setEstados] = useState({
     data: []
-  })
+  });
   const [cidades, setCidades] = useState({
     data: []
-  })
+  });
   const [value, setValue] = useState({
-    estado: '',
-    cidade: ''
-  })
-  const [estadoEscolhido, setEstadoEscolhido] = useState('')
-  const [cidadeEscolhida, setCidadeEscolhida] = useState('')
+    estado: "",
+    cidade: ""
+  });
+  const [estadoEscolhido, setEstadoEscolhido] = useState("");
+  const [cidadeEscolhida, setCidadeEscolhida] = useState("");
 
   const validatePhoneNumber = (_, value) => {
-    const cleanedValue = value.replace(/\D/g, '')
+    const cleanedValue = value.replace(/\D/g, "");
     if (cleanedValue.length === 11) {
-      return Promise.resolve()
+      return Promise.resolve();
     }
-    return Promise.reject(new Error('Digite um telefone válido: 31999999999'))
-  }
+    return Promise.reject(new Error("Digite um telefone válido: 31999999999"));
+  };
 
   const validateInstagramProfile = (_, value) => {
     const regex = /^@?(?!http|www)[a-zA-Z0-9].*/;
     if (regex.test(value)) {
       return Promise.resolve();
     }
-    return Promise.reject(new Error('Digite um perfil válido. Exemplo: @pratiquefitness ou pratiquefitness'))
-  }
+    return Promise.reject(
+      new Error("Digite um perfil válido. Exemplo: @pratiquefitness ou pratiquefitness")
+    );
+  };
 
-  const onUpdate = values => {
-    if (typeof values.user_pass !== 'undefined') {
-      dispatch(updateConta(values))
+  const onUpdate = (values) => {
+    if (typeof values.user_pass !== "undefined") {
+      dispatch(updateConta(values));
     } else {
       dispatch(
         updateConta({
@@ -60,9 +65,18 @@ export default function Dados() {
           instagram: values.instagram,
           visivel: values.visivel
         })
-      )
+      );
     }
-  }
+  };
+
+  const onDelete = () => {
+    dispatch(excluirConta());
+    signOut();
+  };
+
+  const abreExcluirContaModal = () => {
+    setExcluirContaModal(true);
+  };
 
   useEffect(() => {
     form.setFieldsValue({
@@ -76,56 +90,56 @@ export default function Dados() {
       telefone: usuario.telefone,
       instagram: usuario.instagram,
       visivel: usuario.visivel
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
     if (usuario.estado?.length) {
-      onSelectEstado(usuario.estado)
+      onSelectEstado(usuario.estado);
     }
-  }, [usuario.estado])
+  }, [usuario.estado]);
 
   useEffect(() => {
     if (estadosCIdades.estados?.length) {
-      setEstados(prevState => ({
+      setEstados((prevState) => ({
         ...prevState,
         data: estadosCIdades.estados.reduce((o, option) => {
-          return [...o, { value: option.nome }]
+          return [...o, { value: option.nome }];
         }, [])
-      }))
+      }));
     }
-  }, [])
+  }, []);
 
-  const onSelectEstado = value => {
-    setEstadoEscolhido(value)
-    const cidadesJson = estadosCIdades.estados.filter(estado => estado.nome === value)
+  const onSelectEstado = (value) => {
+    setEstadoEscolhido(value);
+    const cidadesJson = estadosCIdades.estados.filter((estado) => estado.nome === value);
 
     if (cidadesJson.length > 0) {
-      setCidades(prevState => ({
+      setCidades((prevState) => ({
         ...prevState,
         data: cidadesJson[0].cidades.reduce((o, option) => {
-          return [...o, { value: option }]
+          return [...o, { value: option }];
         }, [])
-      }))
+      }));
     } else {
-      setCidades({ data: [] }) 
+      setCidades({ data: [] });
     }
-  }
+  };
 
-  const onSelectCidade = value => {
-    setCidadeEscolhida(value)
-  }
+  const onSelectCidade = (value) => {
+    setCidadeEscolhida(value);
+  };
 
-  const onChange = e => {
-    form.setFieldsValue({ visivel: e.target.checked === true ? '1' : null })
-  }
+  const onChange = (e) => {
+    form.setFieldsValue({ visivel: e.target.checked === true ? "1" : null });
+  };
 
   return (
     <>
-      {usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER') ? (
+      {usuario.professor === 1 || usuario.plano?.includes("PERSONAL TRAINER") ? (
         usuario.curriculo !== null ? (
-          <div className={'d-flex justify-space-between mb-4'}>
-            <Space size={'large'}>
+          <div className={"d-flex justify-space-between mb-4"}>
+            <Space size={"large"}>
               <AvatarUploader />
               <MiniCurriculum />
             </Space>
@@ -138,7 +152,7 @@ export default function Dados() {
       )}
 
       <Form layout="vertical" form={form} onFinish={onUpdate}>
-        {(usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER')) && (
+        {(usuario.professor === 1 || usuario.plano?.includes("PERSONAL TRAINER")) && (
           <Form.Item label="" name="visivel">
             <Checkbox defaultChecked={usuario.visivel === 1} onChange={onChange}>
               Exibir mini-currículo na home
@@ -151,86 +165,98 @@ export default function Dados() {
         <Form.Item
           label="CPF"
           name="cpf"
-          rules={[{ min: 11, message: 'Digite um CPF válido', pattern: new RegExp(/^[0-9]+$/) }]}
+          rules={[{ min: 11, message: "Digite um CPF válido", pattern: new RegExp(/^[0-9]+$/) }]}
         >
           <Input maxLength={11} />
         </Form.Item>
-        <Form.Item label="Telefone Celular com DDD" name="telefone" rules={[{ validator: validatePhoneNumber }]}>
+        <Form.Item
+          label="Telefone Celular com DDD"
+          name="telefone"
+          rules={[{ validator: validatePhoneNumber }]}
+        >
           <Input />
         </Form.Item>
 
         <Form.Item label="Estado" name="estado">
           <AutoComplete
-            id={'estado'}
+            id={"estado"}
             value={value.estado}
             options={estados.data}
             style={{
-              width: '100%'
+              width: "100%"
             }}
-            onSelect={e => onSelectEstado(e)}
-            onChange={value => {
-              setCidadeEscolhida('')
-              setEstadoEscolhido('')
-              setValue(prevState => ({
+            onSelect={(e) => onSelectEstado(e)}
+            onChange={(value) => {
+              setCidadeEscolhida("");
+              setEstadoEscolhido("");
+              setValue((prevState) => ({
                 ...prevState,
                 estado: value,
-                cidade: ''
-              }))
+                cidade: ""
+              }));
               form.setFieldsValue({
-                cidade: ''
-              })
+                cidade: ""
+              });
             }}
-            filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+            }
             placeholder="Selecione um estado"
             allowClear
             onClear={() => {
-              setCidadeEscolhida('')
-              setEstadoEscolhido('')
-              setValue(prevState => ({
+              setCidadeEscolhida("");
+              setEstadoEscolhido("");
+              setValue((prevState) => ({
                 ...prevState,
-                estado: '',
-                cidade: ''
-              }))
+                estado: "",
+                cidade: ""
+              }));
               form.setFieldsValue({
-                cidade: ''
-              })
+                cidade: ""
+              });
             }}
           />
         </Form.Item>
         <Form.Item label="Cidade" name="cidade">
           <AutoComplete
-            id={'cidade'}
+            id={"cidade"}
             value={value.cidade}
             options={cidades.data}
             style={{
-              width: '100%'
+              width: "100%"
             }}
-            onSelect={e => onSelectCidade(e)}
-            onChange={value => {
-              setCidadeEscolhida('')
-              setValue(prevState => ({
+            onSelect={(e) => onSelectCidade(e)}
+            onChange={(value) => {
+              setCidadeEscolhida("");
+              setValue((prevState) => ({
                 ...prevState,
                 cidade: value
-              }))
+              }));
             }}
-            filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+            filterOption={(inputValue, option) =>
+              option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+            }
             placeholder="Selecione uma cidade"
             allowClear
             onClear={() => {
-              setCidadeEscolhida('')
-              setValue(prevState => ({
+              setCidadeEscolhida("");
+              setValue((prevState) => ({
                 ...prevState,
-                cidade: ''
-              }))
+                cidade: ""
+              }));
             }}
           />
         </Form.Item>
-        {(usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER')) && (
+        {(usuario.professor === 1 || usuario.plano?.includes("PERSONAL TRAINER")) && (
           <>
             <Form.Item label="Mini Currículo" name="curriculo">
               <TextArea rows={7} placeholder="No máximo 140 caracteres" maxLength={140} />
             </Form.Item>
-            <Form.Item label="Instagram - Ex: @pratiquefitness ou pratiquefitness" name="instagram" rules={[{ validator: validateInstagramProfile }]}>
+            <Form.Item
+              label="Instagram - Ex: @pratiquefitness ou pratiquefitness"
+              name="instagram"
+              rules={[{ validator: validateInstagramProfile }]}
+            >
               <Input placeholder="Ex: @pratiquefitness ou pratiquefitness" />
             </Form.Item>
           </>
@@ -246,6 +272,31 @@ export default function Dados() {
           Atualizar
         </Button>
       </Form>
+
+      <Modal
+        title="Excluir Conta"
+        onCancel={() => setExcluirContaModal(false)}
+        open={excluirContaModal}
+        footer={null}
+      >
+        <div className="d-flex flex-column mt-6 gap-4">
+          <Text type="primary">Você realmente quer excluir sua conta?</Text>
+          <Text type="primary">
+            Você não terá acesso as aulas e outros benefícios do aplicativo da Pratique
+          </Text>
+        </div>
+        <div className="d-flex justify-center mt-6 gap-4">
+          <Button onClick={() => setExcluirContaModal(false)}>Cancelar</Button>
+          <Button type="primary" onClick={onDelete}>
+            Excluir conta
+          </Button>
+        </div>
+      </Modal>
+
+      <div className="d-flex flex-column mt-6 gap-4">
+        <Text type="primary">Deseja excluir seus dados?</Text>
+        <Button onClick={abreExcluirContaModal}>Excluir conta</Button>
+      </div>
     </>
-  )
+  );
 }
