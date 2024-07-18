@@ -2,7 +2,6 @@ import { Tabs } from "antd";
 import Dados from "./_Dados";
 import Plano from "./_Plano";
 import FAQ from "./_Faq";
-import Nps from "./_Nps";
 import Alunos from "./_Alunos";
 import Personal from "./_Personal";
 import AlunosTreino from "./_AlunosTreino";
@@ -37,11 +36,6 @@ export default function Conta() {
       key: "dados",
       label: `Dados`,
       children: <Dados />
-    },
-    {
-      key: "nps",
-      label: `Nps`,
-      children: <Nps />
     },
     {
       key: "plano",
