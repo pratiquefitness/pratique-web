@@ -7,7 +7,6 @@ import {
   Space,
   Modal,
   Radio,
-  Checkbox,
   Steps,
   Typography,
   Rate,
@@ -35,31 +34,27 @@ export default function EvaluationForm() {
     { question: "Nome do Professor que realizou o exame", type: "text", answer: "" },
     { question: "E-mail do Professor", type: "email", answer: "" },
     {
-      question: "O avaliador olhou a sua Diagnose e fez comentários com base nos seus resultados?",
+      question: "Na orientação do módulo treino o que o avaliador te apresentou:",
       type: "radio",
-      options: ["Sim", "Não"],
-      answer: ""
-    },
-    {
-      question: "O avaliador mostrou nosso aplicativo e suas funções?",
-      type: "radio",
-      options: ["Sim", "Não"],
-      answer: ""
-    },
-    {
-      question: "Assinale todas as coisas que você se lembra que o avaliador falou para você:",
-      type: "checkbox",
       options: [
-        "Diagnose",
-        "Poweflix",
-        "Aulas on demand (online)",
-        "Ficha de treino no aplicativo",
-        "Videos dos exercícios",
-        "Monte seu Treino",
-        "Botão Fale com o Professor",
-        "Resultado da Avaliação Física"
+        "O PowerFlix que tem no seu aplicativo, com treinos do adaptativo até treinos específicos para jogar tênis , corrida , bike etc",
+        "O módulo bem estar mental, com Aulas e ioga meditação Guiada que encontra na Home do Aplicativo.",
+        "O avaliador me apresentou o treino específico montado para mim e seus exercícios e TAMBÉM me explicou a sessão MONTE SEU TREINO, botão FALE COM PROFESSOR, também me mostrou o Qrcode de TROCA DE TREINO fixado na academia."
       ],
-      answer: []
+      answer: ""
+    },
+    {
+      question: "Utilidades e Atividades gratuitas e do Aplicativo foi lhe apresento:",
+      type: "radio",
+      options: [
+        "On Demand aulas que o cliente Pratique pode fazer em casa como, Power Bum Bum / Power Dance / Ioga / Meditação Guiada / Abdominal / Powe Jump / ETC.",
+        "Botão Fale com Professo Ajuste de treino",
+        "Sessão - Monte seu treino.",
+        "Fale com SAC",
+        "Horário de Funcionamento.",
+        "Foi me apresentado tudo."
+      ],
+      answer: ""
     },
     {
       question: "Como você avaliaria a sua experiência na avaliação física da Pratique?",
@@ -136,9 +131,17 @@ export default function EvaluationForm() {
             name="answer"
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
-            <Radio.Group>
+            <Radio.Group style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
               {currentQuestion.options.map((option) => (
-                <Radio value={option} key={option}>
+                <Radio
+                  value={option}
+                  key={option}
+                  style={{
+                    fontSize: "16px",
+                    padding: "8px",
+                    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.2)"
+                  }}
+                >
                   {option}
                 </Radio>
               ))}
@@ -221,7 +224,9 @@ export default function EvaluationForm() {
       content: (
         <Form layout="vertical" form={formEvaluation} onFinish={handleNext}>
           <Space direction="vertical" className="w-100" style={{ textAlign: "center" }}>
-            <Paragraph>{evaluationSteps[currentStep].question}</Paragraph>
+            <Paragraph style={{ color: "#c70630" }}>
+              {evaluationSteps[currentStep].question}
+            </Paragraph>
             {renderQuestion()}
             <Button type="primary" htmlType="submit">
               {currentStep < evaluationSteps.length - 1 ? "Próximo" : "Finalizar"}
