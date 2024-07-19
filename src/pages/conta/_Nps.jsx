@@ -18,8 +18,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateConta } from "@/redux/actions/conta";
 import { AuthContext } from "@/contexts/AuthContext";
 import axios from "axios";
+import { LikeOutlined } from "@ant-design/icons";
 
-const { Paragraph } = Typography;
+const { Paragraph, Title } = Typography;
 
 export default function EvaluationForm() {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ export default function EvaluationForm() {
       answer: 0
     }
   ]);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
@@ -93,14 +95,20 @@ export default function EvaluationForm() {
       setCurrentStep(currentStep + 1);
       formEvaluation.resetFields();
     } else {
-      // Enviar avaliação final
+      // Enviar avaliação final para o endpoint API do Next.js
       axios
-        .post("https://pratiquetecnologia.com.br/api/app/nps", {
+        .post("/api/nps", {
           user_id: usuario.ID,
-          responses: newSteps
+          responses: newSteps.map((step) => ({
+            question: step.question,
+            answer: step.answer,
+            type: step.type,
+            options: step.options || []
+          }))
         })
         .then((response) => {
           message.success("Avaliação enviada com sucesso!");
+          setFinished(true);
         })
         .catch((error) => {
           message.error("Erro ao enviar avaliação.");
@@ -143,7 +151,15 @@ export default function EvaluationForm() {
             name="answer"
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
-            <Checkbox.Group options={currentQuestion.options} />
+            <Checkbox.Group>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {currentQuestion.options.map((option) => (
+                  <Checkbox value={option} key={option} style={{ marginBottom: 8 }}>
+                    {option}
+                  </Checkbox>
+                ))}
+              </div>
+            </Checkbox.Group>
           </Form.Item>
         );
       case "rate":
@@ -216,17 +232,34 @@ export default function EvaluationForm() {
     }
   ];
 
+  if (finished) {
+    return (
+      <Row justify="center">
+        <Col span={24} className="mt-4" style={{ textAlign: "center" }}>
+          <Space direction="vertical" className="w-100" style={{ textAlign: "center" }}>
+            <Title level={2}>Obrigado por sua contribuição</Title>
+            <LikeOutlined style={{ fontSize: "64px", color: "#08c" }} />
+          </Space>
+        </Col>
+      </Row>
+    );
+  }
+
   return (
     <>
       <Row justify="center">
         <Col span={24} className="mt-4" style={{ maxWidth: "600px" }}>
           <Steps
+            direction="horizontal"
             current={isModalVisible ? 0 : 1}
             items={steps.map((item) => ({ title: item.title }))}
             size="small"
-            style={{ marginBottom: "8px" }}
+            style={{ marginBottom: "24px" }}
           />
-          <div className="py-6" style={{ textAlign: "center", paddingTop: "0" }}>
+          <div
+            className="py-6"
+            style={{ textAlign: "center", paddingTop: "0 !important", paddingBottom: "24px" }}
+          >
             {steps[isModalVisible ? 0 : 1].content}
           </div>
         </Col>
