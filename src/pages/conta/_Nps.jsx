@@ -258,7 +258,12 @@ export default function EvaluationForm() {
           />
           <div
             className="py-6"
-            style={{ textAlign: "center", paddingTop: "0 !important", paddingBottom: "24px" }}
+            style={{
+              textAlign: "center",
+              paddingTop: "0 !important",
+              paddingBottom: "24px",
+              marginTop: "-30px"
+            }}
           >
             {steps[isModalVisible ? 0 : 1].content}
           </div>
