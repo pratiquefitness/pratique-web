@@ -1,87 +1,120 @@
-import { Loading } from '@/components'
-import { getDadosAfiliado, getPix, savePix } from '@/redux/actions/afiliados'
-import utils from '@/utils'
-import { Button, Card, Col, Form, Input, Row, Select, Space, Statistic, message, theme } from 'antd'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { WhatsAppOutlined } from '@ant-design/icons'
-import { FaWhatsapp } from 'react-icons/fa'
+import { Loading } from "@/components";
+import { getDadosAfiliado, getPix, savePix } from "@/redux/actions/afiliados";
+import utils from "@/utils";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Statistic,
+  message,
+  theme
+} from "antd";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { WhatsAppOutlined } from "@ant-design/icons";
+import { FaWhatsapp } from "react-icons/fa";
 
 const tiposPix = [
-  { value: 'cpf', label: 'CPF' },
-  { value: 'telefone', label: 'Telefone' },
-  { value: 'email', label: 'E-mail' },
-  { value: 'aleatoria', label: 'Aleatória' }
-]
+  { value: "cpf", label: "CPF" },
+  { value: "telefone", label: "Telefone" },
+  { value: "email", label: "E-mail" },
+  { value: "aleatoria", label: "Aleatória" }
+];
 
 export default function Geral() {
-  const [editablePix, setEditablePix] = useState(false)
-  const [formPix] = Form.useForm()
-  const dispatch = useDispatch()
-  const { usuario } = useSelector(state => state.login)
-  const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
-  const { token } = theme.useToken()
+  const [editablePix, setEditablePix] = useState(false);
+  const [formPix] = Form.useForm();
+  const dispatch = useDispatch();
+  const { usuario } = useSelector((state) => state.login);
+  const { geral, loading, pix, pixLoading } = useSelector((state) => state.afiliados);
+  const { token } = theme.useToken();
 
   useEffect(() => {
-    dispatch(getDadosAfiliado())
-    dispatch(getPix())
-  }, [])
+    dispatch(getDadosAfiliado());
+    dispatch(getPix());
+  }, []);
 
   useEffect(() => {
-    formPix.setFieldsValue(pix)
-  }, [pix])
+    formPix.setFieldsValue(pix);
+  }, [pix]);
 
   const onSavePix = ({ tipo, chave }) => {
-    dispatch(savePix(tipo, chave, setEditablePix))
-  }
+    dispatch(savePix(tipo, chave, setEditablePix));
+  };
 
   const messageLink = () => {
-    message.success('Link copiado!')
-    utils.copyTextToClipboard(pix?.chave)
-  }
+    message.success("Link copiado!");
+    utils.copyTextToClipboard(pix?.chave);
+  };
 
-  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
+  const isMobile =
+    typeof window !== "undefined" && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=5531994679675&text=Ol%C3%A1%2C%20estou%20vindo%20do%20app%20Pratique%20em%20Casa%20e%20sou%20um%20dos%20afiliados.%20Pode%20me%20ajudar%3F'
+      "https://api.whatsapp.com/send?phone=5531994679675&text=Ol%C3%A1%2C%20estou%20vindo%20do%20app%20Pratique%20em%20Casa%20e%20sou%20um%20dos%20afiliados.%20Pode%20me%20ajudar%3F";
 
     if (isMobile) {
-      window.location.href = whatsappUrl
-      return
+      window.location.href = whatsappUrl;
+      return;
     }
 
-    window.open(whatsappUrl, '_blank')
-  }
+    window.open(whatsappUrl, "_blank");
+  };
 
   return (
     <Loading spinning={loading}>
       <Row gutter={[16, 16]} className="mb-4">
-        <Col span={12}>
-          <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
-            <Statistic title="Total de Vendas" an value={geral.totalVendas} />
-          </div>
-        </Col>
         <Col span={6}>
-          <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+          <div
+            className="p-4"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
+            <Statistic title="Vendas" an value={geral.totalVendas} />
+          </div>
+        </Col>{" "}
+        <Col span={6}>
+          <div
+            className="p-4"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
             <Statistic title="Balcão" value={geral.totalBalcao} />
           </div>
         </Col>
         <Col span={6}>
-          <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+          <div
+            className="p-4"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
             <Statistic title="Afiliado" value={geral.totalAfiliados} />
           </div>
         </Col>
+        <Col span={6}>
+          <div
+            className="p-4"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
+            <Statistic title="NPS" an value={geral.nps} />
+          </div>
+        </Col>
         <Col span={12}>
-          <div className="p-4" style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}>
+          <div
+            className="p-4"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
             <Statistic title="Vendas a Receber" value={geral.totalReceber} />
           </div>
         </Col>
         <Col span={12}>
           <div className="p-4" style={{ background: token.colorPrimary, borderRadius: 5 }}>
             <Statistic
-              title={<span style={{ color: 'white' }}>Valor a Receber</span>}
-              valueStyle={{ color: 'white' }}
+              title={<span style={{ color: "white" }}>Valor a Receber</span>}
+              valueStyle={{ color: "white" }}
               value={`R$ ${geral.valorReceber},00`}
             />
           </div>
@@ -104,13 +137,17 @@ export default function Geral() {
                 <Form.Item
                   name="tipo"
                   label="Tipo de Chave"
-                  rules={[{ required: true, message: 'Selecione o tipo de chave' }]}
+                  rules={[{ required: true, message: "Selecione o tipo de chave" }]}
                 >
                   <Select placeholder="Selecione..." options={tiposPix} loading={pixLoading} />
                 </Form.Item>
               </Col>
               <Col xs={24} lg={8}>
-                <Form.Item name="chave" label="Chave PIX" rules={[{ required: true, message: 'Digite a chave' }]}>
+                <Form.Item
+                  name="chave"
+                  label="Chave PIX"
+                  rules={[{ required: true, message: "Digite a chave" }]}
+                >
                   <Input placeholder="Sua chave PIX" />
                 </Form.Item>
               </Col>
@@ -118,18 +155,18 @@ export default function Geral() {
                 <Form.Item
                   label="Confirme a chave PIX"
                   name="rChave"
-                  dependencies={['chave']}
+                  dependencies={["chave"]}
                   rules={[
                     {
                       required: true,
-                      message: 'Confirme a chave.'
+                      message: "Confirme a chave."
                     },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || getFieldValue('chave') === value) {
-                          return Promise.resolve()
+                        if (!value || getFieldValue("chave") === value) {
+                          return Promise.resolve();
                         }
-                        return Promise.reject(new Error('As chaves devem ser iguais.'))
+                        return Promise.reject(new Error("As chaves devem ser iguais."));
                       }
                     })
                   ]}
@@ -147,10 +184,17 @@ export default function Geral() {
           </Form>
         ) : (
           <Row gutter={[16, 16]}>
-            <Col xs={24}>Tipo da Chave: {tiposPix.find(tipo => tipo.value === pix.tipo)?.label}</Col>
+            <Col xs={24}>
+              Tipo da Chave: {tiposPix.find((tipo) => tipo.value === pix.tipo)?.label}
+            </Col>
             <Col xs={24} lg={12} className="d-flex align-center justify-space-between">
               Chave: {pix?.chave}
-              <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+              <Button
+                type="primary"
+                style={{ background: "#1677ff" }}
+                size="small"
+                onClick={messageLink}
+              >
                 Copiar Chave
               </Button>
             </Col>
@@ -163,7 +207,7 @@ export default function Geral() {
               <Col xs={24} className="mb-12">
                 <Button
                   icon={<FaWhatsapp fill="#fff" size={30} />}
-                  style={{ background: 'green', color: 'white' }}
+                  style={{ background: "green", color: "white" }}
                   block
                   onClick={openWhatsApp}
                 >
@@ -177,5 +221,5 @@ export default function Geral() {
         )}
       </Card>
     </Loading>
-  )
+  );
 }
