@@ -223,14 +223,24 @@ export default function EvaluationForm() {
       title: "Avaliação",
       content: (
         <Form layout="vertical" form={formEvaluation} onFinish={handleNext}>
-          <Space direction="vertical" className="w-100" style={{ textAlign: "center" }}>
-            <Paragraph style={{ color: "#c70630" }}>
+          <Space direction="vertical" className="w-100" style={{ textAlign: "left" }}>
+            <Paragraph
+              style={{
+                color: "#c70630",
+                fontSize: "18px",
+                fontWeight: "bold",
+                lineHeight: "19px",
+                textAlign: "center"
+              }}
+            >
               {evaluationSteps[currentStep].question}
             </Paragraph>
             {renderQuestion()}
-            <Button type="primary" htmlType="submit">
-              {currentStep < evaluationSteps.length - 1 ? "Próximo" : "Finalizar"}
-            </Button>
+            <div style={{ textAlign: "center" }}>
+              <Button type="primary" htmlType="submit">
+                {currentStep < evaluationSteps.length - 1 ? "Próximo" : "Finalizar"}
+              </Button>
+            </div>
           </Space>
         </Form>
       )

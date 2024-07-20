@@ -375,11 +375,13 @@ body .ant-layout-footer {
   height: 20%;
   border-bottom-left-radius: 20px !important;
   border-bottom-right-radius: 20px !important;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Cor da tarja e opacidade (aqui, 0.5 para 50%) */
+  background-color: rgba(0, 0, 0, 0.5); /* Cor da tarja e opacidade (aqui, 0.5 para 50%) */
   z-index: 1; /* Garante que a tarja fique sobre a imagem */
+}
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon {
+  background-color: #018000 !important;
+}
+
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #ffffff !important;
 }

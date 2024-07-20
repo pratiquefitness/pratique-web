@@ -39,7 +39,7 @@ export default function Conta() {
     },
     {
       key: "nps",
-      label: `Nps`,
+      label: `NPS`,
       children: <Nps />
     },
     {
