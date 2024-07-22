@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateConta } from "@/redux/actions/conta";
 import { AuthContext } from "@/contexts/AuthContext";
 import axios from "axios";
-import { LikeOutlined } from "@ant-design/icons";
+import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 const { Paragraph, Title } = Typography;
 
@@ -63,6 +63,11 @@ export default function EvaluationForm() {
     }
   ]);
   const [finished, setFinished] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [canSubmit, setCanSubmit] = useState(true);
+  const [npsModalVisible, setNpsModalVisible] = useState(false);
+  const [lastSubmissionDate, setLastSubmissionDate] = useState(null);
+  const [daysRemaining, setDaysRemaining] = useState(0);
 
   useEffect(() => {
     if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
@@ -81,6 +86,29 @@ export default function EvaluationForm() {
       });
   };
 
+  const checkEmail = async (email) => {
+    try {
+      const response = await axios.post(
+        "https://pratiquetecnologia.com.br/api/app/nps/consulta.php",
+        { user_id: usuario.ID, user_email: email },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      const { canSubmit, lastSubmissionDate, daysRemaining } = response.data;
+      setCanSubmit(canSubmit);
+      setLastSubmissionDate(lastSubmissionDate);
+      setDaysRemaining(daysRemaining);
+      if (!canSubmit) {
+        setNpsModalVisible(true);
+      }
+    } catch (error) {
+      message.error("Erro ao verificar email.");
+    }
+  };
+
   const handleNext = (values) => {
     const newSteps = [...evaluationSteps];
     newSteps[currentStep].answer = values.answer;
@@ -90,11 +118,13 @@ export default function EvaluationForm() {
       setCurrentStep(currentStep + 1);
       formEvaluation.resetFields();
     } else {
-      // Enviar avaliação final para o endpoint API do Next.js
       axios
         .post("/api/nps", {
           user_id: usuario.ID,
-          responses: newSteps.map((step) => ({
+          user_email: userEmail, // Supondo que o email do usuário seja fornecido
+          professor_name: newSteps[0].answer, // Supondo que a primeira pergunta é o nome do professor
+          professor_email: newSteps[1].answer, // Supondo que a segunda pergunta é o email do professor
+          responses: newSteps.slice(2).map((step) => ({
             question: step.question,
             answer: step.answer,
             type: step.type,
@@ -122,7 +152,18 @@ export default function EvaluationForm() {
             name="answer"
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
-            <Input type={currentQuestion.type} placeholder={currentQuestion.question} />
+            <Input
+              type={currentQuestion.type}
+              placeholder={currentQuestion.question}
+              onBlur={
+                currentQuestion.type === "email"
+                  ? (e) => {
+                      setUserEmail(e.target.value);
+                      checkEmail(e.target.value);
+                    }
+                  : null
+              }
+            />
           </Form.Item>
         );
       case "radio":
@@ -237,7 +278,7 @@ export default function EvaluationForm() {
             </Paragraph>
             {renderQuestion()}
             <div style={{ textAlign: "center" }}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" disabled={!canSubmit}>
                 {currentStep < evaluationSteps.length - 1 ? "Próximo" : "Finalizar"}
               </Button>
             </div>
@@ -292,6 +333,26 @@ export default function EvaluationForm() {
         onCancel={() => setIsModalVisible(false)}
       >
         {steps[0].content}
+      </Modal>
+
+      <Modal
+        title="Avaliação já realizada"
+        visible={npsModalVisible}
+        footer={[
+          <Button key="ok" type="primary" onClick={() => setNpsModalVisible(false)}>
+            OK
+          </Button>
+        ]}
+        onCancel={() => setNpsModalVisible(false)}
+      >
+        <Space direction="vertical" className="w-100" style={{ textAlign: "center" }}>
+          <ExclamationCircleOutlined style={{ fontSize: "64px", color: "#f5222d" }} />
+          <Title level={4}>Você já fez uma avaliação nos últimos 30 dias.</Title>
+          <Paragraph>
+            Última avaliação: {new Date(lastSubmissionDate).toLocaleDateString()} <br />
+            Dias restantes para poder fazer outra avaliação: {daysRemaining} dias
+          </Paragraph>
+        </Space>
       </Modal>
     </>
   );

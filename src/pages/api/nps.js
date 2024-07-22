@@ -3,11 +3,33 @@ import axios from "axios";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
-      const { user_id, responses } = req.body;
+      const { user_id, user_email, responses, professor_name, professor_email } = req.body;
+
+      // Verificar se o usuário já fez um NPS nos últimos 30 dias
+      const checkResponse = await axios.post(
+        "https://pratiquetecnologia.com.br/api/app/nps/consulta.php",
+        { user_id, user_email },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      const { canSubmit } = checkResponse.data;
+
+      if (!canSubmit) {
+        return res.status(400).json({ message: "Você já fez uma avaliação nos últimos 30 dias." });
+      }
+
+      // Se permitido, enviar a nova avaliação
       const response = await axios.post(
         "https://pratiquetecnologia.com.br/api/app/nps/nps.php",
         {
           user_id,
+          user_email,
+          professor_name,
+          professor_email,
           responses
         },
         {
@@ -16,6 +38,7 @@ export default async function handler(req, res) {
           }
         }
       );
+
       res.status(200).json(response.data);
     } catch (error) {
       console.error(
