@@ -79,28 +79,29 @@ export default function EvaluationForm() {
   useEffect(() => {
     if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
       setIsModalVisible(true);
+    } else {
+      checkNPS(usuario.ID, usuario.user_email);
     }
-
-    // Verificar se o usuário já fez uma avaliação nos últimos 30 dias
-    checkEmail(usuario.user_email);
   }, [usuario]);
 
-  const onCheckPassword = ({ password }) => {
-    dispatch(updateConta({ user_pass: password }))
-      .then(() => {
-        message.success("Senha alterada com sucesso!");
-        setIsModalVisible(false);
-      })
-      .catch(() => {
-        message.error("Erro ao alterar senha.");
-      });
+  const onCheckPassword = async ({ password }) => {
+    try {
+      await dispatch(updateConta({ user_pass: password }));
+      message.success("Senha alterada com sucesso!");
+      setIsModalVisible(false);
+      // Verificar o NPS apenas após a verificação da senha
+      await checkNPS(usuario.ID, usuario.user_email);
+    } catch {
+      message.error("Erro ao alterar senha.");
+    }
   };
 
-  const checkEmail = async (email) => {
+  const checkNPS = async (user_id, user_email) => {
     try {
       const response = await axios.post("/api/nps", {
-        user_id: usuario.ID,
-        user_email: email
+        user_id,
+        user_email,
+        check_only: true
       });
       const { canSubmit, lastSubmissionDate, daysRemaining } = response.data;
       setCanSubmit(canSubmit);
@@ -110,7 +111,7 @@ export default function EvaluationForm() {
         setNpsModalVisible(true);
       }
     } catch (error) {
-      message.error("Erro ao verificar email.");
+      message.error("Erro ao verificar NPS.");
     }
   };
 
