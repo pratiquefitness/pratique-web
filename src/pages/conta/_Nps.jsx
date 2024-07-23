@@ -31,28 +31,36 @@ export default function EvaluationForm() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [evaluationSteps, setEvaluationSteps] = useState([
-    { question: "Nome do Professor que realizou o exame", type: "text", answer: "" },
-    { question: "E-mail do Professor", type: "email", answer: "" },
     {
-      question: "Na orientação do módulo treino o que o avaliador te apresentou:",
+      question: "Nome do Professor que realizou o exame",
+      type: "text",
+      answer: ""
+    },
+    {
+      question: "E-mail do Professor",
+      type: "email",
+      answer: ""
+    },
+    {
+      question: "Na página principal (Home) quais funções o avaliador te apresentou?",
       type: "radio",
       options: [
-        "O PowerFlix que tem no seu aplicativo, com treinos do adaptativo até treinos específicos para jogar tênis , corrida , bike etc",
-        "O módulo bem estar mental, com Aulas e ioga meditação Guiada que encontra na Home do Aplicativo.",
-        "O avaliador me apresentou o treino específico montado para mim e seus exercícios e TAMBÉM me explicou a sessão MONTE SEU TREINO, botão FALE COM PROFESSOR, também me mostrou o Qrcode de TROCA DE TREINO fixado na academia."
+        "Powerflix, Aulas On Demand (online)",
+        "Treinos Desportivos, Atividades de Bem-Estar",
+        "Fale com a Pratique: SAC e Horário de Funcionamento",
+        "Todas as opções anteriores"
       ],
       answer: ""
     },
     {
-      question: "Utilidades e Atividades gratuitas e do Aplicativo foi lhe apresento:",
+      question:
+        "Na opção da Ficha de Treino marque a alternativa que contém as funções que o avaliador te apresentou:",
       type: "radio",
       options: [
-        "On Demand aulas que o cliente Pratique pode fazer em casa como, Power Bum Bum / Power Dance / Ioga / Meditação Guiada / Abdominal / Powe Jump / ETC.",
-        "Botão Fale com Professo Ajuste de treino",
-        "Sessão - Monte seu treino.",
-        "Fale com SAC",
-        "Horário de Funcionamento.",
-        "Foi me apresentado tudo."
+        "Monte Seu Treino",
+        "Botão Fale com o Professor",
+        "Visualização (videos) e explicação dos exercícios",
+        "Todas as opções anteriores"
       ],
       answer: ""
     },
