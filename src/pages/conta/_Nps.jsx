@@ -16,8 +16,8 @@ import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConta } from "@/redux/actions/conta";
 import { AuthContext } from "@/contexts/AuthContext";
-import axios from "axios";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Paragraph, Title } = Typography;
 
@@ -71,7 +71,6 @@ export default function EvaluationForm() {
     }
   ]);
   const [finished, setFinished] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
   const [canSubmit, setCanSubmit] = useState(true);
   const [npsModalVisible, setNpsModalVisible] = useState(false);
   const [lastSubmissionDate, setLastSubmissionDate] = useState(null);
@@ -81,6 +80,9 @@ export default function EvaluationForm() {
     if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
       setIsModalVisible(true);
     }
+
+    // Verificar se o usuário já fez uma avaliação nos últimos 30 dias
+    checkEmail(usuario.user_email);
   }, [usuario]);
 
   const onCheckPassword = ({ password }) => {
@@ -96,15 +98,10 @@ export default function EvaluationForm() {
 
   const checkEmail = async (email) => {
     try {
-      const response = await axios.post(
-        "https://pratiquetecnologia.com.br/api/app/nps/consulta.php",
-        { user_id: usuario.ID, user_email: email },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      const response = await axios.post("/api/nps", {
+        user_id: usuario.ID,
+        user_email: email
+      });
       const { canSubmit, lastSubmissionDate, daysRemaining } = response.data;
       setCanSubmit(canSubmit);
       setLastSubmissionDate(lastSubmissionDate);
@@ -129,14 +126,12 @@ export default function EvaluationForm() {
       axios
         .post("/api/nps", {
           user_id: usuario.ID,
-          user_email: userEmail, // Supondo que o email do usuário seja fornecido
-          professor_name: newSteps[0].answer, // Supondo que a primeira pergunta é o nome do professor
-          professor_email: newSteps[1].answer, // Supondo que a segunda pergunta é o email do professor
-          responses: newSteps.slice(2).map((step) => ({
+          user_email: usuario.user_email,
+          professor_name: newSteps[0].answer,
+          professor_email: newSteps[1].answer,
+          responses: newSteps.slice(2).map((step, index) => ({
             question: step.question,
-            answer: step.answer,
-            type: step.type,
-            options: step.options || []
+            answer: `${index + 1} - ${step.answer}`
           }))
         })
         .then((response) => {
@@ -160,18 +155,7 @@ export default function EvaluationForm() {
             name="answer"
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
-            <Input
-              type={currentQuestion.type}
-              placeholder={currentQuestion.question}
-              onBlur={
-                currentQuestion.type === "email"
-                  ? (e) => {
-                      setUserEmail(e.target.value);
-                      checkEmail(e.target.value);
-                    }
-                  : null
-              }
-            />
+            <Input type={currentQuestion.type} placeholder={currentQuestion.question} />
           </Form.Item>
         );
       case "radio":
@@ -181,9 +165,9 @@ export default function EvaluationForm() {
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
             <Radio.Group style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {currentQuestion.options.map((option) => (
+              {currentQuestion.options.map((option, index) => (
                 <Radio
-                  value={option}
+                  value={`${index + 1} - ${option}`}
                   key={option}
                   style={{
                     fontSize: "16px",
@@ -205,8 +189,12 @@ export default function EvaluationForm() {
           >
             <Checkbox.Group>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {currentQuestion.options.map((option) => (
-                  <Checkbox value={option} key={option} style={{ marginBottom: 8 }}>
+                {currentQuestion.options.map((option, index) => (
+                  <Checkbox
+                    value={`${index + 1} - ${option}`}
+                    key={option}
+                    style={{ marginBottom: 8 }}
+                  >
                     {option}
                   </Checkbox>
                 ))}
@@ -357,7 +345,8 @@ export default function EvaluationForm() {
           <ExclamationCircleOutlined style={{ fontSize: "64px", color: "#f5222d" }} />
           <Title level={4}>Você já fez uma avaliação nos últimos 30 dias.</Title>
           <Paragraph>
-            Última avaliação: {new Date(lastSubmissionDate).toLocaleDateString()} <br />
+            Última avaliação:{" "}
+            {lastSubmissionDate ? new Date(lastSubmissionDate).toLocaleDateString() : "N/A"} <br />
             Dias restantes para poder fazer outra avaliação: {daysRemaining} dias
           </Paragraph>
         </Space>
