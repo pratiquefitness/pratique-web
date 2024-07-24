@@ -2,10 +2,26 @@ import { message } from 'antd'
 import { setData, setLoading, setLoadingAnotacoes, setLoadingPeso } from '../slices/treino'
 import api from '@/services/api'
 
-export const getTreino = (emailAluno = '') => {
+export const getTreino = () => {
   return async (dispatch, getState) => {
     const { login, conta } = getState();
-    const email = emailAluno === '' ? login.usuario.user_email : emailAluno
+    const email = login.usuario.user_email;
+    dispatch(setLoading(true))
+    return api
+      .post('/treino', { email: email })
+      .then(res => {
+        dispatch(setData(res.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const getTreinoAluno = (emailAluno) => {
+  return async (dispatch, getState) => {
+    const { login, conta } = getState();
+    const email = emailAluno
     dispatch(setLoading(true))
     return api
       .post('/treino', { email: email })

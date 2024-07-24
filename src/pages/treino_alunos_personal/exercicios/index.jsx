@@ -9,6 +9,7 @@ import { getTreinoLivre, saveTreinoLivre } from '@/redux/actions/exercicios'
 import TreinosLivresSalvos from '@/components/Exercicios/TreinoLivre/TreinosLivresSalvos'
 import Exercicios from '@/components/Exercicios/TreinoLivre/Exercicios'
 import VerTreinoEscolhido from '@/components/Exercicios/TreinoLivre/VerMeuTreino'
+import { parseCookies } from 'nookies'
 const { Text } = Typography
 
 export default function ExerciciosView() {
@@ -25,8 +26,15 @@ export default function ExerciciosView() {
   const [treino, setTreino] = useState({})
   const [disabledButton, setDisabledButton] = useState(true)
 
+  const getObjectFromCookie = (ctx, key) => {
+    const cookies = parseCookies(ctx)
+    return cookies[key] ? JSON.parse(cookies[key]) : null
+  }
+
+  const alunoData = getObjectFromCookie(null, 'alunoPersonal');
+
   useEffect(() => {
-    dispatch(getTreinoLivre(dadosAluno.ID))
+    dispatch(getTreinoLivre(dadosAluno.ID || alunoData.ID))
   }, [])
 
   useEffect(() => {
@@ -70,26 +78,7 @@ export default function ExerciciosView() {
       <Loading spinning={loading}>
         {!verMeusTreinos ? (
           <>
-            {/* <div className="mt-4 text-center">
-                <Text>
-                  Biblioteca de exercícios com <Text strong>VÍDEOS</Text>
-                </Text>
-        </div>
-              <div className="text-center">
-                <Text>
-                  demonstrativos. Tenha uma boa pesquisa
-                </Text>
-              </div>
-              <div className="text-center">
-                <Text>
-                   e monte seu treino! 💪
-                </Text>
-              </div>*/}
             <br />
-            <div className="text-center">
-              <Text>PESQUISE O GRUPO MUSCULAR</Text>
-            </div>
-
             <Exercicios
               treinoLivre={treinoLivre}
               showModal={showModal}
@@ -119,6 +108,7 @@ export default function ExerciciosView() {
                 }}
                 nome={nomeTreino}
                 treinoPersonal={true}
+                id_user={alunoData?.ID}
               />
             </Modal>
             <TreinosLivresSalvos

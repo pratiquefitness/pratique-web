@@ -16,6 +16,7 @@ import {
 import api from "@/services/api";
 import apiPratiqueTecnologia from "@/services/apiPratiqueTecnologia";
 import { message } from "antd";
+import { setCookie } from 'nookies'
 
 export const excluirConta = () => {
   return async (dispatch, getState) => {
@@ -114,6 +115,15 @@ export const signInVerifyPersonalUser = (id) => {
     return api
       .post("/conta/verifyPersonalUser", { alunoId: id })
       .then((res) => {
+        const data = {
+          ID: res.data[0].ID,
+          login: res.data[0].user_login,
+          email: res.data[0].user_email
+        }
+        setCookie(undefined, 'alunoPersonal', JSON.stringify(data), {
+          maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+          path: '/'
+        })
         dispatch(setDadosAluno(res.data[0]));
       })
       .finally(() => {

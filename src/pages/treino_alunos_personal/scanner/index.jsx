@@ -3,9 +3,11 @@ import { Button, Empty, Table, Typography } from 'antd' // Adicionando Typograph
 import { DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import TreinoLayout from '../_Layout'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTreino } from '@/redux/actions/treino'
+import { getTreino, getTreinoAluno } from '@/redux/actions/treino'
 import axios from 'axios'
 import { setBrowserURL } from '@/redux/slices/global'
+import { parseCookies } from 'nookies'
+import { signInVerifyPersonalUser } from '@/redux/actions/conta'
 
 export default function ScannerView() {
   const dispatch = useDispatch()
@@ -21,7 +23,14 @@ export default function ScannerView() {
   const { dadosAluno } = useSelector(state => state.conta)
 
   useEffect(() => {
-    dispatch(getTreino(dadosAluno.user_email))
+    const getObjectFromCookie = (ctx, key) => {
+      const cookies = parseCookies(ctx)
+      return cookies[key] ? JSON.parse(cookies[key]) : null
+    }
+
+    const alunoData = getObjectFromCookie(null, 'alunoPersonal');
+    dispatch(getTreinoAluno(alunoData.email))
+    dispatch(signInVerifyPersonalUser(alunoData?.ID));
 
     const fetchExamsData = async () => {
       try {
@@ -67,7 +76,7 @@ export default function ScannerView() {
     }
 
     fetchExamsData()
-  }, [dispatch, dadosAluno])
+  }, [dispatch])
 
   const handleImageClick = async record => {
     setSelectedImage(record.bodyImage)

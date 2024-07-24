@@ -1,21 +1,21 @@
-import { Button, Col, Empty, Flex, Form, Input, Row, Space, Tag, theme } from 'antd'
+import { Button, Col, Empty, Form, Input, Row, Space, Tag, theme } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { LuClipboardCheck, LuClock, LuUser } from 'react-icons/lu'
 import InfoBox from './_InfoBox'
 import Loading from '@/components/Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getTreino, updateAnotacoes, updatePeso } from '@/redux/actions/treino'
+import { getTreinoAluno, updateAnotacoes, updatePeso } from '@/redux/actions/treino'
 import utils from '@/utils'
 import { FaWhatsapp } from 'react-icons/fa'
 import { BsFire } from 'react-icons/bs'
 import TreinoLayout from './_Layout'
 import { Collapse, Panel } from '@/components'
-import { Button as AntButton, Modal } from 'antd'
-import Link from 'next/link'
+import { Modal } from 'antd'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { signInVerifyPersonalUser } from '@/redux/actions/conta'
+import { parseCookies } from 'nookies'
 
 export default function MeuTreinoView() {
   const dispatch = useDispatch()
@@ -27,7 +27,14 @@ export default function MeuTreinoView() {
   //const { email } = useSelector(state => state.login.usuario)
   const { usuario } = useSelector(state => state.login)
   const router = useRouter();
-  const { themeMode } = useSelector(state => state.global)
+  const { themeMode } = useSelector(state => state.global);
+
+  const getObjectFromCookie = (ctx, key) => {
+    const cookies = parseCookies(ctx)
+    return cookies[key] ? JSON.parse(cookies[key]) : null
+  }
+
+  const alunoData = getObjectFromCookie(null, 'alunoPersonal');
 
   const onSaveAnotacoes = values => {
     dispatch(updateAnotacoes(values))
@@ -38,22 +45,24 @@ export default function MeuTreinoView() {
   }
 
   useEffect(() => {
-    dispatch(getTreino(dadosAluno.user_email))
-  } , [dadosAluno])
+    if(Object.keys(alunoData).length !== 0) {
+      dispatch(getTreinoAluno(alunoData?.email))
+    }
+  } , [dadosAluno]);
 
   useEffect(() => {
 
-    if(Object.keys(dadosAluno).length === 0) dispatch(signInVerifyPersonalUser(router.query.userId))
+    if(Object.keys(dadosAluno).length === 0) dispatch(signInVerifyPersonalUser(alunoData?.ID))
     if (
       usuario.user_email === '' ||
       usuario.user_email === '' ||
       usuario.user_email === ''
     ) {
-      openModal('/images/banner_home/banner-anovator.jpg')
+      openModal('/images/webp/banner_home/banner-anovator.jpg')
     } else {
       setModalVisible(false) // Esconde o modal se o email não corresponder
     }
-  }, [])
+  }, []);
 
   const openModal = imageUrl => {
     // Verifica se a URL da imagem está definida
