@@ -16,8 +16,8 @@ import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConta } from "@/redux/actions/conta";
 import { AuthContext } from "@/contexts/AuthContext";
-import axios from "axios";
 import { LikeOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Paragraph, Title } = Typography;
 
@@ -31,28 +31,36 @@ export default function EvaluationForm() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [evaluationSteps, setEvaluationSteps] = useState([
-    { question: "Nome do Professor que realizou o exame", type: "text", answer: "" },
-    { question: "E-mail do Professor", type: "email", answer: "" },
     {
-      question: "Na orientação do módulo treino o que o avaliador te apresentou:",
+      question: "Nome do Professor que realizou o exame",
+      type: "text",
+      answer: ""
+    },
+    {
+      question: "E-mail do Professor",
+      type: "email",
+      answer: ""
+    },
+    {
+      question: "Na página principal (Home) quais funções o avaliador te apresentou?",
       type: "radio",
       options: [
-        "O PowerFlix que tem no seu aplicativo, com treinos do adaptativo até treinos específicos para jogar tênis , corrida , bike etc",
-        "O módulo bem estar mental, com Aulas e ioga meditação Guiada que encontra na Home do Aplicativo.",
-        "O avaliador me apresentou o treino específico montado para mim e seus exercícios e TAMBÉM me explicou a sessão MONTE SEU TREINO, botão FALE COM PROFESSOR, também me mostrou o Qrcode de TROCA DE TREINO fixado na academia."
+        "Powerflix, Aulas On Demand (online)",
+        "Treinos Desportivos, Atividades de Bem-Estar",
+        "Fale com a Pratique: SAC e Horário de Funcionamento",
+        "Todas as opções anteriores"
       ],
       answer: ""
     },
     {
-      question: "Utilidades e Atividades gratuitas e do Aplicativo foi lhe apresento:",
+      question:
+        "Na opção da Ficha de Treino marque a alternativa que contém as funções que o avaliador te apresentou:",
       type: "radio",
       options: [
-        "On Demand aulas que o cliente Pratique pode fazer em casa como, Power Bum Bum / Power Dance / Ioga / Meditação Guiada / Abdominal / Powe Jump / ETC.",
-        "Botão Fale com Professo Ajuste de treino",
-        "Sessão - Monte seu treino.",
-        "Fale com SAC",
-        "Horário de Funcionamento.",
-        "Foi me apresentado tudo."
+        "Monte Seu Treino",
+        "Botão Fale com o Professor",
+        "Visualização (videos) e explicação dos exercícios",
+        "Todas as opções anteriores"
       ],
       answer: ""
     },
@@ -63,7 +71,6 @@ export default function EvaluationForm() {
     }
   ]);
   const [finished, setFinished] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
   const [canSubmit, setCanSubmit] = useState(true);
   const [npsModalVisible, setNpsModalVisible] = useState(false);
   const [lastSubmissionDate, setLastSubmissionDate] = useState(null);
@@ -72,31 +79,30 @@ export default function EvaluationForm() {
   useEffect(() => {
     if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
       setIsModalVisible(true);
+    } else {
+      checkNPS(usuario.ID, usuario.user_email);
     }
   }, [usuario]);
 
-  const onCheckPassword = ({ password }) => {
-    dispatch(updateConta({ user_pass: password }))
-      .then(() => {
-        message.success("Senha alterada com sucesso!");
-        setIsModalVisible(false);
-      })
-      .catch(() => {
-        message.error("Erro ao alterar senha.");
-      });
+  const onCheckPassword = async ({ password }) => {
+    try {
+      await dispatch(updateConta({ user_pass: password }));
+      message.success("Senha alterada com sucesso!");
+      setIsModalVisible(false);
+      // Verificar o NPS apenas após a verificação da senha
+      await checkNPS(usuario.ID, usuario.user_email);
+    } catch {
+      message.error("Erro ao alterar senha.");
+    }
   };
 
-  const checkEmail = async (email) => {
+  const checkNPS = async (user_id, user_email) => {
     try {
-      const response = await axios.post(
-        "https://pratiquetecnologia.com.br/api/app/nps/consulta.php",
-        { user_id: usuario.ID, user_email: email },
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      const response = await axios.post("/api/nps", {
+        user_id,
+        user_email,
+        check_only: true
+      });
       const { canSubmit, lastSubmissionDate, daysRemaining } = response.data;
       setCanSubmit(canSubmit);
       setLastSubmissionDate(lastSubmissionDate);
@@ -105,7 +111,7 @@ export default function EvaluationForm() {
         setNpsModalVisible(true);
       }
     } catch (error) {
-      message.error("Erro ao verificar email.");
+      message.error("Erro ao verificar NPS.");
     }
   };
 
@@ -121,14 +127,12 @@ export default function EvaluationForm() {
       axios
         .post("/api/nps", {
           user_id: usuario.ID,
-          user_email: userEmail, // Supondo que o email do usuário seja fornecido
-          professor_name: newSteps[0].answer, // Supondo que a primeira pergunta é o nome do professor
-          professor_email: newSteps[1].answer, // Supondo que a segunda pergunta é o email do professor
-          responses: newSteps.slice(2).map((step) => ({
+          user_email: usuario.user_email,
+          professor_name: newSteps[0].answer,
+          professor_email: newSteps[1].answer,
+          responses: newSteps.slice(2).map((step, index) => ({
             question: step.question,
-            answer: step.answer,
-            type: step.type,
-            options: step.options || []
+            answer: `${index + 1} - ${step.answer}`
           }))
         })
         .then((response) => {
@@ -152,18 +156,7 @@ export default function EvaluationForm() {
             name="answer"
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
-            <Input
-              type={currentQuestion.type}
-              placeholder={currentQuestion.question}
-              onBlur={
-                currentQuestion.type === "email"
-                  ? (e) => {
-                      setUserEmail(e.target.value);
-                      checkEmail(e.target.value);
-                    }
-                  : null
-              }
-            />
+            <Input type={currentQuestion.type} placeholder={currentQuestion.question} />
           </Form.Item>
         );
       case "radio":
@@ -173,9 +166,9 @@ export default function EvaluationForm() {
             rules={[{ required: true, message: "Este campo é obrigatório" }]}
           >
             <Radio.Group style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {currentQuestion.options.map((option) => (
+              {currentQuestion.options.map((option, index) => (
                 <Radio
-                  value={option}
+                  value={`${index + 1} - ${option}`}
                   key={option}
                   style={{
                     fontSize: "16px",
@@ -197,8 +190,12 @@ export default function EvaluationForm() {
           >
             <Checkbox.Group>
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {currentQuestion.options.map((option) => (
-                  <Checkbox value={option} key={option} style={{ marginBottom: 8 }}>
+                {currentQuestion.options.map((option, index) => (
+                  <Checkbox
+                    value={`${index + 1} - ${option}`}
+                    key={option}
+                    style={{ marginBottom: 8 }}
+                  >
                     {option}
                   </Checkbox>
                 ))}
@@ -349,7 +346,8 @@ export default function EvaluationForm() {
           <ExclamationCircleOutlined style={{ fontSize: "64px", color: "#f5222d" }} />
           <Title level={4}>Você já fez uma avaliação nos últimos 30 dias.</Title>
           <Paragraph>
-            Última avaliação: {new Date(lastSubmissionDate).toLocaleDateString()} <br />
+            Última avaliação:{" "}
+            {lastSubmissionDate ? new Date(lastSubmissionDate).toLocaleDateString() : "N/A"} <br />
             Dias restantes para poder fazer outra avaliação: {daysRemaining} dias
           </Paragraph>
         </Space>

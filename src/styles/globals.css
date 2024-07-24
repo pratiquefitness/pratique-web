@@ -385,3 +385,7 @@ body .ant-layout-footer {
 .ant-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
   color: #ffffff !important;
 }
+
+.ant-form-item .ant-form-item-control-input {
+  text-align: center !important;
+}
