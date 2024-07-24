@@ -75,9 +75,10 @@ export default function EvaluationForm() {
   const [npsModalVisible, setNpsModalVisible] = useState(false);
   const [lastSubmissionDate, setLastSubmissionDate] = useState(null);
   const [daysRemaining, setDaysRemaining] = useState(0);
+  const [passwordChanged, setPasswordChanged] = useState(false);
 
   useEffect(() => {
-    if (usuario.user_pass === "202cb962ac59075b964b07152d234b70") {
+    if (usuario.user_pass === "202cb962ac59075b964b07152d234b70" && !passwordChanged) {
       setIsModalVisible(true);
     } else {
       checkNPS(usuario.ID, usuario.user_email);
@@ -89,6 +90,7 @@ export default function EvaluationForm() {
       await dispatch(updateConta({ user_pass: password }));
       message.success("Senha alterada com sucesso!");
       setIsModalVisible(false);
+      setPasswordChanged(true);
       // Verificar o NPS apenas após a verificação da senha
       await checkNPS(usuario.ID, usuario.user_email);
     } catch {
@@ -275,7 +277,7 @@ export default function EvaluationForm() {
             </Paragraph>
             {renderQuestion()}
             <div style={{ textAlign: "center" }}>
-              <Button type="primary" htmlType="submit" disabled={!canSubmit}>
+              <Button type="primary" htmlType="submit" disabled={!canSubmit || !passwordChanged}>
                 {currentStep < evaluationSteps.length - 1 ? "Próximo" : "Finalizar"}
               </Button>
             </div>
@@ -328,6 +330,8 @@ export default function EvaluationForm() {
         visible={isModalVisible}
         footer={null}
         onCancel={() => setIsModalVisible(false)}
+        maskClosable={false}
+        closable={false}
       >
         {steps[0].content}
       </Modal>
