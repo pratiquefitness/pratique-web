@@ -86,6 +86,10 @@ export default function EvaluationForm() {
   }, [usuario]);
 
   const onCheckPassword = async ({ password }) => {
+    if (password === "123" || password === "202cb962ac59075b964b07152d234b70") {
+      message.error("Você não pode usar esta senha. Escolha outra senha.");
+      return;
+    }
     try {
       await dispatch(updateConta({ user_pass: password }));
       message.success("Senha alterada com sucesso!");
@@ -329,7 +333,6 @@ export default function EvaluationForm() {
         title="Alterar Senha"
         visible={isModalVisible}
         footer={null}
-        onCancel={() => setIsModalVisible(false)}
         maskClosable={false}
         closable={false}
       >
