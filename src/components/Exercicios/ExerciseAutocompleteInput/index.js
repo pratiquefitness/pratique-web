@@ -57,7 +57,7 @@ export const ExerciseAutocompleteInput = ({
         onSearch={onSearch}
         onChange={setValue}
         filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-        placeholder="PESQUISE O EXERCÍCIO DESEJADO"
+        placeholder=""
         allowClear
         onFocus={focus}
       />
@@ -110,6 +110,9 @@ export const ExerciseChoiceInput = ({ selectedChoice = () => { }, focus = () => 
 
   return (
     <>
+      <div className="mt-4 text-center">
+        <Text>PESQUISE O GRUPO MUSCULAR</Text>
+      </div>
       <Select
         labelInValue
         id={'filtro_grupamento_muscular'}

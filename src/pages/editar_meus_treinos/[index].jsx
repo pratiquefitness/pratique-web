@@ -13,9 +13,9 @@ import Exercicios from '@/components/Exercicios/TreinoLivre/Exercicios'
 import TreinoLayout from '@/pages/treino/_Layout'
 
 const { Title } = Typography
-import { IoSaveSharp, IoAddCircle } from 'react-icons/io5'
+import { IoSaveSharp, IoAddCircle, IoArrowUndoSharp } from 'react-icons/io5'
 
-export default function EditarMeusTreinos() {
+export default function EditarMeusTreinos({params}) {
   const { loading } = useSelector(state => state.exercicios)
   const { usuario } = useSelector(state => state.login)
   const { treinoLivre } = useSelector(state => state.exercicios)
@@ -43,9 +43,9 @@ export default function EditarMeusTreinos() {
   }, [nomeTreino])
 
   useEffect(() => {
-    let treino = treinoLivre.meus_treinos?.length > 0 ? JSON.parse(JSON.stringify(treinoLivre.meus_treinos[0])) : {}
-    let nome = treinoLivre.meus_treinos?.length > 0 ? treinoLivre.meus_treinos[0].nome_treino : ''
-    let exercicios = treinoLivre.meus_treinos?.length > 0 ? treinoLivre.meus_treinos[0].exercicios : []
+    let treino = treinoLivre.meus_treinos?.length > 0 ? treinoLivre.meus_treinos.find(treino => treino.id_ficha === parseInt(router.query.index)) : {}
+    let nome = treinoLivre.meus_treinos?.length > 0 ? treino?.nome_treino : ''
+    let exercicios = treinoLivre.meus_treinos?.length > 0 ? treino?.exercicios : []
     setMeuTreino(treino)
     setNomeTreino(nome)
     setSelectedExercises(JSON.parse(JSON.stringify(exercicios)))
@@ -130,7 +130,7 @@ export default function EditarMeusTreinos() {
                 <>
                   {
                     usuario.professor === 1 || usuario.plano?.includes('PERSONAL TRAINER') ?
-                      <Divider orientation="center"><Title level={3}>Treino Livre do ALuno</Title></Divider>
+                      <Divider orientation="center"><Title level={3}>Treino Livre do Aluno</Title></Divider>
                       :
                       <Divider orientation="center"><Title level={3}>Meu Treino Livre</Title></Divider>
                   }
@@ -204,6 +204,18 @@ export default function EditarMeusTreinos() {
                     }
                   </Collapse>
                   <Divider orientation="center"></Divider>
+                  <Flex justify={'center'} align={'center'} vertical>
+                    <Button
+                      block
+                      icon={<IoArrowUndoSharp />}
+                      style={{ backgroundColor: '#756483', color: '#fff' }}
+                      onClick={() => {
+                        router.back();
+                      }}
+                    >
+                      TREINOS
+                    </Button>
+                  </Flex>
                   <br />
                   <Flex justify={'center'} align={'center'} vertical>
                     <Button

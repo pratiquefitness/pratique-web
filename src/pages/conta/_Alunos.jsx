@@ -206,9 +206,9 @@ export default function Alunos() {
                       size={'small'}
                       onClick={() => {
                         router.push({
-                          pathname: '/treino_alunos_personal',
+                          pathname: `/treino_alunos_personal`,
                           query: { email: item.email || item.user_email, userId: item.id || item.ID }
-                        }, '/treino_alunos_personal')
+                        }, `/treino_alunos_personal`)
                       }}
                     >
                       Acessar
