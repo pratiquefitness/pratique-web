@@ -34,6 +34,12 @@ export default function MeuTreinoView() {
     return cookies[key] ? JSON.parse(cookies[key]) : null
   }
 
+  useEffect(() => {
+    if(router.query?.userId !== undefined) {
+      dispatch(signInVerifyPersonalUser(router.query?.userId));
+    }
+  }, [router])
+
   const alunoData = getObjectFromCookie(null, 'alunoPersonal');
 
   const onSaveAnotacoes = values => {
@@ -45,14 +51,15 @@ export default function MeuTreinoView() {
   }
 
   useEffect(() => {
-    if(Object.keys(alunoData).length !== 0) {
+    if(
+      undefined !== alunoData ||
+      Object.keys(alunoData).length !== 0
+    ) {
       dispatch(getTreinoAluno(alunoData?.email))
     }
   } , [dadosAluno]);
 
   useEffect(() => {
-
-    if(Object.keys(dadosAluno).length === 0) dispatch(signInVerifyPersonalUser(alunoData?.ID))
     if (
       usuario.user_email === '' ||
       usuario.user_email === '' ||
