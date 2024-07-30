@@ -13,7 +13,9 @@ export default function AulasColetivas({ tema }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAulasColetivas(modalidades[tema] || 14));
+    // Obtendo o ID da modalidade com base no tema
+    const modalidadeId = modalidades[tema] || 14;
+    dispatch(getAulasColetivas(modalidadeId));
   }, [tema, dispatch]);
 
   const renderPlayer = () => {
@@ -30,7 +32,7 @@ export default function AulasColetivas({ tema }) {
         <Row gutter={16}>
           {data.map(
             (aula, key) =>
-              aula.aula_capa.length && (
+              aula.aula_capa.length > 0 && (
                 <Col xs={{ span: 24 }} md={{ span: 12 }} key={key} className="pb-4">
                   <Card
                     title={aula.aula_nome}
