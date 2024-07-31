@@ -71,17 +71,18 @@ export default function EvaluationForm() {
     }
   ]);
   const [finished, setFinished] = useState(false);
-  const [canSubmit, setCanSubmit] = useState(true);
+  const [canSubmit, setCanSubmit] = useState(false);
   const [npsModalVisible, setNpsModalVisible] = useState(false);
   const [lastSubmissionDate, setLastSubmissionDate] = useState(null);
   const [daysRemaining, setDaysRemaining] = useState(0);
   const [passwordChanged, setPasswordChanged] = useState(false);
 
   useEffect(() => {
-    if (usuario.user_pass === "202cb962ac59075b964b07152d234b70" && !passwordChanged) {
-      setIsModalVisible(true);
+    if (usuario.user_pass !== "202cb962ac59075b964b07152d234b70") {
+      setPasswordChanged(true);
+      checkNPS(usuario.ID, usuario.user_email); // Verifica NPS se a senha não for "123"
     } else {
-      checkNPS(usuario.ID, usuario.user_email);
+      setIsModalVisible(true);
     }
   }, [usuario]);
 
@@ -95,8 +96,7 @@ export default function EvaluationForm() {
       message.success("Senha alterada com sucesso!");
       setIsModalVisible(false);
       setPasswordChanged(true);
-      // Verificar o NPS apenas após a verificação da senha
-      await checkNPS(usuario.ID, usuario.user_email);
+      await checkNPS(usuario.ID, usuario.user_email); // Verifica NPS após alterar a senha
     } catch {
       message.error("Erro ao alterar senha.");
     }
@@ -150,6 +150,11 @@ export default function EvaluationForm() {
         });
     }
   };
+
+  useEffect(() => {
+    console.log("canSubmit:", canSubmit);
+    console.log("passwordChanged:", passwordChanged);
+  }, [canSubmit, passwordChanged]);
 
   const renderQuestion = () => {
     const currentQuestion = evaluationSteps[currentStep];
