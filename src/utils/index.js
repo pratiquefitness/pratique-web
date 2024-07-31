@@ -13,31 +13,37 @@ const utils = {
       return "/";
     }
   },
+
   getByObjectKeyValue: (array, key, value) => {
     const result = array.filter((obj) => {
       return obj[key] === value;
     });
     return result[0] || "";
   },
+
   clearDatabaseResult: (data) => {
     const updatedData = JSON.stringify(data, (key, value) =>
       typeof value === "bigint" ? value.toString() : value
     );
     return JSON.parse(updatedData);
   },
+
   convertToYouTubeEmbedUrl: (url) => {
     const videoId = url.split("/").pop();
     return `https://www.youtube.com/embed/${videoId}`;
   },
+
   getIdFromYouTubeUrl: (url) => {
     const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     const match = url.match(regExp);
     return match && match[7].length == 11 ? match[7] : false;
   },
+
   getMonthNames: (month) => {
     const monthSelected = months.filter((mes) => mes.key === parseInt(month));
     return monthSelected.length ? monthSelected[0] : months[0];
   },
+
   fieldSearch: (list, input, field) => {
     list = list.filter((item) => {
       return item[field]
@@ -54,6 +60,7 @@ const utils = {
 
     return list;
   },
+
   wildCardSearch: (list, input) => {
     const searchText = (item) => {
       for (const key in item) {
@@ -92,9 +99,11 @@ const utils = {
   },
 
   encrypt_md5: (text) => crypto.createHash("md5").update(text).digest("hex"),
+
   getRndInteger: (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   },
+
   resizeAndConvertToBase64: (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -134,9 +143,30 @@ const utils = {
       reader.onerror = (error) => reject(error);
     });
   },
+
   isInWebView: () => {
     var userAgent = navigator.userAgent.toLowerCase();
     return userAgent.indexOf("wv") > -1 || userAgent.indexOf("x-webview") > -1;
+  },
+
+  disablePullToRefresh: () => {
+    if (utils.isInWebView()) {
+      document.addEventListener(
+        "touchmove",
+        function (e) {
+          if (window.scrollY === 0) {
+            e.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+    }
+  },
+
+  preventScrollDefault: () => {
+    if (utils.isInWebView()) {
+      document.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
+    }
   },
 
   utf8Decode: (utf8String) => {
@@ -156,14 +186,16 @@ const utils = {
       });
     return unicodeString;
   },
+
   createImage: (url) =>
     new Promise((resolve, reject) => {
       const image = new Image();
       image.addEventListener("load", () => resolve(image));
       image.addEventListener("error", (error) => reject(error));
-      image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
+      image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues
       image.src = url;
     }),
+
   getCroppedImg: async (imageSrc, crop) => {
     const image = await utils.createImage(imageSrc);
     const canvas = document.createElement("canvas");
@@ -180,6 +212,7 @@ const utils = {
       }, "image/jpeg");
     });
   },
+
   getFistLastName: (name) => {
     const firstLastName = name.trim().split(" ");
     if (firstLastName.length === 1) return `${firstLastName.shift()}`;
