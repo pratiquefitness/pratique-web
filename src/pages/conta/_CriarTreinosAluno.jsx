@@ -72,11 +72,6 @@ export default function CriarTreinosAluno() {
     <Loading spinning={loading}>
       {!verMeusTreinos ? (
         <>
-          <div className="mt-4 text-center">
-            <Text>PESQUISE O GRUPO MUSCULAR</Text>
-          </div>
-
-          <br />
           <Exercicios
             treinoLivre={treinoLivre}
             showModal={showModal}

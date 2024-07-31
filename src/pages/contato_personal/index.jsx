@@ -81,7 +81,12 @@ export default function Contato() {
           href={`https://api.whatsapp.com/send?phone=55${router.query.telefone.replace(/[^0-9a-zA-Z]/g, "")}&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20gostaria%20de%20falar%20sobre%20seu%20personal.`}
           target="_blank"
         >
-          <Button icon={<FaWhatsapp fill="#25D366" />} block>
+          <Button
+            icon={<FaWhatsapp fill="#25D366" />}
+            className="text-white text-large"
+            style={{ background: 'green' }}
+            block
+          >
             Entre em contato comigo
           </Button>
         </a>

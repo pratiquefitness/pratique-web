@@ -114,7 +114,7 @@ const TreinosLivresSalvos = ({
     }
   ];
   
-  const data = treinoLivre.meus_treinos.map((treino, i) => {
+  const data = treinoLivre.meus_treinos?.map((treino, i) => {
     return {
       key: i,
       data: <Text>{`${format(new Date(treino.data_criacao), 'dd-MM-yy-EEEEEE', {locale: ptBR})}`}</Text>,

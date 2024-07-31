@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import TreinoLayout from '../_Layout'
 import Link from 'next/link'
 import { format } from 'date-fns';
+import { signInVerifyPersonalUser } from '@/redux/actions/conta'
+import { parseCookies } from 'nookies'
 
 const columns = [
   {
@@ -44,11 +46,19 @@ const columns = [
 export default function DiagnoseView() {
   const dispatch = useDispatch()
   const { data, loading } = useSelector(state => state.diagnose)
-  const { dadosAluno } = useSelector(state => state.conta)
+
+  const getObjectFromCookie = (ctx, key) => {
+    const cookies = parseCookies(ctx)
+    return cookies[key] ? JSON.parse(cookies[key]) : null
+  }
 
   useEffect(() => {
-    dispatch(getDiagnose(dadosAluno.user_email))
-  }, [])
+    const alunoData = getObjectFromCookie(null, 'alunoPersonal');
+    if(Object.keys(alunoData).length > 0){
+      dispatch(signInVerifyPersonalUser(alunoData?.ID));
+      dispatch(getDiagnose(alunoData?.email))
+    }
+  }, []);
 
   return (
     <TreinoLayout>
