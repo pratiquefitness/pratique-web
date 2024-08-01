@@ -1,21 +1,21 @@
-import Loading from '@/components/Loading'
-import { getLives } from '@/redux/actions/lives'
-import utils from '@/utils'
-import { Carousel, Typography, theme } from 'antd'
-import { format } from 'date-fns'
-import { useEffect } from 'react'
-import Countdown from 'react-countdown'
-import { useDispatch, useSelector } from 'react-redux'
+import Loading from "@/components/Loading";
+import { getLives } from "@/redux/actions/lives";
+import utils from "@/utils";
+import { Carousel, Typography, theme } from "antd";
+import { format } from "date-fns";
+import { useEffect } from "react";
+import Countdown from "react-countdown";
+import { useDispatch, useSelector } from "react-redux";
 
 const contentStyle = {
   margin: 5,
   height: 200,
-  color: 'black',
+  color: "black",
   borderRadius: 10
-}
+};
 
 const settings = {
-  className: 'center',
+  className: "center",
   centerMode: false,
   slidesToShow: 1,
   swipeToSlide: true,
@@ -24,9 +24,9 @@ const settings = {
   dots: true,
   autoplaySpeed: 3000,
   style: {
-    width: '100%'
+    width: "100%"
   }
-}
+};
 
 /*
 5 min - em instantes
@@ -34,13 +34,13 @@ agora - acontecendo
 */
 
 export default function BannersPowerCycle() {
-  const disptach = useDispatch()
-  const { token } = theme.useToken()
-  const { data, loading } = useSelector(state => state.lives)
+  const disptach = useDispatch();
+  const { token } = theme.useToken();
+  const { data, loading } = useSelector((state) => state.lives);
 
   useEffect(() => {
-    disptach(getLives())
-  }, [])
+    disptach(getLives());
+  }, []);
 
   return (
     <Loading spinning={loading}>
@@ -48,23 +48,26 @@ export default function BannersPowerCycle() {
         {data.length ? (
           <Carousel {...settings}>
             {data.map((live, key) => {
-              const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`)
+              const datetime = new Date(`${live.live_datagravacao}T${live.live_horagravacao}:00`);
               if (new Date() >= datetime) {
-                return false
+                return false;
               }
-              const dia = format(new Date(live.live_datagravacao + 'T00:00:00'), 'dd')
-              const mes = format(new Date(live.live_datagravacao + 'T00:00:00'), 'MM')
+              const dia = format(new Date(live.live_datagravacao + "T00:00:00"), "dd");
+              const mes = format(new Date(live.live_datagravacao + "T00:00:00"), "MM");
               return (
                 <div key={key}>
-                  <a href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`} target="_blank">
+                  <a
+                    href={`https://www.youtube.com/watch?v=${live.live_videoyoutube}`}
+                    target="_blank"
+                  >
                     <div
                       style={{
                         backgroundImage: `url('${live.live_link}')`,
-                        backgroundSize: 'cover',
-                        backgroundSize: 'contain',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'right',
-                        backgroundColor: 'white',
+                        backgroundSize: "cover",
+                        backgroundSize: "contain",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "right",
+                        backgroundColor: "white",
                         ...contentStyle
                       }}
                     >
@@ -80,11 +83,11 @@ export default function BannersPowerCycle() {
                               return (
                                 <>
                                   Começa em: <br />
-                                  <span style={{ fontWeight: 'bold', fontSize: 20 }}>
+                                  <span style={{ fontWeight: "bold", fontSize: 20 }}>
                                     {hours}h {minutes}m {seconds}s
                                   </span>
                                 </>
-                              )
+                              );
                             }}
                           />
                         </p>
@@ -92,11 +95,11 @@ export default function BannersPowerCycle() {
                     </div>
                   </a>
                 </div>
-              )
+              );
             })}
           </Carousel>
         ) : null}
       </>
     </Loading>
-  )
+  );
 }
