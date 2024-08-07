@@ -70,36 +70,44 @@ export default function Geral() {
   return (
     <Loading spinning={loading}>
       <Row gutter={[16, 16]} className="mb-4">
-        <Col span={6}>
+        <Col span={5}>
           <div
-            className="p-4"
+            className="p-2"
             style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
           >
             <Statistic title="Vendas" an value={geral.totalVendas} />
           </div>
         </Col>{" "}
-        <Col span={6}>
+        <Col span={5}>
           <div
-            className="p-4"
+            className="p-2"
             style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
           >
             <Statistic title="Balcão" value={geral.totalBalcao} />
           </div>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <div
-            className="p-4"
+            className="p-2"
             style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
           >
             <Statistic title="Afiliado" value={geral.totalAfiliados} />
           </div>
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <div
-            className="p-4"
+            className="p-2"
             style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
           >
             <Statistic title="NPS" an value={geral.nps} />
+          </div>
+        </Col>
+        <Col span={5}>
+          <div
+            className="p-2"
+            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
+          >
+            <Statistic title="Tablet" an value={geral.tablet} />
           </div>
         </Col>
         <Col span={12}>
@@ -115,7 +123,7 @@ export default function Geral() {
             <Statistic
               title={<span style={{ color: "white" }}>Valor a Receber</span>}
               valueStyle={{ color: "white" }}
-              value={`R$ ${geral.valorReceber},00`}
+              value={`R$ ${geral.valorReceber}`}
             />
           </div>
         </Col>
