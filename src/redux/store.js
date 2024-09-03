@@ -13,6 +13,7 @@ import afiliadosSlice from './slices/afiliados';
 import contaSlice from './slices/conta';
 import exerciciosSlice from './slices/exercicios';
 import areaDoPersonalSlice from './slices/areaDoPersonal';
+import calendarioSlice from './slices/calendario';
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     afiliados: afiliadosSlice.reducer,
     exercicios: exerciciosSlice.reducer,
     areaDoPersonal: areaDoPersonalSlice.reducer,
+    calendario: calendarioSlice.reducer,
   }
 })
 
