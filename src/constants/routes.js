@@ -63,14 +63,14 @@ const routes = [
     href: "/blog",
     icon: <IoNewspaperOutline />,
     activeIcon: <IoNewspaper />,
-    showInNavigation: true
+    showInNavigation: false
   },
   {
     title: "Calendário",
     href: "/calendario",
     icon: <IoCalendarOutline />,
     activeIcon: <IoCalendar />,
-    showInNavigation: false
+    showInNavigation: true
   },
   {
     title: "Meditação",
