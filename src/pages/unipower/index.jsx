@@ -23,8 +23,8 @@ const subcategories = {
   "aba-professor": {
     "aba-professor-verde": "Professor Verde",
     "aba-professor-vermelha": "Professor Vermelha",
-    "aba-professor-exame-de-bioimpedancia": "Professor Exame de Bioimpedância",
-    "aba-professor-atualizacoes-cientificas": "Professor Atualizações Científicas"
+    "aba-professor-bioimpedancia": "Professor Exame de Bioimpedância",
+    "aba-professor-atualizacoes-cientifica": "Professor Atualizações Científicas"
   }
 };
 
@@ -32,8 +32,8 @@ const subcategories = {
 const subcategoryColors = {
   "aba-professor-verde": "#28a745", // verde
   "aba-professor-vermelha": "#dc3545", // vermelho
-  "aba-professor-exame-de-bioimpedancia": "#17a2b8", // ciano
-  "aba-professor-atualizacoes-cientificas": "#ffc107" // amarelo
+  "aba-professor-bioimpedancia": "#6217b8", // ciano
+  "aba-professor-atualizacoes-cientifica": "#6d4711e0" // amarelo
 };
 
 // Função para remover números iniciais do título
@@ -233,7 +233,14 @@ export default function Unipower() {
                       textAlign: "center"
                     }}
                   >
-                    <Text style={{ color: "#fff", fontSize: "16px", fontWeight: "bold" }}>
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontSize: "12px",
+                        padding: "5px",
+                        fontWeight: "bold"
+                      }}
+                    >
                       {subcategories["aba-professor"][subcategory]}
                     </Text>
                   </div>
