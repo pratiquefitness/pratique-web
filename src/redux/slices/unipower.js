@@ -1,23 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
   loading: true
-}
+};
 
 export const unipowerSlice = createSlice({
-  name: 'unipower',
+  name: "unipower",
   initialState,
   reducers: {
     setData(state, action) {
-      return { ...state, data: action.payload }
+      return { ...state, data: action.payload };
     },
     setLoading(state, action) {
-      return { ...state, loading: action.payload }
+      return { ...state, loading: action.payload };
     }
   }
-})
+});
 
-export const { setData, setLoading } = unipowerSlice.actions
+export const { setData, setLoading } = unipowerSlice.actions;
 
-export default unipowerSlice
+export default unipowerSlice;
