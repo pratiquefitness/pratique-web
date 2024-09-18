@@ -166,7 +166,7 @@ export default function Unipower() {
           {/* Exibir as categorias */}
           <div className="p-1">
             <Typography.Title level={4} style={{ textAlign: "center" }}>
-              Navegue por Categorias
+              Escolha seu Setor
             </Typography.Title>
             <Row gutter={[16, 16]} justify="center">
               {Object.keys(categoryImages)
