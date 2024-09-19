@@ -21,10 +21,10 @@ const categoryImages = {
 // Definir as subcategorias da categoria "aba-professor"
 const subcategories = {
   "aba-professor": {
-    "aba-professor-verde": "Professor Verde",
-    "aba-professor-vermelha": "Professor Vermelha",
-    "aba-professor-bioimpedancia": "Professor Exame de Bioimpedância",
-    "aba-professor-atualizacoes-cientifica": "Professor Atualizações Científicas"
+    "aba-professor-verde": "Pulseira Verde",
+    "aba-professor-vermelha": "Pulseira Vermelha",
+    "aba-professor-bioimpedancia": "Exame de Bioimpedância",
+    "aba-professor-atualizacoes-cientifica": "Atualizações Científicas"
   }
 };
 
