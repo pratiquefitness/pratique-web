@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
-import Diagnose from "@/components/Diagnose/Cards"; // Caminho atualizado
+//import Diagnose from "./Cards";
 import { getPerguntasDiagnose } from "@/redux/actions/diagnose"; // Certifique-se de que o caminho e a função estão corretos
 import Loading from "@/components/Loading";
 
