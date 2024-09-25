@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import DiagnoseForm from "@/components/DiagnoseForm"; // Ajuste o caminho conforme necessário
+import DiagnoseForm from "./DiagnoseForm"; // Se `DiagnoseForm.jsx` estiver na mesma pasta
 
 export default function DiagnoseRequired() {
   const { usuario } = useSelector((state) => state.login);
