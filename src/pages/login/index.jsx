@@ -1,47 +1,48 @@
-import { Alert, Button, Col, Form, Input, Modal, Row, Typography, message, theme } from 'antd'
-import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useDispatch, useSelector } from 'react-redux'
-import { useContext } from 'react'
-import { AuthContext } from '@/contexts/AuthContext'
-import Recovery from './_Recovery'
-import { resetModalRecovery, setModalRecovery, setModalRegister } from '@/redux/slices/login'
-import Register from './_Register'
-import { FaWhatsapp } from 'react-icons/fa'
+import { Alert, Button, Col, Form, Input, Modal, Row, Typography, message, theme } from "antd";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+import Recovery from "./_Recovery";
+import { resetModalRecovery, setModalRecovery, setModalRegister } from "@/redux/slices/login";
+import Register from "./_Register";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function LoginView() {
-  const { token } = theme.useToken()
-  const { loading, modalRegister, modalRecovery } = useSelector(state => state.login)
-  const searchParams = useSearchParams()
-  const { signIn } = useContext(AuthContext)
-  const dispath = useDispatch()
-  const router = useRouter()
+  const { token } = theme.useToken();
+  const { loading, modalRegister, modalRecovery } = useSelector((state) => state.login);
+  const searchParams = useSearchParams();
+  const { signIn } = useContext(AuthContext);
+  const dispath = useDispatch();
+  const router = useRouter();
 
-  const error = searchParams.get('error')
+  const error = searchParams.get("error");
 
-  const isMobile = typeof window !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent)
+  const isMobile =
+    typeof window !== "undefined" && /iPhone|iPad|iPod|Android/i.test(window.navigator.userAgent);
 
   const openWhatsApp = () => {
     const whatsappUrl =
-      'https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa'
+      "https://api.whatsapp.com/send?phone=553141411962&text=Olá, estou vindo do suporte do aplicativo da Pratique em Casa";
     if (isMobile) {
-      window.location.href = whatsappUrl
-      return
+      window.location.href = whatsappUrl;
+      return;
     }
 
-    window.open(whatsappUrl, '_blank')
-  }
+    window.open(whatsappUrl, "_blank");
+  };
 
-  const onFinish = async values => {
-    const login = await signIn(values)
+  const onFinish = async (values) => {
+    const login = await signIn(values);
     if (!login) {
-      message.error('Usuário ou senha invalidos!')
+      message.error("Usuário ou senha invalidos!");
       router.push({
-        pathname: '/',
-        query: { error: 'true' }
-      })
+        pathname: "/",
+        query: { error: "true" }
+      });
     }
-  }
+  };
 
   return (
     <div className="login login-background" style={{ backgroundColor: token.colorBgBase }}>
@@ -69,15 +70,21 @@ export default function LoginView() {
             src="/logo.svg"
             width={220}
             height={58}
-            style={{ filter: 'drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4))' }}
+            style={{ filter: "drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4))" }}
           />
         </div>
         <div className="box-login">
-          <Form name="basic" initialValues={{ remember: true }} onFinish={onFinish} autoCapitalize='off' autoComplete="off">
-            <Form.Item name="email" rules={[{ required: true, message: 'Preencha seu e-mail...' }]}>
+          <Form
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            autoCapitalize="off"
+            autoComplete="off"
+          >
+            <Form.Item name="email" rules={[{ required: true, message: "Preencha seu e-mail..." }]}>
               <Input placeholder="E-mail" />
             </Form.Item>
-            <Form.Item name="senha" rules={[{ required: true, message: 'Preencha sua senha...' }]}>
+            <Form.Item name="senha" rules={[{ required: true, message: "Preencha sua senha..." }]}>
               <Input.Password placeholder="Senha" />
             </Form.Item>
             {error && (
@@ -85,7 +92,8 @@ export default function LoginView() {
                 message="Usuário ou senha invalidos!"
                 description={
                   <>
-                    Esqueceu sua senha? <a onClick={() => dispath(setModalRecovery(true))}>Clique aqui</a>.
+                    Esqueceu sua senha?{" "}
+                    <a onClick={() => dispath(setModalRecovery(true))}>Clique aqui</a>.
                   </>
                 }
                 type="error"
@@ -93,7 +101,10 @@ export default function LoginView() {
               />
             )}
 
-            <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: error ? 10 : -10 }}>
+            <Typography.Paragraph
+              className="text-center"
+              style={{ color: "white", marginTop: error ? 10 : -10 }}
+            >
               Senha padrão: 123
             </Typography.Paragraph>
 
@@ -104,12 +115,15 @@ export default function LoginView() {
             </Form.Item>
           </Form>
 
-          <Typography.Paragraph className="text-center" style={{ color: 'white', marginTop: -10 }}>
+          <Typography.Paragraph className="text-center" style={{ color: "white", marginTop: -10 }}>
             <small>Ao clicar em ENTRAR você concorda com os nossos termos.</small>
             <br></br>
           </Typography.Paragraph>
           <br></br>
-          <Typography.Paragraph className="text-center" style={{ color: 'white' }}></Typography.Paragraph>
+          <Typography.Paragraph
+            className="text-center"
+            style={{ color: "white" }}
+          ></Typography.Paragraph>
 
           <Row gutter={6}>
             <Col xs={24} sm={12} md={12} lg={12} className="mb-4">
@@ -125,7 +139,7 @@ export default function LoginView() {
             <Col xs={24} className="mb-12">
               <Button
                 icon={<FaWhatsapp fill="#fff" size={30} />}
-                style={{ background: 'green', color: 'white' }}
+                style={{ background: "green", color: "white" }}
                 block
                 onClick={openWhatsApp}
               >
@@ -136,5 +150,5 @@ export default function LoginView() {
         </div>
       </div>
     </div>
-  )
+  );
 }

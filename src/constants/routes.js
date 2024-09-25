@@ -182,6 +182,16 @@ const routes = [
     title: "",
     href: "/treino_alunos_personal",
     showInNavigation: false
+  },
+  {
+    href: "/treino/diagnose",
+    title: "Realizar Diagnose"
+    // outras propriedades...
+  },
+  {
+    href: "/diagnose-required",
+    title: "Diagnose Obrigatória"
+    // outras propriedades...
   }
 ];
 

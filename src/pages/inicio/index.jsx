@@ -1,5 +1,8 @@
+// src/pages/inicio/index.jsx
+
 import { Button, Col, Form, Input, Modal, Row, Space, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import Banners from "./_Banners";
 import { setBrowserURL } from "@/redux/slices/global";
@@ -14,17 +17,19 @@ import { IdcardOutlined } from "@ant-design/icons";
 import { updateNiceName } from "@/redux/actions/conta";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { TURBO_TRACE_DEFAULT_MEMORY_LIMIT } from "next/dist/shared/lib/constants";
 import { InView } from "react-intersection-observer";
 import { LazyLoadingCardBig } from "../../components/LazyLoadingCardBig";
 import { LazyLoadingCardExtraBig } from "../../components/LazyLoadingCardExtraBig";
 import { LazyLoadingTwoColumns } from "../../components/LazyLoadingTwoColumns";
 import { LazyLoadingThreeColumns } from "../../components/LazyLoadingThreeColumns";
+import { useRouter } from "next/router"; // Importar useRouter
 
 const { Title, Text } = Typography;
 
 export default function Inicio() {
   const dispatch = useDispatch();
+  const router = useRouter(); // Inicializar o router
+  const { user } = useContext(AuthContext); // Obter o usuário do contexto
   const [horariosModal, setHorariosModal] = useState(false);
   const [saverClubModal, setSaverClubModal] = useState(false);
   const [isCpfValid, setIsCpfValid] = useState(false);
@@ -56,17 +61,44 @@ export default function Inicio() {
     }
   };
 
+  // Função para verificar se o usuário possui diagnóstico
+  const checkDiagnose = async () => {
+    try {
+      const response = await fetch("/api/check-diagnose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: user.user_login })
+      });
+      const data = await response.json();
+      if (!data.hasDiagnose) {
+        // Usuário não possui diagnose, redireciona para /treino/diagnose
+        router.push("/treino/diagnose/primeira");
+      }
+      // Caso contrário, não faz nada e permanece na página inicial
+    } catch (error) {
+      console.error("Erro ao verificar diagnose:", error);
+      // Opcional: você pode querer lidar com erros de forma mais robusta
+    }
+  };
+
+  useEffect(() => {
+    if (user && user.status == 1) {
+      // Usuário é aluno com status 1, verifica se possui diagnose
+      checkDiagnose();
+    }
+  }, [user]);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(`/api/getUserData?userId=${usuario.ID}`);
-        const user = await response.json();
+        const userData = await response.json();
         setIsSaverSaudeAndPesonal(
-          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
+          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
         );
 
         // Verifica o CPF do usuário
-        const isValid = await checkUserCPF(user.cpf);
+        const isValid = await checkUserCPF(userData.cpf);
 
         setIsCpfValid(isValid);
       } catch (error) {
@@ -74,7 +106,9 @@ export default function Inicio() {
       }
     };
 
-    fetchUserData();
+    if (usuario.ID) {
+      fetchUserData();
+    }
   }, [usuario.ID]);
 
   const isSaver = usuario.plano?.includes("SAVER") || usuario.isEmployee || isCpfValid;
@@ -82,19 +116,21 @@ export default function Inicio() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const user = await apiPratiqueFunciona.wp_users.findUnique({
+        const userData = await apiPratiqueFunciona.wp_users.findUnique({
           where: { ID: usuario.ID }
         });
 
         setIsSaverSaudeAndPesonal(
-          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || user?.professor === 1
+          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
         );
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
     };
 
-    fetchUserData();
+    if (usuario.ID) {
+      fetchUserData();
+    }
   }, [usuario.ID]);
 
   useEffect(() => {
@@ -295,16 +331,9 @@ export default function Inicio() {
     }
   };
 
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <Space direction="vertical" className="w-100">
+      {/* Modal para Atualizar Nome */}
       <Modal
         title={
           <div style={{ textAlign: "center" }}>
@@ -341,6 +370,7 @@ export default function Inicio() {
         </Form>
       </Modal>
 
+      {/* Modal para Horários */}
       <Modal
         title="Horários"
         open={horariosModal}
@@ -349,12 +379,13 @@ export default function Inicio() {
       >
         <iframe
           src="https://pratiquefitness.com.br/horarios/horariospratique/"
-          frameborder="0"
+          frameBorder="0"
           width={"100%"}
           height={500}
         ></iframe>
       </Modal>
 
+      {/* Modal Saver Club */}
       <Modal
         title="Saver Club"
         open={saverClubModal}
@@ -415,6 +446,7 @@ export default function Inicio() {
         </Space>
       </Modal>
 
+      {/* Seção de Novidades */}
       <div>
         <Title level={3} className="m-0">
           Novidades
@@ -426,6 +458,7 @@ export default function Inicio() {
         <Banners />
       </LazyLoadingCardExtraBig>
 
+      {/* Seção Clube Personal */}
       {isSaverSaudeAndPesonal ? (
         <div className="mt-4">
           <div>
@@ -485,6 +518,7 @@ export default function Inicio() {
         </div>
       ) : null}
 
+      {/* Seção Área do Colaborador */}
       {usuario.isEmployee && !isSaverSaudeAndPesonal ? (
         <div className="mt-4">
           <div>
@@ -546,6 +580,7 @@ export default function Inicio() {
         </div>
       ) : null}
 
+      {/* Seção Área do Cliente */}
       {isClient ? (
         <>
           <div>
@@ -610,6 +645,7 @@ export default function Inicio() {
         </>
       ) : null}
 
+      {/* Seção Atividades On Demand */}
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
           Atividades On Demand
@@ -621,8 +657,10 @@ export default function Inicio() {
         <AtividadesOnDemand />
       </LazyLoadingThreeColumns>
 
+      {/* Seção Powerflix */}
       <Powerflix />
 
+      {/* Seção Bem-estar */}
       <div className="mt-4 mb-2">
         <Title level={3} className="m-0 ">
           Bem-estar físico e emocional
@@ -633,6 +671,7 @@ export default function Inicio() {
         <BemEstar />
       </LazyLoadingCardBig>
 
+      {/* Seção Evolua seu RESULTADO */}
       <div className="mt-126 flex flex-col mb-0">
         <div className="mt-4 mb-2">
           <Title level={3} className="m-0 ">
@@ -658,7 +697,7 @@ export default function Inicio() {
             </a>
             <a
               className="sm:flex-1"
-              href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%2%C3%BAdvida."
+              href="https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida."
               target="_blank"
             >
               <img src="/images/webp/fale_professor.webp" width="100%" />
@@ -666,7 +705,11 @@ export default function Inicio() {
           </div>
         </LazyLoadingCardBig>
       </div>
+
+      {/* Seção Área Personal */}
       <AreaPersonal />
+
+      {/* Seção Fale com a Pratique */}
       <div>
         <Title level={3} className="m-0 mt-6">
           Fale com a Pratique

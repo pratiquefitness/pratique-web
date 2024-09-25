@@ -139,6 +139,10 @@ export default function Diagnose({ id }) {
   return (
     <Loading spinning={loading}>
       <div className="text-center">
+        <br></br> <h5>Sua Diagnose foi preenchida com sucesso.</h5>
+        <p>Em até 24 horas, voce receberá seu treino de forma customizada aqui.</p>
+        <br></br>
+        <br></br>
         <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
         <img
           src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.webp`}
@@ -146,18 +150,6 @@ export default function Diagnose({ id }) {
           className="mb-4"
           height={20}
         />{" "}
-        {usuario.user_email === "pratadeu@gmail.com" ||
-        usuario.user_email === "edujobtours@hotmail.com" ||
-        usuario.user_email === "glauberpratique@hotmail.com" ? (
-          <img
-            src={`/images/webp/banner_home/${
-              usuario.user_email === "adelmo2@gmail.com" ? "adelmo.jpg" : "icone-anovator.webp"
-            }`}
-            className="mb-4"
-            height={60}
-            margingLeft={40}
-          />
-        ) : null}
         <Typography.Paragraph>{produtos[diagnose?.diagnose_produto]}</Typography.Paragraph>
         {diagnose?.diagnose_subproduto !== "nenhum" ? (
           <>

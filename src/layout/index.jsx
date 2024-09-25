@@ -31,13 +31,22 @@ export default function Layout({ children }) {
   const { authenticated, usuario } = useSelector((state) => state.login);
   const pathname = usePathname();
 
-  const isApp = typeof window !== "undefined" && window.self === window.parent ? true : false;
+  const isApp = typeof window !== "undefined" && window.self === window.parent;
 
-  const fraseInicial = authenticated
-    ? utils
-        .getByObjectKeyValue(routes, "href", utils.getFirstLevelRoute(pathname))
-        .title.replace("#USUARIO#!", `${usuario.user_nicename.split("@")[0]}!`)
-        .split("!")
+  // Definir as rotas onde o header e footer não devem ser exibidos
+  const noHeaderFooterRoutes = ["/treino/diagnose/primeira"];
+
+  // Verificar se devemos exibir o header e footer
+  const showHeaderFooter = !noHeaderFooterRoutes.includes(pathname);
+
+  const routeObject = authenticated
+    ? utils.getByObjectKeyValue(routes, "href", utils.getFirstLevelRoute(pathname))
+    : null;
+
+  const userNiceName = usuario?.user_nicename || "";
+
+  const fraseInicial = routeObject
+    ? routeObject.title.replace("#USUARIO#!", `${userNiceName.split("@")[0]}!`).split("!")
     : "";
 
   return (
@@ -49,16 +58,16 @@ export default function Layout({ children }) {
               <Browser url={browserURL} onClose={() => dispatch(setBrowserURL(null))} />
             ) : (
               <>
-                <Header />
+                {showHeaderFooter && <Header />}
                 <Content
                   style={{
-                    paddingTop: "1rem",
-                    paddingBottom: "3.75rem"
+                    paddingTop: showHeaderFooter ? "1rem" : "0",
+                    paddingBottom: showHeaderFooter ? "3.75rem" : "0"
                   }}
                 >
                   <div className="container">
                     <div className="d-flex flex-column justify-space-between">
-                      {pathname !== "/" && (
+                      {pathname !== "/" && showHeaderFooter && (
                         <Breadcrumb
                           separator={<DoubleRightOutlined className="text-black" />}
                           className="mb-4 text-capitalize d-flex items-center"
@@ -74,7 +83,7 @@ export default function Layout({ children }) {
                           ]}
                         />
                       )}
-                      {fraseInicial[0] !== "" && (
+                      {fraseInicial && fraseInicial[0] !== "" && showHeaderFooter && (
                         <Title level={3}>
                           {fraseInicial[0]} <br /> {fraseInicial[1]}
                         </Title>
@@ -83,9 +92,9 @@ export default function Layout({ children }) {
                     {children}
                   </div>
                 </Content>
+                {showHeaderFooter && <Navigation data={routes} />}
               </>
             )}
-            <Navigation data={routes} />
           </AntLayout>
         </>
       ) : pathname && pathname.includes("/afiliados/loja/") ? (

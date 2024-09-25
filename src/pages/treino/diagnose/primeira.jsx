@@ -3,7 +3,7 @@ import { getDiagnose, getPerguntasDiagnose } from "@/redux/actions/diagnose";
 import { Button, Table, Tag } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TreinoLayout from "../_Layout";
+import TreinoLayout from "../_Layout2";
 import Link from "next/link";
 import Diagnose from "./Cards";
 import { format } from "date-fns";
