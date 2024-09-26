@@ -140,12 +140,11 @@ export default function Diagnose({ id }) {
     <Loading spinning={loading}>
       <div className="text-center">
         <br></br> <h5>Sua Diagnose foi preenchida com sucesso.</h5>
-        <p>Em até 24 horas, voce receberá seu treino de forma customizada aqui.</p>
         <br></br>
         <br></br>
         <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
         <img
-          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.webp`}
+          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.png`}
           style={{ filter: "invert(100%)" }}
           className="mb-4"
           height={20}
