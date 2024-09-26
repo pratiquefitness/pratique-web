@@ -82,10 +82,8 @@ export default function Inicio() {
   };
 
   useEffect(() => {
-    if (user && user.status == 1) {
-      // Usuário é aluno com status 1, verifica se possui diagnose
-      checkDiagnose();
-    }
+    // Usuário é aluno com status 1, verifica se possui diagnose
+    checkDiagnose();
   }, [user]);
 
   useEffect(() => {
