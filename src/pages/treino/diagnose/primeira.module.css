@@ -1,7 +1,7 @@
 /* src/pages/treino/diagnose/primeira.module.css */
 
 .background {
-  /*background-image: url("/images/webp/people-login.webp");*/
+  background-image: url("/images/webp/people-login.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -17,10 +17,17 @@
 }
 
 .content {
-  background: rgba(255, 255, 255, 0.84); /* Fundo semitransparente para melhor legibilidade */
   padding: 20px;
   border-radius: 8px;
   max-width: 600px; /* Ajuste conforme necessário */
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Opcional: adiciona uma sombra para destaque */
+}
+
+.centeredContent {
+  text-align: center;
+  margin: 70px 0 120px;
+  border-radius: 30px;
+  padding: 20px;
+  background: rgb(255 255 255 / 84%);
 }

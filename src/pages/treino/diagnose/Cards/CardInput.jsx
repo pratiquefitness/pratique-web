@@ -11,7 +11,8 @@ const EtapaFormulario = ({ pergunta, respostas, regra, onResposta }) => {
 
   return (
     <div className="d-flex flex-column items-center gap-4 mt-4">
-      <h3>{pergunta}</h3>
+      <h3 style={{ textAlign: "center" }}>{pergunta}</h3>
+
       <div className="d-flex justify-center flex-wrap gap-4">
         {respostas.map((opcao, index) => (
           <Button

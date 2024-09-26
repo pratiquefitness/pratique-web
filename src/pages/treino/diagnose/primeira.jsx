@@ -85,7 +85,28 @@ export default function DiagnoseView() {
             </Button>
           </div>
         )}{" "}
-      </div>
+      </div>{" "}
+      {/* Adicionar estilos globais específicos para esta página */}
+      <style jsx global>{`
+        /* Remove o padding do .ant-layout-content apenas nesta página */
+        .ant-layout-content {
+          padding: 0 !important;
+          margin: 0 !important;
+          box-sizing: border-box;
+        }
+
+        @media (min-width: 1200px) {
+          .container {
+            width: 100%;
+          }
+        }
+
+        /* Opcional: Remove margens e paddings do body para garantir que não haja espaçamentos adicionais */
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+      `}</style>
     </TreinoLayout>
   );
 }

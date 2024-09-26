@@ -62,17 +62,12 @@ const FormularioPrincipal = ({ onRegisterPerguntas, listaPerguntas, idDiagnose }
   return (
     <Loading spinning={loading}>
       <div className="d-flex justify-center">
-        <div
-          className="p-4 w-95 "
-          style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
-        >
+        <div className="p-4 w-95 " style={{ background: "#fff", borderRadius: 5 }}>
           <div>
             {!aguardaDiagnose ? (
               etapaAtual <= listaPerguntas.length ? (
                 <>
-                  <div>
-                    <h2>Teste sua Diagnose aqui</h2>
-                  </div>
+                  <div></div>
                   <EtapaFormulario
                     pergunta={
                       listaPerguntas.find((pergunta) => pergunta.id === etapaAtual)?.pergunta
@@ -87,8 +82,6 @@ const FormularioPrincipal = ({ onRegisterPerguntas, listaPerguntas, idDiagnose }
               ) : (
                 <div className="d-flex flex-column gap-4">
                   <h2>Sua Diagnose foi preenchida com sucesso.</h2>
-
-                  <p>Em até 24 horas, voce receberá seu treino de forma customizada aqui.</p>
                 </div>
               )
             ) : (
