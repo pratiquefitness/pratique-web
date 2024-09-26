@@ -11,9 +11,7 @@ export default async function apiPratiqueTec(req, res) {
     const stringResposta = JSON.stringify(respostaArray);
 
     const apiUrl = "/app/diagnose/envia/processa/respostas_app.php";
-    const urlWithParams = `${apiUrl}?resposta=${stringResposta}`;
 
-    console.log("url final", urlWithParams);
     const response = await apiPratiqueTecnologia.post(
       apiUrl,
       { resposta: stringResposta },
@@ -23,11 +21,12 @@ export default async function apiPratiqueTec(req, res) {
         }
       }
     );
-    res.status(200).json(response.data);
-    const idDiagnose = response.data;
-    // return idDiagnose;
-    const idDiagnoseNovo = "";
-    return idDiagnoseNovo;
+
+    // Extrair o ID da resposta
+    const idDiagnose = response.data.diagnose_id;
+
+    // Retornar o ID como parte da resposta JSON para o cliente
+    res.status(200).json({ diagnose_id: idDiagnose });
   } catch (error) {
     console.log("error", error);
     res

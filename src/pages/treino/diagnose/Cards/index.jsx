@@ -41,7 +41,7 @@ export default function Diagnose() {
     try {
       const response = await axios.post("/api/envioDiagnose", jsonDiagnose);
       console.log("response", response);
-      const data = response.data;
+      const data = response.data.diagnose_id;
 
       if (!data) {
         throw new Error("Falha ao enviar a diagnose");
