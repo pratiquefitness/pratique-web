@@ -89,10 +89,7 @@ export default function Diagnose() {
     <Loading spinning={loading}>
       {!iniciarPergunta ? (
         <div className="d-flex justify-center">
-          <div
-            className="p-4 w-95 "
-            style={{ background: token.colorBgContainerDisabled, borderRadius: 5 }}
-          >
+          <div className="p-4 w-95 " style={{ background: "#fff", borderRadius: 5 }}>
             <div className="text-center">
               <h2>Preencha os dados a seguir para criarmos seu treino</h2>
             </div>

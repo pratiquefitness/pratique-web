@@ -1,6 +1,6 @@
 import Loading from "@/components/Loading";
 import { getDiagnose, getPerguntasDiagnose } from "@/redux/actions/diagnose";
-import { Button, Table, Tag } from "antd";
+import { Button, Table, Tag, Typography } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TreinoLayout from "../_Layout2";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import Diagnose from "./Cards";
 import { format } from "date-fns";
 import React, { useState } from "react";
+import styles from "./primeira.module.css";
 
 const columns = [
   {
@@ -62,20 +63,29 @@ export default function DiagnoseView() {
 
   return (
     <TreinoLayout>
-      {showDiagnose ? (
-        <Diagnose onClose={closeDiagnose} />
-      ) : (
-        <div style={{ textAlign: "center", margin: "20px 0" }}>
-          <Button type="primary" size="large" onClick={handleNewDiagnose}>
-            Realizar Nova Diagnose
-          </Button>
-        </div>
-      )}
-      {!showDiagnose && (
-        <Loading spinning={loading}>
-          <Table dataSource={data} columns={columns} pagination={false} />
-        </Loading>
-      )}
+      <div className={styles.background}>
+        {showDiagnose ? (
+          <Diagnose onClose={closeDiagnose} />
+        ) : (
+          <div
+            style={{
+              textAlign: "center",
+              margin: "120px 0",
+              marginTop: "70px",
+              borderRadius: "30px",
+              padding: "20px",
+              background: "rgb(255 255 255 / 84%)"
+            }}
+          >
+            <Typography.Paragraph style={{ color: "#595959", marginTop: "16px" }}>
+              Você precisa ter uma Diagnose realizada nos ultimos 6 meses para acessar o APP.
+            </Typography.Paragraph>
+            <Button type="primary" size="large" onClick={handleNewDiagnose}>
+              Realizar Nova Diagnose
+            </Button>
+          </div>
+        )}{" "}
+      </div>
     </TreinoLayout>
   );
 }

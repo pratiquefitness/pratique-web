@@ -10,7 +10,7 @@ export default async function apiPratiqueTec(req, res) {
     const respostaArray = JSON.parse(Object.keys(req.body)[0]);
     const stringResposta = JSON.stringify(respostaArray);
 
-    const apiUrl = "/app/diagnose/envia/processa/respostas.php";
+    const apiUrl = "/app/diagnose/envia/processa/respostas_app.php";
     const urlWithParams = `${apiUrl}?resposta=${stringResposta}`;
 
     console.log("url final", urlWithParams);
@@ -25,7 +25,9 @@ export default async function apiPratiqueTec(req, res) {
     );
     res.status(200).json(response.data);
     const idDiagnose = response.data;
-    return idDiagnose;
+    // return idDiagnose;
+    const idDiagnoseNovo = "";
+    return idDiagnoseNovo;
   } catch (error) {
     console.log("error", error);
     res
