@@ -144,7 +144,7 @@ export default function Diagnose({ id }) {
         <br></br>
         <Typography.Title level={3}>SEU MÉTODO</Typography.Title>
         <img
-          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.png`}
+          src={`https://pratiqueemcasa.com.br/pratique-em-casa/diagnose/${diagnose?.diagnose_produto}.webp`}
           style={{ filter: "invert(100%)" }}
           className="mb-4"
           height={20}
