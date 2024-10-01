@@ -10,7 +10,7 @@ export default async function apiPratiqueTec(req, res) {
     const respostaArray = JSON.parse(Object.keys(req.body)[0]);
     const stringResposta = JSON.stringify(respostaArray);
 
-    const apiUrl = "/app/diagnose/envia/processa/respostas_app2.php";
+    const apiUrl = "/app/diagnose/envia/processa/respostas_app.php";
 
     const response = await apiPratiqueTecnologia.post(
       apiUrl,
