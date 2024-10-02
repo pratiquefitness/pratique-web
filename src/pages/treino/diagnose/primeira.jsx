@@ -74,13 +74,28 @@ export default function DiagnoseView() {
               marginTop: "70px",
               borderRadius: "30px",
               padding: "20px",
-              background: "rgb(255 255 255 / 84%)"
+              background: "rgb(255 255 255 / 0%)"
             }}
           >
-            <Typography.Paragraph style={{ color: "#595959", marginTop: "16px" }}>
+            <Typography.Paragraph
+              style={{
+                color: "rgb(0 0 0)",
+                marginTop: "16px",
+                fontSize: "13px",
+                padding: "5px",
+                fontWeight: 600,
+                borderRadius: "5px",
+                background: "rgb(255 255 255 / 65%)"
+              }}
+            >
               Você precisa ter uma Diagnose realizada nos ultimos 6 meses para acessar o APP.
             </Typography.Paragraph>
-            <Button type="primary" size="large" onClick={handleNewDiagnose}>
+            <Button
+              className="blink-button"
+              type="primary"
+              size="large"
+              onClick={handleNewDiagnose}
+            >
               Realizar Nova Diagnose
             </Button>
           </div>
