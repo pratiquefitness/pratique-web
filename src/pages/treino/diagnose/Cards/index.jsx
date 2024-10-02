@@ -7,6 +7,28 @@ import FormularioPrincipal from "./Perguntas";
 import { setData, setLoading } from "@/redux/slices/diagnose";
 import axios from "axios";
 import { useRouter } from "next/router";
+import {
+  UserOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  ArrowRightOutlined,
+  DashboardOutlined,
+  ManOutlined,
+  WomanOutlined
+} from "@ant-design/icons";
+
+const iconStyle = {
+  backgroundColor: "rgb(0, 167, 201)",
+  borderRadius: "50%",
+  padding: "4px",
+  color: "white",
+  fontSize: "24px"
+};
+
+const inputStyle = {
+  textAlign: "center",
+  fontSize: "16px"
+};
 
 export default function Diagnose() {
   const { loadingPeso, loadingAnotacoes } = useSelector((state) => state.treino);
@@ -89,7 +111,7 @@ export default function Diagnose() {
     <Loading spinning={loading}>
       {!iniciarPergunta ? (
         <div className="d-flex justify-center">
-          <div className="p-4 w-95 " style={{ background: "#fff", borderRadius: 5 }}>
+          <div className="p-4 w-95 " style={{ background: "#fff", borderRadius: 15 }}>
             <div className="text-center">
               <h2>Preencha os dados a seguir para criarmos seu treino</h2>
             </div>
@@ -110,19 +132,28 @@ export default function Diagnose() {
                   name="diagnoseNomeCompleto"
                 >
                   <Input
+                    prefix={<UserOutlined style={iconStyle} />}
                     placeholder={usuario.user_nicename}
                     value={usuario.user_nicename}
                     disabled
                   />
                 </Form.Item>
                 <Form.Item label="E-mail" id="diagnoseEmail" name="diagnoseEmail">
-                  <Input placeholder={usuario.user_login} value={usuario.user_login} disabled />
+                  <Input
+                    prefix={<MailOutlined style={iconStyle} />}
+                    placeholder={usuario.user_login}
+                    value={usuario.user_login}
+                    disabled
+                  />
                 </Form.Item>
                 <Form.Item label="Digite seu whatsapp" name="diagnoseTelefone">
                   <ReactInputMask mask="(99) 99999-9999">
-                    {(inputProps) => <Input {...inputProps} />}
+                    {(inputProps) => (
+                      <Input {...inputProps} prefix={<PhoneOutlined style={iconStyle} />} />
+                    )}
                   </ReactInputMask>
                 </Form.Item>
+
                 <Form.Item
                   label="Qual seu peso atual?"
                   name="diagnosePeso"
@@ -142,12 +173,24 @@ export default function Diagnose() {
                   rules={[{ required: true, message: "Qual sexo?" }]}
                 >
                   <Select placeholder="Sexo?">
-                    <Select.Option value="masculino">Masculino</Select.Option>
-                    <Select.Option value="feminino">Feminino</Select.Option>
+                    <Select.Option value="masculino">
+                      <ManOutlined style={{ fontSize: "24px", marginRight: "8px" }} />
+                      Masculino
+                    </Select.Option>
+                    <Select.Option value="feminino">
+                      <WomanOutlined style={{ fontSize: "24px", marginRight: "8px" }} />
+                      Feminino
+                    </Select.Option>
                   </Select>
                 </Form.Item>
               </div>
-              <Button className="mt-8" type="primary" htmlType="submit" loading={loading}>
+              <Button
+                className="mt-8"
+                style={{ backgroundColor: "rgb(0, 167, 201)" }}
+                type="primary"
+                htmlType="submit"
+                loading={loading}
+              >
                 Próximo
               </Button>
             </Form>

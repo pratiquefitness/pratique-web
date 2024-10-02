@@ -17,6 +17,7 @@ const EtapaFormulario = ({ pergunta, respostas, regra, onResposta }) => {
         {respostas.map((opcao, index) => (
           <Button
             type="primary"
+            style={{ background: "rgb(0, 134, 161)" }}
             className="text-capitalize"
             key={index}
             onClick={() => handleResposta(opcao)}
