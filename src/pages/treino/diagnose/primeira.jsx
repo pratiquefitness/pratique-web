@@ -61,12 +61,26 @@ export default function DiagnoseView() {
     setShowDiagnose(false);
   };
 
+  const diagnoseMaisDe6Meses = () => {
+    if (!data || !data.length) return true;
+
+    const ultimaDiagnose = data[0].diagnose_data;
+    const hoje = new Date();
+    const dataUltimaDiagnose = new Date(ultimaDiagnose);
+    const diffMeses =
+      (hoje.getFullYear() - dataUltimaDiagnose.getFullYear()) * 12 +
+      hoje.getMonth() -
+      dataUltimaDiagnose.getMonth();
+
+    return diffMeses >= 6;
+  };
+
   return (
     <TreinoLayout>
       <div className={styles.background}>
         {showDiagnose ? (
           <Diagnose onClose={closeDiagnose} />
-        ) : (
+        ) : diagnoseMaisDe6Meses() ? (
           <div
             style={{
               textAlign: "center",
@@ -88,7 +102,7 @@ export default function DiagnoseView() {
                 background: "rgb(255 255 255 / 65%)"
               }}
             >
-              Você precisa ter uma Diagnose realizada nos ultimos 6 meses para acessar o APP.
+              Você precisa ter uma Diagnose realizada nos últimos 6 meses para acessar o APP.
             </Typography.Paragraph>
             <Button
               className="blink-button"
@@ -99,11 +113,11 @@ export default function DiagnoseView() {
               Realizar Nova Diagnose
             </Button>
           </div>
-        )}{" "}
-      </div>{" "}
-      {/* Adicionar estilos globais específicos para esta página */}
+        ) : (
+          <Table columns={columns} dataSource={data} rowKey="diagnose_id" />
+        )}
+      </div>
       <style jsx global>{`
-        /* Remove o padding do .ant-layout-content apenas nesta página */
         .ant-layout-content {
           padding: 0 !important;
           margin: 0 !important;
@@ -116,7 +130,6 @@ export default function DiagnoseView() {
           }
         }
 
-        /* Opcional: Remove margens e paddings do body para garantir que não haja espaçamentos adicionais */
         body {
           margin: 0 !important;
           padding: 0 !important;
