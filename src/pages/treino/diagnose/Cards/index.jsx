@@ -11,8 +11,6 @@ import {
   UserOutlined,
   MailOutlined,
   PhoneOutlined,
-  ArrowRightOutlined,
-  DashboardOutlined,
   ManOutlined,
   WomanOutlined
 } from "@ant-design/icons";
@@ -25,23 +23,26 @@ const iconStyle = {
   fontSize: "24px"
 };
 
-const inputStyle = {
-  textAlign: "center",
-  fontSize: "16px"
-};
-
 export default function Diagnose() {
-  const { loadingPeso, loadingAnotacoes } = useSelector((state) => state.treino);
   const [iniciarPergunta, setIniciarPergunta] = useState(false);
-  const [listaPerguntas, setListaPerguntas] = useState(false);
+  const [listaPerguntas, setListaPerguntas] = useState([]);
   const [idDiagnose, setIdDiagnose] = useState(null);
-  const { token } = theme.useToken();
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.diagnose);
+  const { loading } = useSelector((state) => state.diagnose);
   const { usuario } = useSelector((state) => state.login);
   const [diagnoseData, setDiagnoseData] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
-  const { themeMode } = useSelector((state) => state.global);
+
+  useEffect(() => {
+    getPerguntasDiagnose();
+  }, []);
+
+  useEffect(() => {
+    if (idDiagnose) {
+      router.push(`/treino/diagnose/${idDiagnose}`);
+    }
+  }, [idDiagnose]);
 
   const getPerguntasDiagnose = async () => {
     try {
@@ -52,17 +53,19 @@ export default function Diagnose() {
       }
       dispatch(setLoading(false));
       setListaPerguntas(data);
-      return;
     } catch (error) {
       console.error("Erro ao resgatar data:", error);
-      throw error;
     }
   };
 
-  const setPerguntasDiagnose = async (jsonDiagnose) => {
+  const setPerguntasDiagnose = async (dadosDiagnose) => {
+    console.log("Enviando diagnose:", dadosDiagnose);
     try {
-      const response = await axios.post("/api/envioDiagnose", jsonDiagnose);
-      console.log("response", response);
+      const response = await axios.post("/api/envioDiagnose", dadosDiagnose, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
       const data = response.data.diagnose_id;
 
       if (!data) {
@@ -75,35 +78,32 @@ export default function Diagnose() {
     }
   };
 
-  useEffect(() => {
-    getPerguntasDiagnose();
-  }, []);
-
   const handleIniciarPergunta = () => {
-    setIniciarPergunta(!iniciarPergunta);
+    setIniciarPergunta(true);
   };
   const [formRegister] = Form.useForm();
 
   const onRegisterPersonalData = (values) => {
-    setDiagnoseData([...diagnoseData, values]);
-
+    setDiagnoseData([values]);
     formRegister.resetFields();
     handleIniciarPergunta();
   };
 
   const onRegisterPerguntas = async (values) => {
+    if (submitting) return;
+    setSubmitting(true);
     try {
+      console.log("onRegisterPerguntas chamada");
       const dadosDiagnose = diagnoseData.concat(values);
-      const jsonDiagnose = JSON.stringify(dadosDiagnose);
-      const response = await setPerguntasDiagnose(jsonDiagnose);
+      const response = await setPerguntasDiagnose(dadosDiagnose);
 
-      // Se a resposta da API contiver um idDiagnose, atualize o estado
       if (response) {
         setIdDiagnose(response);
       }
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
-      // Trate o erro conforme necessário
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -196,11 +196,15 @@ export default function Diagnose() {
             </Form>
           </div>
         </div>
+      ) : idDiagnose ? (
+        <div className="text-center">
+          <h2>Diagnose enviada com sucesso! Redirecionando...</h2>
+        </div>
       ) : (
         <FormularioPrincipal
           listaPerguntas={listaPerguntas}
           onRegisterPerguntas={onRegisterPerguntas}
-          idDiagnose={idDiagnose} // Passe o idDiagnose como propriedade
+          submitting={submitting}
         />
       )}
     </Loading>

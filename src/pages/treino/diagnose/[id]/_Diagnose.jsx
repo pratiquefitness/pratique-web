@@ -20,10 +20,7 @@ const getRespostas = (diagnose_resposta) => {
       dores: respostas[7].split(":")[1],
       quais: respostas[8].split(":")[1],
       pressao: respostas[9].split(":")[1],
-      sangue: respostas[10].split(":")[1],
-      importante: respostas[11].split(":")[1],
-      academia: respostas[12].split(":")[1],
-      vida: respostas[13].split(":")[1]
+      sangue: respostas[10].split(":")[1]
     };
   }
 };
