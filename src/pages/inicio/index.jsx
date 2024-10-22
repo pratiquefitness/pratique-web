@@ -34,13 +34,16 @@ export default function Inicio() {
 
   const isClient = !usuario.isEmployee;
   const isSaverAndClient = (usuario.plano?.includes("SAVER") && !usuario.isEmployee) || false;
-  const [isSaverSaudeAndPesonal, setIsSaverSaudeAndPesonal] = useState(false);
+  const [isSaverSaudeAndPersonal, setIsSaverSaudeAndPersonal] = useState(false);
   const isSaverSaudeAndClient =
     (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || false;
   const [niceNameForm] = Form.useForm();
   const [openModal, setOpenModal] = useState(false);
 
-  const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false); // Novo estado
+  const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false);
+
+  // 1. Adicionar o estado loginAutoURL para armazenar a URL
+  const [loginAutoURL, setLoginAutoURL] = useState("");
 
   const checkUserCPF = async (cpf) => {
     try {
@@ -92,7 +95,7 @@ export default function Inicio() {
         const userData = await response.json();
         console.log("userData:", userData);
 
-        setIsSaverSaudeAndPesonal(
+        setIsSaverSaudeAndPersonal(
           (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
         );
 
@@ -106,6 +109,38 @@ export default function Inicio() {
 
     if (usuario.ID) {
       fetchUserData();
+    }
+  }, [usuario.ID]);
+
+  // 2. No useEffect, obter a loginAutoURL e armazená-la no estado
+  useEffect(() => {
+    const fetchLoginAutoURL = async () => {
+      try {
+        const email = usuario.user_email.trim().toLowerCase();
+        console.log("Email do usuário:", email);
+
+        const loginAutoResponse = await fetch(
+          `/api/getLoginAutoURL?email=${encodeURIComponent(email)}`
+        );
+        const loginAutoData = await loginAutoResponse.json();
+        console.log("loginAutoData:", loginAutoData);
+
+        if (loginAutoData.success && loginAutoData.data?.usuario?.login_auto) {
+          setLoginAutoURL(loginAutoData.data.usuario.login_auto);
+          console.log("loginAutoURL definida:", loginAutoData.data.usuario.login_auto);
+        } else if (loginAutoData.code === 409) {
+          console.warn("Usuário não encontrado na plataforma Unipower.");
+          setOpenUserNotFoundModal(true);
+        } else {
+          console.error("Falha ao obter a URL login_auto:", loginAutoData);
+        }
+      } catch (error) {
+        console.error("Erro ao obter a URL login_auto:", error);
+      }
+    };
+
+    if (usuario.ID) {
+      fetchLoginAutoURL();
     }
   }, [usuario.ID]);
 
@@ -154,32 +189,13 @@ export default function Inicio() {
     setSaverClubModal(true);
   };
 
-  const dispatchUnipower = async () => {
-    try {
-      const email = usuario.user_email.trim().toLowerCase();
-      console.log("Email do usuário:", email);
-
-      const loginAutoResponse = await fetch(
-        `/api/getLoginAutoURL?email=${encodeURIComponent(email)}`
-      );
-      const loginAutoData = await loginAutoResponse.json();
-      console.log("loginAutoData:", loginAutoData);
-
-      if (loginAutoData.success && loginAutoData.data?.usuario?.login_auto) {
-        const loginURL = loginAutoData.data.usuario.login_auto;
-        // Abrir o loginURL em uma nova janela/aba
-        window.open(loginURL, "_blank");
-      } else if (loginAutoData.code === 409) {
-        console.warn("Usuário não encontrado na plataforma Unipower.");
-        // Exibir o modal informando que o usuário não está cadastrado
-        setOpenUserNotFoundModal(true);
-      } else {
-        console.error("Falha ao obter a URL login_auto:", loginAutoData);
-        message.error("Erro ao acessar a plataforma Unipower. Tente novamente mais tarde.");
-      }
-    } catch (error) {
-      console.error("Erro ao obter a URL login_auto:", error);
-      message.error("Erro ao acessar a plataforma Unipower. Tente novamente mais tarde.");
+  // 3. Atualizar a função dispatchUnipower
+  const dispatchUnipower = () => {
+    if (loginAutoURL) {
+      // Abrir o link diretamente no evento de clique
+      window.open(loginAutoURL, "_blank");
+    } else {
+      message.error("URL de acesso não disponível. Tente novamente mais tarde.");
     }
   };
 
@@ -486,7 +502,7 @@ export default function Inicio() {
       </LazyLoadingCardExtraBig>
 
       {/* Seção Clube Personal */}
-      {isSaverSaudeAndPesonal ? (
+      {isSaverSaudeAndPersonal ? (
         <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
@@ -546,7 +562,7 @@ export default function Inicio() {
       ) : null}
 
       {/* Seção Área do Colaborador */}
-      {usuario.isEmployee && !isSaverSaudeAndPesonal ? (
+      {usuario.isEmployee && !isSaverSaudeAndPersonal ? (
         <div className="mt-4">
           <div>
             <Title level={3} className="m-0">
