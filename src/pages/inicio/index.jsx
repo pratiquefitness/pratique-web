@@ -167,8 +167,7 @@ export default function Inicio() {
 
       if (loginAutoData.success && loginAutoData.data?.usuario?.login_auto) {
         const loginURL = loginAutoData.data.usuario.login_auto;
-        // Abrir o loginURL em uma nova janela/aba
-        window.open(loginURL, "_blank");
+        dispatch(setBrowserURL(loginURL));
       } else if (loginAutoData.code === 409) {
         console.warn("Usuário não encontrado na plataforma Unipower.");
         // Exibir o modal informando que o usuário não está cadastrado
