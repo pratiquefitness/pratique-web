@@ -201,7 +201,7 @@ export default function Inicio() {
     {
       href: "",
       action: dispatchUnipower,
-      image: "/images/webp/unipower2.webp",
+      image: "/images/webp/unipower-beta.webp",
       isRounded: true,
       alt: "unipower_banner"
     },
@@ -246,7 +246,7 @@ export default function Inicio() {
           {
             href: "",
             action: dispatchUnipower,
-            image: "/images/webp/unipower2.webp",
+            image: "/images/webp/unipower-beta.webp",
             isRounded: true,
             alt: "unipower_banner"
           },
