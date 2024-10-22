@@ -1,6 +1,4 @@
-// src/pages/inicio/index.jsx
-
-import { Button, Col, Form, Input, Modal, Row, Space, Typography } from "antd";
+import { Button, Col, Form, Input, Modal, Row, Space, Typography, message } from "antd";
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,21 +13,19 @@ import Powerflix from "../powerflix";
 import AreaPersonal from "../area_personal";
 import { IdcardOutlined } from "@ant-design/icons";
 import { updateNiceName } from "@/redux/actions/conta";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { InView } from "react-intersection-observer";
 import { LazyLoadingCardBig } from "../../components/LazyLoadingCardBig";
 import { LazyLoadingCardExtraBig } from "../../components/LazyLoadingCardExtraBig";
 import { LazyLoadingTwoColumns } from "../../components/LazyLoadingTwoColumns";
 import { LazyLoadingThreeColumns } from "../../components/LazyLoadingThreeColumns";
-import { useRouter } from "next/router"; // Importar useRouter
+import { useRouter } from "next/router";
 
 const { Title, Text } = Typography;
 
 export default function Inicio() {
   const dispatch = useDispatch();
-  const router = useRouter(); // Inicializar o router
-  const { user } = useContext(AuthContext); // Obter o usuário do contexto
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
   const [horariosModal, setHorariosModal] = useState(false);
   const [saverClubModal, setSaverClubModal] = useState(false);
   const [isCpfValid, setIsCpfValid] = useState(false);
@@ -43,6 +39,8 @@ export default function Inicio() {
     (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || false;
   const [niceNameForm] = Form.useForm();
   const [openModal, setOpenModal] = useState(false);
+
+  const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false); // Novo estado
 
   const checkUserCPF = async (cpf) => {
     try {
@@ -89,38 +87,18 @@ export default function Inicio() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        console.log("Iniciando fetchUserData");
         const response = await fetch(`/api/getUserData?userId=${usuario.ID}`);
         const userData = await response.json();
+        console.log("userData:", userData);
+
         setIsSaverSaudeAndPesonal(
           (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
         );
 
         // Verifica o CPF do usuário
         const isValid = await checkUserCPF(userData.cpf);
-
         setIsCpfValid(isValid);
-      } catch (error) {
-        console.error("Erro ao buscar dados do usuário:", error);
-      }
-    };
-
-    if (usuario.ID) {
-      fetchUserData();
-    }
-  }, [usuario.ID]);
-
-  const isSaver = usuario.plano?.includes("SAVER") || usuario.isEmployee || isCpfValid;
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await apiPratiqueFunciona.wp_users.findUnique({
-          where: { ID: usuario.ID }
-        });
-
-        setIsSaverSaudeAndPesonal(
-          (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
-        );
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
@@ -140,6 +118,8 @@ export default function Inicio() {
       setOpenModal(true);
     }
   }, [usuario]);
+
+  const isSaver = usuario.plano?.includes("SAVER") || usuario.isEmployee || isCpfValid;
 
   const dispatchSaverSaude = () => {
     dispatch(setBrowserURL("https://clubecertosaude.com.br/saude/pratiquemed/"));
@@ -174,24 +154,53 @@ export default function Inicio() {
     setSaverClubModal(true);
   };
 
+  const dispatchUnipower = async () => {
+    try {
+      const email = usuario.user_email.trim().toLowerCase();
+      console.log("Email do usuário:", email);
+
+      const loginAutoResponse = await fetch(
+        `/api/getLoginAutoURL?email=${encodeURIComponent(email)}`
+      );
+      const loginAutoData = await loginAutoResponse.json();
+      console.log("loginAutoData:", loginAutoData);
+
+      if (loginAutoData.success && loginAutoData.data?.usuario?.login_auto) {
+        const loginURL = loginAutoData.data.usuario.login_auto;
+        dispatch(setBrowserURL(loginURL));
+      } else if (loginAutoData.code === 409) {
+        console.warn("Usuário não encontrado na plataforma Unipower.");
+        // Exibir o modal informando que o usuário não está cadastrado
+        setOpenUserNotFoundModal(true);
+      } else {
+        console.error("Falha ao obter a URL login_auto:", loginAutoData);
+        message.error("Erro ao acessar a plataforma Unipower. Tente novamente mais tarde.");
+      }
+    } catch (error) {
+      console.error("Erro ao obter a URL login_auto:", error);
+      message.error("Erro ao acessar a plataforma Unipower. Tente novamente mais tarde.");
+    }
+  };
+
   const listaCarousel = [
     {
       href: "",
       action: abreSaverClubModal,
       image: "/images/webp/saver_club.webp",
       isRounded: true,
-      alt: "unipower_banner"
+      alt: "saver_club"
     },
     {
       href: "",
       action: dispatchSaverSaude,
       image: "/images/webp/pratique_med.webp",
       isRounded: true,
-      alt: "unipower_banner"
+      alt: "pratique_med"
     },
     {
-      href: "/unipower",
-      image: "/images/webp/unipower.webp",
+      href: "",
+      action: dispatchUnipower,
+      image: "/images/webp/unipower-beta.webp",
       isRounded: true,
       alt: "unipower_banner"
     },
@@ -215,27 +224,28 @@ export default function Inicio() {
       href: "/personal",
       image: "/images/webp/banner_home/personal.webp",
       isRounded: true,
-      alt: "unipower_banner"
+      alt: "personal_banner"
     },
     {
       href: "",
       action: abreSaverClubModal,
       image: "/images/webp/saver_club.webp",
       isRounded: true,
-      alt: "unipower_banner"
+      alt: "saver_club"
     },
     {
       href: "",
       action: dispatchSaverSaude,
       image: "/images/webp/pratique_med.webp",
       isRounded: true,
-      alt: "unipower_banner"
+      alt: "pratique_med"
     },
     ...(usuario.isEmployee
       ? [
           {
-            href: "/unipower",
-            image: "/images/webp/unipower.webp",
+            href: "",
+            action: dispatchUnipower,
+            image: "/images/webp/unipower-beta.webp",
             isRounded: true,
             alt: "unipower_banner"
           },
@@ -252,7 +262,7 @@ export default function Inicio() {
       href: "https://api.whatsapp.com/send?phone=553135682676&text=Ol%C3%A1%2C%20sou%20do%20Clube%20Personal%20da%20PRATIQUE%20e%20estou%20vindo%20do%20bot%C3%A3o%20de%20suporte%20dentro%20do%20app.",
       image: "/images/webp/banner_home/suporte-personal.webp",
       isRounded: true,
-      alt: "RH",
+      alt: "suporte_personal",
       target: "_blank"
     }
   ];
@@ -279,7 +289,7 @@ export default function Inicio() {
       href: "https://api.whatsapp.com/send?phone=5531984272283&text=Estou%20no%20App%20e%20quero%20alugar%20minha%20bike",
       image: "/images/webp/alugue_bike.webp",
       isRounded: true,
-      alt: "sua_pratique",
+      alt: "alugue_bike",
       target: "_blank"
     },
     ...(isSaverAndClient
@@ -288,7 +298,7 @@ export default function Inicio() {
             href: "",
             image: "/images/webp/saver_club.webp",
             isRounded: true,
-            alt: "saver_saude",
+            alt: "saver_club",
             action: abreSaverClubModal
           }
         ]
@@ -300,7 +310,7 @@ export default function Inicio() {
             href: "https://www.pratiquemed.com.br/login.php",
             image: "/images/webp/pratique_med.webp",
             isRounded: true,
-            alt: "saver_saude",
+            alt: "pratique_med",
             target: "_blank"
           }
         ]
@@ -309,13 +319,13 @@ export default function Inicio() {
       action: dispatchSaverSaude,
       image: "/images/webp/pratique_med.webp",
       isRounded: true,
-      alt: "saver_saude"
+      alt: "pratique_med"
     },
     {
       href: "https://api.whatsapp.com/send?phone=553141411962&text=Ol%C3%A1%20estou%20no%20Aplicativo%20Pratique%20em%20Casa%20e%20estou%20com%20d%C3%BAvida.",
       image: "/images/webp/sac.webp",
       isRounded: true,
-      alt: "sua_pratique",
+      alt: "sac",
       target: "_blank"
     },
     ...listaCarouselAreaCliente
@@ -444,6 +454,24 @@ export default function Inicio() {
         </Space>
       </Modal>
 
+      {/* Modal Usuário Não Encontrado */}
+      <Modal
+        title="Usuário não encontrado"
+        open={openUserNotFoundModal}
+        onCancel={() => setOpenUserNotFoundModal(false)}
+        footer={[
+          <Button key="close" type="primary" onClick={() => setOpenUserNotFoundModal(false)}>
+            Fechar
+          </Button>
+        ]}
+        centered
+      >
+        <Typography.Paragraph>
+          Você não está cadastrado na plataforma Unipower. Por favor, entre em contato com o
+          suporte.
+        </Typography.Paragraph>
+      </Modal>
+
       {/* Seção de Novidades */}
       <div>
         <Title level={3} className="m-0">
@@ -523,7 +551,7 @@ export default function Inicio() {
             <Title level={3} className="m-0">
               Área do Colaborador!
             </Title>
-            <Text type="">Beneficios e conteúdos para você</Text>
+            <Text type="">Benefícios e conteúdos para você</Text>
           </div>
           <LazyLoadingTwoColumns loading={loading}>
             <Carousel
@@ -585,7 +613,7 @@ export default function Inicio() {
             <Title level={3} className="mt-4 mb-0">
               Área do Cliente!
             </Title>
-            <Text type="secondary">Beneficios e conteúdos para você</Text>
+            <Text type="secondary">Benefícios e conteúdos para você</Text>
           </div>
 
           <LazyLoadingTwoColumns loading={loading}>
