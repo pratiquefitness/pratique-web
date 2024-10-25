@@ -41,8 +41,9 @@ export default function Inicio() {
   const [openModal, setOpenModal] = useState(false);
 
   const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false);
+  const [unipowerUserNotFound, setUnipowerUserNotFound] = useState(false); // Novo estado
 
-  // 1. Adicionar o estado loginAutoURL para armazenar a URL
+  // 1. Estado loginAutoURL para armazenar a URL
   const [loginAutoURL, setLoginAutoURL] = useState("");
 
   const checkUserCPF = async (cpf) => {
@@ -112,7 +113,7 @@ export default function Inicio() {
     }
   }, [usuario.ID]);
 
-  // 2. No useEffect, obter a loginAutoURL e armazená-la no estado
+  // 2. useEffect para obter a loginAutoURL e armazená-la no estado
   useEffect(() => {
     const fetchLoginAutoURL = async () => {
       try {
@@ -130,7 +131,7 @@ export default function Inicio() {
           console.log("loginAutoURL definida:", loginAutoData.data.usuario.login_auto);
         } else if (loginAutoData.code === 409) {
           console.warn("Usuário não encontrado na plataforma Unipower.");
-          setOpenUserNotFoundModal(true);
+          setUnipowerUserNotFound(true); // Atualizamos o estado, mas não abrimos o modal aqui
         } else {
           console.error("Falha ao obter a URL login_auto:", loginAutoData);
         }
@@ -191,7 +192,9 @@ export default function Inicio() {
 
   // 3. Atualizar a função dispatchUnipower
   const dispatchUnipower = () => {
-    if (loginAutoURL) {
+    if (unipowerUserNotFound) {
+      setOpenUserNotFoundModal(true); // Agora o modal só é aberto quando o usuário clica no banner
+    } else if (loginAutoURL) {
       // Abrir o link diretamente no evento de clique
       window.open(loginAutoURL, "_blank");
     } else {
