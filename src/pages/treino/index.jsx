@@ -32,6 +32,12 @@ export default function MeuTreinoView() {
     dispatch(updateAnotacoes(values));
   };
 
+  const handleWhatsAppClick = () => {
+    const link = "https://bit.ly/FalarcomProfessorPratique";
+    // Tenta abrir o link no navegador externo
+    window.open(link, "_blank", "noopener,noreferrer");
+  };
+
   const onSavePeso = (values) => {
     dispatch(updatePeso(values));
   };
@@ -201,16 +207,15 @@ export default function MeuTreinoView() {
                 </p>
               </Col>
               <Col span={24} className="mb-2">
-                <a href="https://bit.ly/FalarcomProfessorPratique" target="_blank">
-                  <Button
-                    icon={<FaWhatsapp fill="#25D366" />}
-                    className="text-white text-large"
-                    style={{ background: "green" }}
-                    block
-                  >
-                    Fale com o professor
-                  </Button>
-                </a>
+                <Button
+                  icon={<FaWhatsapp fill="#25D366" />}
+                  className="text-white text-large"
+                  style={{ background: "green" }}
+                  block
+                  onClick={handleWhatsAppClick}
+                >
+                  Fale com o professor
+                </Button>
               </Col>
             </div>
           </>
