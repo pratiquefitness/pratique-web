@@ -192,7 +192,7 @@ export default function Inicio() {
   // Atualizar a função dispatchUnipower para usar setBrowserURL
   const dispatchUnipower = () => {
     if (loginAutoURL) {
-      const galo = "https://plataformaunipower.cademi.com.br/auth/login?redirect=%2Farea%2Fvitrine";
+      const galo = "https://plataformaunipower.cademi.com.br";
       dispatch(setBrowserURL(galo));
     } else {
       message.error("URL de acesso não disponível. Tente novamente mais tarde.");
