@@ -42,7 +42,7 @@ export default function Inicio() {
 
   const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false);
 
-  // 1. Adicionar o estado loginAutoURL para armazenar a URL
+  // Estado para armazenar a URL de login automático
   const [loginAutoURL, setLoginAutoURL] = useState("");
 
   const checkUserCPF = async (cpf) => {
@@ -112,7 +112,7 @@ export default function Inicio() {
     }
   }, [usuario.ID]);
 
-  // 2. No useEffect, obter a loginAutoURL e armazená-la no estado
+  // Obter a loginAutoURL e armazená-la no estado
   useEffect(() => {
     const fetchLoginAutoURL = async () => {
       try {
@@ -189,11 +189,10 @@ export default function Inicio() {
     setSaverClubModal(true);
   };
 
-  // 3. Atualizar a função dispatchUnipower
+  // Atualizar a função dispatchUnipower para usar setBrowserURL
   const dispatchUnipower = () => {
     if (loginAutoURL) {
-      // Abrir o link diretamente no evento de clique
-      window.open(loginAutoURL, "_blank");
+      dispatch(setBrowserURL(loginAutoURL));
     } else {
       message.error("URL de acesso não disponível. Tente novamente mais tarde.");
     }
