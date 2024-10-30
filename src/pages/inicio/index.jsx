@@ -43,7 +43,11 @@ export default function Inicio() {
   const [openUserNotFoundModal, setOpenUserNotFoundModal] = useState(false);
   const [unipowerUserNotFound, setUnipowerUserNotFound] = useState(false); // Novo estado
 
+<<<<<<< HEAD
   // 1. Estado loginAutoURL para armazenar a URL
+=======
+  // Estado para armazenar a URL de login automático
+>>>>>>> f1e4a71b04e0fe52b3632ad27e7ac2b2534f94e8
   const [loginAutoURL, setLoginAutoURL] = useState("");
 
   const checkUserCPF = async (cpf) => {
@@ -113,7 +117,11 @@ export default function Inicio() {
     }
   }, [usuario.ID]);
 
+<<<<<<< HEAD
   // 2. useEffect para obter a loginAutoURL e armazená-la no estado
+=======
+  // Obter a loginAutoURL e armazená-la no estado
+>>>>>>> f1e4a71b04e0fe52b3632ad27e7ac2b2534f94e8
   useEffect(() => {
     const fetchLoginAutoURL = async () => {
       try {
@@ -190,6 +198,7 @@ export default function Inicio() {
     setSaverClubModal(true);
   };
 
+<<<<<<< HEAD
   const secureURL = (loginAutoURL) => {
     if (url.startsWith("http://")) {
       return url.replace("http://", "https://");
@@ -203,6 +212,13 @@ export default function Inicio() {
     } else if (loginAutoURL) {
       // Abrir o link diretamente no evento de clique
       window.open(loginAutoURL, "_blank");
+=======
+  // Atualizar a função dispatchUnipower para usar setBrowserURL
+  const dispatchUnipower = () => {
+    if (loginAutoURL) {
+      const galo = "https://plataformaunipower.cademi.com.br";
+      dispatch(setBrowserURL(galo));
+>>>>>>> f1e4a71b04e0fe52b3632ad27e7ac2b2534f94e8
     } else {
       message.error("URL de acesso não disponível. Tente novamente mais tarde.");
     }
