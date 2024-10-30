@@ -190,6 +190,12 @@ export default function Inicio() {
     setSaverClubModal(true);
   };
 
+  const secureURL = (loginAutoURL) => {
+    if (url.startsWith("http://")) {
+      return url.replace("http://", "https://");
+    }
+    return url;
+  };
   // 3. Atualizar a função dispatchUnipower
   const dispatchUnipower = () => {
     if (unipowerUserNotFound) {
@@ -774,6 +780,17 @@ export default function Inicio() {
         <Col span={12}>
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/webp/horarios.webp" width="100%" style={{ filter: "sepia(1)" }} />
+          </a>{" "}
+          <a
+            onClick={() =>
+              dispatch(
+                setBrowserURL(
+                  "https://plataformaunipower.cademi.com.br/auth/login?crstk=MS06ODM1MjoxNzc5NjIwMjpidmVuaGZoOjpycHI5MjUxOTFxcjgxcXNuOG9zcnI5NjgzMTByOTI4cw%3D%3D"
+                )
+              )
+            }
+          >
+            ..
           </a>
         </Col>
       </Row>
