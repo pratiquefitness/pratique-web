@@ -781,17 +781,6 @@ export default function Inicio() {
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/webp/horarios.webp" width="100%" style={{ filter: "sepia(1)" }} />
           </a>{" "}
-          <a
-            onClick={() =>
-              dispatch(
-                setBrowserURL(
-                  "https://plataformaunipower.cademi.com.br/auth/login?redirect=%2Farea%2Fvitrine"
-                )
-              )
-            }
-          >
-            ..
-          </a>
         </Col>
       </Row>
     </Space>
