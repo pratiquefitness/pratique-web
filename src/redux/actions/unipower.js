@@ -7,7 +7,7 @@ export const getCursos = () => {
     const { login } = getState();
 
     // Verificar se os valores estão disponíveis no estado global
-    console.log("Estado de login:", login);
+    //console.log("Estado de login:", login);
 
     const { user_email, ID } = login.usuario; // Certifique-se de que estas variáveis existem
 

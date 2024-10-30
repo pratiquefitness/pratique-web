@@ -40,7 +40,7 @@ export default function Diagnose() {
   const setPerguntasDiagnose = async (jsonDiagnose) => {
     try {
       const response = await axios.post("/api/envioDiagnose", jsonDiagnose);
-      console.log("response", response);
+      //console.log("response", response);
       const data = response.data.diagnose_id;
 
       if (!data) {

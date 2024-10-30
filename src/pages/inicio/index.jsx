@@ -91,10 +91,10 @@ export default function Inicio() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        console.log("Iniciando fetchUserData");
+        //console.log("Iniciando fetchUserData");
         const response = await fetch(`/api/getUserData?userId=${usuario.ID}`);
         const userData = await response.json();
-        console.log("userData:", userData);
+        //console.log("userData:", userData);
 
         setIsSaverSaudeAndPersonal(
           (usuario.plano?.includes("PERSONAL") && !usuario.isEmployee) || userData?.professor === 1
@@ -104,7 +104,7 @@ export default function Inicio() {
         const isValid = await checkUserCPF(userData.cpf);
         setIsCpfValid(isValid);
       } catch (error) {
-        console.error("Erro ao buscar dados do usuário:", error);
+        //console.error("Erro ao buscar dados do usuário:", error);
       }
     };
 
@@ -118,17 +118,17 @@ export default function Inicio() {
     const fetchLoginAutoURL = async () => {
       try {
         const email = usuario.user_email.trim().toLowerCase();
-        console.log("Email do usuário:", email);
+        //console.log("Email do usuário:", email);
 
         const loginAutoResponse = await fetch(
           `/api/getLoginAutoURL?email=${encodeURIComponent(email)}`
         );
         const loginAutoData = await loginAutoResponse.json();
-        console.log("loginAutoData:", loginAutoData);
+        //console.log("loginAutoData:", loginAutoData);
 
         if (loginAutoData.success && loginAutoData.data?.usuario?.login_auto) {
           setLoginAutoURL(loginAutoData.data.usuario.login_auto);
-          console.log("loginAutoURL definida:", loginAutoData.data.usuario.login_auto);
+          // console.log("loginAutoURL definida:", loginAutoData.data.usuario.login_auto);
         } else if (loginAutoData.code === 409) {
           console.warn("Usuário não encontrado na plataforma Unipower.");
           setUnipowerUserNotFound(true); // Atualizamos o estado, mas não abrimos o modal aqui
