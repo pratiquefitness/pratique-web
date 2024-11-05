@@ -31,6 +31,7 @@ export default function Inicio() {
   const [isCpfValid, setIsCpfValid] = useState(false);
   const { usuario } = useSelector((state) => state.login);
   const { loading } = useSelector((state) => state.lives);
+  const [openIframeModal, setOpenIframeModal] = useState(false);
 
   const isClient = !usuario.isEmployee;
   const isSaverAndClient = (usuario.plano?.includes("SAVER") && !usuario.isEmployee) || false;
@@ -72,10 +73,6 @@ export default function Inicio() {
         body: JSON.stringify({ email: user.user_login })
       });
       const data = await response.json();
-      if (!data.hasDiagnose) {
-        // Usuário não possui diagnose, redireciona para /treino/diagnose
-        router.push("/treino/diagnose/primeira");
-      }
       // Caso contrário, não faz nada e permanece na página inicial
     } catch (error) {
       console.error("Erro ao verificar diagnose:", error);
@@ -781,7 +778,32 @@ export default function Inicio() {
           <a onClick={() => setHorariosModal(true)}>
             <img src="/images/webp/horarios.webp" width="100%" style={{ filter: "sepia(1)" }} />
           </a>{" "}
-        </Col>
+        </Col>{" "}
+        <div className="mt-4">
+          <a type="primary" onClick={() => setOpenIframeModal(true)}>
+            .
+          </a>
+        </div>
+        {/* Modal com o iframe para Plataforma Unipower */}
+        <Modal
+          title="Login Unipower"
+          visible={openIframeModal} // Alterado para 'visible' se estiver usando antd v4
+          onCancel={() => setOpenIframeModal(false)}
+          footer={null}
+          width={800}
+          centered
+        >
+          <div style={{ width: "100%", height: "600px" }}>
+            <iframe
+              src="https://plataformaunipower.cademi.com.br/auth/login?crstk=MS06ODM1MjoxNzc5NjIwMjpidmVuaGZoOjpycHI5MjUxOTFxcjgxcXNuOG9zcnI"
+              width="100%"
+              height="100%"
+              style={{ border: "none" }}
+              allowFullScreen
+              title="Login Unipower"
+            ></iframe>
+          </div>
+        </Modal>
       </Row>
     </Space>
   );
