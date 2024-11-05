@@ -783,31 +783,6 @@ export default function Inicio() {
             <img src="/images/webp/horarios.webp" width="100%" style={{ filter: "sepia(1)" }} />
           </a>{" "}
         </Col>{" "}
-        <div className="mt-4">
-          <a type="primary" onClick={() => setOpenIframeModal(true)}>
-            Acessar Plataforma Unipower
-          </a>
-        </div>
-        {/* Modal com o iframe para Plataforma Unipower */}
-        <Modal
-          title="Login Unipower"
-          visible={openIframeModal} // Alterado para 'visible' se estiver usando antd v4
-          onCancel={() => setOpenIframeModal(false)}
-          footer={null}
-          width={800}
-          centered
-        >
-          <div style={{ width: "100%", height: "600px" }}>
-            <iframe
-              src="https://plataformaunipower.cademi.com.br/auth/login?crstk=MS06ODM1MjoxNzc5NjIwMjpidmVuaGZoOjpycHI5MjUxOTFxcjgxcXNuOG9zcnI"
-              width="100%"
-              height="100%"
-              style={{ border: "none" }}
-              allowFullScreen
-              title="Login Unipower"
-            ></iframe>
-          </div>
-        </Modal>
       </Row>
     </Space>
   );
