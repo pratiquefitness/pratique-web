@@ -73,6 +73,10 @@ export default function Inicio() {
         body: JSON.stringify({ email: user.user_login })
       });
       const data = await response.json();
+      if (!data.hasDiagnose) {
+        // Usuário não possui diagnose, redireciona para /treino/diagnose
+        router.push("/treino/diagnose/primeira");
+      }
       // Caso contrário, não faz nada e permanece na página inicial
     } catch (error) {
       console.error("Erro ao verificar diagnose:", error);
@@ -781,7 +785,7 @@ export default function Inicio() {
         </Col>{" "}
         <div className="mt-4">
           <a type="primary" onClick={() => setOpenIframeModal(true)}>
-            .
+            Acessar Plataforma Unipower
           </a>
         </div>
         {/* Modal com o iframe para Plataforma Unipower */}
