@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     } else {
       user.isAffiliate = 0;
     }
-
+    user.companyId = "slxyQ9Eb17";
     // funcionario
     const funcionarioExists = await apiPratiqueFunciona.funcionarios.findMany({
       where: {

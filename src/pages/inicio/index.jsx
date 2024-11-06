@@ -147,10 +147,13 @@ export default function Inicio() {
   }, [usuario.ID]);
 
   useEffect(() => {
+    const isProfessor = usuario.professor === 1;
+    const hasPersonalTrainerPlan = usuario.plano?.includes("PERSONAL TRAINER") || false;
+    const userNicename = usuario.user_nicename || "";
+
     if (
-      ((usuario.professor === 1 || usuario.plano?.includes("PERSONAL TRAINER")) &&
-        usuario.user_nicename.includes("@")) ||
-      !usuario.user_nicename.length
+      ((isProfessor || hasPersonalTrainerPlan) && userNicename.includes("@")) ||
+      userNicename.length === 0
     ) {
       setOpenModal(true);
     }

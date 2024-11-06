@@ -27,7 +27,7 @@ export async function signInVerify(token) {
   }
 }
 
-export const setTheme = (plano) => {
+export const setTheme = (plano, svaColorTheme = null) => {
   return (dispatch) => {
     let theme = "red";
     if (plano?.includes("PRIME")) {
@@ -35,6 +35,9 @@ export const setTheme = (plano) => {
     }
     if (plano?.includes("NUTRI")) {
       theme = "green";
+    }
+    if (svaColorTheme !== null) {
+      theme = svaColorTheme;
     }
     dispatch(setThemeColor(theme));
   };

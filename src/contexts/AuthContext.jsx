@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { setLogin, unsetLogin, setLoading } from "@/redux/slices/login";
 import { setTheme, signInRequest, signInVerify } from "@/redux/actions/login";
+import { getClubeCertoSva } from "@/redux/actions/clubeCertoSva";
 import { tokenName } from "@/configs/global";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -17,10 +18,17 @@ export function AuthProvider({ children }) {
     checkCookie();
   }, []);
 
+  async function setClubeCertoSvaStyle(login) {
+    if (login?.companyId !== undefined && login?.companyId !== null && login?.companyId !== "") {
+      dispatch(getClubeCertoSva(login));
+    } else {
+      dispatch(setTheme(login.plano));
+    }
+  }
+
   async function signIn({ email, senha }) {
     dispatch(setLoading(true));
     const response = await signInRequest(email, senha);
-    dispatch(setLoading(false));
 
     if (response?.ID) {
       setCookie(undefined, tokenName, response.token, {
@@ -30,13 +38,15 @@ export function AuthProvider({ children }) {
       dispatch(setLogin(response));
       dispatch(setTheme(response.plano));
       setUser(response); // Armazenar o usuário no estado
+      await setClubeCertoSvaStyle(response); // Add the SVA related code
       router.push("/");
+      dispatch(setLoading(false));
       return true;
     } else {
+      dispatch(setLoading(false));
       return false;
     }
   }
-
   async function setCookieToken(token) {
     if (token) {
       dispatch(setLoading(true));

@@ -1,23 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
+// src/redux/slices/areaDoPersonal.js
+
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
   banner: []
-}
+};
 
 export const areaDoPersonalSlice = createSlice({
-  name: 'areaDoPersonal',
+  name: "areaDoPersonal",
   initialState,
   reducers: {
     setLoading(state, action) {
-      return { ...state, loading: action.payload }
+      state.loading = action.payload;
     },
     setBanner(state, action) {
-      return { ...state, banner: action.payload }
+      state.banner = action.payload;
     }
   }
-})
+});
 
-export const { setLoading, setBanner } = areaDoPersonalSlice.actions
+export const { setLoading, setBanner } = areaDoPersonalSlice.actions;
 
-export default areaDoPersonalSlice
+export default areaDoPersonalSlice.reducer; // Certifique-se de exportar o reducer
