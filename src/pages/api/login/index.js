@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     // Verificar se o email do usuário está na lista
     if (emails.indexOf(user.user_email) !== -1) {
       // Atribuir o valor correspondente de companyId
-      user.companyId = 'slxyQ9Eb17'
+      user.companyId = '2573'
     } else {
       user.companyId = ''
     }
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
 
     user.isEmployee = funcionarioExists.length ? 1 : 0
     user.cargo = funcionarioExists.length ? funcionarioExists[0].cargo : 0
-    //user.companyId = 'slxyQ9Eb17'
+    //user.companyId = '2573'
 
     // pacto
     const pactoExist = await apiPratiquePro.matriz.findMany({
