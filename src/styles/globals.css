@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url(./utilities.css);
+
+:root {
+  --color-primary: #ed143d;
+  --color-white: #fff;
+  --color-gray: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', sans-serif !important;
+}
+html,
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  height: 100%;
+}
+body #__next {
+  width: 100vw;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+body .ant-layout:first-child {
+  min-height: 100%;
+}
+body .ant-layout-header {
+  height: 50px;
+  padding: 0;
+  line-height: normal;
+}
+body .ant-layout-content {
+  padding: 0 0.625rem;
+}
+body .ant-layout-footer {
+  padding: 0.625rem 0px;
+}
+.ant-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ant-form-item-label label {
+  height: auto;
+}
+.header-logo {
+  padding: 0.5rem;
+}
+
+.header-button {
+  border-radius: 0;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-button .ant-btn-icon {
+  font-size: 1.375rem;
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  max-width: 600px;
+  height: 3.125rem;
+  //border-radius: 40px;
+  //box-shadow: 0px 10px 21px 17px rgba(0, 0, 0, 0.2);
+  z-index: 999999;
+  cursor: pointer;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.navigation ul li {
+  position: relative;
+  list-style: none;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: var(--color-white);
+  font-weight: 500;
+}
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  line-height: 58px;
+  text-align: center;
+  transition: 0.5s ease-in;
+  font-size: 20px;
+}
+.navigation ul li.active a .icon {
+  font-size: 20px;
+}
+.navigation ul li.active a .icon {
+  color: var(--color-white);
+}
+.navigation ul li.active a::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px; /* Altura da barra */
+  background-color: var(--color-white); /* Cor da barra */
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.5s ease-in;
+}
+.navigation ul li a .icon i {
+  font-size: 20px;
+}
+/* .navigation ul .indicator {
+  position: absolute;
+  left: 10;
+  top: 0;
+  width: 50px;
+  height: 5px;
+  transition: all 0.5s;
+  background-color: var(--color-white);
+} */
+/* .navigation ul .indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  transition: 0.5s;
+} */
+/* .navigation ul li:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(90px * 0));
+}
+.navigation ul li:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(90px * 1));
+}
+.navigation ul li:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(90px * 2));
+}
+.navigation ul li:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(90px * 3));
+}
+.navigation ul li:nth-child(5).active ~ .indicator {
+  transform: translateX(calc(90px * 4));
+}*/
+.navigation ul li.active ~ .indicator::before {
+  background-color: var(--color-white);
+}
+
+.login-background {
+  background: url(/images/people-login.png) no-repeat center top fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-login {
+  width: 100%;
+}
+
+.login .logo {
+  margin: auto;
+  text-align: center;
+  padding: 24px 0px;
+}
+
+.youtube-fullscreen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.youtube-fullscreen iframe {
+  position: absolute;
+  width: 100vh; /* Definir a largura igual à altura da tela */
+  height: 100vw; /* Definir a altura igual à largura da tela */
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.youtube-close svg {
+  font-size: 22px;
+  margin-top: 0.25rem;
+  margin-left: -0.125rem;
+}
+
+.rounded {
+  border-radius: 16px;
+}
+
+.planos_academia .ant-collapse-content-box {
+  padding: 0 !important;
+}
+
+.browser-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.browser-header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.browser-title {
+  font-size: 1.2em;
+}
+.browser-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+}
+.browser-iframe {
+  width: 100%;
+  height: calc(100% - 138px);
+  border: none;
+}
+.browser-iframe-blog {
+  width: 100%;
+  height: calc(100% - 50px);
+  border: none;
+}
+.ant-table-content {
+  font-size: 10px;
+  text-align: center;
+}
+.ant-table-wrapper {
+  padding: 5px 5px;
+  text-align: center;
+}
+.ant-table-cell {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  padding: 5px 5px !important;
+}
+.ant-table-wrapper .ant-table-thead > tr {
+  padding: 5px 5px !important;
+}
+.ant-tabs .ant-tabs-tab {
+  font-size: 13px;
+}
+.ant-tabs .ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 15px;
+}
+.w-50 {
+  width: 50% !important;
+}
+
+.blink {
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; -webkit-box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; -webkit-box-shadow: 0 0 3px #018000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; -moz-box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; -moz-box-shadow: 0 0 3px #018000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+  50% { background-color: #7CE04A; box-shadow: 0 0 40px #7CE04A; }
+  100% { background-color: #018000; box-shadow: 0 0 3px #018000; }
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #018000 !important;
+}
+.ant-checkbox-wrapper:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #018000 !important
+}
+.ant-checkbox-checked:hover .ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #018000 !important;
+}

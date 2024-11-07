@@ -1,0 +1,272 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/@internal/pratiqueaulas/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL_pratiqueaulas")
+}
+
+model aulas {
+  aula_id             Int     @id @default(autoincrement())
+  aula_nome           String  @db.VarChar(100)
+  aula_datapublicacao String  @db.VarChar(15)
+  aula_horapublicacao String  @db.VarChar(15)
+  aula_plano          String  @db.VarChar(20)
+  aula_categoria      String  @db.VarChar(100)
+  aula_professor      String  @db.VarChar(100)
+  aula_tempo          String  @db.VarChar(50)
+  aula_linkvideo      String? @db.LongText
+  aula_descricao      String? @db.LongText
+  aula_capa           String? @db.VarChar(120)
+  aula_temporada      String? @db.VarChar(20)
+  aula_minuto         String  @db.VarChar(20)
+  aula_sprout         String? @db.VarChar(90)
+  aula_capa_sprout    String? @db.VarChar(250)
+  aula_ordem          String? @db.VarChar(4)
+}
+
+model descontos {
+  descontos_id          Int    @id @default(autoincrement())
+  descontos_empresa     String @db.VarChar(120)
+  descontos_porcentagem String @db.VarChar(4)
+  descontos_email       String @db.VarChar(200)
+  descontos_senha       String @db.VarChar(200)
+  descontos_capa        String @db.VarChar(200)
+  descontos_endereco    String @db.VarChar(200)
+  descontos_telefone    String @db.VarChar(40)
+  descontos_instagram   String @db.VarChar(200)
+  descontos_destaque    String @db.VarChar(10)
+  descontos_descricao   String @db.VarChar(200)
+  descontos_categoria   String @db.VarChar(3)
+  descontos_chave       String @db.VarChar(400)
+}
+
+model descontos_categorias {
+  descontos_categorias_id   Int    @id @default(autoincrement())
+  descontos_categorias_nome String @db.VarChar(80)
+}
+
+model descontos_lead {
+  descontos_lead_id       Int      @id @default(autoincrement())
+  descontos_lead_nome     String   @db.VarChar(120)
+  descontos_lead_email    String   @db.VarChar(100)
+  descontos_lead_cpf      String   @db.VarChar(18)
+  descontos_lead_telefone String   @db.VarChar(20)
+  descontos_lead_empresa  String   @db.VarChar(4)
+  descontos_lead_token    String   @db.VarChar(50)
+  descontos_lead_unidade  String   @db.VarChar(5)
+  descontos_lead_data     DateTime @default(now()) @db.DateTime(0)
+  descontos_lead_status   String   @default("1") @db.VarChar(2)
+}
+
+model descontos_links {
+  descontos_links_id       Int      @id @default(autoincrement())
+  descontos_links_nome     String   @db.VarChar(120)
+  descontos_links_email    String   @db.VarChar(80)
+  descontos_links_cpf      String   @db.VarChar(30)
+  descontos_links_telefone String   @db.VarChar(30)
+  descontos_links_empresa  String   @db.VarChar(80)
+  descontos_links_status   String   @default("0") @db.VarChar(5)
+  descontos_links_data     DateTime @default(now()) @db.DateTime(0)
+  descontos_links_unidade  String   @db.VarChar(5)
+}
+
+model faculdade {
+  faculdade_id           Int     @id @default(autoincrement())
+  faculdade_aula         String  @db.VarChar(100)
+  faculdade_data         String  @db.VarChar(15)
+  faculdade_hora         String  @db.VarChar(15)
+  faculdade_categoria    String  @db.VarChar(15)
+  faculdade_temporada    String? @db.VarChar(15)
+  faculdade_capa         String? @db.VarChar(200)
+  faculdade_codigo       String? @db.VarChar(400)
+  faculdade_link         String? @db.VarChar(200)
+  faculdade_download     String? @db.VarChar(200)
+  faculdade_subcategoria String? @db.VarChar(70)
+  faculdade_nomelink     String? @db.VarChar(100)
+  faculdade_typeform     String? @db.VarChar(30)
+  faculdade_gira         String? @db.VarChar(10)
+  faculdade_nomedownload String? @db.VarChar(100)
+  faculdade_descricao    String? @db.VarChar(200)
+  faculdade_capayoutube  String  @db.VarChar(100)
+  faculdade_starta       String  @db.VarChar(30)
+}
+
+model faculdade_modalidade {
+  modalidadefacu_id         Int     @id @default(autoincrement())
+  modalidadefacu_nome       String  @db.VarChar(100)
+  modalidadefacu_capa       String? @db.VarChar(200)
+  modalidadefacu_capa_canal String? @db.VarChar(200)
+  modalidadefacu_slug       String  @db.VarChar(50)
+}
+
+model faculdade_sub {
+  subfacu_id         Int    @id @default(autoincrement())
+  subfacu_nome       String @db.VarChar(100)
+  subfacu_modalidade String @db.VarChar(50)
+}
+
+model faculdade_sub_categoria {
+  faculdade_sub_categoria_id   Int    @id @default(autoincrement()) @map("faculdade_sub-categoria_id")
+  faculdade_sub_categoria_nome String @map("faculdade_sub-categoria_nome") @db.VarChar(30)
+  faculdade_sub_categoria_mae  String @map("faculdade_sub-categoria_mae") @db.VarChar(30)
+
+  @@map("faculdade_sub-categoria")
+}
+
+model faculdade_temporada {
+  temporadafacu_id   Int    @id @default(autoincrement())
+  temporadafacu_nome String @db.VarChar(100)
+}
+
+model favorito {
+  favorito_id    Int    @id @default(autoincrement())
+  favorito_user  String @db.VarChar(30)
+  favorito_video String @db.VarChar(30)
+}
+
+model live {
+  live_id             Int    @id @default(autoincrement())
+  live_nome           String @db.VarChar(100)
+  live_iconelive      String @db.VarChar(10)
+  live_datagravacao   String @db.VarChar(20)
+  live_horagravacao   String @db.VarChar(20)
+  live_datapublicacao String @db.VarChar(20)
+  live_horapublicacao String @db.VarChar(20)
+  live_modalidadeapp  String @db.VarChar(100)
+  live_professorapp   String @db.VarChar(100)
+  live_tipo           String @db.VarChar(100)
+  live_valor          String @db.VarChar(50)
+  live_videoyou       String @db.VarChar(100)
+  live_capalive       String @db.VarChar(100)
+}
+
+model lives {
+  live_id             Int    @id @default(autoincrement())
+  live_nome           String @db.VarChar(100)
+  live_iconelive      String @db.VarChar(100)
+  live_datagravacao   String @db.VarChar(100)
+  live_horagravacao   String @db.Text
+  live_datapublicacao String @db.VarChar(100)
+  live_horapublicacao String @db.VarChar(100)
+  live_modalidadeapp  String @db.VarChar(100)
+  live_professorapp   String @db.VarChar(100)
+  live_tipolive       String @db.VarChar(100)
+  live_valor          String @db.VarChar(100)
+  live_videoyoutube   String @db.VarChar(100)
+  live_link           String @db.VarChar(120)
+  live_horafinal      String @db.VarChar(15)
+  live_compara        String @db.VarChar(20)
+}
+
+model meditacao {
+  meditacao_id        Int     @id @default(autoincrement())
+  meditacao_nome      String  @db.VarChar(120)
+  meditacao_categoria String  @db.VarChar(10)
+  meditacao_audio     String  @db.VarChar(5000)
+  meditacao_sub       String? @db.VarChar(15)
+  meditacao_item      String? @db.VarChar(3000)
+  meditacao_ref       String? @db.VarChar(10)
+}
+
+model meditacao_modalidade {
+  modalidademeditacao_id        Int     @id @default(autoincrement())
+  modalidademeditacao_nome      String  @db.VarChar(100)
+  modalidademeditacao_capa      String  @db.VarChar(120)
+  modalidademeditacao_descricao String? @db.LongText
+}
+
+model meditacao_sub {
+  submeditacao_id         Int    @id @default(autoincrement())
+  submeditacao_nome       String @db.VarChar(100)
+  submeditacao_modalidade String @db.VarChar(50)
+}
+
+model modalidade {
+  modalidadeid   Int    @id @default(autoincrement())
+  modalidadenome String @db.VarChar(100)
+}
+
+model page {
+  page_id    Int    @id @default(autoincrement())
+  page_title String @db.Text
+  page_url   String @db.Text
+  page_order Int
+}
+
+model php_interview_questions {
+  id       Int    @id @default(autoincrement())
+  question String @db.Text
+  answer   String @db.Text
+}
+
+model plano {
+  plano_id   Int    @id @default(autoincrement())
+  plano_nome String @db.VarChar(20)
+}
+
+model popup {
+  id_popup               Int     @id @default(autoincrement())
+  imagem_popup           String  @db.VarChar(150)
+  periodo_popup          String  @db.VarChar(3)
+  redirecionamento_popup String? @db.LongText
+  publico_popup          String  @db.VarChar(3)
+  publico_local          String  @db.VarChar(3)
+}
+
+model powerflix {
+  powerflix_id Int    @id @default(autoincrement())
+  powerflix_1  String @db.VarChar(100)
+  powerflix_2  String @db.VarChar(100)
+}
+
+model professor {
+  professor_id         Int    @id @default(autoincrement())
+  professor_nome       String @db.VarChar(200)
+  professor_modalidade String @db.VarChar(100)
+}
+
+model professor_meta {
+  professor_mid        Int    @id @default(autoincrement())
+  professor_midusuario Int
+  professor_mchave     String @db.VarChar(100)
+  professor_mvalor     String @db.VarChar(100)
+}
+
+model programas {
+  programas_id        Int     @id @default(autoincrement())
+  programas_nome      String  @db.VarChar(100)
+  programas_professor String  @db.VarChar(60)
+  programas_capa_h    String  @db.VarChar(120)
+  programas_capav     String  @db.VarChar(120)
+  programas_temp      String? @db.VarChar(80)
+  programas_estado    String  @db.VarChar(3)
+  programas_categoria String  @db.VarChar(5)
+  programas_sprout    String  @db.VarChar(20)
+  programas_data      String  @db.VarChar(25)
+}
+
+model tempo {
+  tempo_id   Int    @id @default(autoincrement())
+  tempo_nome String @db.VarChar(30)
+}
+
+model temporada {
+  temporada_id   Int    @id @default(autoincrement())
+  temporada_nome String @db.VarChar(100)
+}
+
+model tipoaula {
+  tipoaula_id   Int    @id @default(autoincrement())
+  tipoaula_nome String @db.VarChar(50)
+}
+
+model tv {
+  tv_id      Int    @id @default(autoincrement())
+  tv_tipo    String @db.VarChar(5)
+  tv_url     String @db.LongText
+  tv_unidade String @db.VarChar(7)
+  tv_rotacao String @db.VarChar(12)
+}
