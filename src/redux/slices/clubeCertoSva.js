@@ -10,14 +10,14 @@ export const clubeCertoSvaSlice = createSlice({
   initialState,
   reducers: {
     setSvaClientParameters(state, action) {
-      state.svaClientParameters = action.payload;
+      return { ...state, svaClientParameters: action.payload };
     },
     setLoading(state, action) {
-      state.loading = action.payload;
+      return { ...state, loading: action.payload };
     }
   }
 });
 
 export const { setSvaClientParameters, setLoading } = clubeCertoSvaSlice.actions;
 
-export default clubeCertoSvaSlice.reducer;
+export default clubeCertoSvaSlice;

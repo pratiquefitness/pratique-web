@@ -36,6 +36,13 @@ export default function Navigation({ data }) {
     router.push(href);
   };
 
+  const newData =
+    Object.keys(svaClientParameters).length > 0 && isAffiliate
+      ? data.filter((afiliado, index) => {
+          return afiliado.title !== "Afiliados";
+        })
+      : data;
+
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
       <ul>
