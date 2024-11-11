@@ -36,9 +36,11 @@ export const setTheme = (plano, svaColorTheme = null) => {
     if (plano?.includes('NUTRI')) {
       theme = 'green'
     }
-    /*if (svaColorTheme !== null) {
-      theme = svaColorTheme === undefined ? theme : svaColorTheme;
-    }*/
+    if (svaColorTheme !== null && svaColorTheme !== undefined) {
+      theme = svaColorTheme
+       console.log("setTheme", svaColorTheme);
+    }
+       console.log("setTheme", svaColorTheme);
     dispatch(setThemeColor(theme))
   }
 }

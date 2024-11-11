@@ -84,22 +84,29 @@ export default function Layout({ children }) {
                           ]}
                         />
                       )}
-                      {fraseInicial && fraseInicial[0] !== "" && showHeaderFooter && (
-                        <>
-													<Title level={3}>
-	                          {fraseInicial[0]} <br /> {fraseInicial[1]}
-	                        </Title>
+                      {fraseInicial[0] !== '' && (
+                        <div
+                          className={
+                            Object.keys(svaClientParameters).length > 0
+                              ? 'flex-container d-flex justify-space-between'
+                              : 'd-flex flex-column justify-space-between'
+                          }
+                        >
+                          <Title level={5}>
+                            {fraseInicial[0]} <br /> {fraseInicial[1]}
+                          </Title>
                           {
                             Object.keys(svaClientParameters).length > 0 &&
-                            <Image
-                              alt={'Descrição da imagem'}
-                              className={pathname === '/' ? '' : 'd-none'}
-                              width={100}
-                              height={61}
-                              src={svaClientParameters.image}
-                            />
+                              <Image
+                                alt={"Descrição da imagem"}
+                                className={pathname === '/' ? '' : 'd-none'}
+                                width={100}
+                                height={64}
+                                src={svaClientParameters.image}
+                                preview={false}
+                              />
                           }
-                        </>
+                        </div>
                       )}
                     </div>
                     {children}

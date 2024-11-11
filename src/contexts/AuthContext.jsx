@@ -29,7 +29,6 @@ export function AuthProvider({ children }) {
   async function signIn({ email, senha }) {
     dispatch(setLoading(true));
     const response = await signInRequest(email, senha);
-    console.log('AQUI: ', response)
     dispatch(setLoading(false));
 
     if (response?.ID) {
@@ -38,7 +37,7 @@ export function AuthProvider({ children }) {
         path: "/"
       });
       dispatch(setLogin(response));
-			await setClubeCertoSvaStyle(response);
+			setClubeCertoSvaStyle(response);
       dispatch(setTheme(response.plano));
       setUser(response); // Armazenar o usuário no estado
       await router.push("/");
