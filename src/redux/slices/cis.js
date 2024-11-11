@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   data: {
     disponiveis: [],
-    anteriores: []
+    anteriores: [],
   },
+  coordenadaUnidade: {},
   loading: true
 }
 
@@ -15,12 +16,15 @@ export const cisSlice = createSlice({
     setData(state, action) {
       return { ...state, data: action.payload }
     },
+    setCoordenada(state, action) {
+      return { ...state, coordenadaUnidade: action.payload }
+    },
     setLoading(state, action) {
       return { ...state, loading: action.payload }
     }
   }
 })
 
-export const { setData, setLoading } = cisSlice.actions
+export const { setData, setLoading, setCoordenada } = cisSlice.actions
 
 export default cisSlice

@@ -1,26 +1,26 @@
-import { Button, Col, Row, Space, Tabs, Typography, theme } from 'antd'
-import { Collapse, Panel } from '@/components'
-import AulasColetivas from '../aulas_coletivas/_AulasColetivas'
-import BannersPowerCycle from './_BannersPowerCycle'
+import { Button, Col, Row, Space, Tabs, Typography, theme } from "antd";
+import { Collapse, Panel } from "@/components";
+import AulasColetivas from "../aulas_coletivas/_AulasColetivas";
+import BannersPowerCycle from "./_BannersPowerCycle";
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 
 const items = [
   {
-    key: '2',
-    label: 'Aulas',
+    key: "2",
+    label: "Aulas",
     children: (
       <div>
         <div className="mt-4">
           <BannersPowerCycle />
         </div>
-        <AulasColetivas tema={'netFit_spinning'} />
+        <AulasColetivas tema={"netFit_spinning"} />
       </div>
     )
   },
   {
-    key: '1',
-    label: 'Instruções',
+    key: "1",
+    label: "Instruções",
     children: (
       <div>
         <div className="text-center">
@@ -37,17 +37,20 @@ const items = [
           <Typography.Paragraph>
             Para uma melhor experiência, assista às aulas em uma tela maior. Sugestão - Smart TV
           </Typography.Paragraph>
-          <Typography.Paragraph>Siga o Passo a passo para participar das aulas:</Typography.Paragraph>
+          <Typography.Paragraph>
+            Siga o Passo a passo para participar das aulas:
+          </Typography.Paragraph>
         </div>
         <Collapse>
           <Panel header="1º Assista aulas ao vivo no YouTube">
             <Space direction="vertical" className="w-100">
               <p className="text-center">
-                Assista às nossas aulas no YouTube pela sua TV ou Computador através do canal Power Cycle
+                Assista às nossas aulas no YouTube pela sua TV ou Computador através do canal Power
+                Cycle
               </p>
               <Row className="mt-10">
                 <Col span={24} className="text-center">
-                  <img src="/images/bike/1.png" width={100} alt="" />
+                  <img src="/images/webp/bike/1.webp" width={100} alt="" />
                   <p>
                     <a href="https://www.youtube.com/@powercycleoficial3593">
                       <Button type="primary" size="small">
@@ -68,10 +71,13 @@ const items = [
                   href="https://play.google.com/store/apps/details?id=com.fortram.pratiqueemcasa&hl=pt_BR&gl=US"
                   target="_blank"
                 >
-                  <img src="/images/bike/play.png" width={150} alt="" />
+                  <img src="/images/webp/bike/play.webp" width={150} alt="" />
                 </a>
-                <a href="https://apps.apple.com/br/app/pratique-em-casa/id1520321614" target="_blank">
-                  <img src="/images/bike/store.png" width={150} alt="" />
+                <a
+                  href="https://apps.apple.com/br/app/pratique-em-casa/id1520321614"
+                  target="_blank"
+                >
+                  <img src="/images/webp/bike/store.webp" width={150} alt="" />
                 </a>
               </div>
             </Space>
@@ -89,14 +95,14 @@ const items = [
           </Panel>
           <Panel header="Quadro de Horários">
             <p>
-              <img src="/images/bike/horarios.png" width={'100%'} alt="" />
+              <img src="/images/webp/bike/horarios.webp" width={"100%"} alt="" />
             </p>
           </Panel>
           <Panel header="Solicitar manutenção">
             <a href="https://api.whatsapp.com/send?phone=5531984272283&text=Ol%C3%A1%2C%20solicito%20manuten%C3%A7%C3%A3o%20da%20bike">
               <br />
               <center>
-                <img src="/images/bike/whats.png" style={{ width: '300px' }} />
+                <img src="/images/webp/bike/whats.webp" style={{ width: "300px" }} />
               </center>
               <br />
             </a>
@@ -107,23 +113,23 @@ const items = [
               href="https://api.whatsapp.com/send?1=pt_BR&phone=5531984272283%20&text=Ol%C3%A1,%20estou%20no%20app,%20e%20preciso%20de%20ajuda."
               target="_blank"
             >
-              <img src="/images/bike/whats.png" style={{ width: '300px' }} />
+              <img src="/images/webp/bike/whats.webp" style={{ width: "300px" }} />
             </a>
           </Panel>
         </Collapse>
       </div>
     )
   }
-]
+];
 
 export default function Bike() {
   return (
     <div>
       <div className="text-center">
-        <img src="images/bike/cycle.png" width={'50%'} alt="" style={{ maxWidth: 200 }} />
+        <img src="images/bike/cycle.webp" width={"50%"} alt="" style={{ maxWidth: 200 }} />
       </div>
 
       <Tabs defaultActiveKey="0" items={items} centered size="large" />
     </div>
-  )
+  );
 }

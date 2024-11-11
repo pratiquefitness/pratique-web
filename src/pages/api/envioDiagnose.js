@@ -1,34 +1,37 @@
-import apiPratiqueTecnologia from '@/services/apiPratiqueTecnologia'
+import apiPratiqueTecnologia from "@/services/apiPratiqueTecnologia";
 
 export default async function apiPratiqueTec(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ message: 'Método não permitido' })
-    return
+  if (req.method !== "POST") {
+    res.status(405).json({ message: "Método não permitido" });
+    return;
   }
 
   try {
-    const respostaArray = JSON.parse(Object.keys(req.body)[0])
-    const stringResposta = JSON.stringify(respostaArray)
+    const respostaArray = JSON.parse(Object.keys(req.body)[0]);
+    const stringResposta = JSON.stringify(respostaArray);
 
-    const apiUrl = '/app/diagnose/envia/processa/respostas.php'
-    const urlWithParams = `${apiUrl}?resposta=${stringResposta}`
+    const apiUrl = "/app/diagnose/envia/processa/respostas_app2.php";
 
-    console.log('url final', urlWithParams)
     const response = await apiPratiqueTecnologia.post(
       apiUrl,
       { resposta: stringResposta },
       {
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }
       }
-    )
-    res.status(200).json(response.data)
-    const idDiagnose = response.data
-    return idDiagnose
+    );
+
+    // Extrair o ID da resposta
+    const idDiagnose = response.data.diagnose_id;
+
+    // Retornar o ID como parte da resposta JSON para o cliente
+    res.status(200).json({ diagnose_id: idDiagnose });
   } catch (error) {
-    console.log('error', error)
-    res.status(error.response?.status || 500).json(error.response?.data || { message: 'Internal Server Error' })
+    console.log("error", error);
+    res
+      .status(error.response?.status || 500)
+      .json(error.response?.data || { message: "Internal Server Error" });
   }
 }
 

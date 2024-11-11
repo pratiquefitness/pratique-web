@@ -1,110 +1,233 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Empty, Modal, Table } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
-import TreinoLayout from '../_Layout'
-import { useDispatch, useSelector } from 'react-redux'
-import { getTreino } from '@/redux/actions/treino'
-import axios from 'axios'
-import { setBrowserURL } from '@/redux/slices/global'
+import React, { useEffect, useState } from "react";
+import { Button, Empty, Table, Typography, Modal, Input, Form } from "antd";
+import { DownloadOutlined, ArrowLeftOutlined, IdcardOutlined } from "@ant-design/icons";
+import TreinoLayout from "../_Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { getTreino } from "@/redux/actions/treino";
+import axios from "axios";
+import { setBrowserURL } from "@/redux/slices/global";
+import { updateCpf } from "@/redux/actions/conta";
 
 export default function ScannerView() {
-  const { usuario } = useSelector(state => state.login)
-  const dispatch = useDispatch()
-  const { data } = useSelector(state => state.treino)
-  const { fichas } = data
-  const temExame = fichas && fichas.find(objeto => objeto.urlexame && objeto.urlexame.includes('pdf'))
-  const [examsData, setExamsData] = useState(null)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
-  const [selectedExamId, setSelectedExamId] = useState(null)
+  const dispatch = useDispatch();
+  const { usuario } = useSelector((state) => state.login);
+  const { data } = useSelector((state) => state.treino);
+  const { fichas } = data;
+  const temExame =
+    fichas && fichas.some((objeto) => objeto.urlexame && objeto.urlexame.includes(".pdf"));
+  const [examsData, setExamsData] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedExamId, setSelectedExamId] = useState(null);
+  const [iframeVisible, setIframeVisible] = useState(false);
+  const [pdfLink, setPdfLink] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [cpfModalVisible, setCpfModalVisible] = useState(false);
+  const [cpfForm] = Form.useForm();
 
   useEffect(() => {
-    dispatch(getTreino())
+    dispatch(getTreino());
 
     const fetchExamsData = async () => {
       try {
-        if (usuario && usuario.telefone) {
+        if (usuario) {
+          let parametrosConsulta = "";
+
+          if (usuario.cpf) {
+            const cpfLimpo = usuario.cpf.replace(/\D/g, "");
+            parametrosConsulta += `cpf=${cpfLimpo}`;
+          }
+
+          if (usuario.telefone) {
+            const telefoneLimpo = usuario.telefone.replace(/\D/g, "");
+            const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, "");
+            if (parametrosConsulta !== "") {
+              parametrosConsulta += "&";
+            }
+            parametrosConsulta += `phone=${telefoneSemParenteses}`;
+          }
+
+          if (parametrosConsulta === "") {
+            return;
+          }
+
+          const timestamp = new Date().getTime();
           const response = await axios.get(
-            `https://pratiquetecnologia.com.br/api/balanca/id.php?phone=${usuario.telefone}`
-          )
-          // Convertendo as datas para um formato legível
-          const examsWithFormattedDate = response.data.map(exam => ({
-            ...exam,
-            gmtCreate: new Date(exam.gmtCreate).toLocaleString()
-          }))
-          setExamsData(examsWithFormattedDate)
+            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&phone=${timestamp}`,
+            {
+              headers: {
+                "Cache-Control": "no-cache",
+                Pragma: "no-cache",
+                Expires: "0"
+              }
+            }
+          );
+
+          if (response.status === 200 && response.data && response.data.length > 0) {
+            const examsWithFormattedDate = response.data.map((exam) => ({
+              ...exam,
+              gmtCreate: new Date(exam.gmtCreate).toLocaleString()
+            }));
+            setExamsData(examsWithFormattedDate);
+          } else {
+            console.error("Nenhum exame encontrado para este usuário.");
+          }
         } else {
-          console.error('Telefone do usuário não disponível.')
+          console.error("Telefone do usuário não disponível.");
         }
       } catch (error) {
-        console.error('Erro ao buscar dados dos exames:', error)
+        console.error("Erro ao buscar dados dos exames:", error);
       }
+    };
+
+    fetchExamsData();
+  }, [dispatch, usuario]);
+
+  useEffect(() => {
+    if (!usuario.cpf) {
+      setCpfModalVisible(true);
     }
+  }, [usuario]);
 
-    fetchExamsData()
-  }, [dispatch, usuario])
+  const handleImageClick = async (record) => {
+    setSelectedImage(record.bodyImage);
+    setSelectedExamId(record.id);
+    setLoading(true);
+    setIframeVisible(true);
+    setPdfLink(record.pdf);
+    //console.log('Link do exame:', record.pdf)
+  };
 
-  const handleImageClick = async record => {
-    setSelectedImage(record.bodyImage)
-    setModalVisible(true)
+  const handleIframeLoad = () => {
+    setLoading(false);
+  };
 
+  const handleCpfSubmit = async (values) => {
     try {
-      // Abrir a página embutida na aplicação
-      dispatch(setBrowserURL(`https://www.anovator.com/report/index.html?id=${record.id}&child=false&lang=pt_PT`))
+      await dispatch(updateCpf(values.cpf));
+      setCpfModalVisible(false);
     } catch (error) {
-      console.error('Erro ao abrir a página:', error)
+      console.error("Erro ao atualizar o CPF:", error);
     }
-  }
-
-  const columns = [
-    {
-      title: 'Data',
-      dataIndex: 'gmtCreate',
-      key: 'gmtCreate',
-      render: gmtCreate => {
-        const date = new Date(gmtCreate)
-        return date.toLocaleDateString() // Exibir apenas a data sem a hora
-      }
-    },
-    {
-      title: 'Ações',
-      key: 'actions',
-      render: record => (
-        <Button type="primary" onClick={() => handleImageClick(record)}>
-          VER EXAME
-        </Button>
-      )
-    }
-  ]
+  };
 
   return (
     <TreinoLayout>
+      {iframeVisible && (
+        <div style={{ position: "fixed", zIndex: 9999, top: 0, left: 0, right: 0, bottom: 0 }}>
+          {loading && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: "#f0f0f0"
+              }}
+            />
+          )}
+          <div style={{ position: "absolute", top: "10px", left: "10px", zIndex: "9999" }}>
+            <Button icon={<ArrowLeftOutlined />} onClick={() => setIframeVisible(false)}>
+              Voltar
+            </Button>
+          </div>
+          <div style={{ position: "absolute", top: "10px", right: "10px", zIndex: "9999" }}>
+            {pdfLink && (
+              <a href={pdfLink} target="_blank" rel="noopener noreferrer">
+                <Button type="primary">Ver PDF</Button>
+              </a>
+            )}
+          </div>
+          <iframe
+            title="PDF Viewer"
+            src={`https://www.anovator.com/report/index.html?id=${selectedExamId}&child=false&lang=pt_PT`}
+            width="100%"
+            height="100%"
+            onLoad={handleIframeLoad}
+          />
+        </div>
+      )}
+      {!iframeVisible && examsData ? (
+        <Table
+          dataSource={examsData}
+          columns={[
+            {
+              title: "Data",
+              dataIndex: "data_column",
+              key: "gmtCreate",
+              render: (data_column) => {
+                const date = new Date(data_column);
+                return date.toLocaleDateString();
+              }
+            },
+            {
+              title: "Ações",
+              key: "actions",
+              render: (record) => (
+                <Button
+                  type="primary"
+                  style={{ height: "20px" }}
+                  onClick={() => handleImageClick(record)}
+                >
+                  Ver
+                </Button>
+              )
+            }
+          ]}
+        />
+      ) : (
+        <Empty />
+      )}
       {temExame ? (
-        <a href={temExame?.urlexame} target="_blank" rel="noopener noreferrer">
+        <a
+          href={fichas.find((objeto) => objeto.urlexame.includes(".pdf")).urlexame}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button shape="round" icon={<DownloadOutlined />} size="large" block>
             Baixar Exame
           </Button>
         </a>
       ) : (
-        <div style={{ textAlign: 'center' }}></div>
+        <Empty />
       )}
-
-      {examsData ? (
-        <div>
-          <Table
-            dataSource={examsData}
-            columns={columns}
-            onRow={(record, rowIndex) => ({
-              onClick: () => setSelectedExamId(record.id)
-            })}
-          />
-          <Modal open={modalVisible} onClose={() => setModalVisible(false)} footer={null} destroyOnClose>
-            {selectedImage && <img src={selectedImage} alt="Imagem do exame" style={{ maxWidth: '100%' }} />}
-          </Modal>
+      <Modal
+        title={
+          <div style={{ textAlign: "center" }}>
+            <Typography.Title level={3} style={{ marginBottom: 0 }}>
+              Atenção
+            </Typography.Title>
+          </div>
+        }
+        visible={cpfModalVisible}
+        onCancel={() => setCpfModalVisible(false)}
+        footer={null}
+        centered
+      >
+        <div style={{ textAlign: "center" }}>
+          <IdcardOutlined style={{ fontSize: "48px", color: "#08c" }} />
+          <Typography.Paragraph style={{ color: "#595959", marginTop: "16px" }}>
+            Preencha seu CPF para ter acesso ao SUPERBIO! Preencha corretamente pois ele será a
+            chave para você poder ver seus exames!
+          </Typography.Paragraph>
         </div>
-      ) : (
-        <div style={{ textAlign: 'center' }}></div>
-      )}
+        <Form form={cpfForm} onFinish={handleCpfSubmit}>
+          <Form.Item
+            name="cpf"
+            rules={[
+              { required: true, message: "Por favor, insira seu CPF" },
+              { len: 11, message: "O CPF deve ter 11 dígitos" }
+            ]}
+          >
+            <Input maxLength={11} placeholder="Digite aqui o seu CPF" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Salvar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </TreinoLayout>
-  )
+  );
 }

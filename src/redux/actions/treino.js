@@ -4,10 +4,27 @@ import api from '@/services/api'
 
 export const getTreino = () => {
   return async (dispatch, getState) => {
-    const { login } = getState()
+    const { login, conta } = getState();
+    const email = login.usuario.user_email;
     dispatch(setLoading(true))
     return api
-      .post('/treino', { email: login.usuario.user_email })
+      .post('/treino', { email: email })
+      .then(res => {
+        dispatch(setData(res.data))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const getTreinoAluno = (emailAluno) => {
+  return async (dispatch, getState) => {
+    const { login, conta } = getState();
+    const email = emailAluno
+    dispatch(setLoading(true))
+    return api
+      .post('/treino', { email: email })
       .then(res => {
         dispatch(setData(res.data))
       })

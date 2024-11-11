@@ -40,7 +40,8 @@ const TreinosLivresSalvos = ({
             onClick={() => {
               router.push({
                 pathname: `/editar_meus_treinos/${opcoes.id_ficha}`,
-              })
+                query: { id_user: opcoes.id_user }
+              }, `/editar_meus_treinos/${opcoes.id_ficha}`)
             }}
             type="warning">[Editar]
           </Text>
@@ -113,7 +114,7 @@ const TreinosLivresSalvos = ({
     }
   ];
   
-  const data = treinoLivre.meus_treinos.map((treino, i) => {
+  const data = treinoLivre.meus_treinos?.map((treino, i) => {
     return {
       key: i,
       data: <Text>{`${format(new Date(treino.data_criacao), 'dd-MM-yy-EEEEEE', {locale: ptBR})}`}</Text>,

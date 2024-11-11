@@ -3,7 +3,15 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
 const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   images: {
-    domains: ['img.youtube.com', 'pratiqueemcasa.com.br', 'api.whatsapp.com']
+    domains: ['img.youtube.com', 'pratiqueemcasa.com.br', 'api.whatsapp.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'node.clubecerto.com.br',
+        port: '',
+        pathname: '/superapp/**',
+      },
+    ],
   },
   env: {
     JWT_SECRET: process.env.JWT_SECRET

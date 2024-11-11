@@ -36,10 +36,10 @@ export default function Navigation({ data }) {
     router.push(href)
   }
 
-  const newData = Object.keys(svaClientParameters).length > 0 && isAffiliate ?
-    data.filter((afiliado, index) => {
-      return afiliado.title !== 'Afiliados'
-    }) : data
+	const newData = Object.keys(svaClientParameters).length > 0 && isAffiliate ?
+		data.filter((afiliado, index) => {
+			return afiliado.title !== 'Afiliados'
+		}) : data
 
   return (
     <div className="navigation" style={{ background: token.colorPrimary }}>
@@ -51,7 +51,11 @@ export default function Navigation({ data }) {
             showInNavigation &&
             checkBike &&
             checkAfiliate && (
-              <li className={href === selected ? 'list active' : 'list'} onClick={onNavigate(href, title)} key={key}>
+              <li
+                className={href === selected ? 'list active' : 'list'}
+                onClick={onNavigate( href, title )}
+                key={key}
+              >
                 <a style={{ pointerEvents: 'none' }}>
                   <span className="icon text-white">{href === selected ? activeIcon : icon}</span>
                 </a>

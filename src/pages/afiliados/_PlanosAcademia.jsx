@@ -26,13 +26,16 @@ const columns = (setLinkID, dados, usuario, employee) => {
       key: 'link',
       width: 100,
       render: (_, record) => {
-        const linkFinal = `https://novo.pratiquefitness.com.br/checkoutpageplano/${record.unidade.slug}?pl=${
+        // const unidadeSlug = record.unidade ? record.unidade.slug : ''
+        const unidadeSlug = record.unidade
+
+        const linkFinal = `https://novo.pratiquefitness.com.br/checkoutpageplano/${unidadeSlug}?pl=${
           record.plano
         }&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
           employee ? employee : usuario.isAffiliate
         }|AFILIADO`
 
-        const showError = ['adelmoooo'].includes(record.unidade.slug)
+        const showError = ['adelmoooo'].includes(unidadeSlug)
 
         return employee ? (
           <a href={linkFinal} target="_blank">
@@ -165,7 +168,9 @@ export default function PlanosAcademia({ employee }) {
               <Panel
                 key={key++}
                 header={unidade.unidade}
-                onClick={() => dispatch(getPlanos(unidade.dados.token, unidade.dados.separador, unidade.unidade))}
+                onClick={() =>
+                  dispatch(getPlanos(unidade.dados.token, unidade.dados.separador, unidade.unidade, unidade.dados.slug))
+                }
                 style={{ padding: 0 }}
               >
                 <Loading spinning={planosLoading}>

@@ -8,15 +8,54 @@ datasource db {
   url      = env("DATABASE_URL_pratiquefunciona")
 }
 
+model foraraio {
+  id          Int      @id @default(autoincrement())
+  funcionario Int
+  unidade     Int
+  data        DateTime @db.Timestamp(0)
+  cordenada   String   @db.Text
+}
+
 model funcionarios {
-  id       Int     @id @default(autoincrement())
-  unidade  String? @db.VarChar(80)
-  nome     String  @db.VarChar(300)
-  email    String  @db.VarChar(150)
-  telefone String? @db.VarChar(30)
-  cpf      String? @db.VarChar(25)
-  cargo    String  @db.VarChar(100)
-  status   String? @db.VarChar(3)
+  id          Int      @id @default(autoincrement())
+  unidade     String?  @db.VarChar(80)
+  nome        String   @db.VarChar(300)
+  email       String   @db.VarChar(150)
+  telefone    String?  @db.VarChar(30)
+  cpf         String?  @db.VarChar(25)
+  cargo       String   @db.VarChar(100)
+  status      String?  @db.VarChar(3)
+  flash       String?  @db.VarChar(20)
+  nascimento  String?  @db.VarChar(20)
+  banco       String?  @db.VarChar(20)
+  agencia     String?  @db.VarChar(5)
+  dig_agencia String?  @db.VarChar(5)
+  conta       String?  @db.VarChar(20)
+  dig_conta   String?  @db.VarChar(5)
+  op          String?  @db.VarChar(8)
+  pix         String?  @db.VarChar(80)
+  data        DateTime @default(now()) @db.Timestamp(0)
+}
+
+model lancapacto {
+  id                Int      @id @default(autoincrement())
+  email             String   @db.VarChar(120)
+  cpf               String   @db.VarChar(50)
+  empresa           String   @db.VarChar(15)
+  idExterno         Int
+  idExternoContrato Int
+  codCliente        Int
+  codContrato       Int
+  data              DateTime @default(now()) @db.DateTime(0)
+  plano             Int
+  categoria         String   @db.VarChar(50)
+}
+
+model pix {
+  id    Int    @id @default(autoincrement())
+  email String @db.VarChar(120)
+  chave String @db.VarChar(120)
+  tipo  String @db.VarChar(10)
 }
 
 model ponto {
@@ -25,6 +64,19 @@ model ponto {
   ponto_hora        DateTime @default(now()) @db.DateTime(0)
   ponto_aparelho    String?  @db.VarChar(300)
   ponto_unidade     String?  @db.VarChar(15)
+
+  @@index([ponto_funcionario], map: "idx_ponto_funcionario")
+  @@index([ponto_hora], map: "idx_ponto_hora")
+}
+
+model sva {
+  id        Int      @id @default(autoincrement())
+  cpf       String?  @db.VarChar(20)
+  email     String?  @db.VarChar(150)
+  nome      String?  @db.VarChar(250)
+  status    String   @db.VarChar(3)
+  data      DateTime @default(now()) @db.DateTime(0)
+  companyId Int
 }
 
 model wp_users {
@@ -40,15 +92,21 @@ model wp_users {
   user_status         Int      @default(0)
   display_name        String   @default("") @db.VarChar(250)
   avatar_image        String?  @db.Text
+  personal            String?  @db.VarChar(20)
+  cpf_sva             String?  @db.VarChar(30)
+  sva                 String?  @db.VarChar(3)
+  curriculo           String?  @db.LongText
+  professor           Int?
+  cidade              String?  @db.VarChar(80)
+  estado              String?  @db.VarChar(80)
+  telefone            String?  @db.VarChar(40)
+  cpf                 String?  @db.VarChar(40)
+  recent_problem      Boolean? @default(false)
+  visivel             Int?
+  cref                String?  @db.VarChar(40)
+  instagram           String?  @db.VarChar(50)
 
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")
   @@index([user_nicename], map: "user_nicename")
-}
-
-model pix {
-  id    Int    @id @default(autoincrement())
-  email String @db.VarChar(120)
-  chave String @db.VarChar(120)
-  tipo  String @db.VarChar(10)
 }

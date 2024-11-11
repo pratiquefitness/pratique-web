@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-
 import globalSlice from './slices/global'
 import loginSlice from './slices/login'
 import treinoSlice from './slices/treino'
@@ -14,6 +13,7 @@ import afiliadosSlice from './slices/afiliados'
 import contaSlice from './slices/conta'
 import clubeCertoSvaSlice from './slices/clubeCertoSva'
 import exerciciosSlice from './slices/exercicios'
+import areaDoPersonalSlice from "@/redux/slices/areaDoPersonal";
 
 const store = configureStore({
   reducer: {
@@ -31,6 +31,7 @@ const store = configureStore({
     afiliados: afiliadosSlice.reducer,
     clubeCertoSva: clubeCertoSvaSlice.reducer,
     exercicios: exerciciosSlice.reducer,
+    areaDoPersonal: areaDoPersonalSlice.reducer,
   }
 })
 

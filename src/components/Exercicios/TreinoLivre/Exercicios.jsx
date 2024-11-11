@@ -75,10 +75,10 @@ const Exercicios = ({
     }
   }
 
-  const getGrupamentoMuscular = (value) => {
+  const getGrupamentoMuscular = (grupo) => {
     setFilterExercises(
       treinoLivre.exercises
-        .filter(exercise => value.includes(exercise.exercicio_grupo))
+        .filter(exercise => grupo.value === exercise.exercicio_grupo)
         .sort((a, b) => {
           const exercicioA = a.exercicio_nome.toUpperCase();
           const exercicioB = b.exercicio_nome.toUpperCase();
@@ -118,7 +118,7 @@ const Exercicios = ({
       {
         treinoLivre?.exercises?.length > 0 &&
         <>
-          <div className="text-center pb-4">
+          <div className="pb-4">
             <ExerciseChoiceInput
               selectedChoice={(value) => {
                 getGrupamentoMuscular(value)

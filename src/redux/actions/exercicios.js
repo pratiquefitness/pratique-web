@@ -1,14 +1,13 @@
 import { message } from 'antd'
-import {setLoading, setTreinoLivre, setListarTreino} from '../slices/exercicios'
+import { setLoading, setTreinoLivre, setListarTreino } from '../slices/exercicios'
 import api from '@/services/api'
 
 export const getTreinoLivre = (id) => {
   return async (dispatch) => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios', {usuarioId: id})
+      .post('/exercicios', { usuarioId: id })
       .then(res => {
-        console.log('RES', res.data);
         dispatch(setTreinoLivre(res.data))
       })
       .finally(() => {
@@ -18,7 +17,8 @@ export const getTreinoLivre = (id) => {
 }
 
 export const saveTreinoLivre = data => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const { login } = getState()
     dispatch(setLoading(true))
     return api
       .post('/exercicios/saveTreinoLivre', data)
@@ -30,6 +30,7 @@ export const saveTreinoLivre = data => {
             marginTop: '40vh',
           },
         });
+        dispatch(getTreinoLivreAluno(login.usuario.ID));
         dispatch(getTreinoLivre(data.id_user));
       })
       .finally(() => {
@@ -38,11 +39,11 @@ export const saveTreinoLivre = data => {
   }
 }
 
-export const deleteTreinoLivre = (id_ficha, id_user ) => {
+export const deleteTreinoLivre = (id_ficha, id_user) => {
   return async dispatch => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios/deleteTreinoLivre', {id: id_ficha})
+      .post('/exercicios/deleteTreinoLivre', { id: id_ficha })
       .then(() => {
         message.open({
           type: 'success',
@@ -59,11 +60,11 @@ export const deleteTreinoLivre = (id_ficha, id_user ) => {
   }
 }
 
-export const updateTreinoLivre = (data ) => {
+export const updateTreinoLivre = (data) => {
   return async dispatch => {
     dispatch(setLoading(true))
     return api
-      .post('/exercicios/updateTreinoLivre', {data: data})
+      .post('/exercicios/updateTreinoLivre', { data: data })
       .then(() => {
         message.open({
           type: 'success',
@@ -73,6 +74,20 @@ export const updateTreinoLivre = (data ) => {
           },
         });
         dispatch(getTreinoLivre(parseInt(data.id_user)))
+      })
+      .finally(() => {
+        dispatch(setLoading(false))
+      })
+  }
+}
+
+export const getTreinoLivreAluno = (id) => {
+  return async (dispatch) => {
+    dispatch(setLoading(true))
+    return api
+      .post('/exercicios/personal', { usuarioId: id })
+      .then(res => {
+        dispatch(setTreinoLivre(res.data))
       })
       .finally(() => {
         dispatch(setLoading(false))

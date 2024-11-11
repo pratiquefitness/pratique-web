@@ -8,6 +8,143 @@ datasource db {
   url      = env("DATABASE_URL_pratiquediagnose")
 }
 
+model china {
+  id_table         Int       @id @default(autoincrement())
+  id               String?   @db.VarChar(80)
+  aerobic_goal     Float?
+  age              Float?
+  agility          Float?
+  ana_goal         Float?
+  balance          Float?
+  balance_angle    Float?
+  bmr              Float?
+  body_age         Float?
+  body_image       String?   @db.VarChar(255)
+  body_shape       String?   @db.VarChar(255)
+  bone             String?   @db.VarChar(255)
+  calories_input   String?   @db.VarChar(255)
+  device_from      String?   @db.VarChar(255)
+  endu_goal        Float?
+  fat              Float?
+  fat_control      Float?
+  gmt_create       String?   @db.VarChar(255)
+  gmt_modify       String?   @db.VarChar(255)
+  height           Float?
+  in_fat           Float?
+  muscle           Float?
+  muscle_control   Float?
+  name             String?   @db.VarChar(255)
+  perfect_weight   Float?
+  phone            String?   @db.VarChar(255)
+  protein          Float?
+  score            Float?
+  sex              String?   @db.VarChar(255)
+  side_image       String?   @db.VarChar(255)
+  sport_goal       Float?
+  sub_fat          Float?
+  user_id          Int?
+  vital_capacity   Float?
+  water            Float?
+  wc               Float?
+  weight           Float?
+  weight_control   Float?
+  body_detect      String?   @db.VarChar(255)
+  humpback_risk    String?   @db.VarChar(255)
+  leg_risk         String?   @db.VarChar(255)
+  pelvis_risk      String?   @db.VarChar(255)
+  side_body_detect String?   @db.VarChar(255)
+  shoulder_risk    String?   @db.VarChar(255)
+  aerobicGoal      String?   @db.VarChar(255)
+  anaGoal          String?   @db.VarChar(255)
+  balanceAngle     String?   @db.VarChar(255)
+  bodyAge          String?   @db.VarChar(255)
+  bodyImage        Float?    @db.Float
+  bodyShape        String?   @db.VarChar(255)
+  caloriesInput    String?   @db.VarChar(255)
+  deviceFrom       String?   @db.VarChar(255)
+  enduGoal         String?   @db.VarChar(255)
+  fatControl       String?   @db.VarChar(255)
+  gmtCreate        DateTime? @default(now()) @db.Timestamp(0)
+  gmtModify        DateTime? @default(now()) @db.Timestamp(0)
+  inFat            String?   @db.VarChar(255)
+  muscleControl    String?   @db.VarChar(255)
+  perfectWeight    String?   @db.VarChar(255)
+  sideImage        String?   @db.VarChar(255)
+  sportGoal        String?   @db.VarChar(255)
+  subFat           String?   @db.VarChar(255)
+  userId           String?   @db.VarChar(255)
+  vitalCapacity    String?   @db.VarChar(255)
+  bodyDetect       String?   @db.VarChar(255)
+  humpbackRisk     String?   @db.VarChar(255)
+  legRisk          String?   @db.VarChar(255)
+  pelvisRisk       String?   @db.VarChar(255)
+  sideBodyDetect   String?   @db.VarChar(255)
+  shoulderRisk     String?   @db.VarChar(255)
+  data             DateTime  @default(now()) @db.DateTime(0)
+  pdf              String?   @db.VarChar(255)
+}
+
+model container {
+  diagnose_id           Int     @id @default(autoincrement())
+  diagnose_nome         String  @db.VarChar(255)
+  diagnose_email        String  @db.VarChar(255)
+  diagnose_sexo         String? @db.VarChar(60)
+  diagnose_telefone     String  @db.VarChar(20)
+  diagnose_resposta     String? @db.LongText
+  diagnose_produto      String? @db.VarChar(255)
+  diagnose_peso         String  @db.VarChar(50)
+  diagnose_subproduto   String? @db.VarChar(255)
+  diagnose_nivel        String? @db.VarChar(50)
+  diagnose_recomendacao String? @db.VarChar(255)
+  diagnose_dores        String? @db.VarChar(255)
+  diagnose_data         String? @db.VarChar(80)
+  diagnose_semana       String? @db.VarChar(3)
+  diagnose_modalidade   String? @db.VarChar(30)
+  diagnose_unidade      String  @db.VarChar(60)
+}
+
+model formulario {
+  id         Int       @id @default(autoincrement())
+  nome       String    @db.VarChar(255)
+  email      String    @db.VarChar(255)
+  telefone   String    @db.VarChar(20)
+  mensagem   String    @db.Text
+  data_envio DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model frequencia {
+  id       Int      @id @default(autoincrement())
+  telefone String   @db.VarChar(100)
+  data     DateTime @default(now()) @db.DateTime(0)
+}
+
+model perguntas {
+  pergunta  String? @db.VarChar(255)
+  respostas String? @db.Text
+  regra     Json?
+  id        Int     @id @default(autoincrement())
+}
+
+model sva {
+  diagnose_id           Int      @id @default(autoincrement())
+  diagnose_nome         String   @db.VarChar(255)
+  diagnose_email        String   @db.VarChar(255)
+  diagnose_sexo         String?  @db.VarChar(60)
+  diagnose_telefone     String   @db.VarChar(20)
+  diagnose_resposta     String?  @db.LongText
+  diagnose_produto      String?  @db.VarChar(255)
+  diagnose_peso         String   @db.VarChar(50)
+  diagnose_subproduto   String?  @db.VarChar(255)
+  diagnose_nivel        String?  @db.VarChar(50)
+  diagnose_recomendacao String?  @db.VarChar(255)
+  diagnose_dores        String?  @db.VarChar(255)
+  diagnose_data         DateTime @default(now()) @db.DateTime(0)
+  diagnose_semana       String?  @db.VarChar(3)
+  diagnose_modalidade   String?  @db.VarChar(30)
+  diagnose_unidade      String?  @db.VarChar(10)
+  diagnose_status       String   @default("processando") @db.VarChar(30)
+}
+
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model totem {
   diagnose_id           Int
@@ -43,65 +180,28 @@ model totem_respostas {
   diagnose_recomendacao String    @db.VarChar(255)
   diagnose_dores        String    @db.VarChar(255)
   diagnose_data         DateTime? @default(now()) @db.DateTime(0)
+  diagnose_modalidade   String?   @db.VarChar(30)
+  diagnose_semana       String?   @db.VarChar(3)
+  diagnose_unidade      String?   @db.VarChar(10)
 }
 
 model windows {
-  diagnose_id           Int     @id @default(autoincrement())
-  diagnose_nome         String  @db.VarChar(255)
-  diagnose_email        String  @db.VarChar(255)
-  diagnose_sexo         String? @db.VarChar(60)
-  diagnose_telefone     String  @db.VarChar(20)
-  diagnose_resposta     String? @db.LongText
-  diagnose_produto      String? @db.VarChar(255)
-  diagnose_peso         String  @db.VarChar(50)
-  diagnose_subproduto   String? @db.VarChar(255)
-  diagnose_nivel        String? @db.VarChar(50)
-  diagnose_recomendacao String? @db.VarChar(255)
-  diagnose_dores        String? @db.VarChar(255)
-  diagnose_data         DateTime? @default(now()) @db.DateTime(0)
-  diagnose_semana       String? @db.VarChar(3)
-  diagnose_modalidade   String? @db.VarChar(30)
-}
-
-model sva {
-  diagnose_id           Int     @id @default(autoincrement())
-  diagnose_nome         String  @db.VarChar(255)
-  diagnose_email        String  @db.VarChar(255)
-  diagnose_sexo         String? @db.VarChar(60)
-  diagnose_telefone     String  @db.VarChar(20)
-  diagnose_resposta     String? @db.LongText
-  diagnose_produto      String? @db.VarChar(255)
-  diagnose_peso         String  @db.VarChar(50)
-  diagnose_subproduto   String? @db.VarChar(255)
-  diagnose_nivel        String? @db.VarChar(50)
-  diagnose_recomendacao String? @db.VarChar(255)
-  diagnose_dores        String? @db.VarChar(255)
-   diagnose_data         DateTime? @default(now()) @db.DateTime(0)
-  diagnose_semana       String? @db.VarChar(3)
-  diagnose_modalidade   String? @db.VarChar(30)
-}
-
-model container {
-  diagnose_id           Int     @id @default(autoincrement())
-  diagnose_nome         String  @db.VarChar(255)
-  diagnose_email        String  @db.VarChar(255)
-  diagnose_sexo         String? @db.VarChar(60)
-  diagnose_telefone     String  @db.VarChar(20)
-  diagnose_resposta     String? @db.LongText
-  diagnose_produto      String? @db.VarChar(255)
-  diagnose_peso         String  @db.VarChar(50)
-  diagnose_subproduto   String? @db.VarChar(255)
-  diagnose_nivel        String? @db.VarChar(50)
-  diagnose_recomendacao String? @db.VarChar(255)
-  diagnose_dores        String? @db.VarChar(255)
-  diagnose_data         String? @db.VarChar(80)
-  diagnose_semana       String? @db.VarChar(3)
-  diagnose_modalidade   String? @db.VarChar(30)
-  diagnose_unidade      String  @db.VarChar(60)
-}
-
-model frequencia {
-  id       Int      @id @default(autoincrement())
-  telefone String   @db.VarChar(100)
-  data     DateTime @default(now()) @db.DateTime(0)
+  diagnose_id           Int      @id @default(autoincrement())
+  diagnose_nome         String   @db.VarChar(255)
+  diagnose_email        String   @db.VarChar(255)
+  diagnose_sexo         String?  @db.VarChar(60)
+  diagnose_telefone     String   @db.VarChar(20)
+  diagnose_resposta     String?  @db.LongText
+  diagnose_produto      String?  @db.VarChar(255)
+  diagnose_peso         String   @db.VarChar(50)
+  diagnose_subproduto   String?  @db.VarChar(255)
+  diagnose_nivel        String?  @db.VarChar(50)
+  diagnose_recomendacao String?  @db.VarChar(255)
+  diagnose_dores        String?  @db.VarChar(255)
+  diagnose_data         DateTime @default(now()) @db.DateTime(0)
+  diagnose_semana       String?  @db.VarChar(3)
+  diagnose_modalidade   String?  @db.VarChar(30)
+  diagnose_unidade      String?  @db.VarChar(10)
+  inFat                 Float?   @db.Float
+  diagnose_erro         String?  @db.VarChar(3)
 }

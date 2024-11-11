@@ -58,7 +58,8 @@ export const getDadosAfiliado = () => {
     dispatch(setLoading(true))
     return apiLojaAfiliados
       .post('getDadosAfiliado.php', {
-        isAffiliate: login.usuario.isAffiliate
+        isAffiliate: login.usuario.isAffiliate,
+        isEmail: login.usuario.user_login
       })
       .then(res => {
         dispatch(setGeral(res.data))
@@ -106,7 +107,7 @@ export const getUnidades = () => {
   return async dispatch => {
     dispatch(setLoading(true))
     return apiPratiqueFitness
-      .get('getunidades/index.php')
+      .get('getunidades/index2.php')
       .then(res => {
         dispatch(setUnidades(res.data))
       })
@@ -116,11 +117,11 @@ export const getUnidades = () => {
   }
 }
 
-export const getPlanos = (chave, separador, nome) => {
+export const getPlanos = (chave, separador, nome, slug) => {
   return async dispatch => {
     dispatch(setPlanosLoading(true))
     return apiPratiqueFitness
-      .get(`getplanos/index.php?unidade=${chave}|${separador}&nome=${nome}`)
+      .get(`getplanos/index.php?unidade=${chave}|${separador}&nome=${nome}&slug=${slug}`)
       .then(res => {
         dispatch(setPlanos(res.data))
       })

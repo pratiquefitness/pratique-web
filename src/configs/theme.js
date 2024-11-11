@@ -27,12 +27,12 @@ export const getTheme = (themeColor, themeMode) => {
   return {
     algorithm: theme.algorithm[themeMode],
     token: {
-      colorPrimary: undefined === theme.colorPrimary[themeColor] ? themeColor : theme.colorPrimary[themeColor],
+      colorPrimary: theme.colorPrimary[themeColor],
       colorBgBase: theme.colorBgBase[themeMode],
       controlHeight: 50,
       controlHeightSM: 30
     },
-    logo: undefined === theme.logo[themeColor] ? theme.logo['red'] : theme.logo[themeColor]
+    logo: theme.logo[themeColor]
   }
 }
 
