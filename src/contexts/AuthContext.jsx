@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
         path: "/"
       });
       dispatch(setLogin(response));
-			setClubeCertoSvaStyle(response);
+      await setClubeCertoSvaStyle(response);
       dispatch(setTheme(response.plano));
       setUser(response); // Armazenar o usuário no estado
       await router.push("/");
@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
       const login = await signInVerify(token);
       if (login) {
         dispatch(setLogin(login));
-        dispatch(setTheme(login.plano));
+        await setClubeCertoSvaStyle(login);
         setUser(login); // Armazenar o usuário no estado
       } else {
         destroyCookie(undefined, tokenName);
