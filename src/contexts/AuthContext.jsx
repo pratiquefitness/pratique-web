@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
       const login = await signInVerify(token);
       if (login) {
         dispatch(setLogin(login));
-        dispatch(setTheme(login.plano));
+        await setClubeCertoSvaStyle(login);
         setUser(login); // Armazenar o usuário no estado
       } else {
         destroyCookie(undefined, tokenName);
