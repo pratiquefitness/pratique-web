@@ -1,10 +1,10 @@
 // src/pages/api/getUnidades.js
 
-import { PrismaClient, Estado } from '@prisma/client'
+import { PrismaClient, Estado } from '@internal/pratiquepro/client'
 
-// Implementação de Singleton Manual
 let prisma
 
+// Implementação do Singleton Manual
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient()
 } else {
