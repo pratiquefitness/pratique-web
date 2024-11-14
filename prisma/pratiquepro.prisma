@@ -327,7 +327,10 @@ model usuarios {
   status             String? @db.VarChar(3)
   usuarios_afiliado  String? @db.VarChar(120)
   usuarios_consultor String? @db.VarChar(120)
+  usuarios_anfitriao String? @db.VarChar(2) // Adicione esta linha
 }
+
+
 
 model usuarios_meta {
   user_mid        Int    @id @default(autoincrement())
