@@ -484,9 +484,18 @@ body .ant-layout-footer {
 }
 .unit-selector {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   margin-bottom: 16px;
+}
+
+@media (min-width: 769px) {
+  .unit-selector {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .unit-info .unit-label {
@@ -499,21 +508,23 @@ body .ant-layout-footer {
   margin-left: 8px;
 }
 
+/* Estilos para a lista de professores */
 .professor-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 16px;
+  margin-top: 16px;
 }
 
+/* Estilos para o cartão do professor */
 .professor-card {
+  display: flex;
+  align-items: center;
   background: linear-gradient(45deg, #ed143d, #ff7f50);
   border-radius: 10px;
   color: #fff;
-  padding: 16px;
-  text-align: center;
-  position: relative;
+  padding: 8px;
   cursor: pointer;
-  width: 120px;
 }
 
 .professor-card:hover {
@@ -521,26 +532,37 @@ body .ant-layout-footer {
 }
 
 .professor-card .ant-avatar {
-  margin-bottom: 8px;
+  margin-right: 16px;
 }
 
-.professor-card .professor-name {
+.professor-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.professor-name {
   font-size: 16px;
   font-weight: bold;
 }
 
-.professor-card .question-icon {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 24px;
+.professor-email {
+  font-size: 14px;
   color: #fff;
 }
-@media (max-width: 768px) {
-  .professor-card {
-    width: 100%;
-  }
+
+/* Botão "Não encontrou o Professor?" */
+.not-found-button {
+  background-color: #ed143d;
+  color: #fff;
+  border-radius: 10px;
+  margin-top: 16px;
 }
+
+.not-found-button:hover {
+  background-color: #c0122e;
+}
+
+/* Indicadores de passos personalizados */
 .steps-container {
   display: flex;
   justify-content: center;
@@ -557,8 +579,55 @@ body .ant-layout-footer {
   align-items: center;
   justify-content: center;
   margin: 0 4px;
+  font-weight: bold;
+  font-size: 14px; /* Reduzido para economizar espaço */
 }
 
 .step-indicator.active {
   background-color: #ed143d;
+}
+
+/* Responsividade para cartões de professores e botões no mobile */
+@media (max-width: 768px) {
+  .professor-card {
+    width: 100%;
+  }
+
+  .steps-container {
+    flex-wrap: wrap;
+  }
+
+  .step-indicator {
+    margin: 4px 2px;
+  }
+
+  .not-found-button {
+    width: 100%;
+  }
+
+  .unit-selector {
+    flex-direction: column;
+  }
+}
+
+/* Ajustes adicionais para o formulário */
+.form-container {
+  padding: 16px;
+}
+
+.question-text {
+  color: #c70630;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Ajustes para os selects no modal */
+.ant-select {
+  width: 100%;
+}
+
+.ant-select-selection-search-input {
+  width: 100%;
 }

@@ -286,7 +286,16 @@ model unidade {
   unidade_pagolivre String? @db.VarChar(80)
   unidade_latitude  String? @db.VarChar(20)
   unidade_longitude String? @db.VarChar(20)
+  unidade_estado    Int     @db.Int
+  unidade_aparecer  Boolean @default(true) // 1 = true, 0 = false
 }
+enum Estado {
+  MINAS_GERAIS       // 1
+  SANTA_CATARINA     // 2
+  PARANA             // 3
+  ESPIRITO_SANTO     // 4
+}
+
 
 model unidade_crm {
   unidade_id            Int      @id

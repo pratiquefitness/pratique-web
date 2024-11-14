@@ -1,20 +1,7 @@
+// src/pages/_Nps.jsx
+
 import React, { useEffect, useState, useContext } from 'react'
-import {
-  Avatar,
-  Button,
-  Col,
-  Form,
-  Input,
-  Row,
-  Space,
-  Modal,
-  Radio,
-  Steps,
-  Typography,
-  Rate,
-  message,
-  Select
-} from 'antd'
+import { Avatar, Button, Col, Form, Input, Row, Space, Modal, Radio, Typography, Rate, message, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateConta } from '@/redux/actions/conta'
 import { AuthContext } from '@/contexts/AuthContext'
@@ -23,6 +10,14 @@ import axios from 'axios'
 
 const { Paragraph, Title } = Typography
 const { Option } = Select
+
+// Mapeamento dos estados
+const estados = [
+  { value: '1', label: 'Minas Gerais' },
+  { value: '2', label: 'Santa Catarina' },
+  { value: '3', label: 'Paraná' },
+  { value: '4', label: 'Espírito Santo' }
+]
 
 export default function Nps() {
   const dispatch = useDispatch()
@@ -45,6 +40,8 @@ export default function Nps() {
   const [unidades, setUnidades] = useState([]) // Lista de unidades disponíveis
   const [professors, setProfessors] = useState([])
   const [showUnitSelector, setShowUnitSelector] = useState(false)
+  const [selectedEstado, setSelectedEstado] = useState(null) // Estado selecionado
+  const [searchTerm, setSearchTerm] = useState('') // Termo de busca
 
   // Inicializar evaluationSteps fora do useEffect
   const initialSteps = [
@@ -137,34 +134,42 @@ export default function Nps() {
   // Função para buscar a lista de unidades disponíveis
   const fetchUnidades = async () => {
     try {
-      const response = await axios.get('/api/getUnidades')
+      const response = await axios.get('/api/getUnidades', {
+        params: {
+          search: searchTerm,
+          estado: selectedEstado
+        }
+      })
       setUnidades(response.data.unidades)
     } catch (error) {
+      console.error('Erro ao carregar as unidades:', error)
       message.error('Erro ao carregar as unidades.')
     }
   }
 
   // Função para buscar os professores da unidade selecionada
   const fetchProfessors = async () => {
+    if (!unit) {
+      message.error('Unidade não selecionada.')
+      return
+    }
+
     try {
       const response = await axios.post('/api/getProfessors', {
-        unidade: unit // unit deve ser o nome da unidade
+        unidade: unit
       })
-      setProfessors(response.data.professors)
+      setProfessors(response.data.professores)
+      console.log('Professores carregados:', response.data.professores)
     } catch (error) {
+      console.error('Erro ao carregar os professores:', error)
       message.error('Erro ao carregar os professores.')
     }
   }
 
   useEffect(() => {
     fetchUnidades()
-  }, [])
-
-  useEffect(() => {
-    if (unit) {
-      fetchProfessors()
-    }
-  }, [unit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm, selectedEstado])
 
   const handleNext = values => {
     const newSteps = [...evaluationSteps]
@@ -232,20 +237,15 @@ export default function Nps() {
                     />
                     <div className="professor-details">
                       <div className="professor-name">{professor.usuarios_nome}</div>
-                      {/* Se houver outras informações, como email */}
-                      {/* <div className="professor-email">{professor.usuarios_email}</div> */}
+                      <div className="professor-email">{professor.usuarios_email}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </Form.Item>
+
             <Button
-              style={{
-                backgroundColor: '#ed143d',
-                color: '#fff',
-                borderRadius: '10px',
-                marginTop: '16px'
-              }}
+              className="not-found-button"
               block
               onClick={() => setShowUnitSelector(true)}
               icon={<QuestionCircleOutlined />} // Ícone adicionado aqui
@@ -260,14 +260,42 @@ export default function Nps() {
                 setShowUnitSelector(false)
                 fetchProfessors()
               }}
+              title="Selecionar Unidade"
             >
-              <Select value={unit} onChange={value => setUnit(value)} style={{ width: '100%' }}>
-                {unidades.map(unidade => (
-                  <Option key={unidade.unidade_id} value={unidade.unidade_nome}>
-                    {unidade.unidade_nome}
-                  </Option>
-                ))}
-              </Select>
+              <Space direction="vertical" style={{ width: '100%' }}>
+                <Select
+                  showSearch
+                  placeholder="Selecione um estado"
+                  optionFilterProp="children"
+                  onChange={value => setSelectedEstado(value)}
+                  filterOption={(input, option) => option.label.toLowerCase().includes(input.toLowerCase())}
+                  value={selectedEstado}
+                  allowClear
+                >
+                  {estados.map(estado => (
+                    <Option key={estado.value} value={estado.value} label={estado.label}>
+                      {estado.label}
+                    </Option>
+                  ))}
+                </Select>
+
+                <Select
+                  showSearch
+                  placeholder="Digite o nome da unidade"
+                  optionFilterProp="children"
+                  onSearch={value => setSearchTerm(value)}
+                  onChange={value => setUnit(value)}
+                  filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                  value={unit}
+                  allowClear
+                >
+                  {unidades.map(unidade => (
+                    <Option key={unidade.unidade_id} value={unidade.unidade_nome}>
+                      {unidade.unidade_nome}
+                    </Option>
+                  ))}
+                </Select>
+              </Space>
             </Modal>
           </>
         )
@@ -281,7 +309,7 @@ export default function Nps() {
       case 'radio':
         return (
           <Form.Item name="answer" rules={[{ required: true, message: 'Este campo é obrigatório' }]}>
-            <Radio.Group style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <Radio.Group style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {currentQuestion.options.map((option, index) => (
                 <Radio
                   value={option}
@@ -331,28 +359,20 @@ export default function Nps() {
     <>
       <Row justify="center">
         <Col span={24} className="mt-4" style={{ maxWidth: '600px' }}>
-          <div
-            className="py-6"
-            style={{
-              textAlign: 'center',
-              paddingTop: '0 !important',
-              paddingBottom: '24px',
-              marginTop: '-30px'
-            }}
-          >
+          <div className="steps-container">
+            {evaluationSteps.map((step, index) => (
+              <div
+                key={index}
+                className={`step-indicator ${index <= (isModalVisible ? 0 : currentStep) ? 'active' : ''}`}
+              >
+                {index + 1}
+              </div>
+            ))}
+          </div>
+          <div className="form-container">
             <Form layout="vertical" form={formEvaluation} onFinish={handleNext}>
               <Space direction="vertical" className="w-100" style={{ textAlign: 'left' }}>
-                <Paragraph
-                  style={{
-                    color: '#c70630',
-                    fontSize: '18px',
-                    fontWeight: 'bold',
-                    lineHeight: '19px',
-                    textAlign: 'center'
-                  }}
-                >
-                  {evaluationSteps[currentStep].question}
-                </Paragraph>
+                <Paragraph className="question-text">{evaluationSteps[currentStep].question}</Paragraph>
                 {renderQuestion()}
                 <div style={{ textAlign: 'center' }}>
                   {evaluationSteps[currentStep].type !== 'professor_selection' && (
@@ -367,6 +387,7 @@ export default function Nps() {
         </Col>
       </Row>
 
+      {/* Modal de Alteração de Senha */}
       <Modal title="Alterar Senha" visible={isModalVisible} footer={null} maskClosable={false} closable={false}>
         <Form layout="vertical" form={formCheckPassword} onFinish={onCheckPassword}>
           <Space direction="vertical" className="w-100" style={{ textAlign: 'center' }}>
@@ -401,6 +422,7 @@ export default function Nps() {
         </Form>
       </Modal>
 
+      {/* Modal de Avaliação Já Realizada */}
       <Modal
         title="Avaliação já realizada"
         visible={npsModalVisible}
