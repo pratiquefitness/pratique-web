@@ -482,6 +482,9 @@ body .ant-layout-footer {
     box-shadow: 0 0 3px #018000;
   }
 }
+/* Nps.css */
+
+/* Estilos para o seletor de unidade */
 .unit-selector {
   display: flex;
   flex-direction: column;

@@ -1,8 +1,18 @@
-// pages/api/getUnidades.js
+// src/pages/api/getUnidades.js
 
 import { PrismaClient, Estado } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// Implementação de Singleton Manual
+let prisma
+
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient()
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient()
+  }
+  prisma = global.prisma
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -11,21 +21,13 @@ export default async function handler(req, res) {
 
   const { search, estado } = req.query
 
-  // Mapear estados para os valores numéricos
-  const estadoMap = {
-    1: 'MINAS_GERAIS',
-    2: 'SANTA_CATARINA',
-    3: 'PARANA',
-    4: 'ESPIRITO_SANTO'
-  }
-
   // Construir a condição de filtragem
   const where = {
     unidade_aparecer: true
   }
 
-  if (estado && estadoMap[estado]) {
-    where.unidade_estado = estadoMap[estado]
+  if (estado && Object.values(Estado).includes(estado)) {
+    where.unidade_estado = estado
   }
 
   if (search) {
@@ -60,7 +62,5 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error('Erro ao buscar unidades:', error)
     res.status(500).json({ error: 'Erro ao buscar unidades.' })
-  } finally {
-    await prisma.$disconnect()
   }
 }

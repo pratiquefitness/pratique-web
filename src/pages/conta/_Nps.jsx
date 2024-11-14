@@ -1,7 +1,22 @@
 // src/pages/_Nps.jsx
 
-import React, { useEffect, useState, useContext } from 'react'
-import { Avatar, Button, Col, Form, Input, Row, Space, Modal, Radio, Typography, Rate, message, Select } from 'antd'
+import React, { useEffect, useState, useContext, useRef } from 'react'
+import {
+  Avatar,
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Space,
+  Modal,
+  Radio,
+  Typography,
+  Rate,
+  message,
+  Select,
+  Spin
+} from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateConta } from '@/redux/actions/conta'
 import { AuthContext } from '@/contexts/AuthContext'
@@ -13,10 +28,10 @@ const { Option } = Select
 
 // Mapeamento dos estados
 const estados = [
-  { value: '1', label: 'Minas Gerais' },
-  { value: '2', label: 'Santa Catarina' },
-  { value: '3', label: 'Paraná' },
-  { value: '4', label: 'Espírito Santo' }
+  { value: 'MINAS_GERAIS', label: 'Minas Gerais' },
+  { value: 'SANTA_CATARINA', label: 'Santa Catarina' },
+  { value: 'PARANA', label: 'Paraná' },
+  { value: 'ESPIRITO_SANTO', label: 'Espírito Santo' }
 ]
 
 export default function Nps() {
@@ -42,6 +57,10 @@ export default function Nps() {
   const [showUnitSelector, setShowUnitSelector] = useState(false)
   const [selectedEstado, setSelectedEstado] = useState(null) // Estado selecionado
   const [searchTerm, setSearchTerm] = useState('') // Termo de busca
+  const [loadingUnidades, setLoadingUnidades] = useState(false) // Estado de carregamento
+
+  // Referência para armazenar o timeout do debounce
+  const debounceTimeout = useRef(null)
 
   // Inicializar evaluationSteps fora do useEffect
   const initialSteps = [
@@ -131,20 +150,48 @@ export default function Nps() {
     }
   }
 
-  // Função para buscar a lista de unidades disponíveis
-  const fetchUnidades = async () => {
+  // Função para buscar a lista de unidades disponíveis com debounce manual
+  const fetchUnidades = async (search, estado) => {
+    setLoadingUnidades(true)
     try {
       const response = await axios.get('/api/getUnidades', {
         params: {
-          search: searchTerm,
-          estado: selectedEstado
+          search,
+          estado
         }
       })
       setUnidades(response.data.unidades)
     } catch (error) {
       console.error('Erro ao carregar as unidades:', error)
       message.error('Erro ao carregar as unidades.')
+    } finally {
+      setLoadingUnidades(false)
     }
+  }
+
+  // Função para lidar com o input de busca com debounce manual
+  const handleSearch = value => {
+    setSearchTerm(value)
+
+    // Limpar o timeout anterior
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current)
+    }
+
+    // Definir um novo timeout
+    debounceTimeout.current = setTimeout(() => {
+      fetchUnidades(value, selectedEstado)
+    }, 300) // 300ms de debounce
+  }
+
+  // Função para lidar com a seleção do estado
+  const handleEstadoChange = value => {
+    setSelectedEstado(value)
+    setSearchTerm('')
+    setUnit(null)
+    setUnidades([])
+    // Buscar as unidades imediatamente após a seleção do estado
+    fetchUnidades('', value)
   }
 
   // Função para buscar os professores da unidade selecionada
@@ -165,11 +212,6 @@ export default function Nps() {
       message.error('Erro ao carregar os professores.')
     }
   }
-
-  useEffect(() => {
-    fetchUnidades()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm, selectedEstado])
 
   const handleNext = values => {
     const newSteps = [...evaluationSteps]
@@ -220,28 +262,32 @@ export default function Nps() {
             </div>
 
             <Form.Item name="answer" rules={[{ required: true, message: 'Por favor, selecione um professor.' }]}>
-              <div className="professor-list">
-                {professors.map(professor => (
-                  <div
-                    className="professor-card"
-                    key={professor.usuarios_id}
-                    onClick={() => {
-                      formEvaluation.setFieldsValue({ answer: professor })
-                      formEvaluation.submit()
-                    }}
-                  >
-                    <Avatar
-                      size={64}
-                      src={professor.avatar_image || '/images/default-avatar.png'}
-                      alt={professor.usuarios_nome}
-                    />
-                    <div className="professor-details">
-                      <div className="professor-name">{professor.usuarios_nome}</div>
-                      <div className="professor-email">{professor.usuarios_email}</div>
+              {professors.length === 0 ? (
+                <Spin />
+              ) : (
+                <div className="professor-list">
+                  {professors.map(professor => (
+                    <div
+                      className="professor-card"
+                      key={professor.usuarios_id}
+                      onClick={() => {
+                        formEvaluation.setFieldsValue({ answer: professor })
+                        formEvaluation.submit()
+                      }}
+                    >
+                      <Avatar
+                        size={64}
+                        src={professor.avatar_image || '/images/default-avatar.png'}
+                        alt={professor.usuarios_nome}
+                      />
+                      <div className="professor-details">
+                        <div className="professor-name">{professor.usuarios_nome}</div>
+                        <div className="professor-email">{professor.usuarios_email}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </Form.Item>
 
             <Button
@@ -263,11 +309,12 @@ export default function Nps() {
               title="Selecionar Unidade"
             >
               <Space direction="vertical" style={{ width: '100%' }}>
+                {/* Seletor de Estado */}
                 <Select
                   showSearch
                   placeholder="Selecione um estado"
                   optionFilterProp="children"
-                  onChange={value => setSelectedEstado(value)}
+                  onChange={handleEstadoChange}
                   filterOption={(input, option) => option.label.toLowerCase().includes(input.toLowerCase())}
                   value={selectedEstado}
                   allowClear
@@ -279,14 +326,16 @@ export default function Nps() {
                   ))}
                 </Select>
 
+                {/* Campo de Busca com Autocomplete */}
                 <Select
                   showSearch
                   placeholder="Digite o nome da unidade"
                   optionFilterProp="children"
-                  onSearch={value => setSearchTerm(value)}
+                  onSearch={handleSearch}
                   onChange={value => setUnit(value)}
-                  filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                  filterOption={false} // Desativar a filtragem no front-end, pois já está sendo feita no back-end
                   value={unit}
+                  notFoundContent={loadingUnidades ? <Spin size="small" /> : null}
                   allowClear
                 >
                   {unidades.map(unidade => (
