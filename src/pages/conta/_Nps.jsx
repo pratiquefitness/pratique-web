@@ -58,6 +58,7 @@ export default function Nps() {
   const [selectedEstado, setSelectedEstado] = useState(null) // Estado selecionado
   const [searchTerm, setSearchTerm] = useState('') // Termo de busca
   const [loadingUnidades, setLoadingUnidades] = useState(false) // Estado de carregamento
+  const [loadingProfessors, setLoadingProfessors] = useState(false) // Novo estado para carregamento dos professores
 
   // Referência para armazenar o timeout do debounce
   const debounceTimeout = useRef(null)
@@ -115,9 +116,13 @@ export default function Nps() {
     }
   }, [usuario])
 
-  const onCheckPassword = async ({ password }) => {
+  const onCheckPassword = async ({ password, confirm }) => {
     if (password === '123' || password === '202cb962ac59075b964b07152d234b70') {
       message.error('Você não pode usar esta senha. Escolha outra senha.')
+      return
+    }
+    if (password !== confirm) {
+      message.error('As senhas não coincidem.')
       return
     }
     try {
@@ -126,7 +131,8 @@ export default function Nps() {
       setIsModalVisible(false)
       setPasswordChanged(true)
       await checkNPS(usuario.ID, usuario.user_email)
-    } catch {
+    } catch (error) {
+      console.error('Erro ao alterar senha:', error)
       message.error('Erro ao alterar senha.')
     }
   }
@@ -146,6 +152,7 @@ export default function Nps() {
         setNpsModalVisible(true)
       }
     } catch (error) {
+      console.error('Erro ao verificar NPS:', error)
       message.error('Erro ao verificar NPS.')
     }
   }
@@ -161,6 +168,7 @@ export default function Nps() {
         }
       })
       setUnidades(response.data.unidades)
+      console.log('Unidades carregadas:', response.data.unidades)
     } catch (error) {
       console.error('Erro ao carregar as unidades:', error)
       message.error('Erro ao carregar as unidades.')
@@ -201,15 +209,18 @@ export default function Nps() {
       return
     }
 
+    setLoadingProfessors(true) // Iniciar carregamento
     try {
       const response = await axios.post('/api/getProfessors', {
         unidade: unit
       })
-      setProfessors(response.data.professores)
-      console.log('Professores carregados:', response.data.professores)
+      setProfessors(response.data.professors) // Correção aqui
+      console.log('Professores carregados:', response.data.professors)
     } catch (error) {
       console.error('Erro ao carregar os professores:', error)
       message.error('Erro ao carregar os professores.')
+    } finally {
+      setLoadingProfessors(false) // Finalizar carregamento
     }
   }
 
@@ -239,6 +250,7 @@ export default function Nps() {
           setFinished(true)
         })
         .catch(error => {
+          console.error('Erro ao enviar avaliação:', error)
           message.error('Erro ao enviar avaliação.')
         })
     }
@@ -262,8 +274,10 @@ export default function Nps() {
             </div>
 
             <Form.Item name="answer" rules={[{ required: true, message: 'Por favor, selecione um professor.' }]}>
-              {professors.length === 0 ? (
+              {loadingProfessors ? (
                 <Spin />
+              ) : professors.length === 0 ? (
+                <Paragraph>Nenhum professor encontrado para esta unidade.</Paragraph>
               ) : (
                 <div className="professor-list">
                   {professors.map(professor => (
@@ -425,7 +439,7 @@ export default function Nps() {
                 {renderQuestion()}
                 <div style={{ textAlign: 'center' }}>
                   {evaluationSteps[currentStep].type !== 'professor_selection' && (
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={loadingProfessors}>
                       {currentStep < evaluationSteps.length - 1 ? 'Próximo' : 'Finalizar'}
                     </Button>
                   )}

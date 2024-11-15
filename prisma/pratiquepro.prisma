@@ -290,10 +290,10 @@ model unidade {
   unidade_aparecer  Boolean @default(true) // 1 = true, 0 = false
 }
 enum Estado {
-  MINAS_GERAIS       // 1
-  SANTA_CATARINA     // 2
-  PARANA             // 3
-  ESPIRITO_SANTO     // 4
+  MINAS_GERAIS
+  SANTA_CATARINA
+  PARANA
+  ESPIRITO_SANTO
 }
 
 

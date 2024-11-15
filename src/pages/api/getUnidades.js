@@ -1,44 +1,49 @@
 // src/pages/api/getUnidades.js
 
-import { PrismaClient, Estado } from '@internal/pratiquepro/client'
+import { apiPratiquePro } from '@/services'
 
-let prisma
-
-// Implementação do Singleton Manual
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
-} else {
-  if (!global.prisma) {
-    global.prisma = new PrismaClient()
-  }
-  prisma = global.prisma
+// Mapeamento de estados para inteiros
+const estadoMapping = {
+  MINAS_GERAIS: 1,
+  SANTA_CATARINA: 2,
+  PARANA: 3,
+  ESPIRITO_SANTO: 4
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Método não permitido' })
-  }
-
-  const { search, estado } = req.query
-
-  // Construir a condição de filtragem
-  const where = {
-    unidade_aparecer: true
-  }
-
-  if (estado && Object.values(Estado).includes(estado)) {
-    where.unidade_estado = estado
-  }
-
-  if (search) {
-    where.unidade_nome = {
-      contains: search,
-      mode: 'insensitive'
-    }
-  }
+  console.log('Método HTTP:', req.method)
+  console.log('Query Parameters:', req.query)
+  console.log('apiPratiquePro:', apiPratiquePro)
 
   try {
-    const unidades = await prisma.unidade.findMany({
+    if (req.method !== 'GET') {
+      return res.status(405).json({ error: 'Método não permitido' })
+    }
+
+    const { search, estado } = req.query
+
+    // Construir a condição de filtragem
+    const where = {
+      unidade_aparecer: true
+    }
+
+    if (estado) {
+      const estadoUpper = estado.toUpperCase()
+      const estadoInt = estadoMapping[estadoUpper]
+      if (!estadoInt) {
+        return res.status(400).json({ error: 'Estado inválido.' })
+      }
+      where.unidade_estado = estadoInt
+    }
+
+    if (search) {
+      where.unidade_nome = {
+        contains: search,
+        mode: 'insensitive'
+      }
+    }
+
+    const unidades = await apiPratiquePro.unidade.findMany({
       where,
       orderBy: {
         unidade_nome: 'asc' // Ordenar alfabeticamente
