@@ -15,6 +15,7 @@ import {
   Rate,
   message,
   Select,
+  Alert,
   Spin
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
@@ -103,6 +104,7 @@ export default function Nps() {
 
   useEffect(() => {
     if (usuario && usuario.unidade) {
+      console.log('Unidade do usuário:', usuario.unidade) // Log para verificar a unidade do usuário
       setUnit(usuario.unidade)
     }
   }, [usuario])
@@ -115,6 +117,14 @@ export default function Nps() {
       setIsModalVisible(true)
     }
   }, [usuario])
+
+  // Novo useEffect para chamar fetchProfessors quando 'unit' for definido
+  useEffect(() => {
+    if (unit) {
+      console.log('Chamando fetchProfessors para a unidade:', unit) // Log para verificar quando fetchProfessors é chamado
+      fetchProfessors()
+    }
+  }, [unit])
 
   const onCheckPassword = async ({ password, confirm }) => {
     if (password === '123' || password === '202cb962ac59075b964b07152d234b70') {
@@ -144,6 +154,7 @@ export default function Nps() {
         user_email,
         check_only: true
       })
+
       const { canSubmit, lastSubmissionDate, daysRemaining } = response.data
       setCanSubmit(canSubmit)
       setLastSubmissionDate(lastSubmissionDate)
@@ -405,6 +416,12 @@ export default function Nps() {
     return <div>Carregando...</div>
   }
 
+  // Se o usuário não pode submeter o NPS e o fluxo está finalizado, não renderizar o formulário
+  if (!canSubmit && finished) {
+    return null // Ou renderizar uma mensagem adicional
+  }
+
+  // Se o fluxo do NPS está finalizado (submissão concluída ou não permitida), mostrar a mensagem de agradecimento
   if (finished) {
     return (
       <Row justify="center">
@@ -418,6 +435,7 @@ export default function Nps() {
     )
   }
 
+  // Renderizar o formulário apenas se o usuário puder submeter o NPS
   return (
     <>
       <Row justify="center">
@@ -490,11 +508,21 @@ export default function Nps() {
         title="Avaliação já realizada"
         visible={npsModalVisible}
         footer={[
-          <Button key="ok" type="primary" onClick={() => setNpsModalVisible(false)}>
+          <Button
+            key="ok"
+            type="primary"
+            onClick={() => {
+              setNpsModalVisible(false)
+              setFinished(true) // Finaliza o fluxo após fechar o modal
+            }}
+          >
             OK
           </Button>
         ]}
-        onCancel={() => setNpsModalVisible(false)}
+        onCancel={() => {
+          setNpsModalVisible(false)
+          setFinished(true) // Finaliza o fluxo ao cancelar o modal
+        }}
       >
         <Space direction="vertical" className="w-100" style={{ textAlign: 'center' }}>
           <ExclamationCircleOutlined style={{ fontSize: '64px', color: '#f5222d' }} />

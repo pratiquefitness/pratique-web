@@ -66,11 +66,11 @@ export default async function handler(req, res) {
     console.log('IDs dos usuários:', usuarioIds)
 
     // Obter os usuários que são 'anfitriões' (usuarios_anfitriao = true) e estão na lista de IDs obtidos
-    console.log('Buscando usuários com IDs:', usuarioIds, 'e usuarios_anfitriao = true')
+    console.log('Buscando usuários com IDs:', usuarioIds, 'e usuarios_anfitriao = 1')
     const professores = await apiPratiquePro.usuarios.findMany({
       where: {
         usuarios_id: { in: usuarioIds },
-        usuarios_anfitriao: true // Alterado para Boolean
+        usuarios_anfitriao: '1' // Alterado para Boolean
       },
       select: {
         usuarios_id: true,
