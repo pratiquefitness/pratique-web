@@ -9,11 +9,11 @@ import livesSlice from './slices/lives'
 import cisSlice from './slices/cis'
 import pontoSlice from './slices/ponto'
 import unipowerSlice from './slices/unipower'
-import afiliadosSlice from './slices/afiliados'
+import { afiliadosReducer, afiliadosExtraReducer } from './slices/afiliados'
 import contaSlice from './slices/conta'
 import clubeCertoSvaSlice from './slices/clubeCertoSva'
 import exerciciosSlice from './slices/exercicios'
-import areaDoPersonalSlice from "@/redux/slices/areaDoPersonal";
+import areaDoPersonalSlice from '@/redux/slices/areaDoPersonal'
 
 const store = configureStore({
   reducer: {
@@ -28,10 +28,11 @@ const store = configureStore({
     cis: cisSlice.reducer,
     ponto: pontoSlice.reducer,
     unipower: unipowerSlice.reducer,
-    afiliados: afiliadosSlice.reducer,
+    afiliados: afiliadosReducer,
+    afiliadosExtra: afiliadosExtraReducer,
     clubeCertoSva: clubeCertoSvaSlice.reducer,
     exercicios: exerciciosSlice.reducer,
-    areaDoPersonal: areaDoPersonalSlice.reducer,
+    areaDoPersonal: areaDoPersonalSlice.reducer
   }
 })
 

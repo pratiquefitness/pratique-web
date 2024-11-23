@@ -8,7 +8,8 @@ import {
   setPlanos,
   setPlanosLoading,
   setProdutos,
-  setUnidades
+  setUnidades,
+  setPixPaymentsLoading
 } from '../slices/afiliados'
 import apiLojaAfiliados from '@/services/apiLojaAfiliados'
 import api from '@/services/api'
@@ -49,6 +50,25 @@ export const savePix = (tipo, chave, callback) => {
       .finally(() => {
         dispatch(setPixLoading(false))
       })
+  }
+}
+
+export const getPixPayments = chavePix => async dispatch => {
+  dispatch(setPixPaymentsLoading(true))
+  console.log('Chave Pix enviada para getPixPayments:', chavePix) // Log para verificar a chave Pix
+  try {
+    const response = await api.post('/afiliados/getPixPayments', { chave: chavePix })
+
+    if (response.data?.pixPayments) {
+      dispatch(setPixPayments(response.data.pixPayments))
+    } else {
+      message.error('Erro ao obter pagamentos via Pix.')
+    }
+  } catch (error) {
+    console.error(error)
+    message.error('Erro ao obter pagamentos via Pix.')
+  } finally {
+    dispatch(setPixPaymentsLoading(false))
   }
 }
 

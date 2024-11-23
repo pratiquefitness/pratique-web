@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+/** Primeiro Slice: afiliadosSlice **/
+
+const initialStateAfiliados = {
   geral: [],
   pix: {},
   pixLoading: true,
@@ -9,40 +11,51 @@ const initialState = {
   unidades: [],
   planos: [],
   planosLoading: true,
-  loading: true
+  loading: true,
+  pixPayments: [],
+  pixPaymentsLoading: false // Adicionamos este estado
+  // Adicione outros estados se necessário
 }
 
-export const afiliadosSlice = createSlice({
+const afiliadosSlice = createSlice({
   name: 'afiliados',
-  initialState,
+  initialState: initialStateAfiliados,
   reducers: {
     setGeral(state, action) {
-      return { ...state, geral: action.payload }
+      state.geral = action.payload
     },
     setComissao(state, action) {
-      return { ...state, comissao: action.payload }
+      state.comissao = action.payload
     },
     setProdutos(state, action) {
-      return { ...state, produtos: action.payload }
+      state.produtos = action.payload
     },
     setUnidades(state, action) {
-      return { ...state, unidades: action.payload }
+      state.unidades = action.payload
     },
     setPlanos(state, action) {
-      return { ...state, planos: action.payload }
+      state.planos = action.payload
     },
     setPlanosLoading(state, action) {
-      return { ...state, planosLoading: action.payload }
+      state.planosLoading = action.payload
     },
     setPix(state, action) {
-      return { ...state, pix: action.payload }
+      state.pix = action.payload
     },
     setPixLoading(state, action) {
-      return { ...state, pixLoading: action.payload }
+      state.pixLoading = action.payload
     },
     setLoading(state, action) {
-      return { ...state, loading: action.payload }
+      state.loading = action.payload
+    },
+    // Adicionando a action que está faltando
+    setPixPaymentsLoading(state, action) {
+      state.pixPaymentsLoading = action.payload
+    },
+    setPixPayments(state, action) {
+      state.pixPayments = action.payload
     }
+    // Adicione outros reducers se necessário
   }
 })
 
@@ -55,7 +68,11 @@ export const {
   setPlanosLoading,
   setPix,
   setPixLoading,
-  setLoading
+  setLoading,
+  setPixPaymentsLoading, // Exportamos a action aqui
+  setPixPayments
+  // Exporte outras actions se necessário
 } = afiliadosSlice.actions
 
-export default afiliadosSlice
+// Exportação do reducer do primeiro slice
+export const afiliadosReducer = afiliadosSlice.reducer

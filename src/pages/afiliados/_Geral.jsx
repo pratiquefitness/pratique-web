@@ -15,27 +15,46 @@ const tiposPix = [
 
 export default function Geral() {
   const [editablePix, setEditablePix] = useState(false)
-  const [formPix] = Form.useForm()
   const dispatch = useDispatch()
   const { usuario } = useSelector(state => state.login)
   const { geral, loading, pix, pixLoading } = useSelector(state => state.afiliados)
   const { token } = theme.useToken()
 
+  // Verifica se o Pix está cadastrado
+  const pixCadastrado = pix && pix.chave
+
+  // Estado para controlar a visibilidade do modal
+  const [modalVisible, setModalVisible] = useState(!pixCadastrado)
+
+  // Instância do formulário
+  const [formPix] = Form.useForm()
+
   useEffect(() => {
     dispatch(getDadosAfiliado())
     dispatch(getPix())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (pix) {
       formPix.setFieldsValue(pix)
     }
-  }, [pix])
+  }, [pix, formPix])
+
+  useEffect(() => {
+    if (!pixLoading) {
+      if (pixCadastrado) {
+        setModalVisible(false)
+      } else {
+        setModalVisible(true)
+      }
+    }
+  }, [pixCadastrado, pixLoading])
 
   const onSavePix = ({ tipo, chave }) => {
     dispatch(
       savePix(tipo, chave, () => {
         setEditablePix(false)
+        setModalVisible(false)
         message.success('Pix salvo com sucesso!')
       })
     )
@@ -59,23 +78,6 @@ export default function Geral() {
 
     window.open(whatsappUrl, '_blank')
   }
-
-  // Verifica se o Pix está cadastrado
-  const pixCadastrado = pix && pix.chave
-
-  // Estado para controlar a visibilidade do modal
-  const [modalVisible, setModalVisible] = useState(false)
-
-  // Atualiza o estado do modal quando o Pix é carregado
-  useEffect(() => {
-    if (!pixLoading) {
-      if (pixCadastrado) {
-        setModalVisible(false)
-      } else {
-        setModalVisible(true)
-      }
-    }
-  }, [pixCadastrado, pixLoading])
 
   return (
     <>
@@ -217,7 +219,7 @@ export default function Geral() {
       </Loading>
 
       {/* Modal para cadastro do Pix */}
-      {!pixLoading && (
+      {!pixLoading && modalVisible && (
         <Modal title="Cadastre seu Pix" visible={modalVisible} closable={false} footer={null} maskClosable={false}>
           <Form form={formPix} layout="vertical" onFinish={onSavePix}>
             <Row gutter={[16, 16]}>

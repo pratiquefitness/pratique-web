@@ -1,7 +1,9 @@
+// src/pages/afiliados/_Pagamentos.jsx
+
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPix, getPixPayments } from '@/redux/actions/afiliados'
-import { Table, Typography, Spin } from 'antd'
+import { Table, Typography, Spin, Alert } from 'antd'
 import utils from '@/utils'
 
 const { Title } = Typography
@@ -16,9 +18,10 @@ const Pagamentos = () => {
 
   useEffect(() => {
     if (pix && pix.chave) {
-      dispatch(getPixPayments())
+      console.log('Chave Pix encontrada:', pix.chave) // Log para depuração
+      dispatch(getPixPayments(pix.chave))
     }
-  }, [pix, dispatch])
+  }, [pix.chave, dispatch])
 
   const columns = [
     {

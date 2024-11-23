@@ -19,7 +19,7 @@ model aulas {
   aula_tempo          String  @db.VarChar(50)
   aula_linkvideo      String? @db.LongText
   aula_descricao      String? @db.LongText
-  aula_capa           String? @db.VarChar(120)
+  aula_capa           String? @db.VarChar(200)
   aula_temporada      String? @db.VarChar(20)
   aula_minuto         String  @db.VarChar(20)
   aula_sprout         String? @db.VarChar(90)
@@ -269,4 +269,22 @@ model tv {
   tv_url     String @db.LongText
   tv_unidade String @db.VarChar(7)
   tv_rotacao String @db.VarChar(12)
+}
+
+model unidade_videos {
+  unidade_video_id Int  @id @default(autoincrement())
+  unidade_numero   Int?
+  video_id         Int?
+}
+
+model videos {
+  video_id      Int                   @id @default(autoincrement())
+  video_nome    String?               @db.VarChar(255)
+  video_rotacao videos_video_rotacao?
+  video_url     String?               @db.VarChar(255)
+}
+
+enum videos_video_rotacao {
+  em_pe
+  deitado
 }

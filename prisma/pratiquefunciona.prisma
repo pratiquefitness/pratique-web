@@ -94,7 +94,7 @@ model wp_users {
   avatar_image        String?  @db.Text
   personal            String?  @db.VarChar(20)
   cpf_sva             String?  @db.VarChar(30)
-  sva                 String?  @db.VarChar(3)
+  sva                 String?  @db.VarChar(11)
   curriculo           String?  @db.LongText
   professor           Int?
   cidade              String?  @db.VarChar(80)
@@ -109,4 +109,19 @@ model wp_users {
   @@index([user_email], map: "user_email")
   @@index([user_login], map: "user_login_key")
   @@index([user_nicename], map: "user_nicename")
+}
+
+model transacoes_pix {
+  id                    Int       @id @default(autoincrement())
+  conta_corrente        String    @db.VarChar(20)
+  cpf_cnpj              String    @db.VarChar(20)
+  nome                  String    @db.VarChar(100)
+  end_to_end            String    @db.VarChar(50)
+  valor                 Decimal   @db.Decimal(10, 2)
+  status                String    @db.VarChar(20)
+  data_hora_movimento   DateTime  @db.DateTime(0)
+  data_hora_solicitacao DateTime  @db.DateTime(0)
+  chave                 String    @db.VarChar(100)
+  codigo_solicitacao    String    @db.VarChar(50)
+  created_at            DateTime? @default(now()) @db.Timestamp(0)
 }
