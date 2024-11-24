@@ -56,7 +56,7 @@ export const savePix = (tipo, chave, callback) => {
 
 export const getPixPayments = chavePix => async dispatch => {
   dispatch(setPixPaymentsLoading(true))
-  console.log('Chave Pix enviada para getPixPayments:', chavePix) // Log para verificar a chave Pix
+  //  console.log('Chave Pix enviada para getPixPayments:', chavePix) // Log para verificar a chave Pix
   try {
     const response = await api.post('/afiliados/getPixPayments', { chave: chavePix })
 
@@ -68,9 +68,9 @@ export const getPixPayments = chavePix => async dispatch => {
       return { success: false, message: 'Nenhum pagamento encontrado para esta chave Pix.' }
     }
   } catch (error) {
-    console.error('Erro ao obter pagamentos do Pix:', error)
-    message.error('Erro ao obter pagamentos via Pix.')
-    return { success: false, message: 'Erro ao obter pagamentos via Pix.' }
+    //  console.error('Erro ao obter pagamentos do Pix:', error)
+    //  message.error('Erro ao obter pagamentos via Pix.')
+    //  return { success: false, message: 'Erro ao obter pagamentos via Pix.' }
   } finally {
     dispatch(setPixPaymentsLoading(false))
   }
