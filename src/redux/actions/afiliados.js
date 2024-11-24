@@ -9,11 +9,12 @@ import {
   setPlanosLoading,
   setProdutos,
   setUnidades,
+  setPixPayments,
   setPixPaymentsLoading
 } from '../slices/afiliados'
 import apiLojaAfiliados from '@/services/apiLojaAfiliados'
 import api from '@/services/api'
-import { message } from 'antd'
+import { message, Alert } from 'antd'
 
 export const getPix = () => {
   return async (dispatch, getState) => {
@@ -61,12 +62,15 @@ export const getPixPayments = chavePix => async dispatch => {
 
     if (response.data?.pixPayments) {
       dispatch(setPixPayments(response.data.pixPayments))
+      return { success: true }
     } else {
-      message.error('Erro ao obter pagamentos via Pix.')
+      dispatch(setPixPayments([]))
+      return { success: false, message: 'Nenhum pagamento encontrado para esta chave Pix.' }
     }
   } catch (error) {
-    console.error(error)
+    console.error('Erro ao obter pagamentos do Pix:', error)
     message.error('Erro ao obter pagamentos via Pix.')
+    return { success: false, message: 'Erro ao obter pagamentos via Pix.' }
   } finally {
     dispatch(setPixPaymentsLoading(false))
   }

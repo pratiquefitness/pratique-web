@@ -28,13 +28,19 @@ const Pagamentos = () => {
       title: 'Data',
       dataIndex: 'data_hora_movimento',
       key: 'data_hora_movimento',
-      render: text => <span>{utils.formatDate(text)}</span>
+      render: text => <span>{utils.formatDate(text)}</span> // Uso da função formatDate
+    },
+    {
+      title: 'Hora',
+      dataIndex: 'data_hora_movimento',
+      key: 'hora',
+      render: text => <span>{utils.formatTime(text)}</span> // Uso da função formatTime
     },
     {
       title: 'Valor',
       dataIndex: 'valor',
       key: 'valor',
-      render: value => <span>{utils.formatCurrency(value)}</span>
+      render: value => <span>{utils.formatCurrency(value)}</span> // Uso da função formatCurrency
     },
     {
       title: 'Conta',

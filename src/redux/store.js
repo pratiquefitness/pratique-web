@@ -9,7 +9,7 @@ import livesSlice from './slices/lives'
 import cisSlice from './slices/cis'
 import pontoSlice from './slices/ponto'
 import unipowerSlice from './slices/unipower'
-import { afiliadosReducer, afiliadosExtraReducer } from './slices/afiliados'
+import { afiliadosReducer } from './slices/afiliados'
 import contaSlice from './slices/conta'
 import clubeCertoSvaSlice from './slices/clubeCertoSva'
 import exerciciosSlice from './slices/exercicios'
@@ -29,7 +29,7 @@ const store = configureStore({
     ponto: pontoSlice.reducer,
     unipower: unipowerSlice.reducer,
     afiliados: afiliadosReducer,
-    afiliadosExtra: afiliadosExtraReducer,
+    //   afiliadosExtra: afiliadosExtraReducer,
     clubeCertoSva: clubeCertoSvaSlice.reducer,
     exercicios: exerciciosSlice.reducer,
     areaDoPersonal: areaDoPersonalSlice.reducer

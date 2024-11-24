@@ -1,9 +1,7 @@
 // /pages/api/afiliados/getPixPayments.js
 
-import { PrismaClient } from '@prisma/client'
 import utils from '@/utils'
-
-const prisma = new PrismaClient()
+import { apiPratiqueFunciona } from '@/services'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -23,8 +21,8 @@ export default async function handler(req, res) {
   console.log('Chave Pix recebida:', chave) // Log adicional
 
   try {
-    // Buscar os pagamentos usando a chave Pix
-    const pagamentos = await prisma.transacaoPix.findMany({
+    // Buscar os pagamentos usando o serviço apiPratiqueFunciona
+    const pagamentos = await apiPratiqueFunciona.transacoes_pix.findMany({
       where: {
         chave: chave
       },
@@ -41,11 +39,14 @@ export default async function handler(req, res) {
 
     console.log('Pagamentos encontrados:', pagamentos) // Log adicional
 
+    if (pagamentos.length === 0) {
+      console.log('Nenhum pagamento encontrado para a chave Pix:', chave)
+      return res.status(404).json({ message: 'Nenhum pagamento encontrado para esta chave Pix.' })
+    }
+
     res.status(200).json({ pixPayments: utils.clearDatabaseResult(pagamentos) })
   } catch (error) {
     console.error('Erro ao buscar pagamentos do Pix:', error)
     res.status(500).json({ error: 'Erro interno do servidor.' })
-  } finally {
-    await prisma.$disconnect()
   }
 }
