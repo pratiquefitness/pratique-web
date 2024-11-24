@@ -1,124 +1,120 @@
-import Loading from "@/components/Loading";
-import { getCursos } from "@/redux/actions/unipower";
-import utils from "@/utils";
-import { Button, Col, Input, Row, Typography } from "antd";
-import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-const { Title, Paragraph, Text } = Typography;
+import Loading from '@/components/Loading'
+import { getCursos } from '@/redux/actions/unipower'
+import utils from '@/utils'
+import { Button, Col, Input, Row, Typography } from 'antd'
+import { useEffect, useState } from 'react'
+import { FaSearch } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
+const { Title, Paragraph, Text } = Typography
 
 const categoryImages = {
-  "aba-coletiva": "/images/webp/unipower/coletivas.webp",
-  "aba-piscina": "/images/webp/unipower/piscina.webp",
-  "aba-comum-a-todos": "/images/webp/unipower/area-comum.webp",
-  "aba-comercial": "/images/webp/unipower/comercial.webp",
-  "aba-professor": "/images/webp/unipower/professor.webp",
-  "aba-formacao-de-lideres": "/images/webp/unipower/lideres.webp",
-  "aba-class-prime": "/images/webp/unipower/personal.webp",
-  "aba-bem-estar": "/images/webp/unipower/bem-estar.webp"
-};
+  'aba-coletiva': '/images/webp/unipower/coletivas.webp',
+  'aba-piscina': '/images/webp/unipower/piscina.webp',
+  'aba-comum-a-todos': '/images/webp/unipower/area-comum.webp',
+  'aba-comercial': '/images/webp/unipower/comercial.webp',
+  'aba-professor': '/images/webp/unipower/professor.webp',
+  'aba-formacao-de-lideres': '/images/webp/unipower/lideres.webp',
+  'aba-class-prime': '/images/webp/unipower/personal.webp',
+  'aba-bem-estar': '/images/webp/unipower/bem-estar.webp'
+}
 
 // Definir as subcategorias da categoria "aba-professor"
 const subcategories = {
-  "aba-professor": {
-    "aba-professor-verde": "Pulseira Verde",
-    "aba-professor-vermelha": "Pulseira Vermelha",
-    "aba-professor-bioimpedancia": "Exame de Bioimpedância",
-    "aba-professor-atualizacoes-cientifica": "Atualizações Científicas"
+  'aba-professor': {
+    'aba-professor-verde': 'Pulseira Verde',
+    'aba-professor-vermelha': 'Pulseira Vermelha',
+    'aba-professor-bioimpedancia': 'Exame de Bioimpedância',
+    'aba-professor-atualizacoes-cientifica': 'Atualizações Científicas'
   }
-};
+}
 
 // Definir as cores das subcategorias
 const subcategoryColors = {
-  "aba-professor-verde": "#28a745", // verde
-  "aba-professor-vermelha": "#dc3545", // vermelho
-  "aba-professor-bioimpedancia": "#6217b8", // ciano
-  "aba-professor-atualizacoes-cientifica": "#6d4711e0" // amarelo
-};
+  'aba-professor-verde': '#28a745', // verde
+  'aba-professor-vermelha': '#dc3545', // vermelho
+  'aba-professor-bioimpedancia': '#6217b8', // ciano
+  'aba-professor-atualizacoes-cientifica': '#6d4711e0' // amarelo
+}
 
 // Função para remover números iniciais do título
 function removeLeadingNumbers(str) {
-  return str.replace(/^\d+(\.\d+)?\s*/, "");
+  return str.replace(/^\d+(\.\d+)?\s*/, '')
 }
 
 export default function Unipower() {
-  const dispatch = useDispatch();
-  const { usuario } = useSelector((state) => state.login);
-  const { data = [], loading } = useSelector((state) => state.unipower);
-  const [dataSearch, setDataSearch] = useState([]);
-  const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const dispatch = useDispatch()
+  const { usuario } = useSelector(state => state.login)
+  const { data = [], loading } = useSelector(state => state.unipower)
+  const [dataSearch, setDataSearch] = useState([])
+  const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null)
 
   useEffect(() => {
-    dispatch(getCursos());
-  }, [dispatch]);
+    dispatch(getCursos())
+  }, [dispatch])
 
   useEffect(() => {
-    console.log("Dados recebidos:", data);
-  }, [data]);
+    //    console.log("Dados recebidos:", data);
+  }, [data])
 
   // Agrupar cursos por ID e consolidar categorias
-  const coursesById = {};
+  const coursesById = {}
 
-  data.forEach((curso) => {
-    const id = curso.id;
+  data.forEach(curso => {
+    const id = curso.id
     if (!coursesById[id]) {
-      coursesById[id] = { ...curso, categories: [] };
+      coursesById[id] = { ...curso, categories: [] }
     }
-    coursesById[id].categories.push(curso.category_slug);
-  });
+    coursesById[id].categories.push(curso.category_slug)
+  })
 
-  const uniqueCourses = Object.values(coursesById);
+  const uniqueCourses = Object.values(coursesById)
 
   // Categorizar os cursos
   const categorizedCourses = uniqueCourses.reduce((acc, curso) => {
-    curso.categories.forEach((category) => {
-      if (!acc[category]) acc[category] = [];
-      acc[category].push(curso);
-    });
-    return acc;
-  }, {});
+    curso.categories.forEach(category => {
+      if (!acc[category]) acc[category] = []
+      acc[category].push(curso)
+    })
+    return acc
+  }, {})
 
   useEffect(() => {
-    console.log("Cursos categorizados:", categorizedCourses);
-  }, [categorizedCourses]);
+    //   console.log("Cursos categorizados:", categorizedCourses);
+  }, [categorizedCourses])
 
-  const commonCourses = categorizedCourses["aba-comum-a-todos"] || [];
+  const commonCourses = categorizedCourses['aba-comum-a-todos'] || []
 
   // Ordenar os cursos da categoria "aba-comum-a-todos" por 'post_title' em ordem crescente
-  const sortedCommonCourses = [...commonCourses].sort((a, b) =>
-    a.post_title.localeCompare(b.post_title)
-  );
+  const sortedCommonCourses = [...commonCourses].sort((a, b) => a.post_title.localeCompare(b.post_title))
 
   // Obter a lista de cursos com base na categoria e subcategoria selecionadas
   const getCoursesList = () => {
-    if (search) return dataSearch;
+    if (search) return dataSearch
 
     if (selectedSubCategory) {
       return [...(categorizedCourses[selectedSubCategory] || [])].sort((a, b) =>
         a.post_title.localeCompare(b.post_title)
-      );
+      )
     }
 
-    if (selectedCategory && selectedCategory !== "aba-professor") {
-      return [...(categorizedCourses[selectedCategory] || [])].sort((a, b) =>
-        a.post_title.localeCompare(b.post_title)
-      );
+    if (selectedCategory && selectedCategory !== 'aba-professor') {
+      return [...(categorizedCourses[selectedCategory] || [])].sort((a, b) => a.post_title.localeCompare(b.post_title))
     }
 
-    return [];
-  };
+    return []
+  }
 
-  const list = getCoursesList();
+  const list = getCoursesList()
 
-  const searchData = (e) => {
-    const value = e.currentTarget.value;
-    const dataToSearch = getCoursesList();
-    const dataFiltered = utils.fieldSearch(dataToSearch, value, "post_title");
-    setSearch(value);
-    setDataSearch(dataFiltered);
-  };
+  const searchData = e => {
+    const value = e.currentTarget.value
+    const dataToSearch = getCoursesList()
+    const dataFiltered = utils.fieldSearch(dataToSearch, value, 'post_title')
+    setSearch(value)
+    setDataSearch(dataFiltered)
+  }
 
   return (
     <Loading spinning={loading}>
@@ -137,7 +133,7 @@ export default function Unipower() {
           {/* Exibir cursos da categoria "aba-comum-a-todos" */}
           {sortedCommonCourses.length > 0 && (
             <div className="p-1">
-              {sortedCommonCourses.map((curso) => (
+              {sortedCommonCourses.map(curso => (
                 <Row gutter={[16, 16]} key={curso.id} className="pb-4" align="middle">
                   <Col className="d-flex justify-center" span={8}>
                     <img
@@ -165,28 +161,24 @@ export default function Unipower() {
 
           {/* Exibir as categorias */}
           <div className="p-1">
-            <Typography.Title level={4} style={{ textAlign: "center" }}>
+            <Typography.Title level={4} style={{ textAlign: 'center' }}>
               Escolha seu Setor
             </Typography.Title>
             <Row gutter={[16, 16]} justify="center">
               {Object.keys(categoryImages)
-                .filter((category) => category !== "aba-comum-a-todos")
-                .map((category) => (
+                .filter(category => category !== 'aba-comum-a-todos')
+                .map(category => (
                   <Col span={8} key={category}>
                     <div
                       className="category-cover"
                       onClick={() => {
-                        setSelectedCategory(category);
-                        setSelectedSubCategory(null);
-                        setSearch("");
-                        setDataSearch([]);
+                        setSelectedCategory(category)
+                        setSelectedSubCategory(null)
+                        setSearch('')
+                        setDataSearch([])
                       }}
                     >
-                      <img
-                        src={categoryImages[category]}
-                        className="w-100 rounded-extra"
-                        alt={category}
-                      />
+                      <img src={categoryImages[category]} className="w-100 rounded-extra" alt={category} />
                     </div>
                   </Col>
                 ))}
@@ -196,52 +188,52 @@ export default function Unipower() {
       )}
 
       {/* Se a categoria 'aba-professor' está selecionada e nenhuma subcategoria está selecionada */}
-      {selectedCategory === "aba-professor" && !selectedSubCategory && (
+      {selectedCategory === 'aba-professor' && !selectedSubCategory && (
         <div className="p-1">
           <Button
             onClick={() => {
-              setSelectedCategory(null);
-              setSelectedSubCategory(null);
-              setSearch("");
-              setDataSearch([]);
+              setSelectedCategory(null)
+              setSelectedSubCategory(null)
+              setSearch('')
+              setDataSearch([])
             }}
           >
             Voltar para Categorias
           </Button>
           <div className="py-4">
-            <Typography.Title level={4} style={{ textAlign: "center" }}>
+            <Typography.Title level={4} style={{ textAlign: 'center' }}>
               Escolha uma Subcategoria
             </Typography.Title>
             <Row gutter={[16, 16]} justify="center">
-              {Object.keys(subcategories["aba-professor"]).map((subcategory) => (
+              {Object.keys(subcategories['aba-professor']).map(subcategory => (
                 <Col span={8} key={subcategory}>
                   <div
                     className="category-cover"
                     onClick={() => {
-                      setSelectedSubCategory(subcategory);
-                      setSearch("");
-                      setDataSearch([]);
+                      setSelectedSubCategory(subcategory)
+                      setSearch('')
+                      setDataSearch([])
                     }}
                     style={{
                       backgroundColor: subcategoryColors[subcategory],
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: "100px",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      textAlign: "center"
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      height: '100px',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      textAlign: 'center'
                     }}
                   >
                     <Text
                       style={{
-                        color: "#fff",
-                        fontSize: "12px",
-                        padding: "5px",
-                        fontWeight: "bold"
+                        color: '#fff',
+                        fontSize: '12px',
+                        padding: '5px',
+                        fontWeight: 'bold'
                       }}
                     >
-                      {subcategories["aba-professor"][subcategory]}
+                      {subcategories['aba-professor'][subcategory]}
                     </Text>
                   </div>
                 </Col>
@@ -256,23 +248,18 @@ export default function Unipower() {
         <div className="p-1">
           <Button
             onClick={() => {
-              setSelectedSubCategory(null);
-              setSearch("");
-              setDataSearch([]);
+              setSelectedSubCategory(null)
+              setSearch('')
+              setDataSearch([])
             }}
           >
             Voltar para Subcategorias
           </Button>
           <div className="py-4">
-            <Input
-              placeholder="Pesquisar"
-              suffix={<FaSearch />}
-              onChange={searchData}
-              value={search}
-            />
+            <Input placeholder="Pesquisar" suffix={<FaSearch />} onChange={searchData} value={search} />
           </div>
           {list.length > 0 ? (
-            list.map((curso) => (
+            list.map(curso => (
               <Row gutter={[16, 16]} key={curso.id} className="pb-4" align="middle">
                 <Col className="d-flex justify-center" span={8}>
                   <img
@@ -296,35 +283,28 @@ export default function Unipower() {
               </Row>
             ))
           ) : (
-            <Typography.Paragraph>
-              Nenhum curso encontrado para esta subcategoria.
-            </Typography.Paragraph>
+            <Typography.Paragraph>Nenhum curso encontrado para esta subcategoria.</Typography.Paragraph>
           )}
         </div>
       )}
 
       {/* Se outra categoria está selecionada */}
-      {selectedCategory && selectedCategory !== "aba-professor" && (
+      {selectedCategory && selectedCategory !== 'aba-professor' && (
         <div className="p-1">
           <Button
             onClick={() => {
-              setSelectedCategory(null);
-              setSearch("");
-              setDataSearch([]);
+              setSelectedCategory(null)
+              setSearch('')
+              setDataSearch([])
             }}
           >
             Voltar para Categorias
           </Button>
           <div className="py-4">
-            <Input
-              placeholder="Pesquisar"
-              suffix={<FaSearch />}
-              onChange={searchData}
-              value={search}
-            />
+            <Input placeholder="Pesquisar" suffix={<FaSearch />} onChange={searchData} value={search} />
           </div>
           {list.length > 0 ? (
-            list.map((curso) => (
+            list.map(curso => (
               <Row gutter={[16, 16]} key={curso.id} className="pb-4" align="middle">
                 <Col className="d-flex justify-center" span={8}>
                   <img
@@ -348,12 +328,10 @@ export default function Unipower() {
               </Row>
             ))
           ) : (
-            <Typography.Paragraph>
-              Nenhum curso encontrado para esta categoria.
-            </Typography.Paragraph>
+            <Typography.Paragraph>Nenhum curso encontrado para esta categoria.</Typography.Paragraph>
           )}
         </div>
       )}
     </Loading>
-  );
+  )
 }
