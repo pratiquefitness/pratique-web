@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   let user = {}
 
   if (!req.body || !req.body.email) {
-    return res.status(400).json({ message: 'O parâmetro email é obrigatório na requisição.' });
+    return res.status(400).json({ message: 'O parâmetro email é obrigatório na requisição.' })
   }
 
   const { email } = req.body
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
   })
 
-  console.log("usuarioExist", usuarioExist)
+  // console.log("usuarioExist", usuarioExist)
 
   if (usuarioExist.length) {
     user = {

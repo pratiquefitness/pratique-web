@@ -3,27 +3,27 @@
 import { apiPratiqueFunciona, apiPratiquePro } from '@/services'
 
 export default async function handler(req, res) {
-  console.log('--- [getProfessors] Início da requisição ---')
-  console.log('Método HTTP:', req.method)
-  console.log('Corpo da Requisição:', req.body)
-  console.log('apiPratiquePro:', apiPratiquePro)
-  console.log('apiPratiqueFunciona:', apiPratiqueFunciona)
+  // console.log('--- [getProfessors] Início da requisição ---')
+  //  console.log('Método HTTP:', req.method)
+  //  console.log('Corpo da Requisição:', req.body)
+  // console.log('apiPratiquePro:', apiPratiquePro)
+  //  console.log('apiPratiqueFunciona:', apiPratiqueFunciona)
 
   const { unidade } = req.body
 
   try {
     if (req.method !== 'POST') {
-      console.log('Método não permitido:', req.method)
+      //   console.log('Método não permitido:', req.method)
       return res.status(405).json({ error: 'Método não permitido' })
     }
 
     if (!unidade) {
-      console.log('Unidade não fornecida.')
+      //   console.log('Unidade não fornecida.')
       return res.status(400).json({ error: 'Unidade não fornecida.' })
     }
 
     // Obter o ID da unidade a partir do nome
-    console.log(`Buscando unidade com nome: ${unidade}`)
+    //  console.log(`Buscando unidade com nome: ${unidade}`)
     const unidadeData = await apiPratiquePro.unidade.findFirst({
       where: {
         unidade_nome: unidade
@@ -33,18 +33,18 @@ export default async function handler(req, res) {
       }
     })
 
-    console.log('Resultado da busca da unidade:', unidadeData)
+    //  console.log('Resultado da busca da unidade:', unidadeData)
 
     if (!unidadeData) {
-      console.log('Unidade não encontrada:', unidade)
+      //    console.log('Unidade não encontrada:', unidade)
       return res.status(404).json({ error: 'Unidade não encontrada.' })
     }
 
     const unidadeId = unidadeData.unidade_id
-    console.log('ID da unidade:', unidadeId)
+    //  console.log('ID da unidade:', unidadeId)
 
     // Obter os usuários_meta que têm a chave 'unidade' e o valor igual ao ID da unidade
-    console.log('Buscando usuários_meta com unidade_id:', unidadeId)
+    // console.log('Buscando usuários_meta com unidade_id:', unidadeId)
     const usuariosMeta = await apiPratiquePro.usuarios_meta.findMany({
       where: {
         user_mchave: 'unidade',
@@ -55,18 +55,18 @@ export default async function handler(req, res) {
       }
     })
 
-    console.log('Resultado da busca de usuários_meta:', usuariosMeta)
+    //  console.log('Resultado da busca de usuários_meta:', usuariosMeta)
 
     if (!usuariosMeta || usuariosMeta.length === 0) {
-      console.log('Nenhum usuário_meta encontrado para unidade_id:', unidadeId)
+      //    console.log('Nenhum usuário_meta encontrado para unidade_id:', unidadeId)
       return res.status(404).json({ error: 'Nenhum professor encontrado para esta unidade.' })
     }
 
     const usuarioIds = usuariosMeta.map(meta => meta.user_midusuario)
-    console.log('IDs dos usuários:', usuarioIds)
+    //  console.log('IDs dos usuários:', usuarioIds)
 
     // Obter os usuários que são 'anfitriões' (usuarios_anfitriao = true) e estão na lista de IDs obtidos
-    console.log('Buscando usuários com IDs:', usuarioIds, 'e usuarios_anfitriao = 1')
+    //  console.log('Buscando usuários com IDs:', usuarioIds, 'e usuarios_anfitriao = 1')
     const professores = await apiPratiquePro.usuarios.findMany({
       where: {
         usuarios_id: { in: usuarioIds },
@@ -79,18 +79,18 @@ export default async function handler(req, res) {
       }
     })
 
-    console.log('Resultado da busca de professores:', professores)
+    // console.log('Resultado da busca de professores:', professores)
 
     if (!professores || professores.length === 0) {
-      console.log('Nenhum professor encontrado para unidade_id:', unidadeId)
+      //  console.log('Nenhum professor encontrado para unidade_id:', unidadeId)
       return res.status(404).json({ error: 'Nenhum professor encontrado para esta unidade.' })
     }
 
     // Obter os avatares dos professores na tabela wp_users
-    console.log(
-      'Buscando avatares na tabela wp_users para emails:',
-      professores.map(p => p.usuarios_email)
-    )
+    //   console.log(
+    //     'Buscando avatares na tabela wp_users para emails:',
+    //   professores.map(p => p.usuarios_email)
+    //  )
     const wpUsers = await apiPratiqueFunciona.wp_users.findMany({
       where: {
         user_email: { in: professores.map(p => p.usuarios_email) }
@@ -101,7 +101,7 @@ export default async function handler(req, res) {
       }
     })
 
-    console.log('Resultado da busca de wp_users:', wpUsers)
+    //  console.log('Resultado da busca de wp_users:', wpUsers)
 
     // Combinar as informações de avatar com os professores
     const professoresComAvatar = professores.map(professor => {
@@ -112,12 +112,12 @@ export default async function handler(req, res) {
       }
     })
 
-    console.log('Professores com avatar:', professoresComAvatar)
+    // console.log('Professores com avatar:', professoresComAvatar)
 
     res.status(200).json({ professors: professoresComAvatar })
-    console.log('--- [getProfessors] Requisição concluída com sucesso ---')
+    //   console.log('--- [getProfessors] Requisição concluída com sucesso ---')
   } catch (error) {
-    console.error('Erro ao buscar os professores:', error)
+    //   console.error('Erro ao buscar os professores:', error)
     res.status(500).json({ error: 'Erro ao buscar os professores.', details: error.message })
   }
 }
