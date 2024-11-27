@@ -20,7 +20,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
       dataIndex: 'nome',
       key: 'nome',
       render: nome => {
-        return nome === 'VIP | MATRICULA + SAVER CLUB | PLUS' ? '# PLUS BLACK FRIDAY | RECORRENTE' : nome
+        return nome === '# PLUS BLACK FRIDAY | RECORRENTE' ? 'BLACK' : nome
       }
     },
     {
