@@ -18,7 +18,10 @@ const columns = (setLinkID, dados, usuario, employee) => {
     {
       title: 'Plano',
       dataIndex: 'nome',
-      key: 'nome'
+      key: 'nome',
+      render: nome => {
+        return nome === 'VIP | MATRICULA + SAVER CLUB | PLUS' ? '# PLUS BLACK FRIDAY | RECORRENTE' : nome
+      }
     },
     {
       title: 'Link',
