@@ -20,7 +20,14 @@ const columns = (setLinkID, dados, usuario, employee) => {
       dataIndex: 'nome',
       key: 'nome',
       render: nome => {
-        return nome === '# PLUS BLACK FRIDAY | RECORRENTE' ? 'PLUS BLACK FRIDAY 24' : nome
+        // Ajuste do nome do plano específico
+        if (nome === '# PLUS BLACK FRIDAY | RECORRENTE') {
+          return 'PLUS BLACK FRIDAY 24'
+        } else if (nome === 'VIP | MATRICULA + SAVER CLUB | PLUS\n') {
+          return 'black friday-24'
+        } else {
+          return nome
+        }
       }
     },
     {
@@ -29,19 +36,17 @@ const columns = (setLinkID, dados, usuario, employee) => {
       key: 'link',
       width: 100,
       render: (_, record) => {
-        // const unidadeSlug = record.unidade ? record.unidade.slug : ''
-        const unidadeSlug = record.unidade
+        // Ajuste do unidadeSlug e token
+        const unidadeSlug = record.unidade || dados.slug
+        const token = record.token || dados.token
+        const separador = record.separador || dados.separador
 
-        const linkFinal = `https://novo.pratiquefitness.com.br/checkoutpageplano/${unidadeSlug}?pl=${
-          record.plano
-        }&saver=${record.saver}&obs=AFILIADO|${dados.token}|${dados.separador}|NULL|${
-          employee ? employee : usuario.isAffiliate
-        }|AFILIADO`
+        const linkFinal = `https://novo.pratiquefitness.com.br/checkoutpageplano/${unidadeSlug}?pl=${record.plano}&saver=${record.saver}&obs=AFILIADO|${token}|${separador}|NULL|${employee ? employee : usuario.isAffiliate}|AFILIADO`
 
         const showError = ['adelmoooo'].includes(unidadeSlug)
 
         return employee ? (
-          <a href={linkFinal} target="_blank">
+          <a href={linkFinal} target="_blank" rel="noopener noreferrer">
             <Button type="primary">Link</Button>
           </a>
         ) : (
@@ -49,7 +54,7 @@ const columns = (setLinkID, dados, usuario, employee) => {
             type="primary"
             onClick={() => {
               if (showError) {
-                message.error('O AFILIADOS PARA ESTA UNIDADE ESTA PAUSADO POR SER UMA UNIDADE NOVA')
+                message.error('O AFILIADOS PARA ESTA UNIDADE ESTÁ PAUSADO POR SER UMA UNIDADE NOVA')
               } else {
                 utils.copyTextToClipboard(linkFinal)
                 messageLink()
@@ -88,10 +93,6 @@ export default function PlanosAcademia({ employee }) {
   }
 
   const list = search ? dataSearch : unidades
-
-  const handlePanelChange = key => {
-    setActivePanel(activePanel === key ? null : key) // Alternar entre abrir e fechar o painel
-  }
 
   return (
     <Loading spinning={loading}>
@@ -134,6 +135,7 @@ export default function PlanosAcademia({ employee }) {
                         dispatch(setBrowserURL('https://pratiquefitness.my.canva.site/site-saver-club-whatsapp'))
                       }
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <Button type="primary" size="small">
                         Link
@@ -144,7 +146,7 @@ export default function PlanosAcademia({ employee }) {
                 <Row>
                   <Col span={12}>Conheça os benefícios</Col>
                   <Col span={12} className="text-right">
-                    <a href="https://www.youtube.com/watch?v=F6K8ywhzggw" target="_blank">
+                    <a href="https://www.youtube.com/watch?v=F6K8ywhzggw" target="_blank" rel="noopener noreferrer">
                       <Button type="primary" size="small">
                         Link
                       </Button>
@@ -154,7 +156,7 @@ export default function PlanosAcademia({ employee }) {
                 <Row>
                   <Col span={12}>Conheça sua assinatura</Col>
                   <Col span={12} className="text-right">
-                    <a href="https://www.youtube.com/watch?v=jt3Ueq5rDiM" target="_blank">
+                    <a href="https://www.youtube.com/watch?v=jt3Ueq5rDiM" target="_blank" rel="noopener noreferrer">
                       <Button type="primary" size="small">
                         Link
                       </Button>
@@ -167,6 +169,10 @@ export default function PlanosAcademia({ employee }) {
         </Collapse>
         <Collapse className="planos_academia" accordion>
           {list.map((unidade, key) => {
+            const isPedraBranca = unidade.unidade === 'PEDRA BRANCA'
+            const unidadeSlugForExtraPlans = 'pratique-em-casa' // Conforme solicitado
+            const tokenForExtraPlans = 'd826fbbdd2c37d1342b8d16dfa5c75fd'
+
             return (
               <Panel
                 key={key++}
@@ -178,7 +184,36 @@ export default function PlanosAcademia({ employee }) {
               >
                 <Loading spinning={planosLoading}>
                   <Table
-                    dataSource={planos}
+                    dataSource={
+                      isPedraBranca
+                        ? planos.concat([
+                            {
+                              plano: 335,
+                              saver: '', // Preencha com o valor correto se necessário
+                              unidade: unidadeSlugForExtraPlans,
+                              nome: 'Spinning em Casa - Semestral',
+                              token: tokenForExtraPlans,
+                              separador: unidade.dados.separador
+                            },
+                            {
+                              plano: 668,
+                              saver: '',
+                              unidade: unidadeSlugForExtraPlans,
+                              nome: 'Spinning em Casa - Quadrimestral Bike + Nutri',
+                              token: tokenForExtraPlans,
+                              separador: unidade.dados.separador
+                            },
+                            {
+                              plano: 599,
+                              saver: '',
+                              unidade: unidadeSlugForExtraPlans,
+                              nome: 'Spinning em Casa - Trimestral',
+                              token: tokenForExtraPlans,
+                              separador: unidade.dados.separador
+                            }
+                          ])
+                        : planos
+                    }
                     columns={columns(setLinkID, unidade.dados, usuario, employee)}
                     pagination={false}
                     rowKey={'plano'}
