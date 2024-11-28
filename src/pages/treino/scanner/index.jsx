@@ -1,137 +1,139 @@
-import React, { useEffect, useState } from "react";
-import { Button, Empty, Table, Typography, Modal, Input, Form } from "antd";
-import { DownloadOutlined, ArrowLeftOutlined, IdcardOutlined } from "@ant-design/icons";
-import TreinoLayout from "../_Layout";
-import { useDispatch, useSelector } from "react-redux";
-import { getTreino } from "@/redux/actions/treino";
-import axios from "axios";
-import { setBrowserURL } from "@/redux/slices/global";
-import { updateCpf } from "@/redux/actions/conta";
+import React, { useEffect, useState } from 'react'
+import { Button, Empty, Table, Typography, Modal, Input, Form } from 'antd'
+import { DownloadOutlined, ArrowLeftOutlined, IdcardOutlined } from '@ant-design/icons'
+import TreinoLayout from '../_Layout'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTreino } from '@/redux/actions/treino'
+import axios from 'axios'
+import { setBrowserURL } from '@/redux/slices/global'
+import { updateCpf } from '@/redux/actions/conta'
 
 export default function ScannerView() {
-  const dispatch = useDispatch();
-  const { usuario } = useSelector((state) => state.login);
-  const { data } = useSelector((state) => state.treino);
-  const { fichas } = data;
-  const temExame =
-    fichas && fichas.some((objeto) => objeto.urlexame && objeto.urlexame.includes(".pdf"));
-  const [examsData, setExamsData] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedExamId, setSelectedExamId] = useState(null);
-  const [iframeVisible, setIframeVisible] = useState(false);
-  const [pdfLink, setPdfLink] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [cpfModalVisible, setCpfModalVisible] = useState(false);
-  const [cpfForm] = Form.useForm();
+  const dispatch = useDispatch()
+  const { usuario } = useSelector(state => state.login)
+  const { data } = useSelector(state => state.treino)
+  const { fichas } = data
+  const temExame = fichas && fichas.some(objeto => objeto.urlexame && objeto.urlexame.includes('.pdf'))
+  const [examsData, setExamsData] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [selectedExamId, setSelectedExamId] = useState(null)
+  const [iframeVisible, setIframeVisible] = useState(false)
+  const [pdfLink, setPdfLink] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [cpfModalVisible, setCpfModalVisible] = useState(false)
+  const [cpfForm] = Form.useForm()
 
   useEffect(() => {
-    dispatch(getTreino());
+    dispatch(getTreino())
 
     const fetchExamsData = async () => {
       try {
         if (usuario) {
-          let parametrosConsulta = "";
+          let cpfLimpo = usuario.cpf ? usuario.cpf.replace(/\D/g, '') : null
+          let telefoneLimpo = usuario.telefone ? usuario.telefone.replace(/\D/g, '') : null
 
-          if (usuario.cpf) {
-            const cpfLimpo = usuario.cpf.replace(/\D/g, "");
-            parametrosConsulta += `cpf=${cpfLimpo}`;
-          }
-
-          if (usuario.telefone) {
-            const telefoneLimpo = usuario.telefone.replace(/\D/g, "");
-            const telefoneSemParenteses = telefoneLimpo.replace(/[(|)]/g, "");
-            if (parametrosConsulta !== "") {
-              parametrosConsulta += "&";
+          // Se o CPF não estiver disponível, buscar na tabela wp_users
+          if (!cpfLimpo) {
+            const cpfResponse = await axios.get('/api/getCpfFromWpUsers')
+            if (cpfResponse.status === 200 && cpfResponse.data.cpf) {
+              cpfLimpo = cpfResponse.data.cpf.replace(/\D/g, '')
+            } else {
+              console.error('CPF não encontrado na tabela wp_users.')
+              // Opcional: Solicitar ao usuário que insira o CPF
+              return
             }
-            parametrosConsulta += `phone=${telefoneSemParenteses}`;
           }
 
-          if (parametrosConsulta === "") {
-            return;
+          // Se o telefone não estiver disponível, usar um valor padrão
+          if (!telefoneLimpo) {
+            telefoneLimpo = '0000000000' // Valor padrão ou string vazia
           }
 
-          const timestamp = new Date().getTime();
+          // Construir os parâmetros da consulta
+          const parametrosConsulta = `cpf=${cpfLimpo}&phone=${telefoneLimpo}`
+
+          const timestamp = new Date().getTime()
           const response = await axios.get(
-            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&phone=${timestamp}`,
+            `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&timestamp=${timestamp}`,
             {
               headers: {
-                "Cache-Control": "no-cache",
-                Pragma: "no-cache",
-                Expires: "0"
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache',
+                Expires: '0'
               }
             }
-          );
+          )
 
           if (response.status === 200 && response.data && response.data.length > 0) {
-            const examsWithFormattedDate = response.data.map((exam) => ({
+            const examsWithFormattedDate = response.data.map(exam => ({
               ...exam,
               gmtCreate: new Date(exam.gmtCreate).toLocaleString()
-            }));
-            setExamsData(examsWithFormattedDate);
+            }))
+            setExamsData(examsWithFormattedDate)
           } else {
-            console.error("Nenhum exame encontrado para este usuário.");
+            console.error('Nenhum exame encontrado para este usuário.')
           }
         } else {
-          console.error("Telefone do usuário não disponível.");
+          console.error('Usuário não disponível.')
         }
       } catch (error) {
-        console.error("Erro ao buscar dados dos exames:", error);
+        console.error('Erro ao buscar dados dos exames:', error)
       }
-    };
+    }
 
-    fetchExamsData();
-  }, [dispatch, usuario]);
+    fetchExamsData()
+  }, [dispatch, usuario])
 
   useEffect(() => {
     if (!usuario.cpf) {
-      setCpfModalVisible(true);
+      setCpfModalVisible(true)
     }
-  }, [usuario]);
+  }, [usuario])
 
-  const handleImageClick = async (record) => {
-    setSelectedImage(record.bodyImage);
-    setSelectedExamId(record.id);
-    setLoading(true);
-    setIframeVisible(true);
-    setPdfLink(record.pdf);
+  const handleImageClick = async record => {
+    setSelectedImage(record.bodyImage)
+    setSelectedExamId(record.id)
+    setLoading(true)
+    setIframeVisible(true)
+    setPdfLink(record.pdf)
     //console.log('Link do exame:', record.pdf)
-  };
+  }
 
   const handleIframeLoad = () => {
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
-  const handleCpfSubmit = async (values) => {
+  const handleCpfSubmit = async values => {
     try {
-      await dispatch(updateCpf(values.cpf));
-      setCpfModalVisible(false);
+      await dispatch(updateCpf(values.cpf))
+      setCpfModalVisible(false)
     } catch (error) {
-      console.error("Erro ao atualizar o CPF:", error);
+      console.error('Erro ao atualizar o CPF:', error)
     }
-  };
+  }
 
   return (
     <TreinoLayout>
       {iframeVisible && (
-        <div style={{ position: "fixed", zIndex: 9999, top: 0, left: 0, right: 0, bottom: 0 }}>
+        <div style={{ position: 'fixed', zIndex: 9999, top: 0, left: 0, right: 0, bottom: 0 }}>
           {loading && (
             <div
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: "#f0f0f0"
+                background: '#f0f0f0'
               }}
             />
           )}
-          <div style={{ position: "absolute", top: "10px", left: "10px", zIndex: "9999" }}>
+          <div style={{ position: 'absolute', top: '10px', left: '10px', zIndex: '9999' }}>
             <Button icon={<ArrowLeftOutlined />} onClick={() => setIframeVisible(false)}>
               Voltar
             </Button>
           </div>
-          <div style={{ position: "absolute", top: "10px", right: "10px", zIndex: "9999" }}>
+          <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: '9999' }}>
             {pdfLink && (
               <a href={pdfLink} target="_blank" rel="noopener noreferrer">
                 <Button type="primary">Ver PDF</Button>
@@ -152,23 +154,19 @@ export default function ScannerView() {
           dataSource={examsData}
           columns={[
             {
-              title: "Data",
-              dataIndex: "data_column",
-              key: "gmtCreate",
-              render: (data_column) => {
-                const date = new Date(data_column);
-                return date.toLocaleDateString();
+              title: 'Data',
+              dataIndex: 'data_column',
+              key: 'gmtCreate',
+              render: data_column => {
+                const date = new Date(data_column)
+                return date.toLocaleDateString()
               }
             },
             {
-              title: "Ações",
-              key: "actions",
-              render: (record) => (
-                <Button
-                  type="primary"
-                  style={{ height: "20px" }}
-                  onClick={() => handleImageClick(record)}
-                >
+              title: 'Ações',
+              key: 'actions',
+              render: record => (
+                <Button type="primary" style={{ height: '20px' }} onClick={() => handleImageClick(record)}>
                   Ver
                 </Button>
               )
@@ -180,7 +178,7 @@ export default function ScannerView() {
       )}
       {temExame ? (
         <a
-          href={fichas.find((objeto) => objeto.urlexame.includes(".pdf")).urlexame}
+          href={fichas.find(objeto => objeto.urlexame.includes('.pdf')).urlexame}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -193,7 +191,7 @@ export default function ScannerView() {
       )}
       <Modal
         title={
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: 'center' }}>
             <Typography.Title level={3} style={{ marginBottom: 0 }}>
               Atenção
             </Typography.Title>
@@ -204,19 +202,19 @@ export default function ScannerView() {
         footer={null}
         centered
       >
-        <div style={{ textAlign: "center" }}>
-          <IdcardOutlined style={{ fontSize: "48px", color: "#08c" }} />
-          <Typography.Paragraph style={{ color: "#595959", marginTop: "16px" }}>
-            Preencha seu CPF para ter acesso ao SUPERBIO! Preencha corretamente pois ele será a
-            chave para você poder ver seus exames!
+        <div style={{ textAlign: 'center' }}>
+          <IdcardOutlined style={{ fontSize: '48px', color: '#08c' }} />
+          <Typography.Paragraph style={{ color: '#595959', marginTop: '16px' }}>
+            Preencha seu CPF para ter acesso ao SUPERBIO! Preencha corretamente pois ele será a chave para você poder
+            ver seus exames!
           </Typography.Paragraph>
         </div>
         <Form form={cpfForm} onFinish={handleCpfSubmit}>
           <Form.Item
             name="cpf"
             rules={[
-              { required: true, message: "Por favor, insira seu CPF" },
-              { len: 11, message: "O CPF deve ter 11 dígitos" }
+              { required: true, message: 'Por favor, insira seu CPF' },
+              { len: 11, message: 'O CPF deve ter 11 dígitos' }
             ]}
           >
             <Input maxLength={11} placeholder="Digite aqui o seu CPF" />
@@ -229,5 +227,5 @@ export default function ScannerView() {
         </Form>
       </Modal>
     </TreinoLayout>
-  );
+  )
 }
