@@ -210,6 +210,14 @@ export default function PlanosAcademia({ employee }) {
                               nome: 'Spinning em Casa - Trimestral',
                               token: tokenForExtraPlans,
                               separador: unidade.dados.separador
+                            },
+                            {
+                              plano: 40,
+                              saver: '',
+                              unidade: unidadeSlugForExtraPlans,
+                              nome: '"Spinning em Casa - trimestral cheio FAMILY"',
+                              token: tokenForExtraPlans,
+                              separador: unidade.dados.separador
                             }
                           ])
                         : planos
