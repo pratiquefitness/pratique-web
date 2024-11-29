@@ -36,28 +36,21 @@ export default function ScannerView() {
       try {
         if (usuario) {
           let cpfLimpo = usuario.cpf ? usuario.cpf.replace(/\D/g, '') : null
-          let telefoneLimpo = usuario.telefone ? usuario.telefone.replace(/\D/g, '') : null
+          let telefoneLimpo = usuario.telefone ? usuario.telefone.replace(/\D/g, '') : '0000000000' // Valor padrão se telefone não estiver disponível
 
-          // Se o CPF não estiver disponível, buscar na tabela wp_users
+          // Se o CPF não estiver disponível, buscar via API
           if (!cpfLimpo) {
+            // Chamar o endpoint ajustado sem necessidade de instalação de pacotes
             const cpfResponse = await axios.get('/api/getCpfFromWpUsers')
             if (cpfResponse.status === 200 && cpfResponse.data.cpf) {
               cpfLimpo = cpfResponse.data.cpf.replace(/\D/g, '')
             } else {
               console.error('CPF não encontrado na tabela wp_users.')
-              // Opcional: Solicitar ao usuário que insira o CPF
               return
             }
           }
 
-          // Se o telefone não estiver disponível, usar um valor padrão
-          if (!telefoneLimpo) {
-            telefoneLimpo = '0000000000' // Valor padrão ou string vazia
-          }
-
-          // Construir os parâmetros da consulta
           const parametrosConsulta = `cpf=${cpfLimpo}&phone=${telefoneLimpo}`
-
           const timestamp = new Date().getTime()
           const response = await axios.get(
             `https://pratiquetecnologia.com.br/api/balanca/id.php?${parametrosConsulta}&timestamp=${timestamp}`,

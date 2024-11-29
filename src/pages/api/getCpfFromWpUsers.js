@@ -1,31 +1,25 @@
 // pages/api/getCpfFromWpUsers.js
 import { apiPratiqueFunciona } from '@/services'
-import { getSession } from 'next-auth/client' // Ajuste conforme o seu método de autenticação
+import cookie from 'cookie'
 
 export default async function handler(req, res) {
   try {
-    // Obter a sessão do usuário atual
-    const session = await getSession({ req })
+    // Obter o cookie da requisição
+    const cookies = cookie.parse(req.headers.cookie || '')
+    const email = cookies.userEmail
 
-    if (!session) {
-      return res.status(401).json({ error: 'Usuário não autenticado' })
-    }
-
-    // Obter o email do usuário a partir da sessão
-    const userEmail = session.user.email
-
-    if (!userEmail) {
-      return res.status(400).json({ error: 'Email do usuário não disponível na sessão' })
+    if (!email) {
+      return res.status(400).json({ error: 'Email não encontrado nos cookies' })
     }
 
     // Buscar o usuário na tabela wp_users usando o email
     const user = await apiPratiqueFunciona.wp_users.findUnique({
-      where: { user_email: userEmail },
+      where: { user_email: email },
       select: { cpf: true }
     })
 
     if (!user || !user.cpf) {
-      console.error(`CPF não encontrado para o usuário com email ${userEmail}`)
+      console.error(`CPF não encontrado para o usuário com email ${email}`)
       return res.status(404).json({ error: 'CPF não encontrado' })
     }
 
