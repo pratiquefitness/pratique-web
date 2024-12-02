@@ -39,6 +39,7 @@ export default async function handler(req, res) {
 
     // Definir os emails e os valores correspondentes de cpf_sva
     const emails = [
+      'thamiris.pereira@lecard.com.br',
       'guilhermeam.ornelas@gmail.com',
       'gita@gmail.com',
       'joseantonioben04@gmail.com',

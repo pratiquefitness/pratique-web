@@ -634,3 +634,14 @@ body .ant-layout-footer {
 .ant-select-selection-search-input {
   width: 100%;
 }
+.box-mensagem {
+  text-align: center;
+  background-color: rgb(188, 14, 47);
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
