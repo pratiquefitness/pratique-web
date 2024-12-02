@@ -62,7 +62,7 @@ export default function Plano() {
       }
 
       // Enviar os dados para o backend PHP
-      await axios.post('https://pratiquetecnologia.com.br/api/app/cancelamento', formData, {
+      await axios.post('https://pratiquetecnologia.com.br/api/app/cancelamento/index.php', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
