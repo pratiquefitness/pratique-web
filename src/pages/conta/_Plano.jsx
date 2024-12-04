@@ -1,5 +1,3 @@
-// src/pages/conta/_Plano.jsx
-
 import React, { useState, useEffect } from 'react'
 import { Button, Card, Space, Modal, Form, Input, Select, Upload, message } from 'antd'
 import { FaWhatsapp } from 'react-icons/fa'
@@ -18,6 +16,8 @@ export default function Plano() {
   const [form] = Form.useForm()
   const [isPopupVisible, setIsPopupVisible] = useState(false)
   const [videoStartTime, setVideoStartTime] = useState(0)
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+  const [isCancelConfirmationVisible, setIsCancelConfirmationVisible] = useState(false) // Novo estado
 
   const videoId = '1sQA3ick4as' // Substitua pelo ID do seu vídeo no YouTube
 
@@ -114,14 +114,37 @@ export default function Plano() {
       </a>
 
       {/* Botão "Cancelar Plano" */}
-      <Button type="primary" danger block onClick={openVideo}>
+      <Button type="primary" danger block onClick={() => setIsAccordionOpen(true)}>
         Cancelar Plano
       </Button>
+
+      {/* Conteúdo do Accordion */}
+      {isAccordionOpen && (
+        <div style={{ marginTop: '16px', textAlign: 'justify' }}>
+          <p>
+            É uma pena imaginar que deseja parar com os treinos e deixar a família PRATIQUE, mas entendemos que
+            imprevistos podem ocorrer.
+            <br />
+            <br />
+            Só orientamos que você faça esse pedido sempre, com pelo menos, 15 dias de antecedência à data de renovação
+            mensal. Isso evita que você pague pelos dias remanescentes da sua assinatura e nos permite processar o
+            cancelamento de maneira eficiente.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '15px' }}>
+            <Button type="primary" onClick={openVideo}>
+              PROSSEGUIR
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Modal do Vídeo */}
       <Modal
         visible={isVideoVisible}
-        onCancel={() => setIsVideoVisible(false)}
+        onCancel={() => {
+          setIsVideoVisible(false)
+          setIsAccordionOpen(false) // Resetar o accordion ao fechar o modal
+        }}
         footer={null}
         width={360}
         centered
@@ -131,7 +154,10 @@ export default function Plano() {
         {!videoWatched && <p className="box-mensagem">É preciso ver o vídeo completo para prosseguir</p>}
         <YoutubePlayer
           id={videoId}
-          onClose={() => setIsVideoVisible(false)}
+          onClose={() => {
+            setIsVideoVisible(false)
+            setIsAccordionOpen(false)
+          }}
           onEnd={onVideoEnd}
           startTime={videoStartTime}
         />
@@ -157,8 +183,10 @@ export default function Plano() {
                 type="primary"
                 danger
                 onClick={() => {
-                  setSelectedOption('cancelamento')
-                  setIsFormVisible(true)
+                  // Abrir o modal de confirmação
+                  setIsCancelConfirmationVisible(true)
+                  // Fechar outros modais se necessário
+                  setIsFormVisible(false)
                   setIsVideoVisible(false)
                   setIsPopupVisible(false)
                 }}
@@ -204,11 +232,53 @@ export default function Plano() {
             setIsPopupVisible(false)
             setIsFormVisible(true)
             setIsVideoVisible(false)
+            setSelectedOption('trancamento')
           }}
           style={{ marginTop: '30px', width: '200px' }}
         >
           Prosseguir
         </Button>
+      </Modal>
+
+      {/* Modal de Confirmação de Cancelamento */}
+      <Modal
+        visible={isCancelConfirmationVisible}
+        onCancel={() => setIsCancelConfirmationVisible(false)}
+        footer={null}
+        centered
+      >
+        <p style={{ textAlign: 'center', fontSize: '16px' }}>
+          Tem certeza que deseja <strong>PERDER</strong> o voucher de R$50,00 e perder os benefícios adquiridos quando
+          quiser retornar?
+        </p>
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              // Fechar o modal de confirmação
+              setIsCancelConfirmationVisible(false)
+              // Prosseguir para o formulário com 'trancamento'
+              setSelectedOption('trancamento')
+              setIsFormVisible(true)
+            }}
+            style={{ marginRight: '10px' }}
+          >
+            Melhor trancar
+          </Button>
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              // Fechar o modal de confirmação
+              setIsCancelConfirmationVisible(false)
+              // Prosseguir para o formulário com 'cancelamento'
+              setSelectedOption('cancelamento')
+              setIsFormVisible(true)
+            }}
+          >
+            Prosseguir com Cancelamento
+          </Button>
+        </div>
       </Modal>
 
       {/* Formulário */}
