@@ -6,6 +6,8 @@ import { GiCancel } from 'react-icons/gi'
 
 export default function YoutubePlayer({ id, onClose, onEnd, startTime }) {
   const playerRef = useRef(null)
+  const lastTimeRef = useRef(startTime || 0)
+  const checkTimeIntervalRef = useRef(null)
 
   useEffect(() => {
     let player
@@ -17,10 +19,14 @@ export default function YoutubePlayer({ id, onClose, onEnd, startTime }) {
         height: '100%',
         playerVars: {
           autoplay: 1,
-          controls: 1,
+          controls: 1, // Exibe os controles do player
+          disablekb: 0, // Permite o uso do teclado
           start: startTime || 0,
           origin: window.location.origin,
-          modestbranding: 1
+          modestbranding: 1,
+          fs: 1, // Permite tela cheia
+          rel: 0, // Desabilita vídeos relacionados
+          playsinline: 1 // Reproduz em linha em dispositivos móveis
         },
         events: {
           onReady: onPlayerReady,
@@ -29,11 +35,11 @@ export default function YoutubePlayer({ id, onClose, onEnd, startTime }) {
       })
     }
 
-    // Check if the API is already loaded
+    // Verificar se a API já foi carregada
     if (window.YT && window.YT.Player) {
       onYouTubeIframeAPIReady()
     } else {
-      // Load the YouTube API script
+      // Carregar o script da API do YouTube
       const existingScript = document.getElementById('youtube-iframe-api')
       if (!existingScript) {
         const tag = document.createElement('script')
@@ -42,42 +48,60 @@ export default function YoutubePlayer({ id, onClose, onEnd, startTime }) {
         const firstScriptTag = document.getElementsByTagName('script')[0]
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
       }
-      // Assign the ready function
+      // Atribuir a função ready
       window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady
     }
 
     function onPlayerReady(event) {
       playerRef.current = player
-      // Save current time every second
-      playerRef.current.timeUpdateInterval = setInterval(() => {
-        const currentTime = playerRef.current.getCurrentTime()
-        localStorage.setItem(`video-${id}-currentTime`, currentTime)
+
+      // Iniciar o intervalo para monitorar o tempo de reprodução
+      checkTimeIntervalRef.current = setInterval(() => {
+        if (playerRef.current && playerRef.current.getPlayerState() === window.YT.PlayerState.PLAYING) {
+          const currentTime = playerRef.current.getCurrentTime()
+          const lastTime = lastTimeRef.current
+
+          // Permitir uma tolerância de 2 segundos
+          if (currentTime > lastTime + 2) {
+            // O usuário tentou pular adiante, voltar ao último tempo permitido
+            playerRef.current.seekTo(lastTime, true)
+          } else {
+            lastTimeRef.current = currentTime
+          }
+        }
       }, 1000)
     }
 
     function onPlayerStateChange(event) {
       if (event.data === window.YT.PlayerState.ENDED) {
+        // Vídeo terminou
+        if (checkTimeIntervalRef.current) {
+          clearInterval(checkTimeIntervalRef.current)
+          checkTimeIntervalRef.current = null
+        }
         if (onEnd) {
           onEnd()
         }
         localStorage.removeItem(`video-${id}-currentTime`)
       }
+      // Não precisamos mais impedir que o usuário pause o vídeo
     }
 
     return () => {
-      if (playerRef.current && playerRef.current.timeUpdateInterval) {
-        clearInterval(playerRef.current.timeUpdateInterval)
+      // Limpar intervalos e destruir o player ao desmontar o componente
+      if (checkTimeIntervalRef.current) {
+        clearInterval(checkTimeIntervalRef.current)
       }
       if (player && player.destroy) {
         player.destroy()
       }
-      // Clean up the API ready function
+      // Limpar a função ready da API
       delete window.onYouTubeIframeAPIReady
     }
   }, [id, onEnd, startTime])
 
   return (
-    <div style={{ position: 'relative', paddingBottom: '177.78%', height: 0 }}>
+    <div style={{ position: 'relative', width: '100%', height: '0', paddingBottom: '177.78%' }}>
       <div
         id={`youtube-player-${id}`}
         style={{

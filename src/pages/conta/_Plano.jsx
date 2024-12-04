@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import YoutubePlayer from '../aulas_coletivas/_YoutubePlayerCancela' // Ajuste o caminho se necessário
 import axios from 'axios'
 import { UploadOutlined } from '@ant-design/icons'
+import InputMask from 'react-input-mask' // Importar o InputMask
 
 export default function Plano() {
   const { usuario } = useSelector(state => state.login)
@@ -45,10 +46,52 @@ export default function Plano() {
     'Viagem / Férias'
   ]
 
+  // Função para validar o CPF
+  const validarCPF = (_, value) => {
+    if (!value) {
+      return Promise.reject(new Error('Por favor, insira o CPF do contrato'))
+    }
+
+    // Remover pontos e traço
+    const cpf = value.replace(/[^\d]+/g, '')
+
+    // Implementar a lógica de validação do CPF
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+      return Promise.reject(new Error('CPF inválido'))
+    }
+
+    let soma = 0
+    let resto
+
+    for (let i = 1; i <= 9; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i)
+    }
+    resto = (soma * 10) % 11
+    resto = resto === 10 || resto === 11 ? 0 : resto
+
+    if (resto !== parseInt(cpf.substring(9, 10))) {
+      return Promise.reject(new Error('CPF inválido'))
+    }
+
+    soma = 0
+    for (let i = 1; i <= 10; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i)
+    }
+    resto = (soma * 10) % 11
+    resto = resto === 10 || resto === 11 ? 0 : resto
+
+    if (resto !== parseInt(cpf.substring(10, 11))) {
+      return Promise.reject(new Error('CPF inválido'))
+    }
+
+    return Promise.resolve()
+  }
+
   // Função para lidar com o envio do formulário
   const onFinish = async values => {
     try {
-      // Criar um objeto FormData para enviar os dados incluindo o arquivo
+      console.log('Valores do formulário:', values)
+
       const formData = new FormData()
       formData.append('cpf_contrato', values.cpf_contrato)
       formData.append('whatsapp', values.whatsapp)
@@ -57,20 +100,24 @@ export default function Plano() {
       formData.append('descricao', values.descricao)
       formData.append('tipo', selectedOption) // 'cancelamento' ou 'trancamento'
 
-      if (values.documento && values.documento.file) {
-        formData.append('documento', values.documento.file)
+      // Verificar se o documento está presente
+      if (values.documento && values.documento.length > 0) {
+        console.log('Arquivo selecionado:', values.documento[0])
+        formData.append('documento', values.documento[0].originFileObj)
+      } else {
+        message.error('Por favor, anexe um documento com foto.')
+        return
       }
 
       // Enviar os dados para o backend PHP
-      await axios.post('https://pratiquetecnologia.com.br/api/app/cancelamento/index.php', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      await axios.post('https://pratiquetecnologia.com.br/api/app/cancelamento/index2.php', formData, {
+        // Não defina o Content-Type aqui
       })
 
       setIsFormVisible(false)
       setIsThankYouVisible(true)
     } catch (error) {
+      console.error('Erro ao enviar o formulário:', error.response ? error.response.data : error.message)
       message.error('Ocorreu um erro ao enviar o formulário. Tente novamente mais tarde.')
     }
   }
@@ -115,7 +162,7 @@ export default function Plano() {
 
       {/* Botão "Cancelar Plano" */}
       <Button type="primary" danger block onClick={() => setIsAccordionOpen(true)}>
-        Cancelar Plano
+        Cancelar / Trancar Plano
       </Button>
 
       {/* Conteúdo do Accordion */}
@@ -287,20 +334,43 @@ export default function Plano() {
           <Form.Item
             label="CPF do Contrato"
             name="cpf_contrato"
-            rules={[{ required: true, message: 'Por favor, insira o CPF do contrato' }]}
+            rules={[{ required: true, message: 'Por favor, insira o CPF do contrato' }, { validator: validarCPF }]}
           >
-            <Input placeholder="Digite o CPF do contrato" />
+            <InputMask mask="999.999.999-99">
+              {inputProps => <Input {...inputProps} placeholder="Digite o CPF do contrato" />}
+            </InputMask>
           </Form.Item>
+
           <Form.Item
             label="WhatsApp"
             name="whatsapp"
-            rules={[{ required: true, message: 'Por favor, insira seu WhatsApp' }]}
+            rules={[
+              { required: true, message: 'Por favor, insira seu WhatsApp' },
+              {
+                pattern: /^\(\d{2}\) \d{5}-\d{4}$/,
+                message: 'Número de WhatsApp inválido'
+              }
+            ]}
           >
-            <Input placeholder="(00) 00000-0000" />
+            <InputMask mask="(99) 99999-9999">
+              {inputProps => <Input {...inputProps} placeholder="(00) 00000-0000" />}
+            </InputMask>
           </Form.Item>
-          <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Por favor, insira seu email' }]}>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: 'Por favor, insira seu email' },
+              {
+                type: 'email',
+                message: 'Email inválido'
+              }
+            ]}
+          >
             <Input placeholder="Digite seu email" />
           </Form.Item>
+
           <Form.Item
             label="Motivo do cancelamento"
             name="motivo"
@@ -314,16 +384,22 @@ export default function Plano() {
               ))}
             </Select>
           </Form.Item>
+
           <Form.Item
             label="Anexe um documento com foto"
             name="documento"
-            valuePropName="file"
+            valuePropName="fileList"
+            getValueFromEvent={e => {
+              console.log('Evento de upload:', e)
+              return e && e.fileList
+            }}
             rules={[{ required: true, message: 'Por favor, anexe um documento com foto' }]}
           >
-            <Upload beforeUpload={() => false} maxCount={1}>
+            <Upload accept="image/*,application/pdf" beforeUpload={() => false} maxCount={1}>
               <Button icon={<UploadOutlined />}>Clique para enviar</Button>
             </Upload>
           </Form.Item>
+
           <Form.Item
             label="Descreva para a gente em detalhes o motivo da solicitação"
             name="descricao"
@@ -331,6 +407,7 @@ export default function Plano() {
           >
             <Input.TextArea rows={4} placeholder="Digite aqui sua descrição" />
           </Form.Item>
+
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
               Enviar
