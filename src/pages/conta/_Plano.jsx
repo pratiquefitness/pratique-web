@@ -20,7 +20,7 @@ export default function Plano() {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false)
   const [isCancelConfirmationVisible, setIsCancelConfirmationVisible] = useState(false) // Novo estado
 
-  const videoId = '1sQA3ick4as' // Substitua pelo ID do seu vídeo no YouTube
+  const videoId = 'LgNM9s7abYQ' // Substitua pelo ID do seu vídeo no YouTube
 
   // Função chamada quando o vídeo termina
   const onVideoEnd = () => {
@@ -34,6 +34,22 @@ export default function Plano() {
     console.log('Abrindo vídeo, tempo salvo:', savedTime)
     setVideoStartTime(parseFloat(savedTime) || 0)
     setIsVideoVisible(true)
+  }
+
+  const validarWhatsApp = (_, value) => {
+    if (!value) {
+      return Promise.reject(new Error('Por favor, insira seu WhatsApp'))
+    }
+
+    // Remover todos os caracteres não numéricos
+    const numbers = value.replace(/\D/g, '')
+
+    // Verificar se o número tem 10 ou 11 dígitos
+    if (numbers.length === 10 || numbers.length === 11) {
+      return Promise.resolve()
+    }
+
+    return Promise.reject(new Error('Número de WhatsApp inválido'))
   }
 
   // Opções para o select "Motivo do cancelamento"
@@ -98,7 +114,7 @@ export default function Plano() {
       formData.append('email', values.email)
       formData.append('motivo', values.motivo)
       formData.append('descricao', values.descricao)
-      formData.append('tipo', selectedOption) // 'cancelamento' ou 'trancamento'
+      formData.append('tipo', selectedOption) // 'cancelamento', 'trancamento_indeterminado' ou 'trancamento_90dias'
 
       // Verificar se o documento está presente
       if (values.documento && values.documento.length > 0) {
@@ -141,6 +157,23 @@ export default function Plano() {
       videoWatched
     })
   }, [isVideoVisible, isPopupVisible, isFormVisible, isThankYouVisible, videoWatched])
+
+  const WhatsAppInput = ({ value = '', onChange }) => {
+    const numbers = value.replace(/\D/g, '')
+    const mask = numbers.length > 10 ? '(99) 99999-9999' : '(99) 9999-9999'
+
+    return (
+      <InputMask
+        mask={mask}
+        value={value}
+        onChange={onChange}
+        maskChar={null}
+        key={mask} // Força a re-montagem quando a máscara muda
+      >
+        {inputProps => <Input {...inputProps} placeholder="(00) 00000-0000" />}
+      </InputMask>
+    )
+  }
 
   return (
     <Space direction="vertical" className="w-100">
@@ -213,19 +246,34 @@ export default function Plano() {
           <>
             {console.log('Renderizando os botões')}
             <div style={{ marginTop: '20px', textAlign: 'center' }}>
+              {/* Botão para Trancar por 90 dias */}
               <Button
                 type="primary"
                 onClick={() => {
-                  setSelectedOption('trancamento')
+                  setSelectedOption('trancamento_90dias')
+                  setIsFormVisible(true)
+                  setIsVideoVisible(false)
+                }}
+                style={{ display: 'block', margin: '0 auto 10px auto', width: '250px' }}
+              >
+                Trancar por 90 dias
+              </Button>
+
+              {/* Botão para Trancamento Indeterminado */}
+              <Button
+                type="primary"
+                onClick={() => {
+                  setSelectedOption('trancamento_indeterminado')
                   setIsPopupVisible(true)
                   setIsVideoVisible(false)
                   setIsFormVisible(false)
                 }}
-                style={{ display: 'block', margin: '0 auto 20px auto', width: '250px' }}
+                style={{ display: 'block', margin: '0 auto 10px auto', width: '250px' }}
               >
                 Trancar Indeterminado
               </Button>
 
+              {/* Botão para Cancelamento */}
               <Button
                 type="primary"
                 danger
@@ -279,7 +327,7 @@ export default function Plano() {
             setIsPopupVisible(false)
             setIsFormVisible(true)
             setIsVideoVisible(false)
-            setSelectedOption('trancamento')
+            setSelectedOption('trancamento_indeterminado')
           }}
           style={{ marginTop: '30px', width: '200px' }}
         >
@@ -304,8 +352,8 @@ export default function Plano() {
             onClick={() => {
               // Fechar o modal de confirmação
               setIsCancelConfirmationVisible(false)
-              // Prosseguir para o formulário com 'trancamento'
-              setSelectedOption('trancamento')
+              // Prosseguir para o formulário com 'trancamento_indeterminado'
+              setSelectedOption('trancamento_indeterminado')
               setIsFormVisible(true)
             }}
             style={{ marginRight: '10px' }}
@@ -344,17 +392,9 @@ export default function Plano() {
           <Form.Item
             label="WhatsApp"
             name="whatsapp"
-            rules={[
-              { required: true, message: 'Por favor, insira seu WhatsApp' },
-              {
-                pattern: /^\(\d{2}\) \d{5}-\d{4}$/,
-                message: 'Número de WhatsApp inválido'
-              }
-            ]}
+            rules={[{ required: true, message: 'Por favor, insira seu WhatsApp' }, { validator: validarWhatsApp }]}
           >
-            <InputMask mask="(99) 99999-9999">
-              {inputProps => <Input {...inputProps} placeholder="(00) 00000-0000" />}
-            </InputMask>
+            <WhatsAppInput />
           </Form.Item>
 
           <Form.Item
@@ -372,7 +412,7 @@ export default function Plano() {
           </Form.Item>
 
           <Form.Item
-            label="Motivo do cancelamento"
+            label="Motivo da solicitação"
             name="motivo"
             rules={[{ required: true, message: 'Por favor, selecione o motivo' }]}
           >
@@ -425,8 +465,13 @@ export default function Plano() {
         destroyOnClose
       >
         <p>
-          Obrigado por sua solicitação, seu {selectedOption === 'cancelamento' ? 'cancelamento' : 'trancamento'} está
-          agendado para o dia {dataAgendamento}
+          Obrigado por sua solicitação, seu{' '}
+          {selectedOption === 'cancelamento'
+            ? 'cancelamento'
+            : selectedOption === 'trancamento_90dias'
+              ? 'trancamento por 90 dias'
+              : 'trancamento indeterminado'}{' '}
+          está agendado para o dia {dataAgendamento}
         </p>
       </Modal>
     </Space>
