@@ -20,7 +20,7 @@ export default function Plano() {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false)
   const [isCancelConfirmationVisible, setIsCancelConfirmationVisible] = useState(false) // Novo estado
 
-  const videoId = 'LgNM9s7abYQ' // Substitua pelo ID do seu vídeo no YouTube
+  const videoId = '1sQA3ick4as' // Substitua pelo ID do seu vídeo no YouTube
 
   // Função chamada quando o vídeo termina
   const onVideoEnd = () => {
