@@ -36,7 +36,6 @@ const columns = (setLinkID, dados, usuario, employee) => {
       key: 'link',
       width: 100,
       render: (_, record) => {
-        // Ajuste do unidadeSlug e token
         const unidadeSlug = record.unidade || dados.slug
         const token = record.token || dados.token
         const separador = record.separador || dados.separador
@@ -94,6 +93,62 @@ export default function PlanosAcademia({ employee }) {
 
   const list = search ? dataSearch : unidades
 
+  // Dados para PRATIQUE EM CASA
+  const unidadeSlugForExtraPlans = 'pratique-em-casa'
+  const tokenForExtraPlans = 'd826fbbdd2c37d1342b8d16dfa5c75fd'
+  const separadorForExtraPlans = '' // Ajuste se necessário
+
+  // Planos Minas Gerais
+  const minasGeraisPlans = [
+    {
+      plano: 335,
+      saver: '',
+      unidade: unidadeSlugForExtraPlans,
+      nome: 'WEB | SPINNING EM CASA BRASIL | SEM R$149,90',
+      token: tokenForExtraPlans,
+      separador: separadorForExtraPlans
+    }
+  ]
+
+  // Planos Santa Catarina (os mesmos usados anteriormente na Pedra Branca)
+  const santaCatarinaPlans = [
+    {
+      plano: 335,
+      saver: '',
+      unidade: unidadeSlugForExtraPlans,
+      nome: 'Spinning em Casa - Semestral',
+      token: tokenForExtraPlans,
+      separador: separadorForExtraPlans
+    },
+    {
+      plano: 668,
+      saver: '',
+      unidade: unidadeSlugForExtraPlans,
+      nome: 'Spinning em Casa - Quadrimestral Bike + Nutri',
+      token: tokenForExtraPlans,
+      separador: separadorForExtraPlans
+    },
+    {
+      plano: 599,
+      saver: '',
+      unidade: unidadeSlugForExtraPlans,
+      nome: 'Spinning em Casa - Trimestral',
+      token: tokenForExtraPlans,
+      separador: separadorForExtraPlans
+    },
+    {
+      plano: 40,
+      saver: '',
+      unidade: unidadeSlugForExtraPlans,
+      nome: 'Spinning em Casa - Trimestral Cheio FAMILY',
+      token: tokenForExtraPlans,
+      separador: separadorForExtraPlans
+    }
+  ]
+
+  // Estados sem planos
+  const semPlanos = []
+
   return (
     <Loading spinning={loading}>
       <Modal title="Link" open={linkID.length} onCancel={() => setLinkID('')} footer={null} width={300} centered>
@@ -113,7 +168,15 @@ export default function PlanosAcademia({ employee }) {
               }}
               className="mb-4"
             />
-            <Button type="primary" style={{ background: '#1677ff' }} size="small" onClick={messageLink}>
+            <Button
+              type="primary"
+              style={{ background: '#1677ff' }}
+              size="small"
+              onClick={() => {
+                utils.copyTextToClipboard(linkID)
+                messageLink()
+              }}
+            >
               Copiar Link
             </Button>
           </div>
@@ -167,11 +230,11 @@ export default function PlanosAcademia({ employee }) {
             </div>
           </Panel>
         </Collapse>
+
+        {/* AQUI LISTAMOS AS UNIDADES CARREGADAS VIA REDUX */}
         <Collapse className="planos_academia" accordion>
           {list.map((unidade, key) => {
             const isPedraBranca = unidade.unidade === 'PEDRA BRANCA'
-            const unidadeSlugForExtraPlans = 'pratique-em-casa' // Conforme solicitado
-            const tokenForExtraPlans = 'd826fbbdd2c37d1342b8d16dfa5c75fd'
 
             return (
               <Panel
@@ -189,7 +252,7 @@ export default function PlanosAcademia({ employee }) {
                         ? planos.concat([
                             {
                               plano: 335,
-                              saver: '', // Preencha com o valor correto se necessário
+                              saver: '',
                               unidade: unidadeSlugForExtraPlans,
                               nome: 'Spinning em Casa - Semestral',
                               token: tokenForExtraPlans,
@@ -215,7 +278,7 @@ export default function PlanosAcademia({ employee }) {
                               plano: 40,
                               saver: '',
                               unidade: unidadeSlugForExtraPlans,
-                              nome: '"Spinning em Casa - trimestral cheio FAMILY"',
+                              nome: 'Spinning em Casa - trimestral cheio FAMILY',
                               token: tokenForExtraPlans,
                               separador: unidade.dados.separador
                             }
@@ -230,6 +293,74 @@ export default function PlanosAcademia({ employee }) {
               </Panel>
             )
           })}
+        </Collapse>
+
+        {/* AQUI CRIAMOS A UNIDADE "PRATIQUE EM CASA" MANUALMENTE */}
+        <Collapse className="planos_academia" accordion>
+          <Panel header="PRATIQUE EM CASA" key="pratique-em-casa">
+            <Collapse accordion>
+              <Panel header="MINAS GERAIS" key="mg">
+                <Loading spinning={planosLoading}>
+                  <Table
+                    dataSource={minasGeraisPlans}
+                    columns={columns(
+                      setLinkID,
+                      { token: tokenForExtraPlans, separador: separadorForExtraPlans, slug: unidadeSlugForExtraPlans },
+                      usuario,
+                      employee
+                    )}
+                    pagination={false}
+                    rowKey={'plano'}
+                  />
+                </Loading>
+              </Panel>
+              <Panel header="SANTA CATARINA" key="sc">
+                <Loading spinning={planosLoading}>
+                  <Table
+                    dataSource={santaCatarinaPlans}
+                    columns={columns(
+                      setLinkID,
+                      { token: tokenForExtraPlans, separador: separadorForExtraPlans, slug: unidadeSlugForExtraPlans },
+                      usuario,
+                      employee
+                    )}
+                    pagination={false}
+                    rowKey={'plano'}
+                  />
+                </Loading>
+              </Panel>
+              <Panel header="ESPIRITO SANTO" key="es">
+                <Loading spinning={planosLoading}>
+                  <Table
+                    dataSource={semPlanos}
+                    columns={columns(
+                      setLinkID,
+                      { token: tokenForExtraPlans, separador: separadorForExtraPlans, slug: unidadeSlugForExtraPlans },
+                      usuario,
+                      employee
+                    )}
+                    pagination={false}
+                    rowKey={'plano'}
+                  />
+                </Loading>
+              </Panel>
+              <Panel header="PARANA" key="pr">
+                <Loading spinning={planosLoading}>
+                  <Table
+                    dataSource={semPlanos}
+                    columns={columns(
+                      setLinkID,
+                      { token: tokenForExtraPlans, separador: separadorForExtraPlans, slug: unidadeSlugForExtraPlans },
+                      usuario,
+                      employee
+                    )}
+                    pagination={false}
+                    rowKey={'plano'}
+                  />
+                </Loading>
+              </Panel>
+            </Collapse>
+          </Panel>
         </Collapse>
       </Space>
     </Loading>
