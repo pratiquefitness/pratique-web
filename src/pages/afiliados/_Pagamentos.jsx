@@ -18,7 +18,7 @@ const Pagamentos = () => {
 
   useEffect(() => {
     if (pix && pix.chave) {
-      console.log('Chave Pix encontrada:', pix.chave) // Log para depuração
+      //  console.log('Chave Pix encontrada:', pix.chave) // Log para depuração
       dispatch(getPixPayments(pix.chave))
     }
   }, [pix.chave, dispatch])
@@ -26,7 +26,7 @@ const Pagamentos = () => {
   // Função para gerar o recibo
   const gerarRecibo = pagamento => {
     const receiptWindow = window.open('', '_blank')
-    console.log(pagamento)
+    //    console.log(pagamento)
 
     // Conteúdo HTML do recibo
     const receiptContent = `
