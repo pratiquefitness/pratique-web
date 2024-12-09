@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://cloudconvert.com/
+HostUrl=https://eu-central.storage.cloudconvert.com/tasks/681949a7-2db9-4f91-81f0-ca1cf22fe759/logo-pratique.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20241209%2Ffra%2Fs3%2Faws4_request&X-Amz-Date=20241209T211353Z&X-Amz-Expires=86400&X-Amz-Signature=b3af5924040253bd56e08849dc3c063bd3577ae875a157b91369ef46bbf61e51&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22logo-pratique.webp%22&response-content-type=image%2Fwebp&x-id=GetObject

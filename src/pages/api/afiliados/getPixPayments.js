@@ -30,7 +30,11 @@ export default async function handler(req, res) {
         id: true,
         data_hora_movimento: true,
         valor: true,
-        conta_corrente: true
+        conta_corrente: true,
+        nome: true,
+        status: true,
+        cpf_cnpj: true,
+        chave: true
       },
       orderBy: {
         data_hora_movimento: 'desc'
